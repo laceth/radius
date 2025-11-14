@@ -1,0 +1,2 @@
+class SwitchBase:
+    pass
