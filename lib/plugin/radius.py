@@ -5,7 +5,7 @@ class Radius:
     version = "1.0.0"
     platform = None
 
-    def __init__(self, platform, version = "1.0.0"):
+    def __init__(self, platform, version="1.0.0"):
         self.platform = platform
         self.version = version
 

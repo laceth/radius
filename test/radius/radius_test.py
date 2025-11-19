@@ -10,6 +10,7 @@ class RadiusTestCommanExample(RadiusTestBase):
         log.info("Check auth and properties")
         time.sleep(1)
         self.dot1x.get_radius_status()
+        self.switch.exec_command("show run")
         assert True
 
 
