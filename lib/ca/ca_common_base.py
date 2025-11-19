@@ -31,7 +31,7 @@ class CounterActBase:
                 timeout=10
             )
         except Exception as e:
-            raise ConnectionError(f"Failed to connect to {self.hostname}: {e}")
+            raise ConnectionError(f"Failed to connect to {self.username}: {e}")
 
     def exec_command(self, command: str, timeout: int = 15) -> str:
         """
@@ -63,7 +63,4 @@ class CounterActBase:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
-
-if __name__ == "__main__":
-    c = CounterActBase("10.16.177.65", "root", "aristo1")
 
