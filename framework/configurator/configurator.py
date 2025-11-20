@@ -19,6 +19,7 @@ class Configurator:
     def get_dependencies(self):
         if "ca" in self.config:
             return self.eyesight_config()
+        raise NotImplementedError("Missing ca config, Only Eyesight CA is supported for now.")
 
     def eyesight_config(self):
         ef = EyesightFactory(self.config)
@@ -31,8 +32,11 @@ class Configurator:
         if "switch" in self.config:
             switch = ef.get_switch(self.config.get("switch"))
             instances["switch"] = switch
+        if "passthrough" in self.config:
+            passthrough = ef.ge_passthrough(self.config.get("passthrough"))
+            instances["passthrough"] = passthrough
         for key in self.config:
-            if key in ["ca", "em", "switch"]:
+            if key in ["ca", "em", "switch", "passthrough"]:
                 continue
             plugin = ef.get_plugin(ca, key, self.config.get(key))
             instances[key] = plugin
