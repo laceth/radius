@@ -2,6 +2,9 @@ from typing import Tuple
 
 import paramiko
 
+from framework.log.logger import log
+
+
 class CounterActBase:
     session = None
     username = None
@@ -42,7 +45,7 @@ class CounterActBase:
         """
         if not self.client:
             raise RuntimeError("SSH connection not established. Call connect() first.")
-
+        log.info(f"Executing command on CounterAct: {command}")
         stdin, stdout, stderr = self.client.exec_command(command, timeout=timeout)
         exit_code = stdout.channel.recv_exit_status()
         out = stdout.read().decode().strip()

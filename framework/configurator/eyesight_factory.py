@@ -1,7 +1,5 @@
 import importlib
-
-import yaml
-
+from lib.passthrough.windows_passthrough import WindowsPassthrough
 from lib.switch.cisco_ios import CiscoIOS
 
 PLUGIN_MAPPING = {
@@ -30,6 +28,8 @@ class EyesightFactory:
     def get_switch(self, switch_config):
         return CiscoIOS(**switch_config)
 
+    def ge_passthrough(self, passthrough_config):
+        return WindowsPassthrough(**passthrough_config)
 
     def get_plugin(self, ca_instance, plugin_name, plugin_config):
         cls = PLUGIN_MAPPING.get(plugin_name)

@@ -29,5 +29,4 @@ class CiscoIOS(SwitchBase):
 
     def exec_command(self, command: str, timeout: int = 15) -> str:
         output = self.session.send_command(command, delay_factor=2, max_loops=timeout)
-        print(output)
         return output
