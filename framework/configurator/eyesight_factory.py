@@ -3,8 +3,8 @@ from lib.passthrough.windows_passthrough import WindowsPassthrough
 from lib.switch.cisco_ios import CiscoIOS
 
 PLUGIN_MAPPING = {
-    "ca": "lib.ca.ca_common_base.CounterActBase",
-    "em": "lib.em.em_common_base.CounterActBase",
+    "ca": "lib.ca.ca.CouterActAppliance",
+    "em": "lib.ca.em.EnterpriseManager",
     "radius": "lib.plugin.radius.Radius"
 }
 
@@ -22,7 +22,7 @@ class EyesightFactory:
         module_name, class_name = cls.rsplit(".", 1)
         module = importlib.import_module(module_name)
         cls = getattr(module, class_name)
-        ins = cls(**self.config.get('ca', {}))
+        ins = cls(**self.config.get(role, {}))
         return ins
 
     def get_switch(self, switch_config):

@@ -27,7 +27,7 @@ class Configurator:
         ca = ef.get_ca()
         instances["ca"] = ca
         if "em" in self.config:
-            em = ef.get_ca()
+            em = ef.get_ca(is_em=True)
             instances["em"] = em
         if "switch" in self.config:
             switch = ef.get_switch(self.config.get("switch"))
