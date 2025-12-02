@@ -9,7 +9,8 @@ class RadiusTestCommanExample(RadiusTestBase):
     def do_test(self):
         log.info("Check auth and properties")
         time.sleep(1)
-        self.ca.exec_command("ifconfig")
+        log.info(self.ca.exec_command("ifconfig"))
+        log.info(self.em.exec_command("ifconfig"))
         self.dot1x.get_radius_status()
         self.switch.exec_command("show run")
         self.passthrough.execute_command("whoami")
