@@ -3,7 +3,10 @@ import inspect
 import json
 import logging as log
 import os
+import time
+
 from framework.configurator.configurator import Configurator
+from framework.connection.connection_pool import CONNECTION_POOL
 from framework.log.logger import log
 from framework.report.html_report import HTMLReportGenerator
 from framework.report.test_result import TestResult
@@ -64,6 +67,8 @@ def runner(test_suite, test_config=None, testbed_config=None, report_config=None
         if cls.__module__ == module.__name__:
             log.info(f"\nRunning class: {name}")
             run_class(cls, results, test_config)
+    if CONNECTION_POOL is not None:
+        CONNECTION_POOL.close_all()
     HTMLReportGenerator(results, title="Radius Tests Report").generate("radius_report.html")
     json_results = [result.__dict__ for result in results]
     with open("radius_report.json", "w", encoding="utf-8") as json_file:

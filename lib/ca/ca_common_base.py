@@ -1,11 +1,10 @@
-from typing import Tuple
-
 import paramiko
-
+from framework.connection.ssh_client import SSHClient
 from framework.log.logger import log
+from framework.connection.connection_pool import CONNECTION_POOL
 
 
-class CounterActBase:
+class CounterActBase(SSHClient):
     session = None
     username = None
     password = None
@@ -21,6 +20,11 @@ class CounterActBase:
         self.is_ipv4 = is_ipv4
         self.is_ha = is_ha
         self.is_ipv4 = True
+
+    def get_conn_key(self):
+        return self.ipaddress
+
+    def _create_connection(self):
         self.client = paramiko.SSHClient()
         self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         try:
@@ -33,37 +37,20 @@ class CounterActBase:
                 allow_agent=False,    # Don’t use SSH agent
                 timeout=10
             )
+            return self.client
         except Exception as e:
             raise ConnectionError(f"Failed to connect to {self.username}: {e}")
 
-    def exec_command(self, command: str, timeout: int = 15) -> str:
-        """
-        Execute a shell command on the remote machine.
-
-        Returns:
-            (exit_code, stdout, stderr)
-        """
-        if not self.client:
-            raise RuntimeError("SSH connection not established. Call connect() first.")
-        log.info(f"Executing command on CounterAct: {command}")
-        stdin, stdout, stderr = self.client.exec_command(command, timeout=timeout)
+    def _execute(self, cmd, timeout=30):
+        log.info(f"Executing command on CounterAct: {cmd}")
+        stdin, stdout, stderr = self.client.exec_command(cmd, timeout=timeout)
         exit_code = stdout.channel.recv_exit_status()
         out = stdout.read().decode().strip()
         err = stderr.read().decode().strip()
         if exit_code != 0:
-            raise RuntimeError(f"Command '{command}' failed with exit code {exit_code}: {err}")
+            raise RuntimeError(f"Command '{cmd}' failed with exit code {exit_code}: {err}")
         return out
 
-    def close(self):
-        """Close the SSH connection."""
-        if self.client:
-            self.client.close()
-            self.client = None
-
-    def __enter__(self):
-        self.connect()
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.close()
-
+    def exec_command(self, cmd: str, timeout: int = 15) -> str:
+        self.client = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
+        return self._execute(cmd, timeout)
