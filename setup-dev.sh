@@ -11,6 +11,7 @@ echo "🚀 Setting up fstester development environment..."
 if [[ "$VIRTUAL_ENV" == "" ]]; then
     echo "⚠️  Warning: You're not in a virtual environment!"
     echo "   Consider running: python -m venv .venv && source .venv/bin/activate"
+    echo "   On Windows: .venv\Scripts\activate"
     echo ""
 fi
 

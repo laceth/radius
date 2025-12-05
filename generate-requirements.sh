@@ -10,9 +10,9 @@ if ! command -v pip-compile &> /dev/null; then
     pip install pip-tools
 fi
 
-# Generate requirements.txt (production + windows dependencies)
+# Generate requirements.txt (production dependencies only)
 echo "📝 Generating requirements.txt..."
-pip-compile --extra windows pyproject.toml --output-file requirements.txt
+pip-compile pyproject.toml --output-file requirements.txt
 
 # Generate requirements-dev.txt (with dev dependencies)
 echo "📝 Generating requirements-dev.txt..."
@@ -21,7 +21,7 @@ pip-compile --extra dev pyproject.toml --output-file requirements-dev.txt
 echo "✅ All requirements files updated!"
 echo ""
 echo "Generated files:"
-echo "  - requirements.txt (production + windows)"
+echo "  - requirements.txt (production)"
 echo "  - requirements-dev.txt (development)"
 echo ""
 echo "📋 What to do next:"

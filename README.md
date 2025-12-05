@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 # 4. Setup development tools and code formatting
 # This installs requirements-dev.txt and sets up pre-commit hooks
-./setup-dev.sh  
+./setup-dev.sh
 ```
 
 ### 🔄 Updating Your Environment
