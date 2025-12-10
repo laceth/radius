@@ -8,7 +8,6 @@ class SSHClient(ConnectionClientBase):
         """Unique key for the connection in the pool."""
         pass
 
-
     @abstractmethod
     def _create_connection(self):
         """Create and return the underlying connection object."""
