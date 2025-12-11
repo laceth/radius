@@ -6,12 +6,12 @@ import winrm
 class WindowsPassthrough(PassthroughBase):
     def __init__(self, ip: str, user_name: str, password: str, mac: str) -> None:
         super().__init__(ip, user_name, password, mac)
-        self.session = winrm.Session(self.ip, auth=(self.username, self.password), transport='ntlm')
+        self.win_con = winrm.Session(self.ip, auth=(self.username, self.password), transport='ntlm')
 
     def execute_command(self, command, is_ps=True):
         try:
             log.info(f"Executing command on WindowsPassthrough: {command}")
-            out = self.session.run_ps(command) if is_ps else self.session.run_cmd(command)
+            out = self.win_con.run_ps(command) if is_ps else self.win_con.run_cmd(command)
         except Exception as e:
             raise RuntimeError(f"Failed to execute command '{command}': {str(e)}")
         stdout = out.std_out.decode("utf-8", errors="replace").strip()
