@@ -15,5 +15,6 @@ def main():
     args = parser.parse_args()
     runner(args.test_suite, test_config=args.config_file)
 
+
 if __name__ == "__main__":
     main()
