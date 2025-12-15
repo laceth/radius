@@ -30,7 +30,6 @@ class Radius:
             log.error("RADIUS server is not running")
             return False
 
-    import time
 
     def restart_dot1x_plugin(self, timeout: int = DEFAULT_RADIUS_RESTART_TIMEOUT, interval: int = DEFAULT_POLL_INTERVAL) -> None:
         log.info("Restarting 802.1X plugin on RADIUS server")
