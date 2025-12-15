@@ -6,6 +6,7 @@ class PassthroughBase(ABC):
         self.ip = ip
         self.username = user_name
         self.password = password
+        self.mac = mac
 
     @abstractmethod
     def execute_command(self, command, is_ps=True):

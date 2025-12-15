@@ -2,7 +2,7 @@ from framework.log.logger import log
 from lib.ca.ca_common_base import CounterActBase
 from lib.ca.em import EnterpriseManager
 from lib.passthrough.passthrough_base import PassthroughBase
-from lib.plugin.radius import Radius
+from lib.plugin.radius.radius import Radius
 from lib.switch.cisco_ios import CiscoIOS
 from typing import cast
 

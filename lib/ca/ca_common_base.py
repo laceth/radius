@@ -54,3 +54,5 @@ class CounterActBase(SSHClient):
     def exec_command(self, cmd: str, timeout: int = 15) -> str:
         self.client = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
         return self._execute(cmd, timeout)
+
+
