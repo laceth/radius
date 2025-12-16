@@ -56,7 +56,6 @@ class Radius:
                                execution_policy: str,
                                scripts_path: str,
                                peap_script_filename: str,
-                               domain: str,
                                nicname: str,
                                logs_path: str,
                                peap_username: str = None,
@@ -72,11 +71,11 @@ class Radius:
             execution_policy: PowerShell execution policy
             scripts_path: Path to scripts directory
             peap_script_filename: PEAP script filename
-            domain: Domain name (can be None, uses username as-is)
+            domain: Domain name
             nicname: Network interface name
             logs_path: Path to logs directory
-            peap_username: PEAP username (if different from Windows user, e.g., domain\\user)
-            peap_password: PEAP password (if different from Windows password)
+            peap_username: PEAP username
+            peap_password: PEAP password
 
         Returns:
             Rendered script content
@@ -84,10 +83,6 @@ class Radius:
         # Use PEAP credentials if provided, otherwise use Windows credentials
         peap_user = peap_username if peap_username else passthrough.username
         peap_pass = peap_password if peap_password else passthrough.password
-
-        # Build domain\\username if domain is provided and no explicit PEAP username
-        if not peap_username and domain:
-            peap_user = f"{domain}\\{passthrough.username}"
 
         # Render the launcher script template
         # PsExec uses Windows credentials (passthrough.username/password)
@@ -174,7 +169,6 @@ class Radius:
                                peap_script_filename: str,
                                psexec_path: str,
                                execution_policy: str,
-                               domain: str,
                                nicname: str,
                                peap_username: str,
                                peap_password: str) -> str:
@@ -250,7 +244,6 @@ class Radius:
             execution_policy=execution_policy,
             scripts_path=scripts_path,
             peap_script_filename=peap_script_filename,
-            domain=domain,
             nicname=nicname,
             logs_path=logs_path,
             peap_username=peap_username,
@@ -333,66 +326,64 @@ class Radius:
         """
         log.info("=== Checking/Downloading PsExec ===")
 
-        # Check if PsExec already exists
-        check_cmd = f"Test-Path '{psexec_path}'"
-        try:
-            result = passthrough.execute_command(check_cmd).strip().lower()
-            if result == 'true':
-                log.info(f"[OK] PsExec already exists at: {psexec_path}")
-                return
-        except Exception as e:
-            log.debug(f"PsExec not found, will download: {e}")
+        # Early return if PsExec already exists
+        if self._check_file_exists(passthrough, psexec_path):
+            log.info(f"[OK] PsExec already exists at: {psexec_path}")
+            return
 
         log.info("PsExec not found, downloading from Microsoft Sysinternals...")
 
-        # Create PSTools directory
-        log.info(f"Creating directory: {pstools_path}")
-        passthrough.create_directory(pstools_path)
-
-        # Download PSTools using PowerShell
-        pstools_url = "https://download.sysinternals.com/files/PSTools.zip"
+        # Constants
+        PSTOOLS_URL = "https://download.sysinternals.com/files/PSTools.zip"
         zip_path = f"{pstools_path}\\PSTools.zip"
 
-        log.info(f"Downloading PSTools from: {pstools_url}")
-        download_cmd = f"""
-$ProgressPreference = 'SilentlyContinue'
-Invoke-WebRequest -Uri '{pstools_url}' -OutFile '{zip_path}' -UseBasicParsing
-"""
-        try:
-            passthrough.execute_command(download_cmd)
-            log.info(f"[OK] Downloaded PSTools.zip to: {zip_path}")
-        except Exception as e:
-            log.error(f"Failed to download PSTools: {e}")
-            raise RuntimeError(f"Failed to download PSTools from {pstools_url}: {e}")
+        # Download and extract
+        passthrough.create_directory(pstools_path)
+        self._download_file(passthrough, PSTOOLS_URL, zip_path)
+        self._extract_zip(passthrough, zip_path, pstools_path)
 
-        # Extract the zip file
-        log.info("Extracting PSTools.zip...")
-        extract_cmd = f"""
-$ProgressPreference = 'SilentlyContinue'
-Expand-Archive -Path '{zip_path}' -DestinationPath '{pstools_path}' -Force
-"""
-        try:
-            passthrough.execute_command(extract_cmd)
-            log.info(f"[OK] Extracted PSTools to: {pstools_path}")
-        except Exception as e:
-            log.error(f"Failed to extract PSTools: {e}")
-            raise RuntimeError(f"Failed to extract PSTools: {e}")
-
-        # Verify PsExec was extracted
-        check_cmd = f"Test-Path '{psexec_path}'"
-        result = passthrough.execute_command(check_cmd).strip().lower()
-        if result != 'true':
+        # Verify and cleanup
+        if not self._check_file_exists(passthrough, psexec_path):
             raise RuntimeError(f"PsExec.exe not found after extraction at: {psexec_path}")
 
         log.info(f"[OK] PsExec is ready at: {psexec_path}")
+        self._cleanup_file(passthrough, zip_path)
 
-        # Clean up the zip file
-        log.info("Cleaning up PSTools.zip...")
+    def _check_file_exists(self, passthrough, file_path: str) -> bool:
+        """Check if a file exists on the remote Windows machine."""
         try:
-            passthrough.remove_file(zip_path)
-            log.info("[OK] Cleaned up zip file")
+            result = passthrough.execute_command(f"Test-Path '{file_path}'")
+            return result.strip().lower() == 'true'
+        except Exception:
+            return False
+
+    def _download_file(self, passthrough, url: str, destination: str):
+        """Download a file from URL to the remote Windows machine."""
+        log.info(f"Downloading from: {url}")
+        cmd = f"$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri '{url}' -OutFile '{destination}' -UseBasicParsing"
+        try:
+            passthrough.execute_command(cmd)
+            log.info(f"[OK] Downloaded to: {destination}")
         except Exception as e:
-            log.warning(f"Could not clean up zip file: {e}")
+            raise RuntimeError(f"Failed to download from {url}: {e}")
+
+    def _extract_zip(self, passthrough, zip_path: str, destination: str):
+        """Extract a zip file on the remote Windows machine."""
+        log.info(f"Extracting {zip_path}...")
+        cmd = f"$ProgressPreference = 'SilentlyContinue'; Expand-Archive -Path '{zip_path}' -DestinationPath '{destination}' -Force"
+        try:
+            passthrough.execute_command(cmd)
+            log.info(f"[OK] Extracted to: {destination}")
+        except Exception as e:
+            raise RuntimeError(f"Failed to extract {zip_path}: {e}")
+
+    def _cleanup_file(self, passthrough, file_path: str):
+        """Remove a file from the remote Windows machine (best effort)."""
+        try:
+            passthrough.remove_file(file_path)
+            log.info(f"[OK] Cleaned up: {file_path}")
+        except Exception as e:
+            log.warning(f"Could not clean up {file_path}: {e}")
 
     def verify_log_content(self, log_content: str):
         """
