@@ -5,7 +5,7 @@ from lib.switch.cisco_ios import CiscoIOS
 PLUGIN_MAPPING = {
     "ca": "lib.ca.ca.CouterActAppliance",
     "em": "lib.ca.em.EnterpriseManager",
-    "radius": "lib.plugin.radius.Radius"
+    "radius": "lib.plugin.radius.radius.Radius"
 }
 
 
@@ -28,7 +28,7 @@ class EyesightFactory:
     def get_switch(self, switch_config):
         return CiscoIOS(**switch_config)
 
-    def ge_passthrough(self, passthrough_config):
+    def get_passthrough(self, passthrough_config):
         return WindowsPassthrough(**passthrough_config)
 
     def get_plugin(self, ca_instance, plugin_name, plugin_config):
