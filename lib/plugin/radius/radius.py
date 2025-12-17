@@ -232,7 +232,7 @@ class Radius:
         session_id, session_state = passthrough.get_session_id(passthrough.username)
 
         # Step 4: Attach disconnected session if needed
-        passthrough.attach_disconnected_session(session_id, session_state)
+        passthrough.attach_disconnected_session(session_id, session_state, psexec_path)
 
         # Step 5: Render launcher script
         log.info("Rendering launcher script")

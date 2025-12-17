@@ -208,18 +208,22 @@ class WindowsPassthrough(PassthroughBase):
 
         raise RuntimeError(f"No session found for user '{username}'.\nQuery output:\n{stdout}")
 
-    def attach_disconnected_session(self, session_id: str, session_state: str):
+    def attach_disconnected_session(self, session_id: str, session_state: str, psexec_path: str):
         """
-        Attach a disconnected session to console.
+        Attach a disconnected session to console using PsExec.
 
         Args:
             session_id: Windows session ID
             session_state: Current session state
+            psexec_path: Full path to PsExec.exe (e.g., 'C:\\PSTools\\PsExec.exe')
         """
         if session_state.lower() == 'disc':
             log.info(f"Attaching disconnected session {session_id} to console")
-            cmd = f'psexec -accepteula -s cmd /c "tscon {session_id} /dest:console"'
-            self.execute_command(cmd, is_ps=False)
+
+            # Use PowerShell's call operator (&) which handles paths better through WinRM
+            # The & operator allows running executables with arguments
+            cmd = f"& '{psexec_path}' -accepteula -s cmd /c 'tscon {session_id} /dest:console'"
+            self.execute_command(cmd, is_ps=True)
 
             # Pause for desktop to settle
             log.info("Pausing 10 seconds for desktop to settle")
