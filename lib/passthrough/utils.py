@@ -43,6 +43,96 @@ def download_file(passthrough, url: str, destination: str):
         raise RuntimeError(f"Failed to download from {url}: {e}")
 
 
+def copy_file_to_remote(passthrough, local_path: str, remote_path: str):
+    """
+    Copy a file to the remote Windows machine using pypsrp's native file transfer.
+
+    Args:
+        passthrough: WindowsPassthrough instance
+        local_path: Local file path to copy
+        remote_path: Remote destination path on Windows machine
+
+    Raises:
+        FileNotFoundError: If local file doesn't exist
+        RuntimeError: If file transfer fails
+    """
+    import os
+    from pypsrp.client import Client
+
+    if not os.path.exists(local_path):
+        raise FileNotFoundError(f"Local file not found: {local_path}")
+
+    log.info(f"Copying {local_path} to {remote_path}")
+
+    # Normalize path to Windows format
+    remote_path = remote_path.replace('/', '\\')
+    remote_dir = remote_path.rsplit('\\', 1)[0]
+
+    # Get file size for logging
+    file_size = os.path.getsize(local_path)
+    log.info(f"File size: {file_size} bytes")
+
+    # Create directory if it doesn't exist
+    create_directory(passthrough, remote_dir)
+
+    try:
+        # Use pypsrp's efficient native file transfer
+        log.info("Using pypsrp native file transfer")
+        client = Client(
+            passthrough.ip,
+            username=passthrough.username,
+            password=passthrough.password,
+            ssl=False,
+            auth="ntlm"
+        )
+        client.copy(local_path, remote_path)
+        log.info(f"Successfully copied {local_path} to {remote_path}")
+
+    except Exception as e:
+        log.error(f"Failed to copy file: {e}")
+        raise RuntimeError(f"File transfer failed: {e}")
+
+
+def create_directory(passthrough, path: str):
+    """
+    Create a directory on the remote Windows machine if it doesn't exist.
+
+    Args:
+        passthrough: WindowsPassthrough instance
+        path: Directory path to create on the remote machine
+    """
+    path = path.replace('/', '\\')
+    cmd = f"New-Item -Path '{path}' -ItemType Directory -Force | Out-Null"
+    passthrough.execute_command(cmd)
+    log.info(f"Created directory: {path}")
+
+
+def remove_file(passthrough, path: str):
+    """
+    Remove a file from the remote Windows machine if it exists.
+
+    Args:
+        passthrough: WindowsPassthrough instance
+        path: File path to remove on the remote machine
+    """
+    path = path.replace('/', '\\')
+
+    # First check if file exists to avoid unnecessary errors
+    check_cmd = f"Test-Path -Path '{path}'"
+    try:
+        result = passthrough.execute_command(check_cmd).strip().lower()
+        if result == 'true':
+            # File exists, remove it
+            cmd = f"Remove-Item -Path '{path}' -Force"
+            passthrough.execute_command(cmd)
+            log.info(f"Removed file: {path}")
+        else:
+            log.debug(f"File does not exist (no removal needed): {path}")
+    except RuntimeError as e:
+        # If anything fails, just log and continue (file removal is not critical)
+        log.debug(f"File removal skipped (error: {e}): {path}")
+
+
 def extract_zip(passthrough, zip_path: str, destination: str):
     """
     Extract a zip file on the remote Windows machine.
@@ -184,7 +274,7 @@ def download_psexec(passthrough, pstools_path: str, psexec_path: str):
 
     zip_path = f"{pstools_path}\\PSTools.zip"
 
-    passthrough.create_directory(pstools_path)
+    create_directory(passthrough, pstools_path)
     download_file(passthrough, PSTOOLS_URL, zip_path)
     extract_zip(passthrough, zip_path, pstools_path)
 
@@ -193,5 +283,6 @@ def download_psexec(passthrough, pstools_path: str, psexec_path: str):
 
     log.info(f"[OK] PsExec is ready at: {psexec_path}")
     cleanup_file(passthrough, zip_path)
+
 
 

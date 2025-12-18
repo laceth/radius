@@ -26,9 +26,11 @@ class PEAPCredentialsConfig:
     scripts_path: str = r'C:\Scripts'
     logs_path: str = r'C:\Logs'
     pstools_path: str = r'C:\PSTools'
+    profiles_path: str = r'C:\Profiles'
 
     # Script configuration (defaults provided)
     peap_script_filename: str = 'radius_nic_PEAP_credentials_config.ps1'
+    lan_profile_filename: str = 'lan_profile_peap_config.xml'
     execution_policy: str = 'Bypass'
 
     # Network configuration (default NIC name)
@@ -41,6 +43,7 @@ class PEAPCredentialsConfig:
 
     # Local script path (auto-detected if not provided)
     local_script_path: str = None
+    local_lan_profile_path: str = None
 
     @property
     def psexec_path(self) -> str:
@@ -50,21 +53,32 @@ class PEAPCredentialsConfig:
     @property
     def peap_username(self) -> str:
         """Full PEAP username in domain\\user format."""
-        return f'{self.peap_domain}\\{self.peap_user}'
+        if self.peap_domain:
+            return f'{self.peap_domain}\\{self.peap_user}'
+        return self.peap_user
 
     def __post_init__(self):
         """Initialize and validate configuration."""
         # Auto-detect local script path if not provided
         if not self.local_script_path:
-            self.local_script_path = self._find_script_path()
+            self.local_script_path = self._find_resource_path(self.peap_script_filename)
 
-    def _find_script_path(self) -> str:
-        """Find the PEAP script in the project's scripts directory."""
+        # Auto-detect local LAN profile path if not provided
+        if not self.local_lan_profile_path:
+            self.local_lan_profile_path = self._find_resource_path(self.lan_profile_filename)
+
+    def _find_resource_path(self, filename: str) -> str:
+        """Find a resource file in the project's resources/scripts directory."""
+        project_root = self._find_project_root()
         possible_paths = [
             # From current working directory
-            os.path.join(os.getcwd(), 'scripts', self.peap_script_filename),
+            os.path.join(os.getcwd(), 'scripts', filename),
+            os.path.join(os.getcwd(), 'resources', filename),
+            os.path.join(os.getcwd(), 'resources', 'radius', 'nic_profiles', filename),
             # From project root (detected by markers)
-            os.path.join(self._find_project_root(), 'scripts', self.peap_script_filename),
+            os.path.join(project_root, 'scripts', filename),
+            os.path.join(project_root, 'resources', filename),
+            os.path.join(project_root, 'resources', 'radius', 'nic_profiles', filename),
         ]
 
         for path in possible_paths:

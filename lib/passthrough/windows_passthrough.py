@@ -1,13 +1,9 @@
 from framework.log.logger import log
 from lib.passthrough.passthrough_base import PassthroughBase
 import winrm
-import os
 import re
 import time
-from datetime import datetime
 from typing import Tuple
-
-from pypsrp.client import Client
 
 
 class WindowsPassthrough(PassthroughBase):
@@ -68,87 +64,6 @@ class WindowsPassthrough(PassthroughBase):
 
         return stdout
 
-    def copy_file_to_remote(self, local_path: str, remote_path: str):
-        """
-        Copy a file to the remote Windows machine using pypsrp's native file transfer.
-
-        Args:
-            local_path: Local file path to copy
-            remote_path: Remote destination path on Windows machine
-
-        Raises:
-            FileNotFoundError: If local file doesn't exist
-            RuntimeError: If file transfer fails
-        """
-        if not os.path.exists(local_path):
-            raise FileNotFoundError(f"Local file not found: {local_path}")
-
-        log.info(f"Copying {local_path} to {remote_path}")
-
-        # Normalize path to Windows format
-        remote_path = remote_path.replace('/', '\\')
-        remote_dir = remote_path.rsplit('\\', 1)[0]
-
-        # Get file size for logging
-        file_size = os.path.getsize(local_path)
-        log.info(f"File size: {file_size} bytes")
-
-        # Create directory if it doesn't exist
-        self.execute_command(f"New-Item -Path '{remote_dir}' -ItemType Directory -Force | Out-Null")
-
-        try:
-            # Use pypsrp's efficient native file transfer
-            log.info("Using pypsrp native file transfer")
-            client = Client(
-                self.ip,
-                username=self.username,
-                password=self.password,
-                ssl=False,
-                auth="ntlm"
-            )
-            client.copy(local_path, remote_path)
-            log.info(f"Successfully copied {local_path} to {remote_path}")
-
-        except Exception as e:
-            log.error(f"Failed to copy file: {e}")
-            raise RuntimeError(f"File transfer failed: {e}")
-
-    def create_directory(self, path: str):
-        """
-        Create a directory on the remote Windows machine if it doesn't exist.
-
-        Args:
-            path: Directory path to create on the remote machine
-        """
-        path = path.replace('/', '\\')
-        cmd = f"New-Item -Path '{path}' -ItemType Directory -Force | Out-Null"
-        self.execute_command(cmd)
-        log.info(f"Created directory: {path}")
-
-    def remove_file(self, path: str):
-        """
-        Remove a file from the remote Windows machine if it exists.
-
-        Args:
-            path: File path to remove on the remote machine
-        """
-        path = path.replace('/', '\\')
-
-        # First check if file exists to avoid unnecessary errors
-        check_cmd = f"Test-Path -Path '{path}'"
-        try:
-            result = self.execute_command(check_cmd).strip().lower()
-            if result == 'true':
-                # File exists, remove it
-                cmd = f"Remove-Item -Path '{path}' -Force"
-                self.execute_command(cmd)
-                log.info(f"Removed file: {path}")
-            else:
-                log.debug(f"File does not exist (no removal needed): {path}")
-        except RuntimeError as e:
-            # If anything fails, just log and continue (file removal is not critical)
-            log.debug(f"File removal skipped (error: {e}): {path}")
-            pass
 
     def get_session_id(self, username: str) -> Tuple[str, str]:
         """
@@ -230,4 +145,128 @@ class WindowsPassthrough(PassthroughBase):
             time.sleep(10)
         else:
             log.info(f"Session {session_id} is in state '{session_state}', no need to attach")
+
+    # =========================================================================
+    # LAN Profile Management
+    # =========================================================================
+
+    def delete_lan_profile(self, nicname: str):
+        """
+        Delete existing LAN profile from the specified network interface.
+
+        Args:
+            nicname: Network interface name (e.g., 'pciPassthru0')
+        """
+        log.info(f"Deleting LAN profile from interface: {nicname}")
+
+        cmd = f'netsh lan delete profile interface="{nicname}"'
+        try:
+            result = self.execute_command(cmd, is_ps=False)
+            log.info(f"[OK] LAN profile deleted from {nicname}")
+        except RuntimeError as e:
+            # Profile might not exist, which is okay
+            if "is not configured" in str(e) or "not found" in str(e).lower():
+                log.info("No existing LAN profile found - continuing")
+            else:
+                raise
+
+    def add_lan_profile(self, profile_path: str, nicname: str):
+        """
+        Add a new LAN profile to the specified network interface.
+
+        Args:
+            profile_path: Full path to the XML profile on remote machine
+            nicname: Network interface name (e.g., 'pciPassthru0')
+
+        Raises:
+            AssertionError: If profile addition fails
+        """
+        log.info(f"Adding LAN profile to interface: {nicname}")
+
+        cmd = f'netsh lan add profile filename="{profile_path}" interface="{nicname}"'
+        result = self.execute_command(cmd, is_ps=False)
+
+        expected_message = f"The profile was added successfully on the interface {nicname}."
+        if expected_message not in result:
+            raise AssertionError(f"LAN profile addition failed. Expected: '{expected_message}', Got: '{result}'")
+
+        log.info(f"[OK] LAN profile added to {nicname}")
+
+    # =========================================================================
+    # NIC Management
+    # =========================================================================
+
+    def disable_nic(self, nicname: str, timeout: int = 30):
+        """
+        Disable a network interface.
+
+        Args:
+            nicname: Network interface name (e.g., 'pciPassthru0')
+            timeout: Maximum time to wait for NIC to be disabled
+        """
+        log.info(f"Disabling NIC: {nicname}")
+
+        cmd = f"Disable-NetAdapter -Name '{nicname}' -Confirm:$false"
+        self.execute_command(cmd)
+
+        self._wait_for_nic_status(nicname, "Disabled", timeout)
+        log.info(f"[OK] NIC {nicname} is disabled")
+
+    def enable_nic(self, nicname: str, timeout: int = 30):
+        """
+        Enable a network interface.
+
+        Args:
+            nicname: Network interface name (e.g., 'pciPassthru0')
+            timeout: Maximum time to wait for NIC to be enabled
+        """
+        log.info(f"Enabling NIC: {nicname}")
+
+        cmd = f"Enable-NetAdapter -Name '{nicname}' -Confirm:$false"
+        self.execute_command(cmd)
+
+        self._wait_for_nic_status(nicname, "Up", timeout)
+        log.info(f"[OK] NIC {nicname} is enabled")
+
+    def toggle_nic(self, nicname: str, timeout: int = 30):
+        """
+        Toggle (disable then enable) a network interface to trigger re-authentication.
+
+        Args:
+            nicname: Network interface name (e.g., 'pciPassthru0')
+            timeout: Maximum time to wait for each operation
+        """
+        log.info(f"Toggling NIC: {nicname}")
+        self.disable_nic(nicname, timeout)
+        self.enable_nic(nicname, timeout)
+        log.info(f"[OK] NIC {nicname} toggled successfully")
+
+    def _wait_for_nic_status(self, nicname: str, expected_status: str, timeout: int = 30):
+        """
+        Wait for a NIC to reach the expected status.
+
+        Args:
+            nicname: Network interface name
+            expected_status: Expected status ('Up', 'Disabled', etc.)
+            timeout: Maximum time to wait in seconds
+
+        Raises:
+            AssertionError: If NIC doesn't reach expected status within timeout
+        """
+        start_time = time.time()
+        interval = 2
+
+        while time.time() - start_time < timeout:
+            cmd = f"(Get-NetAdapter -Name '{nicname}').Status"
+            try:
+                status = self.execute_command(cmd).strip()
+                if status == expected_status:
+                    return
+                log.debug(f"NIC {nicname} status: {status}, waiting for: {expected_status}")
+            except RuntimeError as e:
+                log.debug(f"Error checking NIC status: {e}")
+
+            time.sleep(interval)
+
+        raise AssertionError(f"NIC {nicname} did not reach status '{expected_status}' within {timeout}s")
 

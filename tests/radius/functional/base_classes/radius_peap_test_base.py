@@ -15,6 +15,13 @@ class RadiusPeapTestBase(RadiusTestBase):
         """Setup phase: prepare test environment"""
         log.info("=== Starting PEAP Credentials Setup ===")
 
+        # Apply parametrized credentials if provided
+        if hasattr(self, 'peap_domain'):
+            self.peap_config.peap_domain = self.peap_domain if self.peap_domain else self.peap_config.peap_domain
+
+        if hasattr(self, 'peap_user') and self.peap_user:
+            self.peap_config.peap_user = self.peap_user
+
         # Log configuration
         log.info(f"Local script path: {self.peap_config.local_script_path}")
         log.info(f"Remote scripts path: {self.peap_config.scripts_path}")
@@ -29,7 +36,7 @@ class RadiusPeapTestBase(RadiusTestBase):
             self.peap_config.psexec_path
         )
 
-    def setup_peap_credentials(self) -> str:
+    def setup_peap_credentials(self) -> None:
         """
         Execute RADIUS PEAP credentials setup on Windows NIC.
 
@@ -64,14 +71,14 @@ class RadiusPeapTestBase(RadiusTestBase):
 
         # Step 1: Copy PowerShell script to target machine
         log.info(f"Copying PEAP script to {script_path}")
-        passthrough.copy_file_to_remote(config.local_script_path, script_path)
+        passthrough_utils.copy_file_to_remote(passthrough, config.local_script_path, script_path)
 
         # Step 2: Create log directory and prepare log file
         log.info(f"Creating log directory: {config.logs_path}")
-        passthrough.create_directory(config.logs_path)
+        passthrough_utils.create_directory(passthrough, config.logs_path)
 
         log.info(f"Removing old log file if exists: {log_path}")
-        passthrough.remove_file(log_path)
+        passthrough_utils.remove_file(passthrough, log_path)
 
         log.info(f"Creating new log file: {log_path}")
         cmd = f"New-Item -Path '{log_path}' -ItemType File -Force | Out-Null"
@@ -87,12 +94,12 @@ class RadiusPeapTestBase(RadiusTestBase):
         # Step 5: Render launcher script
         log.info("Rendering launcher script")
         launcher_config = LauncherScriptConfig.from_peap_config(config, session_id, log_filename)
-        launcher_content = self.dot1x.render_peap_configuration_launcher_script(passthrough, launcher_config)
+        launcher_content = self.render_peap_configuration_launcher_script(launcher_config)
 
         # Write launcher script to remote machine
         log.info(f"Writing launcher script to: {launcher_path}")
         launcher_content_escaped = launcher_content.replace("'", "''")
-        passthrough.remove_file(launcher_path)
+        passthrough_utils.remove_file(passthrough, launcher_path)
         cmd = f"Set-Content -Path '{launcher_path}' -Value '{launcher_content_escaped}' -Encoding ASCII"
         passthrough.execute_command(cmd)
 
@@ -134,9 +141,9 @@ class RadiusPeapTestBase(RadiusTestBase):
         # Step 8: Read final log content
         log.info("Reading final log output")
         log_content = passthrough_utils.read_log_file(passthrough, log_path)
-
         log.info("RADIUS PEAP credentials setup completed successfully")
-        return log_content
+
+        passthrough_utils.verify_log_content(log_content, 'Script Execution Completed')
 
     def do_teardown(self):
         """Cleanup phase"""
@@ -144,16 +151,81 @@ class RadiusPeapTestBase(RadiusTestBase):
         super().do_teardown()
         log.info("=== Test Complete ===")
 
-    def assert_peap_setup_successful(self, log_content: str, completion_marker: str = 'Script Execution Completed'):
+    def render_peap_configuration_launcher_script(self, config: LauncherScriptConfig) -> str:
         """
-        Assert that PEAP setup completed successfully.
+        Render the PowerShell launcher script that will execute the PEAP configuration script.
 
         Args:
-            log_content: The log file content from the PEAP setup
-            completion_marker: The marker string that indicates successful completion
+            config: LauncherScriptConfig object containing all script parameters
 
-        Raises:
-            AssertionError: If completion marker is not found
+        Returns:
+            Rendered script content
         """
-        passthrough_utils.verify_log_content(log_content, completion_marker)
+        passthrough = self.passthrough
+
+        # Use PEAP credentials if provided, otherwise use Windows credentials
+        peap_user = config.peap_username if config.peap_username else passthrough.username
+        peap_pass = config.peap_password if config.peap_password else passthrough.password
+
+        # Render the launcher script template
+        template = (
+            f"{config.psexec_path} -accepteula -u \"{passthrough.username}\" -p \"{passthrough.password}\" "
+            f"-i {config.session_id} -h -d powershell.exe -ExecutionPolicy {config.execution_policy} "
+            f"-File \"{config.scripts_path}\\{config.peap_script_filename}\" "
+            f"-username \"{peap_user}\" "
+            f"-password \"{peap_pass}\" "
+            f"-nicname \"{config.nicname}\" "
+            f"-logfile \"{config.logs_path}\\{config.log_filename}\""
+        )
+        return template
+
+    # =========================================================================
+    # LAN Profile Management
+    # =========================================================================
+
+    def configure_lan_profile(self):
+        """
+        Configure the LAN profile on the Windows endpoint.
+
+        This method:
+        1. Copies the LAN profile XML to the remote machine
+        2. Deletes any existing LAN profile from the NIC
+        3. Adds the new LAN profile to the NIC
+        """
+        config = self.peap_config
+        passthrough = self.passthrough
+
+        log.info("=== Configuring LAN Profile ===")
+
+        # Copy LAN profile to remote machine
+        remote_profile_path = f"{config.profiles_path}\\{config.lan_profile_filename}"
+        passthrough_utils.copy_file_to_remote(
+            passthrough,
+            config.local_lan_profile_path,
+            remote_profile_path
+        )
+
+        # Delete existing profile (if any)
+        passthrough.delete_lan_profile(config.nicname)
+
+        # Add new profile
+        passthrough.add_lan_profile(remote_profile_path, config.nicname)
+
+        log.info("=== LAN Profile Configuration Complete ===")
+
+    # =========================================================================
+    # NIC Management
+    # =========================================================================
+
+    def toggle_nic(self):
+        """Toggle the NIC (disable then enable) to trigger re-authentication."""
+        self.passthrough.toggle_nic(self.peap_config.nicname)
+
+    def disable_nic(self):
+        """Disable the NIC."""
+        self.passthrough.disable_nic(self.peap_config.nicname)
+
+    def enable_nic(self):
+        """Enable the NIC."""
+        self.passthrough.enable_nic(self.peap_config.nicname)
 
