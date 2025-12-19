@@ -1,4 +1,5 @@
 from framework.decorator.prametrizor import parametrize
+from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile
 from tests.radius.functional.base_classes.radius_peap_test_base import RadiusPeapTestBase
 
 
@@ -10,7 +11,7 @@ from tests.radius.functional.base_classes.radius_peap_test_base import RadiusPea
     # ("", "dotonex"),
     # ("txqalab", "testuser111"),
     # ("txqalab", "testuser1"),
-    # ("robh@", "txlab.forescout.local")
+    # ("robh@txlab.forescout.local", "")
 ])
 class RadiusPEAPCredentialsSetupTest(RadiusPeapTestBase):
     """
@@ -23,13 +24,13 @@ class RadiusPEAPCredentialsSetupTest(RadiusPeapTestBase):
     def do_test(self):
         """Execute the PEAP credentials setup test"""
         # Step 1: Configure LAN profile
-        self.configure_lan_profile()
+        self.configure_lan_profile(auth_nic_profile=AuthNicProfile.PEAP)
 
         # Step 2: Configure PEAP credentials on Windows NIC
-        self.setup_peap_credentials()
+        self.setup_peap_credentials(domain=self.peap_domain, username=self.peap_user)
 
         # Step 3: Toggle NIC to trigger authentication
         self.toggle_nic()
 
-        # TODO: Step 4: Assert authentication works
-        # self.assert_authentication_successful()
+        # Step 4: Assert authentication was successful
+        self.assert_authentication_successful(expected_status=AuthenticationStatus.SUCCEEDED)

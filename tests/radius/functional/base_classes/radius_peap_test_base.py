@@ -1,7 +1,9 @@
 from datetime import datetime
+from typing import Union
 from framework.log.logger import log
 from lib.plugin.radius.models.peap_config import PEAPCredentialsConfig, LauncherScriptConfig
 from lib.passthrough import utils as passthrough_utils
+from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile
 from tests.radius.radius_test_base import RadiusTestBase
 
 
@@ -15,30 +17,26 @@ class RadiusPeapTestBase(RadiusTestBase):
         """Setup phase: prepare test environment"""
         log.info("=== Starting PEAP Credentials Setup ===")
 
-        # Apply parametrized credentials if provided
-        if hasattr(self, 'peap_domain'):
-            self.peap_config.peap_domain = self.peap_domain if self.peap_domain else self.peap_config.peap_domain
-
-        if hasattr(self, 'peap_user') and self.peap_user:
-            self.peap_config.peap_user = self.peap_user
-
         # Log configuration
         log.info(f"Local script path: {self.peap_config.local_script_path}")
         log.info(f"Remote scripts path: {self.peap_config.scripts_path}")
         log.info(f"Remote logs path: {self.peap_config.logs_path}")
         log.info(f"NIC name: {self.peap_config.nicname}")
-        log.info(f"PEAP username: {self.peap_config.peap_username}")
 
         # Download PsExec if not present
-        passthrough_utils.download_psexec(
-            self.passthrough,
+        self.passthrough.download_psexec(
             self.peap_config.pstools_path,
             self.peap_config.psexec_path
         )
 
-    def setup_peap_credentials(self) -> None:
+    def setup_peap_credentials(self, domain: str = None, username: str = None, password: str = 'aristo') -> None:
         """
         Execute RADIUS PEAP credentials setup on Windows NIC.
+
+        Args:
+            domain: PEAP domain (e.g., 'txqalab'). If None, uses peap_config.peap_domain
+            username: PEAP username (e.g., 'dotonex'). If None, uses peap_config.peap_user
+            password: PEAP password (default: 'aristo')
 
         This method orchestrates all the steps:
         1. Copy PowerShell script to target machine
@@ -47,14 +45,17 @@ class RadiusPeapTestBase(RadiusTestBase):
         4. Attach disconnected session if needed
         5. Render and execute launcher script
         6. Wait for completion and verify success
-        7. Return log output
-
-        Returns:
-            Log file content
 
         Raises:
             RuntimeError: If any step fails
         """
+        # Apply domain/username/password if provided
+        if domain is not None:
+            self.peap_config.peap_domain = domain
+        if username is not None:
+            self.peap_config.peap_user = username
+        self.peap_config.peap_password = password
+
         # Validate configuration
         self.peap_config.validate()
 
@@ -67,18 +68,18 @@ class RadiusPeapTestBase(RadiusTestBase):
         script_path = f"{config.scripts_path}\\{config.peap_script_filename}"
         launcher_path = f"{config.scripts_path}\\setup_nic_peap_credentials.ps1"
 
-        log.info("Starting RADIUS PEAP credentials setup")
+        log.info(f"Starting RADIUS PEAP credentials setup for user: {config.peap_username}")
 
         # Step 1: Copy PowerShell script to target machine
         log.info(f"Copying PEAP script to {script_path}")
-        passthrough_utils.copy_file_to_remote(passthrough, config.local_script_path, script_path)
+        passthrough.copy_file_to_remote(config.local_script_path, script_path)
 
         # Step 2: Create log directory and prepare log file
         log.info(f"Creating log directory: {config.logs_path}")
-        passthrough_utils.create_directory(passthrough, config.logs_path)
+        passthrough.create_directory(config.logs_path)
 
         log.info(f"Removing old log file if exists: {log_path}")
-        passthrough_utils.remove_file(passthrough, log_path)
+        passthrough.remove_file(log_path)
 
         log.info(f"Creating new log file: {log_path}")
         cmd = f"New-Item -Path '{log_path}' -ItemType File -Force | Out-Null"
@@ -99,7 +100,7 @@ class RadiusPeapTestBase(RadiusTestBase):
         # Write launcher script to remote machine
         log.info(f"Writing launcher script to: {launcher_path}")
         launcher_content_escaped = launcher_content.replace("'", "''")
-        passthrough_utils.remove_file(passthrough, launcher_path)
+        passthrough.remove_file(launcher_path)
         cmd = f"Set-Content -Path '{launcher_path}' -Value '{launcher_content_escaped}' -Encoding ASCII"
         passthrough.execute_command(cmd)
 
@@ -125,11 +126,11 @@ class RadiusPeapTestBase(RadiusTestBase):
 
         # Step 7: Wait for script completion
         log.info("Waiting for PEAP configuration script to complete")
-        success = passthrough_utils.wait_for_log_completion(passthrough, log_path, timeout=500, interval=5)
+        success = passthrough.wait_for_log_completion(log_path, timeout=500, interval=5)
 
         if not success:
             try:
-                log_content = passthrough_utils.read_log_file(passthrough, log_path)
+                log_content = passthrough.read_log_file(log_path)
             except RuntimeError:
                 log_content = "<Unable to read log file>"
 
@@ -140,7 +141,7 @@ class RadiusPeapTestBase(RadiusTestBase):
 
         # Step 8: Read final log content
         log.info("Reading final log output")
-        log_content = passthrough_utils.read_log_file(passthrough, log_path)
+        log_content = passthrough.read_log_file(log_path)
         log.info("RADIUS PEAP credentials setup completed successfully")
 
         passthrough_utils.verify_log_content(log_content, 'Script Execution Completed')
@@ -183,24 +184,30 @@ class RadiusPeapTestBase(RadiusTestBase):
     # LAN Profile Management
     # =========================================================================
 
-    def configure_lan_profile(self):
+    def configure_lan_profile(self, auth_nic_profile: AuthNicProfile = AuthNicProfile.PEAP):
         """
         Configure the LAN profile on the Windows endpoint.
 
+        Args:
+            auth_nic_profile: NIC profile type to configure (default: AuthNicProfile.PEAP)
+
         This method:
-        1. Copies the LAN profile XML to the remote machine
-        2. Deletes any existing LAN profile from the NIC
-        3. Adds the new LAN profile to the NIC
+        1. Sets the auth_nic_profile on the config
+        2. Copies the LAN profile XML to the remote machine
+        3. Deletes any existing LAN profile from the NIC
+        4. Adds the new LAN profile to the NIC
         """
+        # Set the NIC profile type
+        self.peap_config.auth_nic_profile = auth_nic_profile
+
         config = self.peap_config
         passthrough = self.passthrough
 
-        log.info("=== Configuring LAN Profile ===")
+        log.info(f"=== Configuring LAN Profile: {auth_nic_profile.name} ===")
 
         # Copy LAN profile to remote machine
         remote_profile_path = f"{config.profiles_path}\\{config.lan_profile_filename}"
-        passthrough_utils.copy_file_to_remote(
-            passthrough,
+        passthrough.copy_file_to_remote(
             config.local_lan_profile_path,
             remote_profile_path
         )
@@ -228,4 +235,27 @@ class RadiusPeapTestBase(RadiusTestBase):
     def enable_nic(self):
         """Enable the NIC."""
         self.passthrough.enable_nic(self.peap_config.nicname)
+
+    # =========================================================================
+    # Authentication Assertions
+    # =========================================================================
+
+    def assert_authentication_successful(self,
+                                         expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED,
+                                         timeout: int = 90):
+        """
+        Assert that authentication was successful by waiting for NIC authentication status.
+
+        Args:
+            expected_status: Expected authentication status (default: AuthenticationStatus.SUCCEEDED)
+            timeout: Maximum time to wait in seconds (default: 90)
+
+        Raises:
+            AssertionError: If NIC does not reach expected status within timeout
+        """
+        self.passthrough.wait_for_nic_authentication(
+            self.peap_config.nicname,
+            expected_status=expected_status,
+            timeout=timeout
+        )
 

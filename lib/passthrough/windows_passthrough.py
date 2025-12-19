@@ -1,9 +1,10 @@
 from framework.log.logger import log
 from lib.passthrough.passthrough_base import PassthroughBase
+from lib.passthrough.enums import AuthenticationStatus
 import winrm
 import re
 import time
-from typing import Tuple
+from typing import Tuple, Union
 
 
 class WindowsPassthrough(PassthroughBase):
@@ -147,6 +148,177 @@ class WindowsPassthrough(PassthroughBase):
             log.info(f"Session {session_id} is in state '{session_state}', no need to attach")
 
     # =========================================================================
+    # File Operations
+    # =========================================================================
+
+    def check_file_exists(self, file_path: str) -> bool:
+        """
+        Check if a file exists on the remote Windows machine.
+
+        Args:
+            file_path: Path to check on remote machine
+
+        Returns:
+            True if file exists, False otherwise
+        """
+        try:
+            result = self.execute_command(f"Test-Path '{file_path}'")
+            return result.strip().lower() == 'true'
+        except Exception:
+            return False
+
+    def copy_file_to_remote(self, local_path: str, remote_path: str):
+        """
+        Copy a file to the remote Windows machine using pypsrp's native file transfer.
+
+        Args:
+            local_path: Local file path to copy
+            remote_path: Remote destination path on Windows machine
+
+        Raises:
+            FileNotFoundError: If local file doesn't exist
+            RuntimeError: If file transfer fails
+        """
+        from lib.passthrough import utils as passthrough_utils
+        passthrough_utils.copy_file_to_remote(self, local_path, remote_path)
+
+    def create_directory(self, path: str):
+        """
+        Create a directory on the remote Windows machine if it doesn't exist.
+
+        Args:
+            path: Directory path to create on the remote machine
+        """
+        path = path.replace('/', '\\')
+        cmd = f"New-Item -Path '{path}' -ItemType Directory -Force | Out-Null"
+        self.execute_command(cmd)
+        log.info(f"Created directory: {path}")
+
+    def remove_file(self, path: str):
+        """
+        Remove a file from the remote Windows machine if it exists.
+
+        Args:
+            path: File path to remove on the remote machine
+        """
+        path = path.replace('/', '\\')
+
+        check_cmd = f"Test-Path -Path '{path}'"
+        try:
+            result = self.execute_command(check_cmd).strip().lower()
+            if result == 'true':
+                cmd = f"Remove-Item -Path '{path}' -Force"
+                self.execute_command(cmd)
+                log.info(f"Removed file: {path}")
+            else:
+                log.debug(f"File does not exist (no removal needed): {path}")
+        except RuntimeError as e:
+            log.debug(f"File removal skipped (error: {e}): {path}")
+
+    def download_file(self, url: str, destination: str):
+        """
+        Download a file from URL to the remote Windows machine.
+
+        Args:
+            url: URL to download from
+            destination: Destination path on remote machine
+
+        Raises:
+            RuntimeError: If download fails
+        """
+        log.info(f"Downloading from: {url}")
+        cmd = f"$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri '{url}' -OutFile '{destination}' -UseBasicParsing"
+        try:
+            self.execute_command(cmd)
+            log.info(f"[OK] Downloaded to: {destination}")
+        except Exception as e:
+            raise RuntimeError(f"Failed to download from {url}: {e}")
+
+    def extract_zip(self, zip_path: str, destination: str):
+        """
+        Extract a zip file on the remote Windows machine.
+
+        Args:
+            zip_path: Path to zip file on remote machine
+            destination: Destination directory on remote machine
+
+        Raises:
+            RuntimeError: If extraction fails
+        """
+        log.info(f"Extracting {zip_path}...")
+        cmd = f"$ProgressPreference = 'SilentlyContinue'; Expand-Archive -Path '{zip_path}' -DestinationPath '{destination}' -Force"
+        try:
+            self.execute_command(cmd)
+            log.info(f"[OK] Extracted to: {destination}")
+        except Exception as e:
+            raise RuntimeError(f"Failed to extract {zip_path}: {e}")
+
+    def cleanup_file(self, file_path: str):
+        """
+        Remove a file from the remote Windows machine (best effort).
+
+        Args:
+            file_path: Path to file to remove
+        """
+        try:
+            self.remove_file(file_path)
+            log.info(f"[OK] Cleaned up: {file_path}")
+        except Exception as e:
+            log.warning(f"Could not clean up {file_path}: {e}")
+
+    def read_log_file(self, log_path: str) -> str:
+        """
+        Read and return the content of a log file from remote Windows machine.
+
+        Args:
+            log_path: Path to the log file on remote machine
+
+        Returns:
+            Log file content
+
+        Raises:
+            RuntimeError: If log file cannot be read
+        """
+        log_path = log_path.replace('/', '\\')
+        cmd = f"Get-Content '{log_path}'"
+        return self.execute_command(cmd)
+
+    def wait_for_log_completion(self, log_path: str, completion_marker: str = 'Script Execution Completed',
+                                timeout: int = 500, interval: int = 5) -> bool:
+        """
+        Wait for the script execution to complete by monitoring the log file.
+
+        Args:
+            log_path: Path to the log file on remote machine
+            completion_marker: The marker string that indicates successful completion
+            timeout: Maximum time to wait in seconds
+            interval: Check interval in seconds
+
+        Returns:
+            True if completion marker found, False if timeout
+        """
+        start_time = time.time()
+        max_retries = timeout // interval
+
+        log.info(f"Waiting for script completion (max {timeout}s)...")
+
+        for attempt in range(max_retries):
+            try:
+                content = self.read_log_file(log_path)
+                if completion_marker in content:
+                    log.info("Script execution completed successfully")
+                    return True
+            except RuntimeError:
+                pass  # Log file might not exist yet
+
+            elapsed = time.time() - start_time
+            log.debug(f"Attempt {attempt + 1}/{max_retries}: Completion marker not found yet (elapsed: {elapsed:.1f}s)")
+            time.sleep(interval)
+
+        log.error(f"Timeout waiting for script completion after {timeout}s")
+        return False
+
+    # =========================================================================
     # LAN Profile Management
     # =========================================================================
 
@@ -241,7 +413,7 @@ class WindowsPassthrough(PassthroughBase):
         self.enable_nic(nicname, timeout)
         log.info(f"[OK] NIC {nicname} toggled successfully")
 
-    def _wait_for_nic_status(self, nicname: str, expected_status: str, timeout: int = 30):
+    def _wait_for_nic_status(self, nicname: str, expected_status: str, timeout: int = 30, interval: int = 2):
         """
         Wait for a NIC to reach the expected status.
 
@@ -249,18 +421,19 @@ class WindowsPassthrough(PassthroughBase):
             nicname: Network interface name
             expected_status: Expected status ('Up', 'Disabled', etc.)
             timeout: Maximum time to wait in seconds
+            interval: Interval in seconds between status checks
 
         Raises:
             AssertionError: If NIC doesn't reach expected status within timeout
         """
+        log.info(f"Waiting for NIC '{nicname}' to reach '{expected_status}' status (max {timeout}s)...")
         start_time = time.time()
-        interval = 2
 
         while time.time() - start_time < timeout:
-            cmd = f"(Get-NetAdapter -Name '{nicname}').Status"
             try:
-                status = self.execute_command(cmd).strip()
-                if status == expected_status:
+                status = self.get_nic_status(nicname)
+                if expected_status in status:
+                    log.info(f"[OK] NIC '{nicname}' status: '{status}'")
                     return
                 log.debug(f"NIC {nicname} status: {status}, waiting for: {expected_status}")
             except RuntimeError as e:
@@ -269,4 +442,110 @@ class WindowsPassthrough(PassthroughBase):
             time.sleep(interval)
 
         raise AssertionError(f"NIC {nicname} did not reach status '{expected_status}' within {timeout}s")
+
+    def get_nic_status(self, nicname: str) -> str:
+        """
+        Get the current status of a network interface.
+
+        Args:
+            nicname: Network interface name (e.g., 'pciPassthru0')
+
+        Returns:
+            NIC status string
+
+        Raises:
+            RuntimeError: If unable to get NIC status
+        """
+        cmd = f'(Get-NetAdapter -Name "{nicname}" -ErrorAction SilentlyContinue).Status'
+        return self.execute_command(cmd).strip()
+
+    def get_nic_authentication_status(self, nicname: str) -> str:
+        """
+        Get the 802.1X authentication status of a network interface using netsh.
+
+        Args:
+            nicname: Network interface name (e.g., 'pciPassthru0')
+
+        Returns:
+            Output of netsh lan show interfaces command
+
+        Raises:
+            RuntimeError: If unable to get authentication status
+        """
+        cmd = f'netsh lan show interfaces interface="{nicname}"'
+        return self.execute_command(cmd, is_ps=False)
+
+    def wait_for_nic_authentication(self, nicname: str,
+                                     expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED,
+                                     timeout: int = 90, interval: int = 5):
+        """
+        Wait for NIC to reach expected 802.1X authentication status.
+
+        Args:
+            nicname: Network interface name (e.g., 'pciPassthru0')
+            expected_status: Expected authentication status (default: AuthenticationStatus.SUCCEEDED)
+            timeout: Maximum time to wait in seconds (default: 90)
+            interval: Interval in seconds between status checks (default: 5)
+
+        Raises:
+            AssertionError: If NIC does not reach expected status within timeout
+        """
+        # Convert enum to string value if needed
+        status_value = expected_status.value if isinstance(expected_status, AuthenticationStatus) else expected_status
+
+        log.info(f"Waiting for NIC '{nicname}' 802.1X authentication (max {timeout}s)...")
+        start_time = time.time()
+
+        while time.time() - start_time < timeout:
+            try:
+                output = self.get_nic_authentication_status(nicname)
+                if status_value in output:
+                    log.info(f"[OK] NIC '{nicname}' authentication status: '{status_value}'")
+                    return
+                log.debug(f"NIC {nicname} auth status not ready, waiting for: {status_value}")
+            except RuntimeError as e:
+                log.debug(f"Error checking NIC authentication status: {e}")
+
+            time.sleep(interval)
+
+        raise AssertionError(
+            f"NIC '{nicname}' did not reach authentication status '{status_value}' within {timeout}s"
+        )
+
+    # =========================================================================
+    # Tool Management
+    # =========================================================================
+
+    def download_psexec(self, pstools_path: str, psexec_path: str):
+        """
+        Download and extract PsExec on the remote Windows machine if not already present.
+
+        Args:
+            pstools_path: Path to PSTools directory (e.g., 'C:\\PSTools')
+            psexec_path: Full path to PsExec.exe (e.g., 'C:\\PSTools\\PsExec.exe')
+
+        Raises:
+            RuntimeError: If download or extraction fails
+        """
+        PSTOOLS_URL = "https://download.sysinternals.com/files/PSTools.zip"
+
+        log.info("=== Checking/Downloading PsExec ===")
+
+        if self.check_file_exists(psexec_path):
+            log.info(f"[OK] PsExec already exists at: {psexec_path}")
+            return
+
+        log.info("PsExec not found, downloading from Microsoft Sysinternals...")
+
+        zip_path = f"{pstools_path}\\PSTools.zip"
+
+        self.create_directory(pstools_path)
+        self.download_file(PSTOOLS_URL, zip_path)
+        self.extract_zip(zip_path, pstools_path)
+
+        if not self.check_file_exists(psexec_path):
+            raise RuntimeError(f"PsExec.exe not found after extraction at: {psexec_path}")
+
+        log.info(f"[OK] PsExec is ready at: {psexec_path}")
+        self.cleanup_file(zip_path)
 

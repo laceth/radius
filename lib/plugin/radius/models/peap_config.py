@@ -4,6 +4,8 @@ Configuration dataclasses for RADIUS PEAP setup.
 from dataclasses import dataclass
 import os
 
+from lib.passthrough.enums import AuthNicProfile
+
 
 @dataclass
 class PEAPCredentialsConfig:
@@ -16,11 +18,11 @@ class PEAPCredentialsConfig:
     Most parameters have sensible defaults and only need to be overridden for special cases.
 
     Usage:
-        # Minimal - uses all defaults
+        # Minimal - uses all defaults (PEAP)
         config = PEAPCredentialsConfig()
 
-        # Override specific values
-        config = PEAPCredentialsConfig(nicname='Wi-Fi', peap_username='domain\\\\user')
+        # Use different NIC profile
+        config = PEAPCredentialsConfig(auth_nic_profile=AuthNicProfile.EAP_TLS)
     """
     # Remote paths (defaults to standard locations)
     scripts_path: str = r'C:\Scripts'
@@ -30,8 +32,10 @@ class PEAPCredentialsConfig:
 
     # Script configuration (defaults provided)
     peap_script_filename: str = 'radius_nic_PEAP_credentials_config.ps1'
-    lan_profile_filename: str = 'lan_profile_peap_config.xml'
     execution_policy: str = 'Bypass'
+
+    # NIC profile type (determines LAN profile XML file)
+    auth_nic_profile: AuthNicProfile = AuthNicProfile.PEAP
 
     # Network configuration (default NIC name)
     nicname: str = 'pciPassthru0'
@@ -44,6 +48,11 @@ class PEAPCredentialsConfig:
     # Local script path (auto-detected if not provided)
     local_script_path: str = None
     local_lan_profile_path: str = None
+
+    @property
+    def lan_profile_filename(self) -> str:
+        """LAN profile XML filename based on NIC profile type."""
+        return self.auth_nic_profile.profile_filename
 
     @property
     def psexec_path(self) -> str:
