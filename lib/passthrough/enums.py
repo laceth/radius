@@ -21,10 +21,3 @@ class AuthNicProfile(Enum):
     EAP_TLS = "lan_profile_eap_tls_config.xml"
     PEAP_EAP_TLS = "lan_profile_peap_eap_tls_config.xml"
     EAP_TTLS = "lan_profile_eap_ttls_config.xml"
-
-    @property
-    def profile_filename(self) -> str:
-        """Return the LAN profile XML filename for this NIC profile type."""
-        return self.value
-
-

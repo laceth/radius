@@ -52,7 +52,7 @@ class PEAPCredentialsConfig:
     @property
     def lan_profile_filename(self) -> str:
         """LAN profile XML filename based on NIC profile type."""
-        return self.auth_nic_profile.profile_filename
+        return self.auth_nic_profile.value
 
     @property
     def psexec_path(self) -> str:
