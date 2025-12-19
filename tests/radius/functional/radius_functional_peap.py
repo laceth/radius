@@ -27,4 +27,4 @@ class RadiusPEAPCredentialsSetupTest(RadiusPeapTestBase):
         self.toggle_nic()
 
         # Step 4: Assert authentication status matches expected
-        self.assert_authentication_successful(expected_status=self.expected_status)
+        self.assert_authentication_status(expected_status=self.expected_status)
