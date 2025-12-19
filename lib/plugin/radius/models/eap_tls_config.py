@@ -48,9 +48,6 @@ class CertificateAuthConfig:
             raise FileNotFoundError(f"Certificate not found: {self.local_certificate_path}")
 
 
-# Alias for backward compatibility
-EAPTLSConfig = CertificateAuthConfig
-
 
 # =============================================================================
 # Private: Resource path utilities
