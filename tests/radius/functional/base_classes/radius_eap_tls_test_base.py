@@ -5,7 +5,6 @@ from tests.radius.functional.base_classes.radius_certificates_test_base import R
 class RadiusEapTlsTestBase(RadiusCertificatesTestBase):
     """Base class for EAP-TLS authentication tests."""
 
-    # Alias methods for backward compatibility
     def import_eap_tls_certificates(self, certificate_password: str = 'aristo'):
         """Import EAP-TLS certificates. Alias for import_certificates()."""
         self.import_certificates(certificate_password)
@@ -14,7 +13,3 @@ class RadiusEapTlsTestBase(RadiusCertificatesTestBase):
         """Remove EAP-TLS certificates. Alias for remove_certificates()."""
         self.remove_certificates()
 
-    # Keep eap_tls_config as alias for cert_config
-    @property
-    def eap_tls_config(self):
-        return self.cert_config
