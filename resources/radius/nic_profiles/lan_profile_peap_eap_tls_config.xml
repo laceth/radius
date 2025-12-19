@@ -1,0 +1,76 @@
+<!--This network adapter configuration defines a secure LAN profile that uses 802.1X authentication with PEAP (using inner EAP-TLS with certificates)-->
+<!--This XML works on all modern Windows versions (Windows 7+, Windows 10/11, Server 2008 R2+), but not on Windows XP.
+
+🔹 About v2 and other schema versions
+v1, v2, and v3 in the XML refer to schema versions used by Windows to define advanced EAP settings.
+v2 adds support for: Skipping server validation prompts; Optional PEAP settings
+v3 adds things like AllowPromptingWhenServerCANotFound.
+
+These are supported in:
+Windows 7 (with updates)
+Windows 8, 10, 11
+Windows Server 2008 R2 and newer
+Older versions will ignore unknown XML parts, or fail to import the profile. -->
+
+<LANProfile xmlns="http://www.microsoft.com/networking/LAN/profile/v1">
+  <MSM>
+    <security>
+      <OneXEnforced>false</OneXEnforced>
+      <OneXEnabled>true</OneXEnabled>
+      <OneX xmlns="http://www.microsoft.com/networking/OneX/v1">
+        <cacheUserData>false</cacheUserData>
+        <authMode>machine</authMode>
+        <EAPConfig>
+          <EapHostConfig xmlns="http://www.microsoft.com/provisioning/EapHostConfig">
+            <EapMethod>
+              <Type xmlns="http://www.microsoft.com/provisioning/EapCommon">25</Type>
+              <VendorId xmlns="http://www.microsoft.com/provisioning/EapCommon">0</VendorId>
+              <VendorType xmlns="http://www.microsoft.com/provisioning/EapCommon">0</VendorType>
+              <AuthorId xmlns="http://www.microsoft.com/provisioning/EapCommon">0</AuthorId>
+            </EapMethod>
+            <Config xmlns="http://www.microsoft.com/provisioning/EapHostConfig">
+              <Eap xmlns="http://www.microsoft.com/provisioning/BaseEapConnectionPropertiesV1">
+                <Type>25</Type>
+                <EapType xmlns="http://www.microsoft.com/provisioning/MsPeapConnectionPropertiesV1">
+                  <ServerValidation>
+                    <DisableUserPromptForServerValidation>false</DisableUserPromptForServerValidation>
+                    <ServerNames/>
+                  </ServerValidation>
+                  <FastReconnect>true</FastReconnect>
+                  <InnerEapOptional>false</InnerEapOptional>
+                  <Eap xmlns="http://www.microsoft.com/provisioning/BaseEapConnectionPropertiesV1">
+                    <Type>13</Type>
+                    <EapType xmlns="http://www.microsoft.com/provisioning/EapTlsConnectionPropertiesV1">
+                      <CredentialsSource>
+                        <CertificateStore>
+                          <SimpleCertSelection>true</SimpleCertSelection>
+                        </CertificateStore>
+                      </CredentialsSource>
+                      <ServerValidation>
+                        <DisableUserPromptForServerValidation>false</DisableUserPromptForServerValidation>
+                        <ServerNames/>
+                        <TrustedRootCA>0c f2 86 56 e7 f5 db 42 20 8f 33 01 7c 64 02 20 a0 81 29 66</TrustedRootCA>
+                      </ServerValidation>
+                      <DifferentUsername>false</DifferentUsername>
+                      <PerformServerValidation xmlns="http://www.microsoft.com/provisioning/EapTlsConnectionPropertiesV2">true</PerformServerValidation>
+                      <AcceptServerName xmlns="http://www.microsoft.com/provisioning/EapTlsConnectionPropertiesV2">false</AcceptServerName>
+                    </EapType>
+                  </Eap>
+                  <EnableQuarantineChecks>false</EnableQuarantineChecks>
+                  <RequireCryptoBinding>false</RequireCryptoBinding>
+                  <PeapExtensions>
+                    <PerformServerValidation xmlns="http://www.microsoft.com/provisioning/MsPeapConnectionPropertiesV2">false</PerformServerValidation>
+                    <AcceptServerName xmlns="http://www.microsoft.com/provisioning/MsPeapConnectionPropertiesV2">false</AcceptServerName>
+                    <PeapExtensionsV2 xmlns="http://www.microsoft.com/provisioning/MsPeapConnectionPropertiesV2">
+                      <AllowPromptingWhenServerCANotFound xmlns="http://www.microsoft.com/provisioning/MsPeapConnectionPropertiesV3">true</AllowPromptingWhenServerCANotFound>
+                    </PeapExtensionsV2>
+                  </PeapExtensions>
+                </EapType>
+              </Eap>
+            </Config>
+          </EapHostConfig>
+        </EAPConfig>
+      </OneX>
+    </security>
+  </MSM>
+</LANProfile>

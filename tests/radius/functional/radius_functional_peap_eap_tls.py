@@ -1,13 +1,13 @@
 from framework.log.logger import log
 from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile
-from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
+from tests.radius.functional.base_classes.radius_peap_eap_tls_test_base import RadiusPeapEapTlsTestBase
 
 
-class T275181_HostAuthenticationEapTlsWired(RadiusEapTlsTestBase):
+class T275180_HostAuthenticationPeapEapTlsWired(RadiusPeapEapTlsTestBase):
     """
-    DOT | Verify Host authentication using EAP-TLS (wired)
+    DOT | Verify Host authentication using PEAP-EAP-TLS (wired)
 
-    TestRail: https://testrail/index.php?/tests/view/275181
+    TestRail: https://testrail/index.php?/tests/view/275180
 
     Imports certificates to Windows certificate stores,
     configures LAN profile, triggers NIC toggle, and validates
@@ -15,8 +15,8 @@ class T275181_HostAuthenticationEapTlsWired(RadiusEapTlsTestBase):
     """
 
     def do_test(self):
-        """Execute the EAP-TLS authentication test"""
-        auth_nic_profile = AuthNicProfile.EAP_TLS
+        """Execute the PEAP-EAP-TLS authentication test"""
+        auth_nic_profile = AuthNicProfile.PEAP_EAP_TLS
         certificate_password = 'aristo'
         expected_status = AuthenticationStatus.SUCCEEDED
 
