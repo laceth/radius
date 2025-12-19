@@ -143,26 +143,14 @@ class RadiusCertificatesTestBase(RadiusTestBase):
 
     def _delete_cert_by_thumbprint(self, store_name: str, thumbprint: str):
         """Delete certificate by thumbprint from specified store."""
-        cmd = f'''
-$cert = Get-ChildItem -Path Cert:\\{self.STORE_LOCATION}\\{store_name} | Where-Object {{ $_.Thumbprint -eq "{thumbprint}" }}
-if ($cert) {{
-    Remove-Item -Path $cert.PSPath -Force
-    Write-Output "Deleted certificate {thumbprint} from {store_name}"
-}} else {{
-    Write-Output "Certificate {thumbprint} not found in {store_name}"
-}}
-'''
+        cmd = self._ps_delete_cert(store_name, thumbprint)
         result = self.passthrough.execute_command(cmd)
         log.info(f"[OK] {result.strip()}")
 
     def _import_pfx_to_personal_store(self, pfx_path: str, password: str):
         """Import PFX certificate to Personal (My) store on LocalMachine."""
         log.info("Importing PFX to Personal store...")
-        cmd = f'''
-$password = ConvertTo-SecureString -String "{password}" -Force -AsPlainText
-Import-PfxCertificate -FilePath "{pfx_path}" -CertStoreLocation Cert:\\{self.STORE_LOCATION}\\{self.PERSONAL_CERT_STORE} -Password $password -Exportable
-Write-Output "PFX imported successfully"
-'''
+        cmd = self._ps_import_pfx(pfx_path, password)
         result = self.passthrough.execute_command(cmd)
         log.info(f"[OK] {result.strip()}")
 
@@ -181,16 +169,48 @@ Write-Output "PFX imported successfully"
             self.passthrough.copy_file_to_remote(local_cer_path, remote_cer_path)
 
             log.info("Importing trusted cert to Root store...")
-            cmd = f'''
-Import-Certificate -FilePath "{remote_cer_path}" -CertStoreLocation Cert:\\{self.STORE_LOCATION}\\{self.TRUSTED_CERT_STORE}
-Write-Output "Trusted cert imported to Root store"
-'''
+            cmd = self._ps_import_cer(remote_cer_path, self.TRUSTED_CERT_STORE)
             result = self.passthrough.execute_command(cmd)
             log.info(f"[OK] {result.strip()}")
 
             self.passthrough.remove_file(remote_cer_path)
         finally:
             os.unlink(local_cer_path)
+
+    # =========================================================================
+    # PowerShell Command Builders
+    # =========================================================================
+
+    def _ps_delete_cert(self, store_name: str, thumbprint: str) -> str:
+        """Build PowerShell command to delete certificate by thumbprint."""
+        return f'''
+$cert = Get-ChildItem -Path Cert:\\{self.STORE_LOCATION}\\{store_name} |
+    Where-Object {{ $_.Thumbprint -eq "{thumbprint}" }}
+if ($cert) {{
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from {store_name}"
+}} else {{
+    "Certificate not found in {store_name}"
+}}'''
+
+    def _ps_import_pfx(self, pfx_path: str, password: str) -> str:
+        """Build PowerShell command to import PFX certificate."""
+        return f'''
+$securePassword = ConvertTo-SecureString -String "{password}" -Force -AsPlainText
+Import-PfxCertificate `
+    -FilePath "{pfx_path}" `
+    -CertStoreLocation Cert:\\{self.STORE_LOCATION}\\{self.PERSONAL_CERT_STORE} `
+    -Password $securePassword `
+    -Exportable | Out-Null
+"PFX imported successfully"'''
+
+    def _ps_import_cer(self, cer_path: str, store_name: str) -> str:
+        """Build PowerShell command to import .cer certificate."""
+        return f'''
+Import-Certificate `
+    -FilePath "{cer_path}" `
+    -CertStoreLocation Cert:\\{self.STORE_LOCATION}\\{store_name} | Out-Null
+"Certificate imported to {store_name}"'''
 
     def remove_certificates(self):
         """Remove certificates from Windows certificate stores."""
