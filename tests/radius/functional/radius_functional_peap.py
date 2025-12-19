@@ -3,15 +3,9 @@ from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile
 from tests.radius.functional.base_classes.radius_peap_test_base import RadiusPeapTestBase
 
 
-@parametrize("peap_domain, peap_user", [
-    ("txqalab", "dotonex"),
-    # TODO: uncomment the following lines to implement AA-817 test cases
-    # ("txqalab", "dotonex-adm"),
-    # ("txqalab2", "e2euser"),
-    # ("", "dotonex"),
-    # ("txqalab", "testuser111"),
-    # ("txqalab", "testuser1"),
-    # ("robh@txlab.forescout.local", "")
+@parametrize("peap_domain, peap_user, expected_status", [
+    ("txqalab", "dotonex", AuthenticationStatus.SUCCEEDED),
+    ("txqalab", "invalid_user", AuthenticationStatus.FAILED),
 ])
 class RadiusPEAPCredentialsSetupTest(RadiusPeapTestBase):
     """
@@ -32,5 +26,5 @@ class RadiusPEAPCredentialsSetupTest(RadiusPeapTestBase):
         # Step 3: Toggle NIC to trigger authentication
         self.toggle_nic()
 
-        # Step 4: Assert authentication was successful
-        self.assert_authentication_successful(expected_status=AuthenticationStatus.SUCCEEDED)
+        # Step 4: Assert authentication status matches expected
+        self.assert_authentication_successful(expected_status=self.expected_status)
