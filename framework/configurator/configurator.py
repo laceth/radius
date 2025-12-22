@@ -6,7 +6,7 @@ from framework.configurator.eyesight_factory import EyesightFactory
 CONTEXTMAPPING = {
     'ca': 'lib.ca.ca_common_base.CounterActBase',
     'em': 'lib.em.em_common_base.CounterActBase',
-    'radius': 'lib.plugin.radius.Radius',
+    'radius': 'lib.plugin.radius.radius.Radius',
     'switch': 'lib.plugin.switch.cisco_ios.CiscoIOS'
 }
 
@@ -33,7 +33,7 @@ class Configurator:
             switch = ef.get_switch(self.config.get("switch"))
             instances["switch"] = switch
         if "passthrough" in self.config:
-            passthrough = ef.ge_passthrough(self.config.get("passthrough"))
+            passthrough = ef.get_passthrough(self.config.get("passthrough"))
             instances["passthrough"] = passthrough
         for key in self.config:
             if key in ["ca", "em", "switch", "passthrough"]:

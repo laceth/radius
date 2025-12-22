@@ -1,7 +1,7 @@
 import time
 from framework.log.logger import log
 from framework.decorator.prametrizor import parametrize
-from test.radius.radius_test_base import RadiusTestBase
+from tests.radius.radius_test_base import RadiusTestBase
 
 
 class RadiusTestCommanExample(RadiusTestBase):
