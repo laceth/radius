@@ -76,15 +76,7 @@ select = [
 ignore = [
     "S101", # assert used (common in tests)
     "B008", # function calls in argument defaults
-    "S107", # demo/default secrets in code
-    "S106", # hardcoded password in tests/args
-    "B024", # abstract base without abstract methods
-    "B011", # assert False used in tests
 ]
-
-# McCabe (cyclomatic) complexity threshold
-[tool.ruff.lint.mccabe]
-max-complexity = 20
 
 # Naming convention rules
 [tool.ruff.lint.pep8-naming]
@@ -110,7 +102,7 @@ disable = [
 good-names = ["i", "j", "k", "ex", "Run", "_", "id", "ip", "db", "os", "fs"]
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.7"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = false

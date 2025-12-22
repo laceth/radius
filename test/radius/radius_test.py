@@ -1,8 +1,7 @@
 import time
-from test.radius.radius_test_base import RadiusTestBase
-
-from framework.decorator.prametrizor import parametrize
 from framework.log.logger import log
+from framework.decorator.prametrizor import parametrize
+from test.radius.radius_test_base import RadiusTestBase
 
 
 class RadiusTestCommanExample(RadiusTestBase):
@@ -28,10 +27,13 @@ class RadiusTestSpecialSetupExample(RadiusTestBase):
         assert False
 
 
-@parametrize("username, password", [("admin", "1234"), ("admin", "$%^&*(")])
+@parametrize("username, password", [
+    ("admin", "1234"),
+    ("admin", "$%^&*(")
+])
 class RadiusTestPrametrized(RadiusTestBase):
     def do_test(self):
-        log.info("Check Auth and properties")
+        log.info(f"Check Auth and properties")
         time.sleep(1)
         self.dot1x.get_radius_status()
         assert True
