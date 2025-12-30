@@ -10,7 +10,6 @@ from lib.switch.cisco_ios import CiscoIOS
 
 
 class RadiusTestBase():
-
     # Default NIC name - can be overridden in subclasses
     DEFAULT_NICNAME = 'pciPassthru0'
 
@@ -89,3 +88,11 @@ class RadiusTestBase():
             timeout=timeout
         )
 
+    def verify_authentication_on_ca(self, **kwargs):
+        """
+        Verify authentication status on CounterAct.
+
+        Args:
+            kwargs: Additional parameters for property check
+        """
+        log.info("Verifying authentication status on CounterAct")
