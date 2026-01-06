@@ -1,16 +1,16 @@
 import importlib
+
 from lib.passthrough.windows_passthrough import WindowsPassthrough
 from lib.switch.cisco_ios import CiscoIOS
 
 PLUGIN_MAPPING = {
     "ca": "lib.ca.ca.CouterActAppliance",
     "em": "lib.ca.em.EnterpriseManager",
-    "radius": "lib.plugin.radius.radius.Radius"
+    "radius": "lib.plugin.radius.radius.Radius",
 }
 
 
 class EyesightFactory:
-
     def __init__(self, config):
         self.config = config
 

@@ -5,4 +5,5 @@ def requires(*deps):
             base_reqs.extend(getattr(base, "__requires__", []))
         cls.__requires__ = tuple(set(base_reqs + list(deps)))
         return cls
+
     return wrapper

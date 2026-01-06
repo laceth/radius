@@ -1,28 +1,24 @@
 import ipaddress
+
 from netmiko import ConnectHandler
+
 from framework.connection.connection_pool import CONNECTION_POOL
 from framework.connection.ssh_client import SSHClient
 from framework.log.logger import log
 from lib.switch.switch_base import SwitchBase
+
 CISCOIOS_TYPE = "cisco_ios"
 
 
 class CiscoIOS(SwitchBase, SSHClient):
-
-    def __init__(self, ip: str, user_name: str, password: str, src_port: str = "gi0/1",
-                 dst_port: str = "gi0/1") -> None:
+    def __init__(self, ip: str, user_name: str, password: str, src_port: str = "gi0/1", dst_port: str = "gi0/1") -> None:
         super().__init__(ip, user_name, password)
         self.ip = ip
         self.username = user_name
         self.password = password
         self.src_port = src_port
         self.dst_port = dst_port
-        self.device = {
-            "device_type": CISCOIOS_TYPE,
-            "ip": self.ip,
-            "username": self.username,
-            "password": self.password
-        }
+        self.device = {"device_type": CISCOIOS_TYPE, "ip": self.ip, "username": self.username, "password": self.password}
         self.session = ConnectHandler(**self.device)
         self.is_ipv4 = True
         ip_obj = ipaddress.ip_address(self.ip)
@@ -33,12 +29,7 @@ class CiscoIOS(SwitchBase, SSHClient):
         return self.ip
 
     def _create_connection(self):
-        self.device = {
-            "device_type": CISCOIOS_TYPE,
-            "ip": self.ip,
-            "username": self.username,
-            "password": self.password
-        }
+        self.device = {"device_type": CISCOIOS_TYPE, "ip": self.ip, "username": self.username, "password": self.password}
         self.session = ConnectHandler(**self.device)
         return self.session
 

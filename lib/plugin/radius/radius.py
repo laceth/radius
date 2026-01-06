@@ -1,4 +1,5 @@
 import time
+
 from framework.log.logger import log
 from lib.plugin.radius.pre_admission_rule import edit_pre_admission_rule
 from lib.plugin.radius.radius_base import RadiusBase
@@ -8,8 +9,8 @@ DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_RESTART_TIMEOUT = 60
 DO1X_CHECK_INTERVAL = 5
 
-class Radius(RadiusBase):
 
+class Radius(RadiusBase):
     def exec_cmd(self, command: str, timeout: int = 15) -> str:
         return self.platform.exec_command(command, timeout)
 
@@ -36,7 +37,6 @@ class Radius(RadiusBase):
                 time.sleep(interval)
         except Exception as e:
             raise Exception(f"Failed to restart 802.1X plugin: {e}")
-
 
     def set_pre_admission_rules(self, rules: list) -> None:
         """Set pre-admission rules on the RADIUS server.

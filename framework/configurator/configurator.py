@@ -1,13 +1,14 @@
 import inspect
+
 import yaml
+
 from framework.configurator.eyesight_factory import EyesightFactory
 
-
 CONTEXTMAPPING = {
-    'ca': 'lib.ca.ca_common_base.CounterActBase',
-    'em': 'lib.em.em_common_base.CounterActBase',
-    'radius': 'lib.plugin.radius.radius.Radius',
-    'switch': 'lib.plugin.switch.cisco_ios.CiscoIOS'
+    "ca": "lib.ca.ca_common_base.CounterActBase",
+    "em": "lib.em.em_common_base.CounterActBase",
+    "radius": "lib.plugin.radius.radius.Radius",
+    "switch": "lib.plugin.switch.cisco_ios.CiscoIOS",
 }
 
 
@@ -45,25 +46,12 @@ class Configurator:
     def inject(self, cls, dependencies):
         sig = inspect.signature(cls.__init__)
 
-        valid_params = {
-            name for name in sig.parameters
-            if name != "self"
-        }
+        valid_params = {name for name in sig.parameters if name != "self"}
 
-        kwargs = {
-            key: value
-            for key, value in dependencies.items()
-            if key in valid_params
-        }
+        kwargs = {key: value for key, value in dependencies.items() if key in valid_params}
 
-        missing = [
-            name for name, p in sig.parameters.items()
-            if name != "self"
-               and p.default is p.empty
-               and name not in kwargs
-        ]
+        missing = [name for name, p in sig.parameters.items() if name != "self" and p.default is p.empty and name not in kwargs]
         if missing:
             raise ValueError(f"Missing required config keys: {missing}")
 
         return cls(**kwargs)
-

@@ -9,9 +9,9 @@ from lib.plugin.radius.radius import Radius
 from lib.switch.cisco_ios import CiscoIOS
 
 
-class RadiusTestBase():
+class RadiusTestBase:
     # Default NIC name - can be overridden in subclasses
-    DEFAULT_NICNAME = 'pciPassthru0'
+    DEFAULT_NICNAME = "pciPassthru0"
 
     def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
         self.ca = cast(CounterActBase, ca)
@@ -35,8 +35,7 @@ class RadiusTestBase():
     # LAN Profile Management
     # =========================================================================
 
-    def configure_lan_profile(self, auth_nic_profile: AuthNicProfile,
-                              local_profile_path: str, remote_profiles_path: str):
+    def configure_lan_profile(self, auth_nic_profile: AuthNicProfile, local_profile_path: str, remote_profiles_path: str):
         """
         Configure LAN profile on the Windows endpoint.
 
@@ -72,9 +71,9 @@ class RadiusTestBase():
     # Assertions
     # =========================================================================
 
-    def assert_authentication_status(self,
-                                     expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED,
-                                     timeout: int = 90):
+    def assert_authentication_status(
+        self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
+    ):
         """
         Assert NIC reaches expected authentication status.
 
@@ -82,11 +81,7 @@ class RadiusTestBase():
             expected_status: Expected authentication status
             timeout: Maximum time to wait in seconds
         """
-        self.passthrough.wait_for_nic_authentication(
-            self.nicname,
-            expected_status=expected_status,
-            timeout=timeout
-        )
+        self.passthrough.wait_for_nic_authentication(self.nicname, expected_status=expected_status, timeout=timeout)
 
     def verify_authentication_on_ca(self, **kwargs):
         """

@@ -11,4 +11,3 @@ class PassthroughBase(ABC):
     @abstractmethod
     def execute_command(self, command, is_ps=True):
         pass
-

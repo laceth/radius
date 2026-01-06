@@ -1,4 +1,5 @@
 from abc import abstractmethod
+
 from framework.connection.connection_client import ConnectionClientBase
 
 

@@ -18,17 +18,18 @@ class CertificateAuthConfig:
         config = CertificateAuthConfig()  # Defaults to EAP-TLS
         config = CertificateAuthConfig(auth_nic_profile=AuthNicProfile.PEAP_EAP_TLS)
     """
+
     # Remote Windows paths
-    certificates_path: str = r'C:\Certificates'
-    profiles_path: str = r'C:\Profiles'
+    certificates_path: str = r"C:\Certificates"
+    profiles_path: str = r"C:\Profiles"
 
     # Certificate configuration
-    certificate_filename: str = 'Dot1x-CLT-G.pfx'
-    certificate_password: str = 'aristo'
+    certificate_filename: str = "Dot1x-CLT-G.pfx"
+    certificate_password: str = "aristo"
 
     # Execution configuration
     auth_nic_profile: AuthNicProfile = AuthNicProfile.EAP_TLS
-    nicname: str = 'pciPassthru0'
+    nicname: str = "pciPassthru0"
 
     @property
     def lan_profile_filename(self) -> str:
@@ -48,15 +49,14 @@ class CertificateAuthConfig:
             raise FileNotFoundError(f"Certificate not found: {self.local_certificate_path}")
 
 
-
 # =============================================================================
 # Private: Resource path utilities
 # =============================================================================
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[4]
-_RESOURCES_DIR = _PROJECT_ROOT / 'resources'
-_CERTIFICATES_DIR = _RESOURCES_DIR / 'radius' / 'certificates'
-_NIC_PROFILES_DIR = _RESOURCES_DIR / 'radius' / 'nic_profiles'
+_RESOURCES_DIR = _PROJECT_ROOT / "resources"
+_CERTIFICATES_DIR = _RESOURCES_DIR / "radius" / "certificates"
+_NIC_PROFILES_DIR = _RESOURCES_DIR / "radius" / "nic_profiles"
 
 
 def _find_resource(filename: str) -> str:
@@ -65,4 +65,3 @@ def _find_resource(filename: str) -> str:
         if path.exists():
             return str(path)
     return str(_CERTIFICATES_DIR / filename)
-

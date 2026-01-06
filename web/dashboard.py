@@ -1,7 +1,8 @@
-from flask import Flask, request, render_template_string, jsonify
-from pathlib import Path
-from datetime import datetime
 import json
+from datetime import datetime
+from pathlib import Path
+
+from flask import Flask, jsonify, render_template_string, request
 
 app = Flask(__name__)
 
@@ -56,7 +57,7 @@ HTML_TEMPLATE = """
             </table>
         </div>
     {% endfor %}
-    
+
     <script>
         function toggleSubmission(id) {
             var elem = document.getElementById(id);
@@ -71,6 +72,7 @@ HTML_TEMPLATE = """
 </html>
 """
 
+
 @app.route("/submit", methods=["POST"])
 def submit_results():
     data = request.get_json()
@@ -80,10 +82,7 @@ def submit_results():
         if not all(k in item for k in ("test_name", "status")):
             return jsonify({"error": "Each test result must have 'test_name' and 'status'"}), 400
 
-    submission = {
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "results": data
-    }
+    submission = {"timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "results": data}
     submissions.append(submission)
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
@@ -91,11 +90,13 @@ def submit_results():
 
     return jsonify({"message": "Test results submitted", "count": len(data)}), 200
 
+
 @app.route("/")
 def show_results():
     # Newest submissions first
     sorted_submissions = sorted(submissions, key=lambda x: x["timestamp"], reverse=True)
     return render_template_string(HTML_TEMPLATE, submissions=sorted_submissions)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

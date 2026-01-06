@@ -17,8 +17,8 @@ class T275141_HostAuthenticationPeapWired(RadiusPeapTestBase):
     def do_test(self):
         """Execute the PEAP credentials setup test"""
         auth_nic_profile = AuthNicProfile.PEAP
-        peap_domain = 'txqalab'
-        peap_user = 'dotonex'
+        peap_domain = "txqalab"
+        peap_user = "dotonex"
         expected_status = AuthenticationStatus.SUCCEEDED
 
         try:
