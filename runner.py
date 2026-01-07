@@ -1,8 +1,8 @@
+import ast
 import importlib.util
 import inspect
 import json
 import os
-import ast
 
 from framework.configurator.configurator import Configurator
 from framework.connection.connection_pool import CONNECTION_POOL
@@ -56,6 +56,7 @@ class _MarkerExprEvaluator(ast.NodeVisitor):
       smoke or regression
     Allowed nodes: Name, BoolOp (And/Or), UnaryOp (Not), Paren via nested AST, Constant True/False
     """
+
     def __init__(self, tags: set[str]):
         self.tags = tags
 
@@ -181,7 +182,7 @@ def runner(
         if cls.__module__ != module.__name__:
             continue
         # Only run classes that look like your tests
-        if not hasattr(cls, "do_test") or not callable(getattr(cls, "do_test")):
+        if not hasattr(cls, "do_test") or not callable(cls.do_test):
             continue
         discovered.append((name, cls))
 
