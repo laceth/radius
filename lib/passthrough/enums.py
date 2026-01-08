@@ -35,6 +35,9 @@ class WindowsCert(Enum):
     TEST_DECODE_A = "testdecodeA.pfx"
     TEST_DECODE_B = "clientcert.pfx"
 
+    DOT1X_CLT_B = "Dot1x-CLT-B.pfx"
+    DOT1X_CLT_C = "Dot1x-CLT-C.pfx"
+    DOT1X_CLT_D = "Dot1x-CLT-D.pfx"
     DOT1X_CLT_E = "Dot1x-CLT-E.pfx"
     DOT1X_CLT_F = "Dot1x-CLT-F.pfx"
     DOT1X_CLT_G = "Dot1x-CLT-G.pfx"
@@ -83,7 +86,7 @@ class MSCAEntry(Enum):
 
 class PreAdmissionRuleSet(Enum):
     """
-    Canonical rule sets for tests (avoid hardcoding dictionaries in test classes).
+    Pre-admission rule sets for Microsoft-Certificate-Authority.
 
     The list values are compatible with:
       Radius.set_pre_admission_rules(rules: list)
@@ -132,13 +135,13 @@ class PreAdmissionRuleSet(Enum):
             "rule_name": "Certificate-MS-Certificate-Authority",
             "fields": [
                 MSCAEntry.SZOID_CERTSRV_PREVIOUS_CERT_HASH.value,  # .2
-                MSCAEntry.SZOID_CRL_NEXT_PUBLISH.value,            # .4
-                MSCAEntry.SZOID_KP_KEY_RECOVERY_AGENT.value,       # .6
-                MSCAEntry.SZOID_ENTERPRISE_OID_ROOT.value,         # .8
-                MSCAEntry.SZOID_CRL_SELF_CDP.value,                # .14
-                MSCAEntry.SZOID_ARCHIVED_KEY_CERT_HASH.value,      # .16
-                MSCAEntry.SZOID_CERTSRV_CROSSCA_VERSION.value,     # .22
-                MSCAEntry.USER_CREDENTIALS_LOW_ASSURANCE.value,    # .32
+                MSCAEntry.SZOID_CRL_NEXT_PUBLISH.value,  # .4
+                MSCAEntry.SZOID_KP_KEY_RECOVERY_AGENT.value,  # .6
+                MSCAEntry.SZOID_ENTERPRISE_OID_ROOT.value,  # .8
+                MSCAEntry.SZOID_CRL_SELF_CDP.value,  # .14
+                MSCAEntry.SZOID_ARCHIVED_KEY_CERT_HASH.value,  # .16
+                MSCAEntry.SZOID_CERTSRV_CROSSCA_VERSION.value,  # .22
+                MSCAEntry.USER_CREDENTIALS_LOW_ASSURANCE.value,  # .32
             ],
         }
     ]
@@ -148,13 +151,13 @@ class PreAdmissionRuleSet(Enum):
         {
             "rule_name": "Certificate-MS-Certificate-Authority",
             "fields": [
-                MSCAEntry.SZOID_CRL_NEXT_PUBLISH.value,            # .4
-                MSCAEntry.SZOID_KP_KEY_RECOVERY_AGENT.value,       # .6
-                MSCAEntry.SZOID_ENTERPRISE_OID_ROOT.value,         # .8
-                MSCAEntry.SZOID_CRL_SELF_CDP.value,                # .14
-                MSCAEntry.SZOID_ARCHIVED_KEY_CERT_HASH.value,      # .16
-                MSCAEntry.SZOID_CERTSRV_CROSSCA_VERSION.value,     # .22
-                MSCAEntry.USER_CREDENTIALS_LOW_ASSURANCE.value,    # .32
+                MSCAEntry.SZOID_CRL_NEXT_PUBLISH.value,  # .4
+                MSCAEntry.SZOID_KP_KEY_RECOVERY_AGENT.value,  # .6
+                MSCAEntry.SZOID_ENTERPRISE_OID_ROOT.value,  # .8
+                MSCAEntry.SZOID_CRL_SELF_CDP.value,  # .14
+                MSCAEntry.SZOID_ARCHIVED_KEY_CERT_HASH.value,  # .16
+                MSCAEntry.SZOID_CERTSRV_CROSSCA_VERSION.value,  # .22
+                MSCAEntry.USER_CREDENTIALS_LOW_ASSURANCE.value,  # .32
             ],
         }
     ]
@@ -164,7 +167,7 @@ class PreAdmissionRuleSet(Enum):
         {
             "rule_name": "Certificate-MS-Certificate-Authority",
             "fields": [
-                MSCAEntry.SZOID_CRL_SELF_CDP.value,             # .14
+                MSCAEntry.SZOID_CRL_SELF_CDP.value,  # .14
                 MSCAEntry.SZOID_CERTSRV_CROSSCA_VERSION.value,  # .22
             ],
         }
@@ -175,8 +178,8 @@ class PreAdmissionRuleSet(Enum):
         {
             "rule_name": "Certificate-MS-Certificate-Authority",
             "fields": [
-                MSCAEntry.SZOID_CRL_SELF_CDP.value,             # .14
-                MSCAEntry.USER_CREDENTIALS_LOW_ASSURANCE.value, # .32
+                MSCAEntry.SZOID_CRL_SELF_CDP.value,  # .14
+                MSCAEntry.USER_CREDENTIALS_LOW_ASSURANCE.value,  # .32
             ],
         }
     ]

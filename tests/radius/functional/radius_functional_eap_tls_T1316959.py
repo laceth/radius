@@ -1,10 +1,9 @@
 from framework.log.logger import log
-from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile
-from lib.passthrough.enums import WindowsCert, PreAdmissionRuleSet
+from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile, PreAdmissionRuleSet, WindowsCert
 from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
 
 
-class T1316959_Verify_Microsoft_Certificate_Authority_and_Pre_Admission_Rule(RadiusEapTlsTestBase):
+class T1316959(RadiusEapTlsTestBase):
     """
     DOT | Verify a condition that contains multiple MSCA criterions using EAP-TLS.
 
@@ -13,9 +12,8 @@ class T1316959_Verify_Microsoft_Certificate_Authority_and_Pre_Admission_Rule(Rad
       2) With cert E -> auth succeeds AND matches Pre-Admission rule 1
       3) Swap cert to G -> auth succeeds but should NOT match Rule One (rule mismatch)
       4) Configure Rule Two (Priority 2): (.5 + .19) AND (.11 + .19)
-      5) Swap cert to F -> auth succeeds AND matches Pre-Admission rule 2
-"""
-    
+      5) Swap cert to F -> auth succeeds AND matches Pre-Admission rule 2"""
+
     TAGS = {"smoke", "regression"}
 
     def do_test(self):
@@ -28,7 +26,7 @@ class T1316959_Verify_Microsoft_Certificate_Authority_and_Pre_Admission_Rule(Rad
         # Step 1: Disable NIC + set Rule One in Priority 1 (cond1)
         self.disable_nic()
         log.info("Setting Pre-Admission Rule ONE at Priority 1 (defpol_cond1)")
-        self.dot1x.set_pre_admission_rules(PreAdmissionRuleSet.RULE1.value, condition_slot=1)
+        self.dot1x.set_pre_admission_rules(PreAdmissionRuleSet.T1316959_RULE1.value, condition_slot=1)
 
         # Step 2: Enable NIC + import cert E + expect auth SUCCESS + Rule 1 match
         self.enable_nic()
@@ -47,7 +45,7 @@ class T1316959_Verify_Microsoft_Certificate_Authority_and_Pre_Admission_Rule(Rad
         # Step 4: Disable NIC + set Rule Two at Priority 2 (condition 2)
         self.disable_nic()
         log.info("Setting Pre-Admission Rule TWO at Priority 2 (defpol_cond2)")
-        self.dot1x.set_pre_admission_rules(PreAdmissionRuleSet.RULE2.value, condition_slot=2)
+        self.dot1x.set_pre_admission_rules(PreAdmissionRuleSet.T1316959_RULE2.value, condition_slot=2)
         self.enable_nic()
 
         # Step 5: Swap to cert F + expect auth SUCCESS + Rule 2 match

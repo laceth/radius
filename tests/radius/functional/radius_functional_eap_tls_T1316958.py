@@ -1,10 +1,10 @@
 from framework.log.logger import log
-from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile
-from lib.passthrough.enums import WindowsCert, PreAdmissionRuleSet
+from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile, PreAdmissionRuleSet, WindowsCert
 from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
+ 
 
 
-class T1316958_Verify_MSCA_criterion_with_multiple_values_using_EAP_TLS(RadiusEapTlsTestBase):
+class T1316958_(RadiusEapTlsTestBase):
     """
     T1316958
     Verifies a Microsoft-Certificate-Authority value can be pulled from a client certificate
@@ -49,28 +49,45 @@ class T1316958_Verify_MSCA_criterion_with_multiple_values_using_EAP_TLS(RadiusEa
         self.dot1x.set_pre_admission_rules(rule_set.value, condition_slot=self.RULE_SLOT)
         self.enable_nic()
 
+    
+    # def _switch_client_cert(self, cert_filename: str, cert_pw: str = "aristo"):
+    #     """
+    #     Mimics UI: switch client certificate on the Windows host.
+
+    #     """
+    
+    #     # Best-effort: delete the previously copied PFX file from the remote host
+    #     # (this is only the file in C:\\Certificates, NOT the cert in the Windows store)
+    #     try:
+    #         prev_filename = getattr(self.cert_config, "certificate_filename", None)
+    #         if prev_filename and prev_filename != cert_filename:
+    #             prev_remote_path = f"{self.cert_config.certificates_path}\\{prev_filename}"
+    #             log.info(f"[CertSwitch] Removing previous remote PFX file (best-effort): {prev_remote_path}")
+    #             self.passthrough.remove_file(prev_remote_path)
+    #     except Exception as e:
+    #         log.warning(f"[CertSwitch] Could not remove previous remote PFX file (continuing): {e}")
+
+    #     # Switch config + import (this performs the real Windows store cleanup + import)
+    #     self.cert_config.certificate_filename = cert_filename
+    #     log.info(f"[CertSwitch] Importing client cert: {cert_filename}")
+    #     self.import_certificates(certificate_password=cert_pw)
     def _switch_client_cert(self, cert_filename: str, cert_pw: str = "aristo"):
         """
-        Mimics UI: delete old cert, import new cert.
-        If your passthrough layer has explicit delete methods, we use them if present.
-        """
-        # Optional cleanup hooks if they exist (keeps Windows from selecting wrong cert)
-        if hasattr(self.passthrough, "delete_all_personal_client_certs"):
-            try:
-                self.passthrough.delete_all_personal_client_certs()
-            except Exception as e:
-                log.warning(f"delete_all_personal_client_certs() failed (continuing): {e}")
+        Mimics UI: switch client certificate on the Windows host.
 
+        NOTE:
+        - We do NOT delete PFX files on disk.
+        - We rely on import_certificates() which:
+        - extracts thumbprints from the new PFX locally
+        - deletes any prior imported certs by thumbprint on the Windows host
+        - imports the new PFX into LocalMachine\\My
+        - imports the trusted CA cert into LocalMachine\\Root
+        """
         self.cert_config.certificate_filename = cert_filename
+        log.info(f"[CertSwitch] Importing client cert: {cert_filename}")
         self.import_certificates(certificate_password=cert_pw)
 
-        # Optional: remove CA cert named "Dot1x-CA" like TestRail notes
-        if hasattr(self.passthrough, "delete_cert_by_subject"):
-            try:
-                self.passthrough.delete_cert_by_subject(store="Personal", subject="Dot1x-CA")
-            except Exception as e:
-                log.warning(f"delete_cert_by_subject(Dot1x-CA) failed (continuing): {e}")
-
+    
     def _authenticate_and_verify(self, should_succeed: bool):
         # Trigger auth
         self.toggle_nic()
@@ -87,7 +104,7 @@ class T1316958_Verify_MSCA_criterion_with_multiple_values_using_EAP_TLS(RadiusEa
         # Step 0: Start with Cert B (precondition in TestRail)
         # -------------------------
         log.info("Precondition: install client cert B (Dot1xMSCA-CLT-B)")
-        self._switch_client_cert(WindowsCert.DOT1X_MSCA_CLT_B.value)
+        self._switch_client_cert(WindowsCert.DOT1X_MSCA_B.value)
 
         # -------------------------
         # Step 1 + 2: Rule One ALL options; enable; verify success
@@ -118,7 +135,7 @@ class T1316958_Verify_MSCA_criterion_with_multiple_values_using_EAP_TLS(RadiusEa
 
         # UI: delete B, import C (contains .2 and .32 per TestRail text)
         self.disable_nic()
-        self._switch_client_cert(WindowsCert.DOT1X_MSCA_CLT_C.value)
+        self._switch_client_cert(WindowsCert. DOT1X_MSCA_C.value)
         self.enable_nic()
         self._authenticate_and_verify(should_succeed=True)
 
@@ -130,7 +147,7 @@ class T1316958_Verify_MSCA_criterion_with_multiple_values_using_EAP_TLS(RadiusEa
 
         # UI: delete C, import D (contains no MSCA values)
         self.disable_nic()
-        self._switch_client_cert(WindowsCert.DOT1X_MSCA_CLT_D.value)
+        self._switch_client_cert(WindowsCert.DOT1X_MSCA_D .value)
         self.enable_nic()
         self._authenticate_and_verify(should_succeed=False)
 

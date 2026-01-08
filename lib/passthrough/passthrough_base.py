@@ -11,3 +11,16 @@ class PassthroughBase(ABC):
     @abstractmethod
     def execute_command(self, command, is_ps=True):
         pass
+
+    def delete_all_personal_client_certs(self) -> None:
+        pass
+
+    def delete_cert_by_subject(self, subject: str) -> None:
+        pass
+
+    def delete_cert_by_subject(self)-> None:
+        pass
+
+
+
+    

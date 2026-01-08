@@ -1,5 +1,5 @@
 import abc
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 import paramiko
 
@@ -59,9 +59,7 @@ class D1XEKUCheckboxListCriterion(D1xOption):
 class D1XMSCACheckboxListCriterion(D1xOption):
     """UI MSCA checkbox list criteria as implemented in local.properties."""
 
-    base_entry = (
-        '"field":"%s","value":"%s","critClass":"forescout.plugin.dot1x.default_policy.D1XMSCACheckboxListCriterion","selected":"%s"'
-    )
+    base_entry = '"field":"%s","value":"%s","critClass":"forescout.plugin.dot1x.default_policy.D1XMSCACheckboxListCriterion","selected":"%s"'
 
     def return_admission_rule_entry(self, rule_dict: Dict[str, Any]) -> str:
         field = rule_dict["rule_name"]
@@ -184,3 +182,19 @@ def edit_pre_admission_rule(rules: List[Dict[str, Any]], ca, condition_slot: int
     context = Context()
     new_entry_string = context.get_line(rules)
     to_file(new_entry_string, ca, lookup=_lookup_for_slot(condition_slot))
+
+# def edit_pre_admission_rule(rules, ca):
+#     """Set pre-admission rules on a remote RADIUS server.
+#     Args:
+#         rules: list: List of pre-admission rules to set.
+#         ie. [{'rule_name': 'Tunneled-User-Name', 'fields': ['matches expression', 'expression_value']},
+#             {'rule_name': 'NAS-IP-Address', 'fields': ['matches', '192.168.1.1']},
+#             {'rule_name': 'NAS-Port-Type', 'fields': ['Ethernet']}]
+#     """
+#     # backdoor to write in plain message line (not recommended)
+#     if len(rules) == 1 and rules[0]["rule_name"] == "Plain":
+#         to_file(rules[0]["fields"][0])
+#         return
+#     context = Context()
+#     new_entry_string = context.get_line(rules)
+#     to_file(new_entry_string, ca)
