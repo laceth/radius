@@ -1,8 +1,8 @@
+import html
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import List, Optional
-import html
 
 
 @dataclass
@@ -30,9 +30,7 @@ class HTMLReportGenerator:
         skipped = sum(1 for r in self.results if r.status == "skipped")
 
         total = len(self.results)
-        summary_color = (
-            "#4CAF50" if failed == 0 else "#F44336"
-        )
+        summary_color = "#4CAF50" if failed == 0 else "#F44336"
 
         rows_html = "\n".join(self._format_row(r) for r in self.results)
 

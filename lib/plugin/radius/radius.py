@@ -1,4 +1,5 @@
 import time
+
 from framework.log.logger import log
 from lib.plugin.radius.pre_admission_rule import edit_pre_admission_rule
 from lib.plugin.radius.radius_base import RadiusBase
@@ -8,8 +9,8 @@ DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_RESTART_TIMEOUT = 60
 DO1X_CHECK_INTERVAL = 5
 
-class Radius(RadiusBase):
 
+class Radius(RadiusBase):
     def exec_cmd(self, command: str, timeout: int = 15) -> str:
         return self.platform.exec_command(command, timeout)
 
@@ -37,33 +38,24 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to restart 802.1X plugin: {e}")
 
+    def set_pre_admission_rules(self, rules: list, condition_slot: int = 1) -> None:
+        """
+        Set pre-admission rules on the RADIUS server by editing local.properties,
+        then restart the dot1x plugin for multiple rules in local.properties.
 
-    def set_pre_admission_rules(self, rules: list) -> None:
-        """Set pre-admission rules on the RADIUS server.
         Args:
             rules (list): List of pre-admission rules to set.
-            ie. rules = [
-                {'rule_name': 'Tunneled-User-Name', 'fields': ['matches expression', 'expression_value']},
-                {'rule_name': 'NAS-IP-Address', 'fields': ['matches', '192.168.1.1']},
-                {'rule_name': 'NAS-Port-Type', 'fields': ['Ethernet']}
-            ]
+            condition_slot (int): Which config.defpol_cond{slot}.value to edit.
+                                 Use 1 for Priority 1 rule, 2 for Priority 2, etc.
         """
         try:
-            edit_pre_admission_rule(rules, self.platform)
+            edit_pre_admission_rule(rules, self.platform, condition_slot=condition_slot)
             self.restart_dot1x_plugin()
         except Exception as e:
             raise Exception(f"Failed to set pre-admission rules: {e}")
 
     def plugin_setting(self, conf_dict):
-        """
-            Configure RADIUS plugin settings based on the provided configuration dictionary.
-            ie. conf_dict = {
-            "active directory port for ldap queries": "global catalog",
-            "enable radsec": "true",
-            "allow only radsec connections": "False",
-            "counteract radius radsec port": 12345
-        }
-        """
+        """Configure RADIUS plugin settings based on the provided configuration dictionary."""
         try:
             log.info("Configuring RADIUS plugin settings")
             configure_radius_plugin(conf_dict, self.platform)

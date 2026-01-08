@@ -1,7 +1,9 @@
 import logging
 
 from lib.ca.ca_common_base import CounterActBase
+
 RESTART_EM_COMMAND = "fstool service restart"
+
 
 class EnterpriseManager(CounterActBase):
     def __int__(self, ca: CounterActBase):

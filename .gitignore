@@ -11,3 +11,12 @@ radius_report.json
 check_output.txt
 check_result.txt
 framework.log
+
+# Forescout local config
+.forescout2/
+
+# Certificates (never push these)
+resources/radius/certificates/*.pfx
+
+# Local backup files
+*.old

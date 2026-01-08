@@ -14,4 +14,3 @@ class RadiusBase:
         self.version = version
         self.username = username
         self.password = password
-

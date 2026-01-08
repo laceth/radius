@@ -1,16 +1,18 @@
-from framework.log.logger import log
-from lib.passthrough.passthrough_base import PassthroughBase
-from lib.passthrough.enums import AuthenticationStatus
-import winrm
 import re
 import time
 from typing import Tuple, Union
+
+import winrm
+
+from framework.log.logger import log
+from lib.passthrough.enums import AuthenticationStatus
+from lib.passthrough.passthrough_base import PassthroughBase
 
 
 class WindowsPassthrough(PassthroughBase):
     def __init__(self, ip: str, user_name: str, password: str, mac: str):
         super().__init__(ip, user_name, password, mac)
-        self.win_con = winrm.Session(self.ip, auth=(self.username, self.password), transport='ntlm')
+        self.win_con = winrm.Session(self.ip, auth=(self.username, self.password), transport="ntlm")
 
     def execute_command(self, command, is_ps=True):
         try:
@@ -29,19 +31,22 @@ class WindowsPassthrough(PassthroughBase):
         stderr = out.std_err.decode("utf-8", errors="replace").strip()
 
         rc = out.status_code
-        ok = (rc == 0)
+        ok = rc == 0
 
         # Filter out CLIXML progress messages from stderr
         if stderr:
             # Remove CLIXML progress output which isn't a real error
-            if '#< CLIXML' in stderr or 'Preparing modules for first use' in stderr:
-                log.debug(f"Filtered PowerShell progress output from stderr")
+            if "#< CLIXML" in stderr or "Preparing modules for first use" in stderr:
+                log.debug("Filtered PowerShell progress output from stderr")
                 # Only keep lines that aren't CLIXML
-                stderr_lines = stderr.split('\n')
-                stderr = '\n'.join(line for line in stderr_lines
-                                   if not line.strip().startswith('<')
-                                   and '#< CLIXML' not in line
-                                   and 'Preparing modules for first use' not in line)
+                stderr_lines = stderr.split("\n")
+                stderr = "\n".join(
+                    line
+                    for line in stderr_lines
+                    if not line.strip().startswith("<")
+                    and "#< CLIXML" not in line
+                    and "Preparing modules for first use" not in line
+                )
                 stderr = stderr.strip()
 
         if not ok:
@@ -64,7 +69,6 @@ class WindowsPassthrough(PassthroughBase):
             raise RuntimeError(msg)
 
         return stdout
-
 
     def get_session_id(self, username: str) -> Tuple[str, str]:
         """
@@ -101,10 +105,10 @@ class WindowsPassthrough(PassthroughBase):
         log.debug(f"Query session output:\n{stdout}")
 
         # Parse the output to find the user's session
-        lines = stdout.strip().split('\n')
+        lines = stdout.strip().split("\n")
 
         # Extract username without domain (if domain\username format)
-        search_username = username.split('\\')[-1] if '\\' in username else username
+        search_username = username.split("\\")[-1] if "\\" in username else username
         log.debug(f"Searching for session with username: {search_username}")
 
         for line in lines:
@@ -115,7 +119,7 @@ class WindowsPassthrough(PassthroughBase):
                 # >rdp-tcp#97        Administrator             1  Active
                 #  rdp-tcp#97        Administrator             1  Disc
                 # Match any number followed by a state
-                match = re.search(r'\s+(\d+)\s+(Active|Disc|Conn|Listen|Idle)', line, re.IGNORECASE)
+                match = re.search(r"\s+(\d+)\s+(Active|Disc|Conn|Listen|Idle)", line, re.IGNORECASE)
                 if match:
                     session_id = match.group(1)
                     session_state = match.group(2)
@@ -133,7 +137,7 @@ class WindowsPassthrough(PassthroughBase):
             session_state: Current session state
             psexec_path: Full path to PsExec.exe (e.g., 'C:\\PSTools\\PsExec.exe')
         """
-        if session_state.lower() == 'disc':
+        if session_state.lower() == "disc":
             log.info(f"Attaching disconnected session {session_id} to console")
 
             # Use PowerShell's call operator (&) which handles paths better through WinRM
@@ -163,7 +167,7 @@ class WindowsPassthrough(PassthroughBase):
         """
         try:
             result = self.execute_command(f"Test-Path '{file_path}'")
-            return result.strip().lower() == 'true'
+            return result.strip().lower() == "true"
         except Exception:
             return False
 
@@ -180,6 +184,7 @@ class WindowsPassthrough(PassthroughBase):
             RuntimeError: If file transfer fails
         """
         from lib.passthrough import utils as passthrough_utils
+
         passthrough_utils.copy_file_to_remote(self, local_path, remote_path)
 
     def create_directory(self, path: str):
@@ -189,7 +194,7 @@ class WindowsPassthrough(PassthroughBase):
         Args:
             path: Directory path to create on the remote machine
         """
-        path = path.replace('/', '\\')
+        path = path.replace("/", "\\")
         cmd = f"New-Item -Path '{path}' -ItemType Directory -Force | Out-Null"
         self.execute_command(cmd)
         log.info(f"Created directory: {path}")
@@ -201,12 +206,12 @@ class WindowsPassthrough(PassthroughBase):
         Args:
             path: File path to remove on the remote machine
         """
-        path = path.replace('/', '\\')
+        path = path.replace("/", "\\")
 
         check_cmd = f"Test-Path -Path '{path}'"
         try:
             result = self.execute_command(check_cmd).strip().lower()
-            if result == 'true':
+            if result == "true":
                 cmd = f"Remove-Item -Path '{path}' -Force"
                 self.execute_command(cmd)
                 log.info(f"Removed file: {path}")
@@ -227,7 +232,9 @@ class WindowsPassthrough(PassthroughBase):
             RuntimeError: If download fails
         """
         log.info(f"Downloading from: {url}")
-        cmd = f"$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri '{url}' -OutFile '{destination}' -UseBasicParsing"
+        cmd = (
+            f"$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri '{url}' -OutFile '{destination}' -UseBasicParsing"
+        )
         try:
             self.execute_command(cmd)
             log.info(f"[OK] Downloaded to: {destination}")
@@ -246,7 +253,9 @@ class WindowsPassthrough(PassthroughBase):
             RuntimeError: If extraction fails
         """
         log.info(f"Extracting {zip_path}...")
-        cmd = f"$ProgressPreference = 'SilentlyContinue'; Expand-Archive -Path '{zip_path}' -DestinationPath '{destination}' -Force"
+        cmd = (
+            f"$ProgressPreference = 'SilentlyContinue'; Expand-Archive -Path '{zip_path}' -DestinationPath '{destination}' -Force"
+        )
         try:
             self.execute_command(cmd)
             log.info(f"[OK] Extracted to: {destination}")
@@ -279,12 +288,13 @@ class WindowsPassthrough(PassthroughBase):
         Raises:
             RuntimeError: If log file cannot be read
         """
-        log_path = log_path.replace('/', '\\')
+        log_path = log_path.replace("/", "\\")
         cmd = f"Get-Content '{log_path}'"
         return self.execute_command(cmd)
 
-    def wait_for_log_completion(self, log_path: str, completion_marker: str = 'Script Execution Completed',
-                                timeout: int = 500, interval: int = 5) -> bool:
+    def wait_for_log_completion(
+        self, log_path: str, completion_marker: str = "Script Execution Completed", timeout: int = 500, interval: int = 5
+    ) -> bool:
         """
         Wait for the script execution to complete by monitoring the log file.
 
@@ -475,9 +485,13 @@ class WindowsPassthrough(PassthroughBase):
         cmd = f'netsh lan show interfaces interface="{nicname}"'
         return self.execute_command(cmd, is_ps=False)
 
-    def wait_for_nic_authentication(self, nicname: str,
-                                     expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED,
-                                     timeout: int = 90, interval: int = 5):
+    def wait_for_nic_authentication(
+        self,
+        nicname: str,
+        expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED,
+        timeout: int = 90,
+        interval: int = 5,
+    ):
         """
         Wait for NIC to reach expected 802.1X authentication status.
 
@@ -508,9 +522,7 @@ class WindowsPassthrough(PassthroughBase):
 
             time.sleep(interval)
 
-        raise AssertionError(
-            f"NIC '{nicname}' did not reach authentication status '{status_value}' within {timeout}s"
-        )
+        raise AssertionError(f"NIC '{nicname}' did not reach authentication status '{status_value}' within {timeout}s")
 
     # =========================================================================
     # Tool Management
@@ -548,4 +560,3 @@ class WindowsPassthrough(PassthroughBase):
 
         log.info(f"[OK] PsExec is ready at: {psexec_path}")
         self.cleanup_file(zip_path)
-

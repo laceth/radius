@@ -17,7 +17,7 @@ class T275180_HostAuthenticationPeapEapTlsWired(RadiusPeapEapTlsTestBase):
     def do_test(self):
         """Execute the PEAP-EAP-TLS authentication test"""
         auth_nic_profile = AuthNicProfile.PEAP_EAP_TLS
-        certificate_password = 'aristo'
+        certificate_password = "aristo"
         expected_status = AuthenticationStatus.SUCCEEDED
 
         try:
@@ -35,5 +35,3 @@ class T275180_HostAuthenticationPeapEapTlsWired(RadiusPeapEapTlsTestBase):
         except Exception as e:
             log.error(f"Test failed: {e}")
             raise
-
-

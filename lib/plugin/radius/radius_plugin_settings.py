@@ -24,7 +24,7 @@ radius_setting_option_mapping = {
     "enable pap-authentication (username and password only)": "config.enable_pap_authentication.value",
     "enable kerberos authentication for ldap queries": "config.ldap_use_krb5.value",
     "authenticate using machine trust account (requires kerberos)": "config.ldap_use_machine_account.value",
-    "enable sasl encryption for ldap bindings": "config.ldap_sign_and_seal.value"
+    "enable sasl encryption for ldap bindings": "config.ldap_sign_and_seal.value",
 }
 # handles implicit options
 implicit_field_mapping = {
@@ -33,27 +33,27 @@ implicit_field_mapping = {
         "standard ldap over tls": "636",
         "global catalog": "3268",
         "global catalog over tls": "3269",
-        "user directory plugin port per ad": "0"
+        "user directory plugin port per ad": "0",
     }
 }
 
 
 def configure_radius_plugin(conf_dict, ca):
     """
-    Configure RADIUS plugin settings based on the provided configuration dictionary.
-    ie. conf_dict = {
-    "active directory port for ldap queries": "global catalog",
-    "enable radsec": "true",
-    "allow only radsec connections": "False",
-    "counteract radius radsec port": 12345
-}
+        Configure RADIUS plugin settings based on the provided configuration dictionary.
+        ie. conf_dict = {
+        "active directory port for ldap queries": "global catalog",
+        "enable radsec": "true",
+        "allow only radsec connections": "False",
+        "counteract radius radsec port": 12345
+    }
     """
     cmd_list = []
     log.info("Configuring RADIUS plugin settings")
     try:
         for key, val in conf_dict.items():
             if key.lower() not in radius_setting_option_mapping:
-                valid_options = ', '.join(radius_setting_option_mapping.keys())
+                valid_options = ", ".join(radius_setting_option_mapping.keys())
                 raise Exception("Invalid configuration option: %s. Valid options are: %s" % (key, valid_options))
             key = radius_setting_option_mapping[key.lower()]
             if key.lower() in implicit_field_mapping:

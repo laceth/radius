@@ -1,7 +1,8 @@
 import paramiko
+
+from framework.connection.connection_pool import CONNECTION_POOL
 from framework.connection.ssh_client import SSHClient
 from framework.log.logger import log
-from framework.connection.connection_pool import CONNECTION_POOL
 
 
 class CounterActBase(SSHClient):
@@ -34,8 +35,8 @@ class CounterActBase(SSHClient):
                 username=self.username,
                 password=self.password,
                 look_for_keys=False,  # Don’t use any SSH keys
-                allow_agent=False,    # Don’t use SSH agent
-                timeout=10
+                allow_agent=False,  # Don’t use SSH agent
+                timeout=10,
             )
             return self.client
         except Exception as e:
@@ -54,5 +55,3 @@ class CounterActBase(SSHClient):
     def exec_command(self, cmd: str, timeout: int = 15) -> str:
         self.client = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
         return self._execute(cmd, timeout)
-
-

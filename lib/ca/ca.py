@@ -21,7 +21,7 @@ class CouterActAppliance(CounterActBase):
         output = self.exec_command(cmd)
         if output == "":
             raise Exception("mac given not found on CA")
-        return output.split("\n")[0].split(',')[0]
+        return output.split("\n")[0].split(",")[0]
 
     def property_check(self, id: str, property_field: str, expected_value: str, resovled_by: str = ""):
         log.info(f"Checking property '{property_field}' for IP '{id}' with expected value '{expected_value}'")

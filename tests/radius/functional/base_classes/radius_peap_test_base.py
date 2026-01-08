@@ -8,7 +8,6 @@ from tests.radius.radius_test_base import RadiusTestBase
 
 
 class RadiusPeapTestBase(RadiusTestBase):
-
     def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
         super().__init__(ca, em, radius, switch, passthrough, version)
         self.peap_config = PEAPCredentialsConfig()
@@ -18,10 +17,7 @@ class RadiusPeapTestBase(RadiusTestBase):
         """Setup phase: prepare test environment."""
         log.info("=== Starting PEAP Test Setup ===")
         log.info(f"NIC: {self.nicname}")
-        self.passthrough.download_psexec(
-            self.peap_config.pstools_path,
-            self.peap_config.psexec_path
-        )
+        self.passthrough.download_psexec(self.peap_config.pstools_path, self.peap_config.psexec_path)
 
     def do_teardown(self):
         """Cleanup phase."""
@@ -32,7 +28,7 @@ class RadiusPeapTestBase(RadiusTestBase):
     # PEAP Credentials Setup
     # =========================================================================
 
-    def setup_peap_credentials(self, domain: str = 'txqalab', username: str = 'dotonex', password: str = 'aristo'):
+    def setup_peap_credentials(self, domain: str = "txqalab", username: str = "dotonex", password: str = "aristo"):
         """
         Configure PEAP credentials on Windows NIC.
 
@@ -50,7 +46,7 @@ class RadiusPeapTestBase(RadiusTestBase):
         log.info(f"Setting up PEAP credentials for: {config.peap_username}")
 
         # Prepare paths
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         log_filename = f"radius_nic_PEAP_credentials_config_{timestamp}.log"
         log_path = f"{config.logs_path}\\{log_filename}"
         script_path = f"{config.scripts_path}\\{config.peap_script_filename}"
@@ -76,28 +72,26 @@ class RadiusPeapTestBase(RadiusTestBase):
             raise RuntimeError(f"Script did not complete within timeout.\nLog:\n{log_content}")
 
         log_content = self.passthrough.read_log_file(log_path)
-        passthrough_utils.verify_log_content(log_content, 'Script Execution Completed')
+        passthrough_utils.verify_log_content(log_content, "Script Execution Completed")
         log.info("PEAP credentials setup completed")
 
     def _render_launcher_script(self, config: PEAPCredentialsConfig, session_id: str, log_filename: str) -> str:
         """Render the PowerShell launcher script."""
         return (
-            f"{config.psexec_path} -accepteula -u \"{self.passthrough.username}\" -p \"{self.passthrough.password}\" "
+            f'{config.psexec_path} -accepteula -u "{self.passthrough.username}" -p "{self.passthrough.password}" '
             f"-i {session_id} -h -d powershell.exe -ExecutionPolicy {config.execution_policy} "
-            f"-File \"{config.scripts_path}\\{config.peap_script_filename}\" "
-            f"-username \"{config.peap_username}\" "
-            f"-password \"{config.peap_password}\" "
-            f"-nicname \"{config.nicname}\" "
-            f"-logfile \"{config.logs_path}\\{log_filename}\""
+            f'-File "{config.scripts_path}\\{config.peap_script_filename}" '
+            f'-username "{config.peap_username}" '
+            f'-password "{config.peap_password}" '
+            f'-nicname "{config.nicname}" '
+            f'-logfile "{config.logs_path}\\{log_filename}"'
         )
 
     def _write_and_execute_launcher(self, launcher_path: str, content: str):
         """Write launcher script to remote machine and execute it."""
         self.passthrough.remove_file(launcher_path)
         escaped_content = content.replace("'", "''")
-        self.passthrough.execute_command(
-            f"Set-Content -Path '{launcher_path}' -Value '{escaped_content}' -Encoding ASCII"
-        )
+        self.passthrough.execute_command(f"Set-Content -Path '{launcher_path}' -Value '{escaped_content}' -Encoding ASCII")
         try:
             self.passthrough.execute_command(f'& "{launcher_path}"')
         except RuntimeError:
@@ -120,6 +114,5 @@ class RadiusPeapTestBase(RadiusTestBase):
         super().configure_lan_profile(
             auth_nic_profile=auth_nic_profile,
             local_profile_path=self.peap_config.local_lan_profile_path,
-            remote_profiles_path=self.peap_config.profiles_path
+            remote_profiles_path=self.peap_config.profiles_path,
         )
-

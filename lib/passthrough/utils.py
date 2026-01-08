@@ -2,10 +2,11 @@
 Utility functions for passthrough operations.
 """
 import os
+
 from framework.log.logger import log
 
 
-def verify_log_content(log_content: str, completion_marker: str = 'Script Execution Completed') -> bool:
+def verify_log_content(log_content: str, completion_marker: str = "Script Execution Completed") -> bool:
     """
     Verify the log content contains the expected completion marker.
 
@@ -48,28 +49,21 @@ def copy_file_to_remote(passthrough, local_path: str, remote_path: str):
 
     log.info(f"Copying {local_path} to {remote_path}")
 
-    remote_path = remote_path.replace('/', '\\')
-    remote_dir = remote_path.rsplit('\\', 1)[0]
+    remote_path = remote_path.replace("/", "\\")
+    remote_dir = remote_path.rsplit("\\", 1)[0]
 
     file_size = os.path.getsize(local_path)
     log.info(f"File size: {file_size} bytes")
 
     # Create directory if passthrough supports it
-    if hasattr(passthrough, 'create_directory'):
+    if hasattr(passthrough, "create_directory"):
         passthrough.create_directory(remote_dir)
 
     try:
         log.info("Using pypsrp native file transfer")
-        client = Client(
-            passthrough.ip,
-            username=passthrough.username,
-            password=passthrough.password,
-            ssl=False,
-            auth="ntlm"
-        )
+        client = Client(passthrough.ip, username=passthrough.username, password=passthrough.password, ssl=False, auth="ntlm")
         client.copy(local_path, remote_path)
         log.info(f"Successfully copied {local_path} to {remote_path}")
     except Exception as e:
         log.error(f"Failed to copy file: {e}")
         raise RuntimeError(f"File transfer failed: {e}")
-
