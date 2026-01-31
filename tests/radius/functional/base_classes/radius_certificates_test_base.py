@@ -290,6 +290,40 @@ Import-Certificate `
 
         log.info("Certificates removed")
 
+    def move_ca_cert_to_personal_store(self):
+        """
+        Move the CA certificate from Trusted Root Certification Authorities to Personal store.
+
+        This simulates the MMC operation of moving the CA cert to the wrong store,
+        which should cause certificate-based authentication to fail.
+        """
+        if not self.trusted_cert_thumbprint:
+            raise RuntimeError("Trusted certificate thumbprint not available. Import certificates first.")
+
+        log.info("Moving CA certificate from Root to Personal store...")
+
+        cmd = f'''
+$thumbprint = "{self.trusted_cert_thumbprint}"
+$cert = Get-ChildItem -Path Cert:\\{self.STORE_LOCATION}\\{self.TRUSTED_CERT_STORE} | Where-Object {{ $_.Thumbprint -eq $thumbprint }}
+if ($cert) {{
+    # Export the certificate
+    $certBytes = $cert.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Cert)
+    
+    # Import to Personal store
+    $personalStore = New-Object System.Security.Cryptography.X509Certificates.X509Store("{self.PERSONAL_CERT_STORE}", "{self.STORE_LOCATION}")
+    $personalStore.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadWrite)
+    $personalStore.Add($cert)
+    $personalStore.Close()
+    
+    # Remove from Root store
+    Remove-Item -Path $cert.PSPath -Force
+    "Moved CA certificate from Root to Personal store"
+}} else {{
+    "CA certificate not found in Root store"
+}}'''
+        result = self.passthrough.execute_command(cmd)
+        log.info(f"[OK] {result.strip()}")
+
     # Known CA certificate names that may be imported with client certs
     KNOWN_CA_CERTS = ["Dot1x-CA", "Dot1xMSCA-CA"]
 
@@ -345,7 +379,7 @@ if ($deleted.Count -gt 0) {{ $deleted -join "`n" }} else {{ "No test certificate
     def _delete_cert_by_subject(self, store_name: str, subject_contains: str):
         """
         Delete certificate(s) from specified store where subject contains the given string.
-        Silently skips if no matching certificates found.
+        Logs warning if deletion fails.
 
         Args:
             store_name: Certificate store name (My, Root, etc.)
@@ -356,8 +390,8 @@ if ($deleted.Count -gt 0) {{ $deleted -join "`n" }} else {{ "No test certificate
             result = self.passthrough.execute_command(cmd)
             if result and "Deleted:" in result:
                 log.info(f"[OK] {result.strip()}")
-        except Exception:
-            pass  # Silently ignore - cert may not exist
+        except Exception as e:
+            log.warning(f"Failed to delete cert '{subject_contains}' from {store_name}: {e}")
 
     # =========================================================================
     # LAN Profile Management
