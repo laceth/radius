@@ -101,7 +101,7 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
 #             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY)
 #             self.toggle_nic()
 #             self.assert_authentication_status(expected_status=expected_status)
-           
+
 #             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_INVALID_ACCEPT_ELSE_DENY)
 #             self.toggle_nic()
 #             self.assert_authentication_status(expected_status=fail_status)
@@ -117,13 +117,13 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
 
 class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
     """
-    T1316931 same as T1316932 (Wireless)d
+    T1316931 same as T1316932 (Wireless)
     Steps
     -----
     1. In CounterAct go to Options -> Radius -> Pre-admission Authorization, add a rule **EAP-Type = TLS**, apply, and verify the rule is saved with priority 1 and the Radius plugin restarts.
     2. Disconnect/reconnect the host NIC and verify it receives an IP address from the configured VLAN (ipconfig).
     3. On the Home tab open the host **Profile -> Authentication** header and verify Pre-Admission rule 1 is used and the RADIUS Authentication State is **RADIUS-Accepted** (EAP-TLS).
-    4.[TODO later Need API?? ] On the host use MMC to move the CA cert from **Trusted Root Certification Authorities** to **Personal**, reconnect the NIC, and verify the Authentication header shows **RADIUS-Rejected** and the NIC no longer has an IP address.
+    4. On the host use MMC to move the CA cert from **Trusted Root Certification Authorities** to **Personal**, reconnect the NIC, and verify the Authentication header shows **RADIUS-Rejected** and the NIC no longer has an IP address.
     """
 
     # Rule Settings
@@ -154,20 +154,30 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
     def do_test(self):
         auth_nic_profile = AuthNicProfile.EAP_TLS
         expected_status = AuthenticationStatus.SUCCEEDED
+        failed_status = AuthenticationStatus.FAILED
         self.certificate_password = CERT_PASSWORD
         case_id = "T1316931"
         EXPECTED_NAS_PORT = self.switch.port1
-        
+
         try:
+            # Step 1: Configure pre-admission rule for EAP-TLS
             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
             self.dot1x.set_pre_admission_rules(self.SET_BASIC_WIRED_ACCEPT_TLS_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_Client_SAN.value
             self.import_certificates(certificate_password=self.certificate_password)
+
+            # Step 2-3: Verify successful authentication with correct cert placement
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
             self.verify_wired_properties(nas_port_id=EXPECTED_NAS_PORT)
             self.verify_authentication_on_ca()
             self.verify_pre_admission_rule(rule_priority=1)
+
+            # Step 4: Move CA cert to Personal store and verify auth fails
+            self.move_ca_cert_to_personal_store()
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=failed_status)
+
         except Exception as e:
             log.error(f"[{case_id}] FAIL: {e}")
             raise
