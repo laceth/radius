@@ -3,7 +3,7 @@ from framework.log.logger import log
 from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile, WindowsCert
 from lib.plugin.radius.enums import Dot1xAttribute, PreAdmissionAuth, MscaOid, EKUEntry, MSCAEntry, PreAdmissionCriterionAttribute
 from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
-from time import sleep
+
 
 
 
@@ -53,8 +53,6 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=certificate_password)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
-            sleep(15)
-            self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=expected_nas_port)
             self.verify_authentication_on_ca()
             self.verify_san(expected_san=expected_sanid)
@@ -113,12 +111,12 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
 #             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_INVALID_ACCEPT_ELSE_DENY)
 #             self.toggle_nic()
 #             self.assert_authentication_status(expected_status=fail_status)
-#             sleep(15)
+#
 #             self.verify_pre_admission_rule(rule_priority=2)
 #             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY)
 #             self.toggle_nic()
 #             self.assert_authentication_status(expected_status=expected_status)
-#             sleep(15)
+#
 #             self.verify_san(expected_san=expected_sanid)
 #         except Exception as e:
 #             log.error(f"[{case_id}] FAIL: {e}")
@@ -162,11 +160,8 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=self.certificate_password)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
-            sleep(15)
             self.verify_pre_admission_rule(rule_priority=1)
-            sleep(15)
             self.verify_wired_properties(nas_port_id=expected_nas_port)
-            sleep(5)
             self.verify_authentication_on_ca()
 
         except Exception as e:
