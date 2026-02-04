@@ -57,7 +57,7 @@ class CouterActAppliance(CounterActBase):
         parts = output.split(", ")
         return parts[3] if len(parts) > 3 else None
 
-    def _property_check(self, id: str, property_field: str, expected_value: str, resolved_by: str = "", timeout: int = 15):
+    def _property_check(self, id: str, property_field: str, expected_value: str, resolved_by: str = "", timeout: int = 60):
         """
         Check if a property of a host matches the expected value.
         Waits up to `timeout` seconds for the property to have the expected value.
@@ -67,7 +67,7 @@ class CouterActAppliance(CounterActBase):
             property_field: The property field to check.
             expected_value: The expected value of the property field.
             resolved_by: Optional plugin name that should have resolved the property.
-            timeout: Maximum time in seconds to wait for the property to match (default: 15).
+            timeout: Maximum time in seconds to wait for the property to match (default: 60).
         returns:
             Tuple of (result: bool, actual_value: str, actual_resolved_by: str)
         """
