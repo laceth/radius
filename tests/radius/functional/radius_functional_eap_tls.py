@@ -168,6 +168,100 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
             log.error(f"[{case_id}] FAIL: {e}")
             raise
 
+class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
+    """
+    T1316960
+    Certificate-EAP-TLS-Template / OID
+
+    Steps
+    -------
+    1. Configure LAN profile on the host for EAP-TLS.
+    2. Import client certificate TEMPLATE_CON_CERT on the host.
+    3. Configure pre-admission rule: Certificate-EAP-TLS-Certificate-Template MATCHES template OID (priority 1).
+       Trigger 802.1X. Verify RADIUS-Accepted / Pre-Admission rule 1 matched (EAP-TLS).
+    4. Update rule 1: Certificate-EAP-TLS-Certificate-Template MATCHES invalid OID. Apply.
+       Trigger 802.1X. Verify authentication FAILED (dummy reject matched).
+    5. Update rule 1: Certificate-EAP-TLS-Certificate-Template ANYVALUE. Apply.
+       Trigger 802.1X. Verify RADIUS-Accepted / rule 1 matched.
+    6. Update rule 1: Certificate-EAP-TLS-Certificate-Template MATCHES REGEX. Apply.
+       Trigger 802.1X. Verify RADIUS-Accepted / rule 1 matched.
+    """
+
+    # Rule Settings
+    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+
+    RULE_TEMPLATE_OID_MATCH = [
+        {"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["matches", MscaOid.TEMPLATE_OID_01.value]}
+    ]
+    RULE_TEMPLATE_OID_INVALID_MATCH = [
+        {"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["matches", "INVALID_OID_VALUE"]}
+    ]
+    RULE_TEMPLATE_OID_ANYVALUE = [{"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["anyvalue"]}]
+    RULE_TEMPLATE_OID_REGEX_MATCH = [
+        {
+            "rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value,
+            "fields": ["matchesexpression", MscaOid.TEMPLATE_OID_02_REGEX.value],
+        }
+    ]
+
+    SET_OID_MATCH_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_TEMPLATE_OID_MATCH, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+    SET_OID_INVALID_MATCH_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_TEMPLATE_OID_INVALID_MATCH, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+    SET_OID_ANYVALUE_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_TEMPLATE_OID_ANYVALUE, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+    SET_OID_REGEX_MATCH_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_TEMPLATE_OID_REGEX_MATCH, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    def do_test(self):
+        auth_nic_profile = AuthNicProfile.EAP_TLS
+        expected_status = AuthenticationStatus.SUCCEEDED
+        fail_status = AuthenticationStatus.FAILED
+        certificate_password = CERT_PASSWORD
+        case_id = "T1316960"
+
+
+        try:
+            self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
+
+            # Step 2: import template client cert
+            self.cert_config.certificate_filename = WindowsCert.CERT_TEMPLATE_CON_CERT.value
+            self.import_certificates(certificate_password=certificate_password)
+
+            # Step 3: exact OID match -> ACCEPT
+            self.dot1x.set_pre_admission_rules(self.SET_OID_MATCH_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+
+            # Step 4: invalid OID -> should hit dummy reject (FAIL)
+            self.dot1x.set_pre_admission_rules(self.SET_OID_INVALID_MATCH_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=fail_status)
+
+            # Step 5: anyvalue -> ACCEPT
+            self.dot1x.set_pre_admission_rules(self.SET_OID_ANYVALUE_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+
+            # Step 6: regex -> ACCEPT
+            self.dot1x.set_pre_admission_rules(self.SET_OID_REGEX_MATCH_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+            self.verify_authentication_on_ca()
+        except Exception as e:
+            log.error(f"[{case_id}] FAIL: {e}")
+            raise
+
+
+
 class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
     """
     T1316965
@@ -192,7 +286,6 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
 
     def do_test(self):
         auth_nic_profile = AuthNicProfile.EAP_TLS
-        expected_status = AuthenticationStatus.SUCCEEDED
         fail_status = AuthenticationStatus.FAILED
         certificate_password = CERT_PASSWORD
         case_id = "T1316965"
