@@ -83,9 +83,16 @@ class CouterActAppliance(CounterActBase):
         res = False
 
         while time.time() - start_time < timeout:
-            output = self.exec_command(PROPERTY_CHECK_COMMAND % (id, property_field))
-            field_value = output.split(", ")[3] if len(output.split(", ")) > 4 else None
-            resolved_by_plugin = re.search(r'\((\w+)@', output).group(1) if re.search(r'\((\w+)@', output) else None
+            try:
+                output = self.exec_command(PROPERTY_CHECK_COMMAND % (id, property_field))
+                field_value = output.split(", ")[3] if len(output.split(", ")) > 4 else None
+                resolved_by_plugin = re.search(r'\((\w+)@', output).group(1) if re.search(r'\((\w+)@', output) else None
+            except RuntimeError as e:
+                # grep returns exit code 1 when no match found - this is expected when property doesn't exist yet
+                log.debug(f"Property '{property_field}' not found yet: {e}")
+                field_value = None
+                resolved_by_plugin = None
+
             res = expected_value == field_value
             if resolved_by != "":
                 res &= resolved_by == resolved_by_plugin
