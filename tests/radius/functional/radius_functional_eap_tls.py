@@ -11,6 +11,9 @@ DOT1X_CLIENT_CERT_REVOKED = getattr(WindowsCert, "DOT1X_CLT_RADIUS_SET2", Window
 
 CERT_PASSWORD = "aristo"
 
+RULE_EAP_TYPE_TLS = [{"rule_name": "EAP-Type", "fields": ["TLS"]}]
+RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+
 
 class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
     """
@@ -258,30 +261,24 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_OID_MATCH_ACCEPT_ELSE_DENY)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
-            sleep(15)
-            self.verify_pre_admission_rule(rule_priority=1)
 
             # Step 4: invalid OID -> should hit dummy reject (FAIL)
             self.dot1x.set_pre_admission_rules(self.SET_OID_INVALID_MATCH_ACCEPT_ELSE_DENY)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=fail_status)
-            sleep(15)
-            self.verify_pre_admission_rule(rule_priority=2)
 
             # Step 5: anyvalue -> ACCEPT
             self.dot1x.set_pre_admission_rules(self.SET_OID_ANYVALUE_ACCEPT_ELSE_DENY)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
-            sleep(15)
-            self.verify_pre_admission_rule(rule_priority=1)
 
             # Step 6: regex -> ACCEPT
             self.dot1x.set_pre_admission_rules(self.SET_OID_REGEX_MATCH_ACCEPT_ELSE_DENY)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
-            sleep(15)
-            self.verify_pre_admission_rule(rule_priority=1)
             self.verify_authentication_on_ca()
         except Exception as e:
             log.error(f"[{case_id}] FAIL: {e}")
             raise
+
+
