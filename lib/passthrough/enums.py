@@ -23,7 +23,7 @@ class AuthNicProfile(Enum):
     EAP_TTLS = "lan_profile_eap_ttls_config.xml"
 
 class WindowsCert(Enum):
-    CERT_TEMPLATE_CON_CERT = "testdecodeA.pfx"
+    CERT_TEMPLATE_CON_CERT =  "Dot1x-CLT-testdecodeA.pfx"
     CERT_TEST_CLIENT = "clientcert.pfx"
     CERT_DOT1X_A = "Dot1x-CLT-A.pfx"
 
@@ -44,9 +44,8 @@ class WindowsCert(Enum):
 
     CERT_DOT1X_MSCA_E = "Dot1xMSCA-CLT-E.pfx"
     CERT_DOT1X_MSCA_F = "Dot1xMSCA-CLT-F.pfx"
-    CERT_DOT1X_MSCA_G = "Dot1xMSCA-CLT-G.pfx"
+    CERT_DOT1X_MSCA_G = "Dot1xMSCA-CLT-G.pfx"  
 
     CERT_DOT1X_EXPIRED = "Dot1x-CLT-Expired.pfx"
-
     CERT_DOT1X_REVOKED = "Dot1x-CLT-Revoked.pfx"
     CERT_DOT1X_VALID   = "Dot1x-CLT-Good.pfx"
