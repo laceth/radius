@@ -22,7 +22,6 @@ class AuthNicProfile(Enum):
     PEAP_EAP_TLS = "lan_profile_peap_eap_tls_config.xml"
     EAP_TTLS = "lan_profile_eap_ttls_config.xml"
 
-
 class WindowsCert(Enum):
     CERT_TEMPLATE_CON_CERT = "testdecodeA.pfx"
     CERT_TEST_CLIENT = "clientcert.pfx"
