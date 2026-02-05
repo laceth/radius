@@ -53,6 +53,7 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=certificate_password)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
+            self.wait_for_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=expected_nas_port)
             self.verify_authentication_on_ca()
             self.verify_san(expected_san=expected_sanid)
@@ -116,6 +117,7 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
 #             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY)
 #             self.toggle_nic()
 #             self.assert_authentication_status(expected_status=expected_status)
+#             self.wait_for_nic_ip_in_range()
 #
 #             self.verify_san(expected_san=expected_sanid)
 #         except Exception as e:
@@ -160,6 +162,7 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=self.certificate_password)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
+            self.wait_for_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=expected_nas_port)
             self.verify_authentication_on_ca()
@@ -238,6 +241,7 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_OID_MATCH_ACCEPT_ELSE_DENY)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
+            self.wait_for_nic_ip_in_range()
 
             # Step 4: invalid OID -> should hit dummy reject (FAIL)
             self.dot1x.set_pre_admission_rules(self.SET_OID_INVALID_MATCH_ACCEPT_ELSE_DENY)
@@ -248,11 +252,13 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_OID_ANYVALUE_ACCEPT_ELSE_DENY)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
+            self.wait_for_nic_ip_in_range()
 
             # Step 6: regex -> ACCEPT
             self.dot1x.set_pre_admission_rules(self.SET_OID_REGEX_MATCH_ACCEPT_ELSE_DENY)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
+            self.wait_for_nic_ip_in_range()
             self.verify_authentication_on_ca()
         except Exception as e:
             log.error(f"[{case_id}] FAIL: {e}")

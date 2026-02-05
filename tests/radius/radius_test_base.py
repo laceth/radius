@@ -16,7 +16,7 @@ from lib.switch.radius_factory import RadiusFactory
 
 
 class RadiusTestBase:
-    # Default NIC name - can be overridden in subclasses
+    # Default NIC name - can be overridden via passthrough config
     DEFAULT_NICNAME = "pciPassthru0"
     DEFAULT_RADIUS_SECRET = "aristo"
     DEFAULT_RADIUS_SETTINGS = RadiusPluginSettings()
@@ -28,7 +28,8 @@ class RadiusTestBase:
         self.dot1x = cast(Radius, radius)
         self.switch = cast(CiscoIOS, switch)
         self.passthrough = cast(PassthroughBase, passthrough)
-        self.nicname = self.DEFAULT_NICNAME
+        # Use nicname from passthrough config if available, otherwise use default
+        self.nicname = getattr(self.passthrough, 'nicname', None) or self.DEFAULT_NICNAME
         self.rf = RadiusFactory(default_secret=self.DEFAULT_RADIUS_SECRET)
         self.test_start_time = None
 
@@ -129,6 +130,45 @@ class RadiusTestBase:
             timeout: Maximum time to wait in seconds
         """
         self.passthrough.wait_for_nic_authentication(self.nicname, expected_status=expected_status, timeout=timeout)
+
+    def wait_for_nic_ip_in_range(self, timeout: int = 90):
+        """
+        Wait for NIC to get an IP address in the configured target VLAN range.
+
+        Args:
+            timeout: Maximum time to wait in seconds
+
+        Returns:
+            The IP address that was assigned
+
+        Raises:
+            AssertionError: If NIC does not get IP in range within timeout
+            ValueError: If target_vlan_ip_range is not configured
+        """
+        ip_range = getattr(self.passthrough, 'target_vlan_ip_range', None)
+        if not ip_range:
+            raise ValueError("target_vlan_ip_range is not configured in passthrough config")
+        return self.passthrough.wait_for_nic_ip_in_range(self.nicname, ip_range, timeout=timeout)
+
+    def assert_authentication_and_ip_in_range(
+        self,
+        expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED,
+        auth_timeout: int = 90,
+        ip_timeout: int = 60
+    ):
+        """
+        Assert NIC authentication succeeds and gets IP in target VLAN range.
+
+        Args:
+            expected_status: Expected authentication status
+            auth_timeout: Maximum time to wait for authentication
+            ip_timeout: Maximum time to wait for IP assignment
+
+        Returns:
+            The IP address that was assigned
+        """
+        self.assert_authentication_status(expected_status=expected_status, timeout=auth_timeout)
+        return self.wait_for_nic_ip_in_range(timeout=ip_timeout)
 
     def _get_host_id(self) -> str:
         """
