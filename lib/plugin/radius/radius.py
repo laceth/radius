@@ -23,15 +23,15 @@ class Radius(RadiusBase):
         Returns:
             True if plugin is running, False otherwise.
         """
-        log.info("Checking if 802.1X plugin is running")
+        log.info("Checking if 802.1X plugin is running on RADIUS server")
         try:
-            uptime_output = self.platform.exec_command(DOT1X_UPTIME_COMMAND)
+            uptime_output = self.exec_cmd(DOT1X_UPTIME_COMMAND)
             log.info(f"Uptime command output: {uptime_output}")
             if DOT1X_RUNNING_VERIFICATION_STRING in uptime_output:
-                log.info("dot1x plugin is running")
+                log.info("RADIUS server is running")
                 return True
             else:
-                log.warning("dot1x plugin is not yet running (uptime not showing days)")
+                log.warning("RADIUS server is not yet running (uptime not showing days)")
                 return False
         except Exception as e:
             log.warning(f"Failed to check plugin status: {e}")
@@ -41,6 +41,9 @@ class Radius(RadiusBase):
         """
         Restart the 802.1X plugin and wait until it's running.
 
+        Verification is done by checking 'fstool dot1x uptime' output for ' days' string,
+        which indicates the plugin is fully operational.
+
         Args:
             timeout: Maximum time in seconds to wait for the plugin to start (default: 60).
             interval: Time in seconds between status checks (default: 5).
@@ -48,9 +51,9 @@ class Radius(RadiusBase):
         Raises:
             Exception: If the plugin fails to start within the timeout period.
         """
-        log.info("Restarting 802.1X plugin")
+        log.info("Restarting 802.1X plugin on RADIUS server")
         try:
-            self.platform.exec_command(DOT1X_RESTART_COMMAND)
+            self.exec_cmd(DOT1X_RESTART_COMMAND)
             start_time = time.time()
             while time.time() - start_time < timeout:
                 if self.dot1x_plugin_running():
@@ -79,7 +82,7 @@ class Radius(RadiusBase):
                 return
 
             edit_pre_admission_rule(rules, self.platform, condition_slot=condition_slot)
-            self.restart_dot1x_plugin()
+            self.restart_dot1x_plugin() # run after setting rules
         except Exception as e:
             raise Exception(f"Failed to set pre-admission rules: {e}")
 
