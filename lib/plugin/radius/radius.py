@@ -3,7 +3,7 @@ import time
 from framework.log.logger import log
 from lib.plugin.radius.pre_admission_rule import edit_pre_admission_rule, set_pre_admission_rules_remote
 from lib.plugin.radius.radius_base import RadiusBase
-from lib.plugin.radius.radius_plugin_settings import configure_radius_plugin
+from lib.plugin.radius.radius_plugin_settings import radius_setting_option_mapping, implicit_field_mapping
 
 DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_UPTIME_COMMAND = "fstool dot1x uptime"
@@ -82,9 +82,54 @@ class Radius(RadiusBase):
                 return
 
             edit_pre_admission_rule(rules, self.platform, condition_slot=condition_slot)
-            self.restart_dot1x_plugin() # run after setting rules
+            self.restart_dot1x_plugin()
         except Exception as e:
             raise Exception(f"Failed to set pre-admission rules: {e}")
+
+    def configure_radius_plugin(self, conf_dict):
+        """
+        Configure RADIUS plugin settings based on the provided configuration dictionary.
+        Automatically restarts the dot1x plugin after configuration.
+
+        Args:
+            conf_dict: Dictionary of configuration options.
+
+        Example:
+            conf_dict = {
+                "active directory port for ldap queries": "global catalog",
+                "enable radsec": "true",
+                "allow only radsec connections": "False",
+                "counteract radius radsec port": 12345
+            }
+        """
+        cmd_list = []
+        log.info("Configuring RADIUS plugin settings")
+        try:
+            for key, val in conf_dict.items():
+                # Skip empty/None values
+                if val is None or str(val).strip() == "":
+                    log.info(f"Skipping empty value for: {key}")
+                    continue
+
+                if key.lower() not in radius_setting_option_mapping:
+                    valid_options = ', '.join(radius_setting_option_mapping.keys())
+                    raise Exception("Invalid configuration option: %s. Valid options are: %s" % (key, valid_options))
+                prop_key = radius_setting_option_mapping[key.lower()]
+                if prop_key.lower() in implicit_field_mapping:
+                    if str(val).lower() not in implicit_field_mapping[prop_key.lower()]:
+                        raise Exception("%s doesn't have a option for %s" % (prop_key, val))
+                    val = implicit_field_mapping[prop_key.lower()][str(val).lower()]
+                cmd = "fstool dot1x set_property %s %s" % (prop_key, str(val).lower())
+                cmd_list.append(cmd)
+                self.platform.exec_command(cmd)
+
+            self.restart_dot1x_plugin()
+
+        except Exception as e:
+            log.error(f"Error configuring RADIUS plugin settings: {e}")
+            raise e
+        log.info("RADIUS plugin settings configured successfully")
+        return cmd_list
 
     def plugin_setting(self, conf_dict):
         """
@@ -97,8 +142,6 @@ class Radius(RadiusBase):
         }
         """
         try:
-            log.info("Configuring RADIUS plugin settings")
-            configure_radius_plugin(conf_dict, self.platform)
-            self.restart_dot1x_plugin()
+            self.configure_radius_plugin(conf_dict)
         except Exception as e:
             raise Exception(f"Failed to configure RADIUS plugin settings: {e}")

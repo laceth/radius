@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from framework.log.logger import log
-
 
 
 @dataclass
@@ -110,47 +108,3 @@ implicit_field_mapping = {
     }
 }
 
-
-def configure_radius_plugin(conf_dict, ca):
-    """
-    Configure RADIUS plugin settings based on the provided configuration dictionary.
-    Automatically restarts the dot1x plugin after configuration.
-
-    Args:
-        conf_dict: Dictionary of configuration options.
-        ca: CounterACT connection object with exec_command method.
-
-    Example:
-        conf_dict = {
-            "active directory port for ldap queries": "global catalog",
-            "enable radsec": "true",
-            "allow only radsec connections": "False",
-            "counteract radius radsec port": 12345
-        }
-    """
-    cmd_list = []
-    log.info("Configuring RADIUS plugin settings")
-    try:
-        for key, val in conf_dict.items():
-            # Skip empty/None values
-            if val is None or str(val).strip() == "":
-                log.info(f"Skipping empty value for: {key}")
-                continue
-
-            if key.lower() not in radius_setting_option_mapping:
-                valid_options = ', '.join(radius_setting_option_mapping.keys())
-                raise Exception("Invalid configuration option: %s. Valid options are: %s" % (key, valid_options))
-            prop_key = radius_setting_option_mapping[key.lower()]
-            if prop_key.lower() in implicit_field_mapping:
-                if str(val).lower() not in implicit_field_mapping[prop_key.lower()]:
-                    raise Exception("%s doesn't have a option for %s" % (prop_key, val))
-                val = implicit_field_mapping[prop_key.lower()][str(val).lower()]
-            cmd = "fstool dot1x set_property %s %s" % (prop_key, str(val).lower())
-            cmd_list.append(cmd)
-            ca.exec_command(cmd)
-
-    except Exception as e:
-        log.error(f"Error configuring RADIUS plugin settings: {e}")
-        raise e
-    log.info("RADIUS plugin settings configured successfully")
-    return cmd_list
