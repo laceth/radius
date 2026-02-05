@@ -29,10 +29,10 @@ class D1XComboStringCriterion(D1xOption):
 
 class D1XStringCriterion(D1xOption):
     map = {
-        "startswith": '"filType":"startswith","input":"%s","field":"%s","value":"\\\\Q%s\\\\E.*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
-        "endswith": '"filType":"endswith","input":"%s","field":"%s","value":".*\\\\Q%s\\\\E","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
-        "contains": '"filType":"contains","input":"%s","field":"%s","value":".*\\\\Q%s\\\\E.*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
-        "matches": '"filType":"equals","input":"%s","field":"%s","value":"\\\\Q%s\\\\E","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
+        "startswith": '"filType":"startswith","input":"%s","field":"%s","value":"\\\\\\\\Q%s\\\\\\\\E.*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
+        "endswith": '"filType":"endswith","input":"%s","field":"%s","value":".*\\\\\\\\Q%s\\\\\\\\E","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
+        "contains": '"filType":"contains","input":"%s","field":"%s","value":".*\\\\\\\\Q%s\\\\\\\\E.*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
+        "matches": '"filType":"equals","input":"%s","field":"%s","value":"\\\\\\\\Q%s\\\\\\\\E","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
         "matchesexpression": '"filType":"regexp","input":"%s","field":"%s","value":"%s","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
         "anyvalue": '"filType":"any","input":"","field":"%s","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
     }
