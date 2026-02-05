@@ -3,7 +3,7 @@ import time
 from framework.log.logger import log
 from lib.plugin.radius.pre_admission_rule import edit_pre_admission_rule, set_pre_admission_rules_remote
 from lib.plugin.radius.radius_base import RadiusBase
-from lib.plugin.radius.radius_plugin_settings import configure_radius_plugin
+from lib.plugin.radius.radius_plugin_settings import radius_setting_option_mapping, implicit_field_mapping
 
 DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_UPTIME_COMMAND = "fstool dot1x uptime"
@@ -19,7 +19,9 @@ class Radius(RadiusBase):
     def dot1x_plugin_running(self) -> bool:
         """
         Check if 802.1X plugin is running by verifying uptime output contains ' days'.
-        This is the reliable way to confirm the plugin is fully operational.
+
+        Returns:
+            True if plugin is running, False otherwise.
         """
         log.info("Checking if 802.1X plugin is running on RADIUS server")
         try:
@@ -44,7 +46,7 @@ class Radius(RadiusBase):
 
         Args:
             timeout: Maximum time in seconds to wait for the plugin to start (default: 60).
-            interval: Time in seconds between status checks (default: 1).
+            interval: Time in seconds between status checks (default: 5).
 
         Raises:
             Exception: If the plugin fails to start within the timeout period.
@@ -63,7 +65,6 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to restart 802.1X plugin: {e}")
 
-    # Support condition_slot
     def set_pre_admission_rules(self, rules: list, condition_slot: int = 1) -> None:
         """
         Set pre-admission rules on the RADIUS server by editing local.properties,
@@ -77,13 +78,58 @@ class Radius(RadiusBase):
         try:
             if isinstance(rules, list) and rules and isinstance(rules[0], dict) and "auth" in rules[0]:
                 set_pre_admission_rules_remote(rules, self.platform)
-                self.restart_dot1x_plugin()  # run after setting rules
+                self.restart_dot1x_plugin()
                 return
 
             edit_pre_admission_rule(rules, self.platform, condition_slot=condition_slot)
             self.restart_dot1x_plugin()
         except Exception as e:
             raise Exception(f"Failed to set pre-admission rules: {e}")
+
+    def configure_radius_plugin(self, conf_dict):
+        """
+        Configure RADIUS plugin settings based on the provided configuration dictionary.
+        Automatically restarts the dot1x plugin after configuration.
+
+        Args:
+            conf_dict: Dictionary of configuration options.
+
+        Example:
+            conf_dict = {
+                "active directory port for ldap queries": "global catalog",
+                "enable radsec": "true",
+                "allow only radsec connections": "False",
+                "counteract radius radsec port": 12345
+            }
+        """
+        cmd_list = []
+        log.info("Configuring RADIUS plugin settings")
+        try:
+            for key, val in conf_dict.items():
+                # Skip empty/None values
+                if val is None or str(val).strip() == "":
+                    log.info(f"Skipping empty value for: {key}")
+                    continue
+
+                if key.lower() not in radius_setting_option_mapping:
+                    valid_options = ', '.join(radius_setting_option_mapping.keys())
+                    raise Exception("Invalid configuration option: %s. Valid options are: %s" % (key, valid_options))
+                prop_key = radius_setting_option_mapping[key.lower()]
+                if prop_key.lower() in implicit_field_mapping:
+                    if str(val).lower() not in implicit_field_mapping[prop_key.lower()]:
+                        raise Exception("%s doesn't have a option for %s" % (prop_key, val))
+                    val = implicit_field_mapping[prop_key.lower()][str(val).lower()]
+                cmd = "fstool dot1x set_property %s %s" % (prop_key, str(val).lower())
+                cmd_list.append(cmd)
+                self.platform.exec_command(cmd)
+
+            self.restart_dot1x_plugin()
+
+        except Exception as e:
+            log.error(f"Error configuring RADIUS plugin settings: {e}")
+            raise e
+        log.info("RADIUS plugin settings configured successfully")
+        return cmd_list
 
     def plugin_setting(self, conf_dict):
         """
@@ -96,8 +142,6 @@ class Radius(RadiusBase):
         }
         """
         try:
-            log.info("Configuring RADIUS plugin settings")
-            configure_radius_plugin(conf_dict, self.platform)
-            self.restart_dot1x_plugin()
+            self.configure_radius_plugin(conf_dict)
         except Exception as e:
             raise Exception(f"Failed to configure RADIUS plugin settings: {e}")

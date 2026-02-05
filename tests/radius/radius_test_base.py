@@ -9,7 +9,7 @@ from lib.ca.em import EnterpriseManager
 from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile
 from lib.passthrough.passthrough_base import PassthroughBase
 from lib.plugin.radius.radius import Radius
-from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings, configure_radius_plugin
+from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings
 from lib.switch.cisco_ios import CiscoIOS
 from lib.switch.radius_factory import RadiusFactory
 
@@ -68,7 +68,7 @@ class RadiusTestBase:
             settings = replace(self.DEFAULT_RADIUS_SETTINGS, **overrides)
         else:
             settings = self.DEFAULT_RADIUS_SETTINGS
-        configure_radius_plugin(settings.to_dict(), self.ca)
+        self.dot1x.configure_radius_plugin(settings.to_dict())
 
 
     def radius_special_setup(self):

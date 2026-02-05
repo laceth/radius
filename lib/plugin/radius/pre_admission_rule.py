@@ -29,10 +29,10 @@ class D1XComboStringCriterion(D1xOption):
 
 class D1XStringCriterion(D1xOption):
     map = {
-        "startswith": '"filType":"startswith","input":"%s","field":"%s","value":"\\\\\\\\Q%s\\\\\\\\E.*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
-        "endswith": '"filType":"endswith","input":"%s","field":"%s","value":".*\\\\\\\\Q%s\\\\\\\\E","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
-        "contains": '"filType":"contains","input":"%s","field":"%s","value":".*\\\\\\\\Q%s\\\\\\\\E.*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
-        "matches": '"filType":"equals","input":"%s","field":"%s","value":"\\\\\\\\Q%s\\\\\\\\E","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
+        "startswith": '"filType":"startswith","input":"%s","field":"%s","value":"\\\\Q%s\\\\E.*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
+        "endswith": '"filType":"endswith","input":"%s","field":"%s","value":".*\\\\Q%s\\\\E","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
+        "contains": '"filType":"contains","input":"%s","field":"%s","value":".*\\\\Q%s\\\\E.*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
+        "matches": '"filType":"equals","input":"%s","field":"%s","value":"\\\\Q%s\\\\E","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
         "matchesexpression": '"filType":"regexp","input":"%s","field":"%s","value":"%s","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
         "anyvalue": '"filType":"any","input":"","field":"%s","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
     }
@@ -173,7 +173,6 @@ def to_file(new_entry_string: str, node, file_path: str = DEFAULT_LOCAL_PROPERTY
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(node.ipaddress, username=node.username, password=node.password)
-    new_entry_string = _escape_for_local_properties(new_entry_string)
 
     try:
         sftp = ssh.open_sftp()
@@ -195,11 +194,6 @@ def to_file(new_entry_string: str, node, file_path: str = DEFAULT_LOCAL_PROPERTY
         ssh.close()
 
 
-def _escape_for_local_properties(value: str) -> str:
-    if value is None:
-        return ""
-    # escape ":" unless already escaped
-    return re.sub(r"(?<!\\):", r"\:", value)
 
 
 def edit_pre_admission_rule(rules: List[Dict[str, Any]], node, condition_slot: int = 1):
@@ -289,8 +283,7 @@ def _to_file_multi(kv: Dict[str, str], node, file_path: str = DEFAULT_LOCAL_PROP
                 key_to_idx[m.group(1)] = i
 
         def upsert(key: str, value: str) -> None:
-            esc = _escape_for_local_properties(value)
-            new_line = f"{key}={esc}\n"
+            new_line = f"{key}={value}\n"
             if key in key_to_idx:
                 lines[key_to_idx[key]] = new_line
             else:
