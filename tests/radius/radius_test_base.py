@@ -12,6 +12,7 @@ from lib.plugin.radius.radius import Radius
 from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings
 from lib.switch.cisco_ios import CiscoIOS
 from lib.switch.radius_factory import RadiusFactory
+from lib.utils.vlan_mapping import get_vlan_from_ip_range
 
 
 
@@ -53,7 +54,7 @@ class RadiusTestBase:
             radius_server_ip=self.ca.ipaddress,
             radius_secret=self.DEFAULT_RADIUS_SECRET,
             mab=False,
-            vlan=1570,
+            vlan=get_vlan_from_ip_range(self.passthrough.target_vlan_ip_range),
         )
 
     def configure_radius_settings(self, **overrides):
@@ -145,10 +146,9 @@ class RadiusTestBase:
             AssertionError: If NIC does not get IP in range within timeout
             ValueError: If target_vlan_ip_range is not configured
         """
-        ip_range = getattr(self.passthrough, 'target_vlan_ip_range', None)
-        if not ip_range:
+        if not self.passthrough.target_vlan_ip_range:
             raise ValueError("target_vlan_ip_range is not configured in passthrough config")
-        return self.passthrough.wait_for_nic_ip_in_range(self.nicname, ip_range, timeout=timeout)
+        return self.passthrough.wait_for_nic_ip_in_range(self.nicname, self.passthrough.target_vlan_ip_range, timeout=timeout)
 
     def assert_authentication_and_ip_in_range(
         self,
