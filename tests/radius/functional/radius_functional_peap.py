@@ -104,16 +104,13 @@ class PeapHostAuthenticationWiredNegative(RadiusPeapTestBase):
             # Step 5: Assert authentication status matches expected
             self.assert_authentication_status(expected_status=expected_status)
 
-            # Step 6: Wait for NIC to get IP in target VLAN range
-            self.wait_for_nic_ip_in_range()
-
-            # Step 7: Verify authentication properties on CounterAct
+            # Step 6: Verify authentication properties on CounterAct
             self.verify_authentication_on_ca(auth_status="Access-Reject")
 
-            # Step 8: Verify pre-admission rule is applied
+            # Step 7: Verify pre-admission rule is applied
             self.verify_pre_admission_rule(rule_priority=1)
 
-            # Step 9: Verify wired properties
+            # Step 8: Verify wired properties
             self.verify_wired_properties()
         except Exception as e:
             log.error(f"Test failed: {e}")

@@ -282,41 +282,6 @@ VLAN_MAPPING = {
     1500: "10.16.129.0/24",
 }
 
-
-def get_vlan_from_ip_range(ip_range: str) -> Optional[int]:
-    """
-    Get the VLAN ID for a given IP range.
-
-    Args:
-        ip_range: IP range in CIDR notation (e.g., "10.16.148.128/26"), or None
-
-    Returns:
-        VLAN ID if found, None otherwise
-    """
-    from framework.log.logger import log
-
-    if not ip_range:
-        return None
-
-    try:
-        target_network = ipaddress.ip_network(ip_range, strict=False)
-    except ValueError:
-        log.warning(f"Invalid IP range format: {ip_range}")
-        return None
-
-    for vlan_id, subnet in VLAN_MAPPING.items():
-        try:
-            vlan_network = ipaddress.ip_network(subnet, strict=False)
-            if target_network.overlaps(vlan_network) or vlan_network.overlaps(target_network):
-                log.info(f"Detected VLAN {vlan_id} from IP range: {ip_range}")
-                return vlan_id
-        except ValueError:
-            continue
-
-    log.warning(f"Could not detect VLAN from IP range: {ip_range}")
-    return None
-
-
 def get_vlan_from_ip(ip: str) -> Optional[int]:
     """
     Get the VLAN ID for a given IP address.
@@ -341,3 +306,15 @@ def get_vlan_from_ip(ip: str) -> Optional[int]:
             continue
 
     return None
+
+def get_ip_range_from_vlan(vlan: int) -> Optional[str]:
+    """
+    Get the IP range for a given VLAN ID.
+
+    Args:
+        vlan: VLAN ID (e.g., 1570)
+
+    Returns:
+        IP range in CIDR notation if found, None otherwise
+    """
+    return VLAN_MAPPING.get(vlan)

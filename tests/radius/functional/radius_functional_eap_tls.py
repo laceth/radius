@@ -44,7 +44,7 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
         expected_status = AuthenticationStatus.SUCCEEDED
         certificate_password = CERT_PASSWORD
         case_id = "T1316924"
-        expected_nas_port = self.switch.port1
+        expected_nas_port = self.switch.port1['interface']
         expected_sanid = "URI:E2EQADeviceId://qae2e-san-testid-12345"
         try:
             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
@@ -153,7 +153,7 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
         expected_status = AuthenticationStatus.SUCCEEDED
         self.certificate_password = CERT_PASSWORD
         case_id = "T1316931"
-        expected_nas_port = self.switch.port1
+        expected_nas_port = self.switch.port1['interface']
 
         try:
             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
@@ -293,7 +293,7 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
         fail_status = AuthenticationStatus.FAILED
         certificate_password = CERT_PASSWORD
         case_id = "T1316965"
-        expected_nas_port = self.switch.port1
+        expected_nas_port = self.switch.port1['interface']
 
         try:
             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)

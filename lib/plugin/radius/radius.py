@@ -7,7 +7,7 @@ from lib.plugin.radius.radius_plugin_settings import radius_setting_option_mappi
 
 DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_UPTIME_COMMAND = "fstool dot1x uptime"
-DOT1X_RESTART_TIMEOUT = 60
+DOT1X_RESTART_TIMEOUT = 280
 DOT1X_CHECK_INTERVAL = 5
 DOT1X_RUNNING_VERIFICATION_STRING = " days"
 

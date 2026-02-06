@@ -12,13 +12,13 @@ CISCOIOS_TYPE = "cisco_ios"
 
 
 class CiscoIOS(SwitchBase, SSHClient):
-    def __init__(self, ip: str, user_name: str, password: str, port1: str = "fa0/1", port2: str = "fa0/2") -> None:
+    def __init__(self, ip: str, user_name: str, password: str, port1: str | dict = "fa0/1", port2: str | dict = "fa0/2") -> None:
         super().__init__(ip, user_name, password)
         self.ip = ip
         self.username = user_name
         self.password = password
-        self.port1 = CiscoIOS.normalize_interface(port1)
-        self.port2 = CiscoIOS.normalize_interface(port2)
+        self.port1 = CiscoIOS._parse_port_config(port1)
+        self.port2 = CiscoIOS._parse_port_config(port2)
         self.device = {
             "device_type": CISCOIOS_TYPE,
             "ip": self.ip,
@@ -36,6 +36,29 @@ class CiscoIOS(SwitchBase, SSHClient):
         ip_obj = ipaddress.ip_address(self.ip)
         if isinstance(ip_obj, ipaddress.IPv6Address):
             self.is_ipv4 = False
+
+    @staticmethod
+    def _parse_port_config(port_config: str | dict) -> dict:
+        """
+        Parse port configuration into a dict with 'interface' and 'vlan' keys.
+
+        Args:
+            port_config: Either a string (interface name) or dict with 'interface' and optional 'vlan'
+
+        Returns:
+            Dict with 'interface' (normalized) and 'vlan' (int or None) keys
+        """
+        if isinstance(port_config, dict):
+            interface = port_config.get('interface', '')
+            vlan = port_config.get('vlan')
+        else:
+            interface = port_config
+            vlan = None
+
+        return {
+            'interface': CiscoIOS.normalize_interface(interface),
+            'vlan': int(vlan) if vlan is not None else None
+        }
 
     def get_conn_key(self):
         return self.ip

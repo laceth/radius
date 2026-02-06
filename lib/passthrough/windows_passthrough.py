@@ -9,8 +9,8 @@ from typing import Optional, Tuple, Union
 
 
 class WindowsPassthrough(PassthroughBase):
-    def __init__(self, ip: str, user_name: str, password: str, mac: str, nicname: str = "pciPassthru0", target_vlan_ip_range: Optional[str] = None):
-        super().__init__(ip, user_name, password, mac, nicname, target_vlan_ip_range)
+    def __init__(self, ip: str, user_name: str, password: str, mac: str, nicname: str = "pciPassthru0"):
+        super().__init__(ip, user_name, password, mac, nicname)
         self.win_con = winrm.Session(self.ip, auth=(self.username, self.password), transport='ntlm')
 
     def execute_command(self, command, is_ps=True):

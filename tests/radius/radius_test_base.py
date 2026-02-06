@@ -12,7 +12,7 @@ from lib.plugin.radius.radius import Radius
 from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings
 from lib.switch.cisco_ios import CiscoIOS
 from lib.switch.radius_factory import RadiusFactory
-from lib.utils.vlan_mapping import get_vlan_from_ip_range
+from lib.utils.vlan_mapping import get_ip_range_from_vlan
 
 
 
@@ -44,14 +44,20 @@ class RadiusTestBase:
         # Cleanup any existing endpoint before test
         self.cleanup_endpoint_by_mac(self.passthrough.mac)
 
+        # Get VLAN and IP range from switch port config
+        vlan = self.switch.port1['vlan']
+        target_ip_range = get_ip_range_from_vlan(vlan) if vlan else None
+        if target_ip_range:
+            log.info(f"Target IP range {target_ip_range} derived from VLAN {vlan}")
+
         # Setup switch RADIUS configuration
         self.rf.setup(
             self.switch,
-            port=self.switch.port1,
+            port=self.switch.port1['interface'],
             radius_server_ip=self.ca.ipaddress,
             radius_secret=self.DEFAULT_RADIUS_SECRET,
             mab=False,
-            vlan=get_vlan_from_ip_range(self.passthrough.target_vlan_ip_range),
+            vlan=vlan,
         )
 
     def configure_radius_settings(self, **overrides):
@@ -131,7 +137,8 @@ class RadiusTestBase:
 
     def wait_for_nic_ip_in_range(self, timeout: int = 90):
         """
-        Wait for NIC to get an IP address in the configured target VLAN range.
+        Wait for NIC to get an IP address in the target VLAN range.
+        The IP range is derived from the switch port's VLAN configuration.
 
         Args:
             timeout: Maximum time to wait in seconds
@@ -141,11 +148,17 @@ class RadiusTestBase:
 
         Raises:
             AssertionError: If NIC does not get IP in range within timeout
-            ValueError: If target_vlan_ip_range is not configured
+            ValueError: If VLAN is not configured or IP range cannot be determined
         """
-        if not self.passthrough.target_vlan_ip_range:
-            raise ValueError("target_vlan_ip_range is not configured in passthrough config")
-        return self.passthrough.wait_for_nic_ip_in_range(self.nicname, self.passthrough.target_vlan_ip_range, timeout=timeout)
+        vlan = self.switch.port1['vlan']
+        if not vlan:
+            raise ValueError("VLAN is not configured in switch port1 config")
+
+        ip_range = get_ip_range_from_vlan(vlan)
+        if not ip_range:
+            raise ValueError(f"Could not determine IP range for VLAN {vlan}")
+
+        return self.passthrough.wait_for_nic_ip_in_range(self.nicname, ip_range, timeout=timeout)
 
     def assert_authentication_and_ip_in_range(
         self,
@@ -244,10 +257,10 @@ class RadiusTestBase:
         Verify wired-specific authentication properties on CounterAct.
 
         Args:
-            nas_port_id: Expected NAS Port ID (dot1x_NASPortIdStr). Defaults to self.switch.port1
+            nas_port_id: Expected NAS Port ID (dot1x_NASPortIdStr). Defaults to self.switch.port1['interface']
         """
         host_id = self._get_host_id()
-        nas_port_id = nas_port_id or self.switch.port1
+        nas_port_id = nas_port_id or self.switch.port1['interface']
 
         log.info(f"Verifying wired properties for host: {host_id}")
 
