@@ -17,8 +17,6 @@ from lib.utils.vlan_mapping import get_vlan_from_ip_range
 
 
 class RadiusTestBase:
-    # Default NIC name - can be overridden via passthrough config
-    DEFAULT_NICNAME = "pciPassthru0"
     DEFAULT_RADIUS_SECRET = "aristo"
     DEFAULT_RADIUS_SETTINGS = RadiusPluginSettings()
 
@@ -29,8 +27,7 @@ class RadiusTestBase:
         self.dot1x = cast(Radius, radius)
         self.switch = cast(CiscoIOS, switch)
         self.passthrough = cast(PassthroughBase, passthrough)
-        # Use nicname from passthrough config if available, otherwise use default
-        self.nicname = getattr(self.passthrough, 'nicname', None) or self.DEFAULT_NICNAME
+        self.nicname = self.passthrough.nicname
         self.rf = RadiusFactory(default_secret=self.DEFAULT_RADIUS_SECRET)
         self.test_start_time = None
 
