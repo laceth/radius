@@ -392,3 +392,153 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
         except Exception as e:
             log.error(f"[{case_id}] FAIL: {e}")
             raise
+
+class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
+    """
+    T1316958
+    Steps
+    -------
+    Precondition: Install client cert B (Dot1xMSCA-CLT-B).
+
+    1. Configure pre-admission rule: MSCA includes (.2, .4, .6, .8, .14, .16, .22, .32) (priority 1).
+       Apply.
+    2. Trigger 802.1X (toggle NIC). Verify RADIUS-Accepted / Pre-Admission rule 1 matched (EAP-TLS).
+    3. Update rule 1: remove MSCA .2 only (keep .4, .6, .8, .14, .16, .22, .32). Apply.
+       Trigger 802.1X. Verify accepted / rule 1 matched.
+    4. Update rule 1: only MSCA (.14, .22). Apply.
+       Trigger 802.1X. Verify accepted / rule 1 matched.
+    5. Update rule 1: only MSCA (.14, .32). Apply.
+       Replace cert B -> cert C. Trigger 802.1X. Verify accepted / rule 1 matched.
+    6. Update rule 1: MSCA includes (.2, .4, .6, .8, .14, .16, .22, .32). Apply.
+       Replace cert C -> cert D. Trigger 802.1X. Verify authentication FAILED (cert D does not match).
+        [TODO] --need Fix for cert FIFO windows endpoint.
+    """
+
+    # Rule Settings
+    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+
+    RULE_MSCA_ALL_2_4_6_8_14_16_22_32 = [
+        {
+            "rule_name": "Certificate-MS-Certificate-Authority",
+            "fields": [
+                MSCAEntry.OID_21_02_SZOID_CERTSRV_PREVIOUS_CERT_HASH.value,  # .2
+                MSCAEntry.OID_21_04_SZOID_CRL_NEXT_PUBLISH.value,            # .4
+                MSCAEntry.OID_21_06_SZOID_KP_KEY_RECOVERY_AGENT.value,       # .6
+                MSCAEntry.OID_21_08_SZOID_ENTERPRISE_OID_ROOT.value,         # .8
+                MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value,                # .14
+                MSCAEntry.OID_21_16_SZOID_ARCHIVED_KEY_CERT_HASH.value,      # .16
+                MSCAEntry.OID_21_22_SZOID_CERTSRV_CROSSCA_VERSION.value,     # .22
+                MSCAEntry.OID_21_32_USER_CREDENTIALS_LOW_ASSURANCE.value,   # .32
+            ],
+        }
+    ]
+
+    RULE_MSCA_ALL_EXCEPT_PREVIOUS_CERT_HASH = [
+        {
+            "rule_name": "Certificate-MS-Certificate-Authority",
+            "fields": [
+                MSCAEntry.OID_21_04_SZOID_CRL_NEXT_PUBLISH.value,            # .4
+                MSCAEntry.OID_21_06_SZOID_KP_KEY_RECOVERY_AGENT.value,       # .6
+                MSCAEntry.OID_21_08_SZOID_ENTERPRISE_OID_ROOT.value,         # .8
+                MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value,                # .14
+                MSCAEntry.OID_21_16_SZOID_ARCHIVED_KEY_CERT_HASH.value,      # .16
+                MSCAEntry.OID_21_22_SZOID_CERTSRV_CROSSCA_VERSION.value,     # .22
+                MSCAEntry.OID_21_32_USER_CREDENTIALS_LOW_ASSURANCE.value,   # .32
+            ],
+        }
+    ]
+
+    RULE_MSCA_ONLY_SELF_CDP_AND_CROSSCA_VERSION = [
+        {
+            "rule_name": "Certificate-MS-Certificate-Authority",
+            "fields": [
+                MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value,            # .14
+                MSCAEntry.OID_21_22_SZOID_CERTSRV_CROSSCA_VERSION.value, # .22
+            ],
+        }
+    ]
+
+    RULE_MSCA_ONLY_SELF_CDP_AND_LOW_ASSURANCE = [
+        {
+            "rule_name": "Certificate-MS-Certificate-Authority",
+            "fields": [
+                MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value,              # .14
+                MSCAEntry.OID_21_32_USER_CREDENTIALS_LOW_ASSURANCE.value, # .32
+            ],
+        }
+    ]
+
+    SET_MSCA_ALL_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_MSCA_ALL_2_4_6_8_14_16_22_32, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_MSCA_ALL_EXCEPT_2_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_MSCA_ALL_EXCEPT_PREVIOUS_CERT_HASH, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_MSCA_ONLY_14_22_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_MSCA_ONLY_SELF_CDP_AND_CROSSCA_VERSION, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_MSCA_ONLY_14_32_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_MSCA_ONLY_SELF_CDP_AND_LOW_ASSURANCE, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    def do_test(self):
+        auth_nic_profile = AuthNicProfile.EAP_TLS
+        expected_status = AuthenticationStatus.SUCCEEDED
+        fail_status = AuthenticationStatus.FAILED
+        certificate_password = CERT_PASSWORD
+        case_id = "T1316958"
+        expected_nas_port = self.switch.port1
+
+        try:
+            self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
+            # Precondition: cert B
+            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_B.value
+            self.import_certificates(certificate_password=certificate_password)
+
+            # Step 1/2
+            self.dot1x.set_pre_admission_rules(self.SET_MSCA_ALL_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+            #self.verify_pre_admission_rule(rule_priority=1)
+           
+
+            # Step 3
+            self.dot1x.set_pre_admission_rules(self.SET_MSCA_ALL_EXCEPT_2_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+            #self.verify_pre_admission_rule(rule_priority=1)
+
+            # Step 4
+            self.dot1x.set_pre_admission_rules(self.SET_MSCA_ONLY_14_22_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+            #self.verify_pre_admission_rule(rule_priority=1)
+
+            # Step 5: switch cert B -> C
+            self.dot1x.set_pre_admission_rules(self.SET_MSCA_ONLY_14_32_ACCEPT_ELSE_DENY)
+            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_C.value
+            self.import_certificates(certificate_password=certificate_password)
+
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+            #self.verify_pre_admission_rule(rule_priority=1)
+             
+            # Step 6: back to ALL + switch cert C -> D (expect FAIL)
+            self.dot1x.set_pre_admission_rules(self.SET_MSCA_ALL_ACCEPT_ELSE_DENY)
+            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_D.value
+            self.import_certificates(certificate_password=certificate_password)
+             
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+            #self.verify_pre_admission_rule(rule_priority=1)
+        except Exception as e:
+            log.error(f"[{case_id}] FAIL: {e}")
+            raise
+        
