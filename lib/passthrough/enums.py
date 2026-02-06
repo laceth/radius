@@ -23,7 +23,7 @@ class AuthNicProfile(Enum):
     EAP_TTLS = "lan_profile_eap_ttls_config.xml"
 
 class WindowsCert(Enum):
-    CERT_TEMPLATE_CON_CERT =  "Dot1x-CLT-testdecodeA.pfx"
+    CERT_TEMPLATE_CON_CERT = "testdecodeA.pfx"
     CERT_TEST_CLIENT = "clientcert.pfx"
     CERT_DOT1X_A = "Dot1x-CLT-A.pfx"
 

@@ -231,11 +231,9 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
 
         try:
             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
-
             # Step 2: import template client cert
             self.cert_config.certificate_filename = WindowsCert.CERT_TEMPLATE_CON_CERT.value
             self.import_certificates(certificate_password=certificate_password)
-
             # Step 3: exact OID match -> ACCEPT
             self.dot1x.set_pre_admission_rules(self.SET_OID_MATCH_ACCEPT_ELSE_DENY)
             self.toggle_nic()
@@ -305,3 +303,201 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
             raise
 
 
+class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
+    """
+    T1316954 
+    Steps
+    -------
+    1. Disable the Windows wired NIC.
+    2. In CounterAct: Options -> RADIUS -> Pre-Admission Authentication.
+       Add rule 1 with condition "Certificate-Extended-Key-Usage".
+       Select EKUs: .2, .4, .6, .8, .14, .16, .23, .29. Save and Apply.
+    3. Enable NIC to trigger 802.1X. Verify accepted / Pre-Admission rule 1 matched (EAP-TLS).
+    4. Disable NIC. Update rule 1 by deselecting EKU .2. Apply. Enable NIC. Verify accepted / rule 1 matched.
+    5. Disable NIC. Update rule 1 by unselecting all but EKUs .14 and .24. Apply. Enable NIC. Verify accepted / rule 1 matched.
+    6. Disable NIC. Update rule 1 by unselecting all but EKUs .14 and .29. Apply.
+       Replace cert B -> cert C. Enable NIC. Verify accepted / rule 1 matched.
+    7. Disable NIC. Update rule 1 by selecting ALL EKU options. Apply.
+       Replace cert C -> cert D (no EKUs). Enable NIC. Verify FAIL (rule 1 not matched; dummy reject matched).
+       [TODO] --need Fix for cert FIFO windows endpoint.
+    """
+
+    # -------------------------
+    # Rule Settings
+    # -------------------------
+    #RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+
+    RULE_EKU_CLIENT_AUTH_EMAIL_IPSEC_TIMESTAMP_EAP_SCVP_SENDROUTER_CMC = [
+        {
+            "rule_name": "Certificate-Extended-Key-Usage",
+            "fields": [
+                EKUEntry.EKU_02_CLIENT_AUTH.value,       # .2
+                EKUEntry.EKU_04_EMAIL_PROTECTION.value,  # .4
+                EKUEntry.EKU_06_IPSEC_TUNNEL.value,       # .6
+                EKUEntry.EKU_08_TIMESTAMPING.value,       # .8
+                EKUEntry.EKU_14_EAP_OVER_LAN.value,       # .14
+                EKUEntry.EKU_16_SCVP_CLIENT.value,        # .16
+                EKUEntry.EKU_23_SEND_ROUTER.value,        # .23
+                EKUEntry.EKU_29_CMC_ARCHIVE.value,        # .29
+            ],
+        }
+    ]
+
+    RULE_EKU_ALL_EXCEPT_CLIENT_AUTH = [
+        {
+            "rule_name": "Certificate-Extended-Key-Usage",
+            "fields": [
+                EKUEntry.EKU_04_EMAIL_PROTECTION.value,
+                EKUEntry.EKU_06_IPSEC_TUNNEL.value,
+                EKUEntry.EKU_08_TIMESTAMPING.value,
+                EKUEntry.EKU_14_EAP_OVER_LAN.value,
+                EKUEntry.EKU_16_SCVP_CLIENT.value,
+                EKUEntry.EKU_23_SEND_ROUTER.value,
+                EKUEntry.EKU_29_CMC_ARCHIVE.value,
+            ],
+        }
+    ]
+
+    RULE_EKU_EAP_OVER_LAN_AND_SEND_PROXY = [
+        {
+            "rule_name": "Certificate-Extended-Key-Usage",
+            "fields": [
+                EKUEntry.EKU_14_EAP_OVER_LAN.value,  # .14
+                EKUEntry.EKU_24_SEND_PROXY.value,    # .24
+            ],
+        }
+    ]
+
+    RULE_EKU_EAP_OVER_LAN_AND_CMC_ARCHIVE = [
+        {
+            "rule_name": "Certificate-Extended-Key-Usage",
+            "fields": [
+                EKUEntry.EKU_14_EAP_OVER_LAN.value,  # .14
+                EKUEntry.EKU_29_CMC_ARCHIVE.value,   # .29
+            ],
+        }
+    ]
+    # Negative Test Cert B , EKU list entry must match all , I left out Cert B OIDs 
+    RULE_EKU_EAP_NO_OVER_LAN = [
+        {
+            "rule_name": "Certificate-Extended-Key-Usage",
+            "fields": [
+                EKUEntry.EKU_03_CODE_SIGNING.value,   # .3
+            ],
+        }
+    ]
+    
+    RULE_EKU_ALL_OPTIONS = [
+        {
+            "rule_name": "Certificate-Extended-Key-Usage",
+            "fields": [
+            EKUEntry.EKU_01_SERVER_AUTH.value,
+            EKUEntry.EKU_02_CLIENT_AUTH.value,
+            EKUEntry.EKU_03_CODE_SIGNING.value,
+            EKUEntry.EKU_04_EMAIL_PROTECTION.value,
+            EKUEntry.EKU_05_IPSEC_IKE.value,
+            EKUEntry.EKU_06_IPSEC_TUNNEL.value,
+            EKUEntry.EKU_07_IPSEC_USER.value,
+            EKUEntry.EKU_08_TIMESTAMPING.value,
+            EKUEntry.EKU_09_OCSP_SIGNING.value,
+            EKUEntry.EKU_10_SSH_AUTHENTICATION.value,
+            EKUEntry.EKU_11_SBGP_CERT_AA_SERVER_AUTH.value,
+            EKUEntry.EKU_12_SCVP_RESPONDER.value,
+            EKUEntry.EKU_13_EAP_OVER_PPP.value,
+            EKUEntry.EKU_14_EAP_OVER_LAN.value,
+            EKUEntry.EKU_15_SCVP_SERVER.value,
+            EKUEntry.EKU_16_SCVP_CLIENT.value,
+            EKUEntry.EKU_17_ID_KP_IPSEC_IKE.value,
+            EKUEntry.EKU_18_CAPWAP_AC.value,
+            EKUEntry.EKU_19_CAPWAP_WTP.value,
+            EKUEntry.EKU_20_SIP_DOMAIN.value,
+            EKUEntry.EKU_21_SECURE_SHELL_CLIENT.value,
+            EKUEntry.EKU_22_SECURE_SHELL_SERVER.value,
+            EKUEntry.EKU_23_SEND_ROUTER.value,
+            EKUEntry.EKU_24_SEND_PROXY.value,
+            EKUEntry.EKU_25_SEND_OWNER.value,
+            EKUEntry.EKU_26_SEND_PROXIED_OWNER.value,
+            EKUEntry.EKU_27_CMC_CA.value,
+            EKUEntry.EKU_28_CMC_RA.value,
+            EKUEntry.EKU_29_CMC_ARCHIVE.value,
+            ],
+        }
+    ]
+
+    # -------------------------
+    # Policy Sets (Rule 1 accept, else dummy reject)
+    # -------------------------
+    SET_EKU_CLIENT_AUTH_EMAIL_IPSEC_TIMESTAMP_EAP_SCVP_SENDROUTER_CMC_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_EKU_CLIENT_AUTH_EMAIL_IPSEC_TIMESTAMP_EAP_SCVP_SENDROUTER_CMC, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_EKU_ALL_EXCEPT_CLIENT_AUTH_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_EKU_ALL_EXCEPT_CLIENT_AUTH, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_EKU_EAP_OVER_LAN_AND_SEND_PROXY_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_EKU_EAP_OVER_LAN_AND_SEND_PROXY, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_EKU_EAP_OVER_LAN_AND_CMC_ARCHIVE_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_EKU_EAP_OVER_LAN_AND_CMC_ARCHIVE, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+    SET_EKU_ALL_OPTIONS_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_EKU_ALL_OPTIONS, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_EKU_EAP_NO_OVER_LAN_DENY = [
+        {"cond_rules": RULE_EKU_EAP_NO_OVER_LAN, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    def do_test(self):
+        auth_nic_profile = AuthNicProfile.EAP_TLS
+        expected_status = AuthenticationStatus.SUCCEEDED
+        fail_status = AuthenticationStatus.FAILED
+        certificate_password = CERT_PASSWORD
+        case_id = "T1316954"
+
+        try:
+            self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
+            # Step 2-3: EKUs (.2,.4,.6,.8,.14,.16,.23,.29) -> cert B -> SUCCESS
+            self.dot1x.set_pre_admission_rules(self.SET_EKU_CLIENT_AUTH_EMAIL_IPSEC_TIMESTAMP_EAP_SCVP_SENDROUTER_CMC_ACCEPT_ELSE_DENY)
+            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_B.value
+            self.import_certificates(certificate_password=certificate_password)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+            #self.verify_pre_admission_rule(rule_priority=1)
+
+            #Step 4: deselect .2 ->
+            self.dot1x.set_pre_admission_rules(self.SET_EKU_EAP_NO_OVER_LAN_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=fail_status)
+            #self.verify_pre_admission_rule(rule_priority=2)
+
+            #Step 5: only (.14,.24) -> SUCCESS
+            self.dot1x.set_pre_admission_rules(self.SET_EKU_EAP_OVER_LAN_AND_SEND_PROXY_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+            #self.verify_pre_admission_rule(rule_priority=1)
+            # Step 6: only (.14,.29) + swap cert B->C -> SUCCESS
+            self.dot1x.set_pre_admission_rules(self.SET_EKU_EAP_OVER_LAN_AND_CMC_ARCHIVE_ACCEPT_ELSE_DENY)
+            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_C.value
+            self.import_certificates(certificate_password=certificate_password)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+            #self.verify_pre_admission_rule(rule_priority=1)
+            # #Step 7: "ALL EKU options" + swap cert C->D (no EKUs) ->
+            self.dot1x.set_pre_admission_rules(self.SET_EKU_ALL_OPTIONS_ACCEPT_ELSE_DENY)
+            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_D.value
+            self.import_certificates(certificate_password=certificate_password)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+            #self.verify_pre_admission_rule(rule_priority=2) 
+            log.info("[OK] CA shows Access-Reject + EAP-TLS")
+        except Exception as e:
+            raise
