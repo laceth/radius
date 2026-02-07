@@ -17,11 +17,16 @@ switch:
   ip: 10.16.128.21
   user_name: admin
   password: aristo
-  port1: fa0/1
-  port2: fa0/2
+  port1:
+    interface: fa0/1
+    vlan: 1570
+  port2:
+    interface: fa0/2
+    vlan: 1570
 
 passthrough:
   ip: 10.16.133.134
   user_name: Administrator
   password: aristo
   mac: 98f2b301a055
+  nicname: pciPassthru0

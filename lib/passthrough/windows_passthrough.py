@@ -1,15 +1,16 @@
 from framework.log.logger import log
 from lib.passthrough.passthrough_base import PassthroughBase
 from lib.passthrough.enums import AuthenticationStatus
+import ipaddress
 import winrm
 import re
 import time
-from typing import Tuple, Union
+from typing import Optional, Tuple, Union
 
 
 class WindowsPassthrough(PassthroughBase):
-    def __init__(self, ip: str, user_name: str, password: str, mac: str):
-        super().__init__(ip, user_name, password, mac)
+    def __init__(self, ip: str, user_name: str, password: str, mac: str, nicname: str = "pciPassthru0"):
+        super().__init__(ip, user_name, password, mac, nicname)
         self.win_con = winrm.Session(self.ip, auth=(self.username, self.password), transport='ntlm')
 
     def execute_command(self, command, is_ps=True):
@@ -459,6 +460,81 @@ class WindowsPassthrough(PassthroughBase):
         cmd = f'(Get-NetAdapter -Name "{nicname}" -ErrorAction SilentlyContinue).Status'
         return self.execute_command(cmd).strip()
 
+    def get_nic_ip(self, nicname: str) -> Optional[str]:
+        """
+        Get the IPv4 address of a network interface.
+
+        Args:
+            nicname: Network interface name (e.g., 'Ethernet')
+
+        Returns:
+            IPv4 address as string, or None if no IP assigned
+        """
+        cmd = f'(Get-NetIPAddress -InterfaceAlias "{nicname}" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress'
+        try:
+            result = self.execute_command(cmd).strip()
+            if result and result != "":
+                log.debug(f"NIC '{nicname}' IP address: {result}")
+                return result
+        except RuntimeError:
+            pass
+        return None
+
+    def is_ip_in_range(self, ip: str, ip_range: str) -> bool:
+        """
+        Check if an IP address is within a CIDR range.
+
+        Args:
+            ip: IP address to check (e.g., '10.16.148.130')
+            ip_range: CIDR range (e.g., '10.16.148.128/26')
+
+        Returns:
+            True if IP is in range, False otherwise
+        """
+        try:
+            network = ipaddress.ip_network(ip_range, strict=False)
+            return ipaddress.ip_address(ip) in network
+        except ValueError as e:
+            log.warning(f"Invalid IP or range: {e}")
+            return False
+
+    def wait_for_nic_ip_in_range(self, nicname: str, ip_range: str, timeout: int = 90, interval: int = 5) -> str:
+        """
+        Wait for NIC to get an IP address within the specified CIDR range.
+
+        Args:
+            nicname: Network interface name (e.g., 'Ethernet')
+            ip_range: Target CIDR range (e.g., '10.16.148.128/26')
+            timeout: Maximum time to wait in seconds (default: 90)
+            interval: Interval in seconds between checks (default: 5)
+
+        Returns:
+            The IP address that was assigned
+
+        Raises:
+            AssertionError: If NIC does not get an IP in range within timeout
+        """
+        log.info(f"Waiting for NIC '{nicname}' to get IP in range '{ip_range}' (max {timeout}s)...")
+        start_time = time.time()
+
+        while time.time() - start_time < timeout:
+            current_ip = self.get_nic_ip(nicname)
+            if current_ip:
+                if self.is_ip_in_range(current_ip, ip_range):
+                    log.info(f"[OK] NIC '{nicname}' got IP '{current_ip}' which is in range '{ip_range}'")
+                    return current_ip
+                else:
+                    log.debug(f"NIC '{nicname}' has IP '{current_ip}' but not in target range '{ip_range}'")
+            else:
+                log.debug(f"NIC '{nicname}' has no IP yet")
+
+            time.sleep(interval)
+
+        current_ip = self.get_nic_ip(nicname)
+        raise AssertionError(
+            f"NIC '{nicname}' did not get IP in range '{ip_range}' within {timeout}s. Current IP: {current_ip}"
+        )
+
     def get_nic_authentication_status(self, nicname: str) -> str:
         """
         Get the 802.1X authentication status of a network interface using netsh.
@@ -495,10 +571,12 @@ class WindowsPassthrough(PassthroughBase):
 
         log.info(f"Waiting for NIC '{nicname}' 802.1X authentication (max {timeout}s)...")
         start_time = time.time()
+        last_status = None
 
         while time.time() - start_time < timeout:
             try:
                 output = self.get_nic_authentication_status(nicname)
+                last_status = output
                 if status_value in output:
                     log.info(f"[OK] NIC '{nicname}' authentication status: '{status_value}'")
                     return
@@ -509,7 +587,8 @@ class WindowsPassthrough(PassthroughBase):
             time.sleep(interval)
 
         raise AssertionError(
-            f"NIC '{nicname}' did not reach authentication status '{status_value}' within {timeout}s"
+            f"NIC '{nicname}' did not reach authentication status '{status_value}' within {timeout}s. "
+            f"Actual status: '{last_status}'"
         )
 
     # =========================================================================
