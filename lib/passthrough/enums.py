@@ -47,5 +47,6 @@ class WindowsCert(Enum):
     CERT_DOT1X_MSCA_G = "Dot1xMSCA-CLT-G.pfx"  
 
     CERT_DOT1X_EXPIRED = "Dot1x-CLT-Expired.pfx"
+    CERT_DOT1X_TIME = "Dot1x-CLT-Time.pfx"  # Certificate with absurd expiry date (12/31/9999)
     CERT_DOT1X_REVOKED = "Dot1x-CLT-Revoked.pfx"
     CERT_DOT1X_VALID   = "Dot1x-CLT-Good.pfx"

@@ -145,6 +145,18 @@ class RadiusTestBase:
     # Assertions
     # =========================================================================
 
+    def assert_dot1x_plugin_running(self, message: str = "802.1X plugin should be running"):
+        """
+        Assert that the 802.1X plugin is running.
+
+        Args:
+            message: Custom assertion message
+
+        Raises:
+            AssertionError: If the plugin is not running
+        """
+        assert self.dot1x.dot1x_plugin_running(), message
+
     def assert_authentication_status(
             self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
     ):

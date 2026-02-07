@@ -1,7 +1,6 @@
-from dataclasses import field
 from framework.log.logger import log
 from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile, WindowsCert
-from lib.plugin.radius.enums import Dot1xAttribute, PreAdmissionAuth, MscaOid, EKUEntry, MSCAEntry, PreAdmissionCriterionAttribute
+from lib.plugin.radius.enums import Dot1xAttribute, PreAdmissionAuth, MscaOid, EKUEntry, MSCAEntry
 from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
 
 
@@ -158,7 +157,7 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
         try:
             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
             self.dot1x.set_pre_admission_rules(self.SET_BASIC_WIRED_ACCEPT_TLS_ELSE_DENY)
-            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_VALID.value
+            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_G.value
             self.import_certificates(certificate_password=self.certificate_password)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
@@ -273,10 +272,9 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
     -------
     1. Configure LAN profile on the host for EAP-TLS.
     2. Configure pre-admission rule: EAP-Type = TLS (priority 1), else dummy reject.
-    Apply.
-    3. Import the client certificate with absurd expiry date.
-    4. Trigger 802.1X (toggle NIC). Verify RADIUS-Accepted-Reject .
-    5. [TODO] Need function to check fstool dot1x status.
+    3. Import the client certificate with absurd expiry date (12/31/9999).
+    4. Trigger 802.1X (toggle NIC). Verify RADIUS-Accepted (plugin handles absurd date gracefully).
+    5. Verify plugin didn't crash by checking uptime.
     """
 
     # Rule Settings
@@ -290,7 +288,7 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
 
     def do_test(self):
         auth_nic_profile = AuthNicProfile.EAP_TLS
-        fail_status = AuthenticationStatus.FAILED
+        expected_status = AuthenticationStatus.SUCCEEDED  # Plugin should handle absurd date gracefully
         certificate_password = CERT_PASSWORD
         case_id = "T1316965"
         expected_nas_port = self.switch.port1['interface']
@@ -298,12 +296,24 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
         try:
             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
             self.dot1x.set_pre_admission_rules(self.SET_ACCEPT_TLS_ELSE_DENY)
-            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EXPIRED.value
+
+            # Verify plugin is running before test
+            self.assert_dot1x_plugin_running("802.1X plugin should be running before test")
+
+            # Import certificate with absurd expiry date (12/31/9999)
+            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_TIME.value
             self.import_certificates(certificate_password=certificate_password)
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=fail_status)
+
+            # Plugin should accept the cert gracefully (not crash)
+            self.assert_authentication_status(expected_status=expected_status)
+            self.wait_for_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=expected_nas_port)
-            log.info(f"[{case_id}] PASS")
+
+            # Verify plugin didn't crash (still running after auth)
+            self.assert_dot1x_plugin_running("802.1X plugin should still be running after handling absurd expiry date")
+
+            log.info(f"[{case_id}] PASS - Plugin handled absurd expiry date gracefully")
         except Exception as e:
             log.error(f"[{case_id}] FAIL: {e}")
             raise
@@ -369,7 +379,7 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
         fail_status = AuthenticationStatus.FAILED
         certificate_password = CERT_PASSWORD
         case_id = "T1316957"
-        expected_nas_port = self.switch.port1
+        expected_nas_port = self.switch.port1['interface']
 
         try:
             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
@@ -500,7 +510,7 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
         fail_status = AuthenticationStatus.FAILED
         certificate_password = CERT_PASSWORD
         case_id = "T1316958"
-        expected_nas_port = self.switch.port1
+        expected_nas_port = self.switch.port1['interface']
 
         try:
             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
@@ -536,13 +546,13 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
             self.assert_authentication_status(expected_status=expected_status)
             #self.verify_pre_admission_rule(rule_priority=1)
              
-            # Step 6: back to ALL + switch cert C -> D (expect FAIL)
+            # Step 6: back to ALL + switch cert C -> D (expect FAIL - cert D has no MSCA values)
             self.dot1x.set_pre_admission_rules(self.SET_MSCA_ALL_ACCEPT_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_D.value
             self.import_certificates(certificate_password=certificate_password)
              
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=expected_status)
+            self.assert_authentication_status(expected_status=fail_status)  # Cert D has no MSCA values, should FAIL
             #self.verify_pre_admission_rule(rule_priority=1)
         except Exception as e:
             log.error(f"[{case_id}] FAIL: {e}")
