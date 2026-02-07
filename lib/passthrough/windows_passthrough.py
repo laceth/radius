@@ -571,10 +571,12 @@ class WindowsPassthrough(PassthroughBase):
 
         log.info(f"Waiting for NIC '{nicname}' 802.1X authentication (max {timeout}s)...")
         start_time = time.time()
+        last_status = None
 
         while time.time() - start_time < timeout:
             try:
                 output = self.get_nic_authentication_status(nicname)
+                last_status = output
                 if status_value in output:
                     log.info(f"[OK] NIC '{nicname}' authentication status: '{status_value}'")
                     return
@@ -585,7 +587,8 @@ class WindowsPassthrough(PassthroughBase):
             time.sleep(interval)
 
         raise AssertionError(
-            f"NIC '{nicname}' did not reach authentication status '{status_value}' within {timeout}s"
+            f"NIC '{nicname}' did not reach authentication status '{status_value}' within {timeout}s. "
+            f"Actual status: '{last_status}'"
         )
 
     # =========================================================================

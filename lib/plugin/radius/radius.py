@@ -7,7 +7,7 @@ from lib.plugin.radius.radius_plugin_settings import radius_setting_option_mappi
 
 DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_UPTIME_COMMAND = "fstool dot1x uptime"
-DOT1X_RESTART_TIMEOUT = 280
+DOT1X_RESTART_TIMEOUT = 300
 DOT1X_CHECK_INTERVAL = 5
 DOT1X_RUNNING_VERIFICATION_STRING = " days"
 
@@ -45,7 +45,7 @@ class Radius(RadiusBase):
         which indicates the plugin is fully operational.
 
         Args:
-            timeout: Maximum time in seconds to wait for the plugin to start (default: 60).
+            timeout: Maximum time in seconds to wait for the plugin to start (default: 300).
             interval: Time in seconds between status checks (default: 5).
 
         Raises:
