@@ -14,6 +14,28 @@ from lib.switch.cisco_ios import CiscoIOS
 from lib.switch.radius_factory import RadiusFactory
 from lib.utils.vlan_mapping import get_ip_range_from_vlan
 
+# CONSTANTS
+DEFAULT_RADIUS_POLICY_MAC_FIELDS = [
+    {
+        "EXPR_TYPE": "SIMPLE",
+        "CONDITION": {
+            "EMPTY_LIST_VALUE": "false",
+            "FIELD_NAME": "mac",
+            "LABEL": "MAC Address",
+            "LEFT_PARENTHESIS": "0",
+            "LOGIC": "AND",
+            "RET_VALUE_ON_UKNOWN": "IRRESOLVED",
+            "RIGHT_PARENTHESIS": "0",
+            "FILTER": {
+                "CASE_SENSITIVE": "false",
+                "TYPE": "equals",
+                "VALUE": {
+                    "VALUE2": "0050568513ca"
+                }
+            }
+        }
+    }
+]
 
 
 class RadiusTestBase:
@@ -32,33 +54,34 @@ class RadiusTestBase:
         self.test_start_time = None
 
     def do_setup(self):
-        log.info("radius common setup")
-
-        # Record test start time
-        self.test_start_time = datetime.now()
-        log.info(f"Test start time: {self.test_start_time}")
-
-        # Configure RADIUS plugin with settings
-        self.configure_radius_settings()
-
-        # Cleanup any existing endpoint before test
-        self.cleanup_endpoint_by_mac(self.passthrough.mac)
-
-        # Get VLAN and IP range from switch port config
-        vlan = self.switch.port1['vlan']
-        target_ip_range = get_ip_range_from_vlan(vlan) if vlan else None
-        if target_ip_range:
-            log.info(f"Target IP range {target_ip_range} derived from VLAN {vlan}")
-
-        # Setup switch RADIUS configuration
-        self.rf.setup(
-            self.switch,
-            port=self.switch.port1['interface'],
-            radius_server_ip=self.ca.ipaddress,
-            radius_secret=self.DEFAULT_RADIUS_SECRET,
-            mab=False,
-            vlan=vlan,
-        )
+        # log.info("radius common setup")
+        #
+        # # Record test start time
+        # self.test_start_time = datetime.now()
+        # log.info(f"Test start time: {self.test_start_time}")
+        #
+        # # Configure RADIUS plugin with settings
+        # self.configure_radius_settings()
+        #
+        # # Cleanup any existing endpoint before test
+        # self.cleanup_endpoint_by_mac(self.passthrough.mac)
+        #
+        # # Get VLAN and IP range from switch port config
+        # vlan = self.switch.port1['vlan']
+        # target_ip_range = get_ip_range_from_vlan(vlan) if vlan else None
+        # if target_ip_range:
+        #     log.info(f"Target IP range {target_ip_range} derived from VLAN {vlan}")
+        #
+        # # Setup switch RADIUS configuration
+        # self.rf.setup(
+        #     self.switch,
+        #     port=self.switch.port1['interface'],
+        #     radius_server_ip=self.ca.ipaddress,
+        #     radius_secret=self.DEFAULT_RADIUS_SECRET,
+        #     mab=False,
+        #     vlan=vlan,
+        # )
+        pass
 
     def configure_radius_settings(self, **overrides):
         """
@@ -74,7 +97,6 @@ class RadiusTestBase:
         else:
             settings = self.DEFAULT_RADIUS_SETTINGS
         self.dot1x.configure_radius_plugin(settings.to_dict())
-
 
     def radius_special_setup(self):
         log.info("radius special setup")
@@ -124,7 +146,7 @@ class RadiusTestBase:
     # =========================================================================
 
     def assert_authentication_status(
-        self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
+            self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
     ):
         """
         Assert NIC reaches expected authentication status.
@@ -161,10 +183,10 @@ class RadiusTestBase:
         return self.passthrough.wait_for_nic_ip_in_range(self.nicname, ip_range, timeout=timeout)
 
     def assert_authentication_and_ip_in_range(
-        self,
-        expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED,
-        auth_timeout: int = 90,
-        ip_timeout: int = 60
+            self,
+            expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED,
+            auth_timeout: int = 90,
+            ip_timeout: int = 60
     ):
         """
         Assert NIC authentication succeeds and gets IP in target VLAN range.
@@ -190,11 +212,11 @@ class RadiusTestBase:
         return self.ca.get_host_ip_by_mac(self.passthrough.mac)
 
     def _verify_common_properties(
-        self,
-        host_id: str,
-        switch_ip: str = None,
-        ca_ip: str = None,
-        auth_state: str = "Access-Accept"
+            self,
+            host_id: str,
+            switch_ip: str = None,
+            ca_ip: str = None,
+            auth_state: str = "Access-Accept"
     ):
         """
         Verify common authentication properties on CounterAct.
@@ -330,9 +352,9 @@ class RadiusTestBase:
         log.info(f"Auth time verified: {auth_time} >= {self.test_start_time}")
 
     def verify_authentication_on_ca(
-        self,
-        switch_ip: str = None,
-        ca_ip: str = None
+            self,
+            switch_ip: str = None,
+            ca_ip: str = None
     ):
         """
         Verify common authentication properties on CounterAct.
@@ -398,6 +420,39 @@ class RadiusTestBase:
         properties_check_list = [
             {"property_field": "dot1x_fr_client_x509_cert_subj_alt_name", "expected_value": expected_san}
         ]
-
         self.ca.check_properties(host_id, properties_check_list)
         log.info(f"SAN verified: {expected_san}")
+
+    def add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(self, match_type, value, match_case=False, inner_not=False):
+        """
+            Add a condition to the policy to check the 802.1x Client Cert Subject Alternative Name property.
+            type: The type of match (e.g., "equals", "contains", "startswith", "endswith")
+            value: The value to match against the SAN property (e.g., "1.1.2" for endswith)
+            match_case: Whether the match should be case sensitive. Default is False.
+            inner_not: Whether to apply NOT operator to the inner condition. Default is False.
+        """
+        fields = DEFAULT_RADIUS_POLICY_MAC_FIELDS.copy()
+        fields[0]["CONDITION"]["FILTER"]["VALUE"]["VALUE2"] = self.passthrough.mac
+        fields.append(
+            {
+                "EXPR_TYPE": "SIMPLE",
+                "CONDITION": {
+                    "EMPTY_LIST_VALUE": "false",
+                    "FIELD_NAME": "dot1x_fr_client_x509_cert_subj_alt_name",
+                    "LABEL": "802.1x Client Cert Subject Alternative Name",
+                    "LEFT_PARENTHESIS": "0",
+                    "LOGIC": "AND",
+                    "RET_VALUE_ON_UKNOWN": "IRRESOLVED",
+                    "INNER_NOT": str(inner_not).lower(),
+                    "RIGHT_PARENTHESIS": "0",
+                    "FILTER": {
+                        "CASE_SENSITIVE": str(match_case).lower(),
+                        "TYPE": match_type,
+                        "VALUE": {
+                            "VALUE2": value
+                        }
+                    }
+                }
+            }
+        )
+        self.em.simple_policy_condition("dot1xSimplePolicyCondition.xml", "policy_condition_dot1x_fr_client_x509_cert_subj_alt_name", fields)
