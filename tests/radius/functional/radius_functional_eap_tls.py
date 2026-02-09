@@ -186,7 +186,12 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
        Trigger 802.1X. Verify RADIUS-Accepted / rule 1 matched.
     6. Update rule 1: Certificate-EAP-TLS-Certificate-Template MATCHES REGEX. Apply.
        Trigger 802.1X. Verify RADIUS-Accepted / rule 1 matched.
+    7. Update rule 1: Certificate-EAP-TLS-Certificate-Template STARTSWITH OID PREFIX. Apply.
+    8. Update rule 1: Certificate-EAP-TLS-Certificate-Template ENDSWITH OID SUFFIX. Apply.
     """
+    TEMPLATE_OID = MscaOid.TEMPLATE_OID_01.value
+    TEMPLATE_OID_PREFIX = ".".join(TEMPLATE_OID.split(".")[:10])   # stable prefix
+    TEMPLATE_OID_SUFFIX = ".".join(TEMPLATE_OID.split(".")[-2:])   # stable suffix
 
     # Rule Settings
     RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
@@ -205,6 +210,14 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
         }
     ]
 
+    RULE_TEMPLATE_OID_STARTSWITH = [
+    {"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["startswith", TEMPLATE_OID_PREFIX]}
+    ]
+
+    RULE_TEMPLATE_OID_ENDSWITH = [
+        {"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["endswith", TEMPLATE_OID_SUFFIX]}
+    ]
+
     SET_OID_MATCH_ACCEPT_ELSE_DENY = [
         {"cond_rules": RULE_TEMPLATE_OID_MATCH, "auth": PreAdmissionAuth.ACCEPT},
         {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
@@ -219,6 +232,16 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
     ]
     SET_OID_REGEX_MATCH_ACCEPT_ELSE_DENY = [
         {"cond_rules": RULE_TEMPLATE_OID_REGEX_MATCH, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_OID_STARTSWITH_ACCEPT_ELSE_DENY = [
+    {"cond_rules": RULE_TEMPLATE_OID_STARTSWITH, "auth": PreAdmissionAuth.ACCEPT},
+    {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_OID_ENDSWITH_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_TEMPLATE_OID_ENDSWITH, "auth": PreAdmissionAuth.ACCEPT},
         {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
     ]
 
@@ -263,6 +286,17 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
+
+            # Step 7: endswith -> ACCEPT
+            self.dot1x.set_pre_admission_rules(self.SET_OID_ENDSWITH_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+
+            # Step 8: regex -> ACCEPT
+            self.dot1x.set_pre_admission_rules(self.SET_OID_REGEX_MATCH_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=expected_status)
+
         except Exception as e:
             log.error(f"[T1316960] FAIL: {e}")
             raise
