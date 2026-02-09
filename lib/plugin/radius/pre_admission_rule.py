@@ -5,6 +5,8 @@ from typing import Any, Dict, List
 
 import paramiko as paramiko
 
+from framework.log.logger import log
+
 DEFAULT_CONDITION_LOOP_UP = "config.defpol_cond1.value="
 DEFAULT_LOCAL_PROPERTY_FILE_PATH = "/usr/local/forescout/plugin/dot1x/local.properties"
 DEFAULT_CONDITION_LOOKUP_PREFIX = "config.defpol_cond"  # support for _lookup_for_slot()
@@ -230,6 +232,7 @@ def set_pre_admission_rules_remote(
     kv: Dict[str, str] = {}
     kv["config.defpol.size.value"] = str(len(rules))
 
+    log.info(f"Building pre-admission rules: {len(rules)} rule(s)")
     for idx, r in enumerate(rules, start=1):
         cond_key = f"config.defpol_cond{idx}.value"
         auth_key = f"config.defpol_auth{idx}.value"
@@ -246,13 +249,13 @@ def set_pre_admission_rules_remote(
         if auth_val is None:
             raise ValueError(f"rule {idx} missing 'auth'")
 
+        log.info(f"Rule {idx}: condition={cond_val}")
+        log.info(f"Rule {idx}: auth={auth_val}")
         kv[cond_key] = cond_val
         kv[auth_key] = auth_val
 
-    # clear leftover stale slots
-    for idx in range(len(rules) + 1, max_slots + 1):
-        kv[f"config.defpol_cond{idx}.value"] = ""
-        kv[f"config.defpol_auth{idx}.value"] = ""
+    # Note: We don't clear stale slots with empty values as this can confuse the plugin
+    # The size.value tells the plugin how many rules to read
 
     _to_file_multi(kv, node, file_path=file_path)
 
@@ -262,6 +265,7 @@ def _to_file_multi(kv: Dict[str, str], node, file_path: str = DEFAULT_LOCAL_PROP
     Remote upsert multiple 'key=value' entries in local.properties in ONE SSH/SFTP session.
     Preserves other lines and comments.
     """
+    log.info(f"Writing {len(kv)} key-value pairs to {file_path} on {node.ipaddress}")
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(node.ipaddress, username=node.username, password=node.password)
@@ -295,6 +299,17 @@ def _to_file_multi(kv: Dict[str, str], node, file_path: str = DEFAULT_LOCAL_PROP
 
         with sftp.open(file_path, "w") as f:
             f.writelines(lines)
+
+        log.info(f"Successfully wrote pre-admission rules to {file_path}")
+
+        # Verify what was written by reading back the relevant keys
+        with sftp.open(file_path, "r") as f:
+            written_lines = f.readlines()
+
+        for line in written_lines:
+            line = line.strip()
+            if line.startswith("config.defpol"):
+                log.info(f"  Verified: {line[:200]}")
 
     finally:
         with suppress(Exception):

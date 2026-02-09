@@ -4,6 +4,12 @@ Enums for RADIUS.
 from enum import Enum
 
 
+class RadiusAuthStatus(str, Enum):
+    """RADIUS authentication status values as shown in CounterAct."""
+    ACCESS_ACCEPT = "Access-Accept"
+    ACCESS_REJECT = "Access-Reject"
+
+
 class LdapPorts(Enum):
     """
     LDAP port modes for Active Directory queries.

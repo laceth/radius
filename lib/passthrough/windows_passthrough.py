@@ -1,4 +1,3 @@
-        return self.execute_command(cmd, is_ps=False)
 from framework.log.logger import log
 from lib.passthrough.passthrough_base import PassthroughBase
 from lib.passthrough.enums import AuthenticationStatus
