@@ -254,8 +254,10 @@ def set_pre_admission_rules_remote(
         kv[cond_key] = cond_val
         kv[auth_key] = auth_val
 
-    # Note: We don't clear stale slots with empty values as this can confuse the plugin
-    # The size.value tells the plugin how many rules to read
+    # clear leftover stale slots
+    for idx in range(len(rules) + 1, max_slots + 1):
+        kv[f"config.defpol_cond{idx}.value"] = ""
+        kv[f"config.defpol_auth{idx}.value"] = ""
 
     _to_file_multi(kv, node, file_path=file_path)
 
