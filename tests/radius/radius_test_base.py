@@ -54,33 +54,33 @@ class RadiusTestBase:
         self.test_start_time = None
 
     def do_setup(self):
-        # log.info("radius common setup")
-        #
-        # # Record test start time
-        # self.test_start_time = datetime.now()
-        # log.info(f"Test start time: {self.test_start_time}")
-        #
-        # # Configure RADIUS plugin with settings
-        # self.configure_radius_settings()
-        #
-        # # Cleanup any existing endpoint before test
-        # self.cleanup_endpoint_by_mac(self.passthrough.mac)
-        #
-        # # Get VLAN and IP range from switch port config
-        # vlan = self.switch.port1['vlan']
-        # target_ip_range = get_ip_range_from_vlan(vlan) if vlan else None
-        # if target_ip_range:
-        #     log.info(f"Target IP range {target_ip_range} derived from VLAN {vlan}")
-        #
-        # # Setup switch RADIUS configuration
-        # self.rf.setup(
-        #     self.switch,
-        #     port=self.switch.port1['interface'],
-        #     radius_server_ip=self.ca.ipaddress,
-        #     radius_secret=self.DEFAULT_RADIUS_SECRET,
-        #     mab=False,
-        #     vlan=vlan,
-        # )
+        log.info("radius common setup")
+
+        # Record test start time
+        self.test_start_time = datetime.now()
+        log.info(f"Test start time: {self.test_start_time}")
+
+        # Configure RADIUS plugin with settings
+        self.configure_radius_settings()
+
+        # Cleanup any existing endpoint before test
+        self.cleanup_endpoint_by_mac(self.passthrough.mac)
+
+        # Get VLAN and IP range from switch port config
+        vlan = self.switch.port1['vlan']
+        target_ip_range = get_ip_range_from_vlan(vlan) if vlan else None
+        if target_ip_range:
+            log.info(f"Target IP range {target_ip_range} derived from VLAN {vlan}")
+
+        # Setup switch RADIUS configuration
+        self.rf.setup(
+            self.switch,
+            port=self.switch.port1['interface'],
+            radius_server_ip=self.ca.ipaddress,
+            radius_secret=self.DEFAULT_RADIUS_SECRET,
+            mab=False,
+            vlan=vlan,
+        )
         pass
 
     def configure_radius_settings(self, **overrides):
