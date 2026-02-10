@@ -1,8 +1,10 @@
 from datetime import datetime
+from typing import Union
 
 from framework.log.logger import log
 from lib.passthrough import utils as passthrough_utils
 from lib.passthrough.enums import AuthNicProfile
+from lib.plugin.radius.enums import RadiusAuthStatus
 from lib.plugin.radius.models.peap_config import PEAPCredentialsConfig
 from tests.radius.radius_test_base import RadiusTestBase
 
@@ -41,7 +43,7 @@ class RadiusPeapTestBase(RadiusTestBase):
         peap_config: PEAPCredentialsConfig = None,
         switch_ip: str = None,
         ca_ip: str = None,
-        auth_status: str = "Access-Accept"
+        auth_status: Union[RadiusAuthStatus, str] = RadiusAuthStatus.ACCESS_ACCEPT
     ):
         """
         Verify PEAP authentication properties on CounterAct.
@@ -52,18 +54,21 @@ class RadiusPeapTestBase(RadiusTestBase):
                          Defaults to self.peap_config
             switch_ip: Expected Switch IP (dot1x_NAS_addr). Defaults to self.switch.ip
             ca_ip: Expected CounterACT IP (dot1x_auth_appliance). Defaults to self.ca.ipaddress
-            auth_status: Expected auth status (dot1x_user_auth_status). Default: "Access-Accept"
+            auth_status: Expected auth status (dot1x_user_auth_status). Default: RadiusAuthStatus.ACCESS_ACCEPT
         """
         # Get host ID once using base class helper
         host_id = self._get_host_id()
         log.info(f"Verifying PEAP authentication for host: {host_id}")
+
+        # Convert enum to string value if needed
+        auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
 
         # Verify common fields using base class helper
         self._verify_common_properties(
             host_id=host_id,
             switch_ip=switch_ip,
             ca_ip=ca_ip,
-            auth_state=auth_status
+            auth_state=auth_status_value
         )
 
         # Use provided config or fall back to instance config
@@ -71,7 +76,7 @@ class RadiusPeapTestBase(RadiusTestBase):
 
         # Build PEAP-specific properties check list
         peap_properties_check_list = [
-            {"property_field": "dot1x_user_auth_status", "expected_value": auth_status},
+            {"property_field": "dot1x_user_auth_status", "expected_value": auth_status_value},
             {"property_field": "dot1x_rqeuested_domain", "expected_value": config.peap_domain},
             {"property_field": "dot1x_user", "expected_value": config.peap_user},
         ]

@@ -145,6 +145,18 @@ class RadiusTestBase:
     # Assertions
     # =========================================================================
 
+    def assert_dot1x_plugin_running(self, message: str = "802.1X plugin should be running"):
+        """
+        Assert that the 802.1X plugin is running.
+
+        Args:
+            message: Custom assertion message
+
+        Raises:
+            AssertionError: If the plugin is not running
+        """
+        assert self.dot1x.dot1x_plugin_running(), message
+
     def assert_authentication_status(
             self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
     ):
@@ -201,6 +213,36 @@ class RadiusTestBase:
         """
         self.assert_authentication_status(expected_status=expected_status, timeout=auth_timeout)
         return self.wait_for_nic_ip_in_range(timeout=ip_timeout)
+
+    def verify_nic_has_no_ip_in_range(self):
+        """
+        Verify NIC does NOT have an IP address in the target VLAN range.
+        This is used to verify that authentication rejection prevents IP assignment.
+
+        Raises:
+            AssertionError: If NIC has an IP address in the VLAN range
+        """
+        vlan = self.switch.port1['vlan']
+        if not vlan:
+            raise ValueError("VLAN is not configured in switch port1 config")
+
+        ip_range = get_ip_range_from_vlan(vlan)
+        if not ip_range:
+            raise ValueError(f"Could not determine IP range for VLAN {vlan}")
+
+        current_ip = self.passthrough.get_nic_ip(self.nicname)
+        if current_ip:
+            try:
+                network = ipaddress.ip_network(ip_range, strict=False)
+                if ipaddress.ip_address(current_ip) in network:
+                    raise AssertionError(
+                        f"NIC '{self.nicname}' has IP '{current_ip}' in VLAN range '{ip_range}' "
+                        f"- expected no IP in range after authentication failure"
+                    )
+            except ValueError:
+                pass  # IP parsing failed, consider it as "no valid IP"
+
+        log.info(f"Verified NIC '{self.nicname}' has no IP in VLAN range '{ip_range}'")
 
     def _get_host_id(self) -> str:
         """
@@ -267,12 +309,25 @@ class RadiusTestBase:
 
         log.info(f"Verifying pre-admission rule for host: {host_id}")
 
+        # Debug: dump all dot1x properties
+        self._dump_dot1x_properties(host_id)
+
         properties_check_list = [
             {"property_field": "dot1x_auth_source", "expected_value": expected_value}
         ]
 
         self.ca.check_properties(host_id, properties_check_list)
         log.info(f"Pre-admission rule verified: {expected_value}")
+
+    def _dump_dot1x_properties(self, host_id: str):
+        """Debug: dump all dot1x properties for a host."""
+        try:
+            output = self.ca.exec_command(f"fstool hostinfo {host_id} | grep dot1x")
+            log.info(f"All dot1x properties for {host_id}:")
+            for line in output.strip().split('\n'):
+                log.info(f"  {line}")
+        except Exception as e:
+            log.warning(f"Failed to dump dot1x properties: {e}")
 
     def verify_wired_properties(self, nas_port_id: str = None):
         """

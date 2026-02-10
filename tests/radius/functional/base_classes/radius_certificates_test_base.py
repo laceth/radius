@@ -4,6 +4,7 @@ Base class for certificate-based RADIUS authentication tests (EAP-TLS, PEAP-EAP-
 This module provides the RadiusCertificatesTestBase class that handles
 certificate import operations shared by both EAP-TLS and PEAP-EAP-TLS tests.
 """
+from typing import Union
 from cryptography.hazmat.primitives.serialization import pkcs12, Encoding
 from cryptography.hazmat.primitives import hashes
 import tempfile
@@ -11,6 +12,7 @@ import os
 
 from framework.log.logger import log
 from lib.passthrough.enums import AuthNicProfile, WindowsCert
+from lib.plugin.radius.enums import RadiusAuthStatus
 from lib.plugin.radius.models.eap_tls_config import CertificateAuthConfig
 from tests.radius.radius_test_base import RadiusTestBase
 
@@ -71,7 +73,7 @@ class RadiusCertificatesTestBase(RadiusTestBase):
             self,
             switch_ip: str = None,
             ca_ip: str = None,
-            auth_status: str = "Access-Accept",
+            auth_status: Union[RadiusAuthStatus, str] = RadiusAuthStatus.ACCESS_ACCEPT,
             login_type: str = "dot1x_computer_login",
             certificate_name: str = None
     ):
@@ -82,7 +84,7 @@ class RadiusCertificatesTestBase(RadiusTestBase):
         Args:
             switch_ip: Expected Switch IP (dot1x_NAS_addr). Defaults to self.switch.ip
             ca_ip: Expected CounterACT IP (dot1x_auth_appliance). Defaults to self.ca.ipaddress
-            auth_status: Expected auth status (dot1x_host_auth_status). Default: "Access-Accept"
+            auth_status: Expected auth status (dot1x_host_auth_status). Default: RadiusAuthStatus.ACCESS_ACCEPT
             login_type: Expected login type (dot1x_login_type). Default: "dot1x_computer_login"
             certificate_name: Expected certificate name (dot1x_host). Defaults to certificate filename without .pfx
         """
@@ -90,11 +92,15 @@ class RadiusCertificatesTestBase(RadiusTestBase):
         host_id = self._get_host_id()
         log.info(f"Verifying {self.DEFAULT_AUTH_PROFILE.name} authentication for host: {host_id}")
 
+        # Convert enum to string value if needed
+        auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
+
         # Verify common fields using base class helper
         self._verify_common_properties(
             host_id=host_id,
             switch_ip=switch_ip,
-            ca_ip=ca_ip
+            ca_ip=ca_ip,
+            auth_state=auth_status_value
         )
 
         # Determine EAP type based on auth profile
@@ -105,7 +111,7 @@ class RadiusCertificatesTestBase(RadiusTestBase):
 
         # Build certificate-based authentication properties check list
         cert_properties_check_list = [
-            {"property_field": "dot1x_host_auth_status", "expected_value": auth_status},
+            {"property_field": "dot1x_host_auth_status", "expected_value": auth_status_value},
             {"property_field": "dot1x_login_type", "expected_value": login_type},
             {"property_field": "dot1x_fr_eap_type", "expected_value": eap_type},
             {"property_field": "dot1x_host", "expected_value": cert_name},

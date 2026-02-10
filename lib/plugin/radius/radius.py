@@ -75,12 +75,17 @@ class Radius(RadiusBase):
             condition_slot (int): Which config.defpol_cond{slot}.value to edit.
             Use 1 for Priority 1 rule, 2 for Priority 2, etc.
         """
+        log.info(f"Setting pre-admission rules: {len(rules)} rule(s)")
+
+
         try:
             if isinstance(rules, list) and rules and isinstance(rules[0], dict) and "auth" in rules[0]:
+                log.info("Using multi-rule format with auth values")
                 set_pre_admission_rules_remote(rules, self.platform)
                 self.restart_dot1x_plugin()
                 return
 
+            log.info(f"Using single condition format for slot {condition_slot}")
             edit_pre_admission_rule(rules, self.platform, condition_slot=condition_slot)
             self.restart_dot1x_plugin()
         except Exception as e:

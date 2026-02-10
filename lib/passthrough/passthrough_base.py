@@ -21,3 +21,7 @@ class PassthroughBase(ABC):
     def wait_for_nic_authentication(self, nicname, expected_status, timeout):
         pass
 
+    @abstractmethod
+    def get_nic_ip(self, nicname):
+        pass
+
