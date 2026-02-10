@@ -10,6 +10,7 @@ DOT1X_UPTIME_COMMAND = "fstool dot1x uptime"
 DOT1X_RESTART_TIMEOUT = 300
 DOT1X_CHECK_INTERVAL = 5
 DOT1X_RUNNING_VERIFICATION_STRING = " days"
+DOT1X_STABILIZATION_DELAY = 5  # seconds to wait after plugin starts for full stabilization
 
 
 class Radius(RadiusBase):
@@ -57,8 +58,15 @@ class Radius(RadiusBase):
             start_time = time.time()
             while time.time() - start_time < timeout:
                 if self.dot1x_plugin_running():
-                    log.info("802.1X plugin restarted successfully and is running")
-                    return
+                    # Add stabilization delay to ensure plugin is fully operational
+                    log.info(f"Plugin detected as running, waiting {DOT1X_STABILIZATION_DELAY}s for stabilization...")
+                    time.sleep(DOT1X_STABILIZATION_DELAY)
+                    # Verify it's still running after stabilization
+                    if self.dot1x_plugin_running():
+                        log.info("802.1X plugin restarted successfully and is running")
+                        return
+                    else:
+                        log.warning("Plugin stopped during stabilization, continuing to wait...")
                 log.info(f"Waiting for plugin to start... Retrying in {interval} second(s)")
                 time.sleep(interval)
             raise Exception(f"802.1X plugin is not running after {timeout} seconds")
@@ -82,7 +90,7 @@ class Radius(RadiusBase):
             if isinstance(rules, list) and rules and isinstance(rules[0], dict) and "auth" in rules[0]:
                 log.info("Using multi-rule format with auth values")
                 set_pre_admission_rules_remote(rules, self.platform)
-                self.restart_dot1x_plugin()
+                # self.restart_dot1x_plugin()
                 return
 
             log.info(f"Using single condition format for slot {condition_slot}")

@@ -169,7 +169,6 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
             log.error(f"[T1316931] FAIL: {e}")
             raise
 
-#Works
 class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
     """
     T1316960
@@ -319,7 +318,6 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
             log.error(f"[T1316965] FAIL: {e}")
             raise
 
-# WORKS!!!
 class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
     """
     T1316957
@@ -343,12 +341,14 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
     # Rule Settings
     # -------------------------
 
-
+    # Two separate EKU criteria = cert must match ALL criteria (AND logic between criteria)
+    # Each criterion with multiple values = cert must have at least one of them (OR within criterion)
     RULE_EKU_CLIENT_AUTH_AND_EAP_OVER_LAN = [
         {"rule_name": "Certificate-Extended-Key-Usage", "fields": [EKUEntry.EKU_02_CLIENT_AUTH.value]},
         {"rule_name": "Certificate-Extended-Key-Usage", "fields": [EKUEntry.EKU_14_EAP_OVER_LAN.value]},
     ]
 
+    # Two separate criteria with multiple values each = cert must match one from each (AND between criteria, OR within)
     RULE_EKU_SCVP_OR_SSHCLIENT__AND__OCSP_OR_SIPDOMAIN = [
         {
             "rule_name": "Certificate-Extended-Key-Usage",
@@ -413,7 +413,6 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
             log.error(f"[T1316957] FAIL: {e}")
             raise
 
-#WORKS!!!
 class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
     """
     T1316958
