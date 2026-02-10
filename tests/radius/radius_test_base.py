@@ -232,7 +232,6 @@ class RadiusTestBase:
 
         current_ip = self.passthrough.get_nic_ip(self.nicname)
         if current_ip:
-            import ipaddress
             try:
                 network = ipaddress.ip_network(ip_range, strict=False)
                 if ipaddress.ip_address(current_ip) in network:
