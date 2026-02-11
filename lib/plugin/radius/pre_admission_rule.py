@@ -36,7 +36,7 @@ class D1XStringCriterion(D1xOption):
         "contains": '"filType":"contains","input":"%s","field":"%s","value":".*\\\\\\\\Q%s\\\\\\\\E.*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
         "matches": '"filType":"equals","input":"%s","field":"%s","value":"\\\\\\\\Q%s\\\\\\\\E","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
         "matchesexpression": '"filType":"regexp","input":"%s","field":"%s","value":"%s","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
-        "anyvalue": '"filType":"any","input":"","field":"%s","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
+        "anyvalue": '"filType":"any","input":"yalla","field":"%s","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"',
     }
 
     def return_admission_rule_entry(self, rule_dict):

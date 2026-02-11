@@ -90,7 +90,7 @@ class Radius(RadiusBase):
             if isinstance(rules, list) and rules and isinstance(rules[0], dict) and "auth" in rules[0]:
                 log.info("Using multi-rule format with auth values")
                 set_pre_admission_rules_remote(rules, self.platform)
-                # self.restart_dot1x_plugin()
+                self.restart_dot1x_plugin()
                 return
 
             log.info(f"Using single condition format for slot {condition_slot}")
