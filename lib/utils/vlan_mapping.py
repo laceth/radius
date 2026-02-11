@@ -11,7 +11,7 @@ from typing import Optional
 # VLAN to subnet mapping (VLAN_ID: subnet)
 VLAN_MAPPING = {
     1569: "10.16.147.128/26",
-    1570: "10.16.148.128/26",
+    #1570: "10.16.148.128/26",
     1571: "10.16.147.192/26",
     1572: "10.16.148.192/26",
     1565: "10.16.147.0/26",
@@ -280,6 +280,7 @@ VLAN_MAPPING = {
     # Additional VLANs
     128: "10.16.128.0/24",
     1500: "10.16.129.0/24",
+    1824: "10.16.148.128/26",
 }
 
 def get_vlan_from_ip(ip: str) -> Optional[int]:

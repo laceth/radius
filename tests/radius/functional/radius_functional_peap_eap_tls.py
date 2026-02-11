@@ -3,6 +3,8 @@ from framework.log.logger import log
 from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile, WindowsCert
 from lib.plugin.radius.enums import Dot1xAttribute, PreAdmissionAuth, MscaOid, EKUEntry, MSCAEntry
 from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
+from lib.utils.vlan_mapping import get_vlan_from_ip, get_ip_range_from_vlan
+
 
 
 
@@ -15,7 +17,7 @@ class PEAPEAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
     T1316930 same as T1316929 (Wireless)
     Steps
     -----
-    1. In CounterAct go to Options -> Radius -> Pre-admission Authorization, add a rule **EAP-Type = TLS**, apply, and verify the rule is saved with priority 1 and the Radius plugin restarts.
+    1. In CounterAct go to Options -> Radius -> Pre-admission Authorization, add a rule **EAP-Type = PEAP**, apply, and verify the rule is saved with priority 1 and the Radius plugin restarts.
     2. Disconnect/reconnect the host NIC and verify it receives an IP address from the configured VLAN (ipconfig).
     3. On the Home tab open the host **Profile -> Authentication** header and verify Pre-Admission rule 1 is used and the RADIUS Authentication State is **RADIUS-Accepted** (EAP-TLS).
 
@@ -46,6 +48,9 @@ class PEAPEAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=self.certificate_password)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
+            ip = self.passthrough.get_nic_ip(self.nicname)
+            vlan = get_vlan_from_ip(ip)
+            log.info(f"[Step 2] IP {ip} maps to VLAN {vlan}")
             self.verify_pre_admission_rule(rule_priority=1)
         except Exception as e:
             log.error(f"[{case_id}] FAIL: {e}")
