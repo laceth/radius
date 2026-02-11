@@ -10,7 +10,6 @@ DOT1X_UPTIME_COMMAND = "fstool dot1x uptime"
 DOT1X_RESTART_TIMEOUT = 300
 DOT1X_CHECK_INTERVAL = 5
 DOT1X_RUNNING_VERIFICATION_STRING = " days"
-DOT1X_STABILIZATION_DELAY = 5  # seconds to wait after plugin starts for full stabilization
 
 
 class Radius(RadiusBase):
@@ -58,15 +57,8 @@ class Radius(RadiusBase):
             start_time = time.time()
             while time.time() - start_time < timeout:
                 if self.dot1x_plugin_running():
-                    # Add stabilization delay to ensure plugin is fully operational
-                    log.info(f"Plugin detected as running, waiting {DOT1X_STABILIZATION_DELAY}s for stabilization...")
-                    time.sleep(DOT1X_STABILIZATION_DELAY)
-                    # Verify it's still running after stabilization
-                    if self.dot1x_plugin_running():
-                        log.info("802.1X plugin restarted successfully and is running")
-                        return
-                    else:
-                        log.warning("Plugin stopped during stabilization, continuing to wait...")
+                    log.info("802.1X plugin restarted successfully and is running")
+                    return
                 log.info(f"Waiting for plugin to start... Retrying in {interval} second(s)")
                 time.sleep(interval)
             raise Exception(f"802.1X plugin is not running after {timeout} seconds")

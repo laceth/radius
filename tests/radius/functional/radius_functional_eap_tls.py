@@ -383,14 +383,11 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
     # Rule Settings
     # -------------------------
 
-    # Two separate EKU criteria = cert must match ALL criteria (AND logic between criteria)
-    # Each criterion with multiple values = cert must have at least one of them (OR within criterion)
     RULE_EKU_CLIENT_AUTH_AND_EAP_OVER_LAN = [
         {"rule_name": "Certificate-Extended-Key-Usage", "fields": [EKUEntry.EKU_02_CLIENT_AUTH.value]},
         {"rule_name": "Certificate-Extended-Key-Usage", "fields": [EKUEntry.EKU_14_EAP_OVER_LAN.value]},
     ]
 
-    # Two separate criteria with multiple values each = cert must match one from each (AND between criteria, OR within)
     RULE_EKU_SCVP_OR_SSHCLIENT__AND__OCSP_OR_SIPDOMAIN = [
         {
             "rule_name": "Certificate-Extended-Key-Usage",
