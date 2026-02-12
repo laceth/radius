@@ -150,3 +150,44 @@ class Radius(RadiusBase):
             self.configure_radius_plugin(conf_dict)
         except Exception as e:
             raise Exception(f"Failed to configure RADIUS plugin settings: {e}")
+
+    def add_domain(self, domain_name: str, ad_username: str, ad_password: str, timeout: int = 60) -> None:
+        """
+        Join a domain in User Directory using fstool dot1x join command.
+
+        This adds the domain to the RADIUS plugin configuration for LDAP queries
+        and authentication against Active Directory.
+
+        Args:
+            domain_name: Name of the domain (e.g., "txqalab"). Will be appended with "-dc1".
+            ad_username: Active Directory username (e.g., "administrator")
+            ad_password: Active Directory password (e.g., "aristo")
+            timeout: Command timeout in seconds (default: 60)
+
+        Example:
+            dot1x.add_domain("txqalab", "administrator", "aristo")
+            # Executes: fstool dot1x join txqalab-dc1 administrator aristo
+
+        Raises:
+            Exception: If the join command fails
+        """
+        domain_dc = f"{domain_name}-dc1"
+        cmd = f"fstool dot1x join {domain_dc} {ad_username} {ad_password}"
+
+        log.info(f"Adding domain '{domain_name}' to User Directory (DC: {domain_dc})")
+        try:
+            output = self.exec_cmd(cmd, timeout=timeout)
+            log.info(f"Domain join command output: {output}")
+
+            # Check for success indicators
+            if "error" in output.lower() or "failed" in output.lower():
+                raise Exception(f"Domain join failed: {output}")
+
+            log.info(f"Successfully joined domain '{domain_name}'")
+
+            # Restart plugin to apply changes
+            self.restart_dot1x_plugin()
+
+        except Exception as e:
+            raise Exception(f"Failed to add domain '{domain_name}': {e}")
+
