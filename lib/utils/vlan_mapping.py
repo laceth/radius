@@ -280,6 +280,8 @@ VLAN_MAPPING = {
     # Additional VLANs
     128: "10.16.128.0/24",
     1500: "10.16.129.0/24",
+    1823: "10.100.49.64/26",
+    1824: "10.100.50.64/26",
 }
 
 def get_vlan_from_ip(ip: str) -> Optional[int]:
