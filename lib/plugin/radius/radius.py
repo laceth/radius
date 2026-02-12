@@ -159,22 +159,21 @@ class Radius(RadiusBase):
         and authentication against Active Directory.
 
         Args:
-            domain_name: Name of the domain (e.g., "txqalab"). Will be appended with "-dc1".
+            domain_name: Domain name (e.g., "txqalab-dc1", "mycompany-dc2")
             ad_username: Active Directory username (e.g., "administrator")
             ad_password: Active Directory password (e.g., "aristo")
             timeout: Command timeout in seconds (default: 60)
 
         Example:
-            dot1x.add_domain("txqalab", "administrator", "aristo")
+            dot1x.add_domain("txqalab-dc1", "administrator", "aristo")
             # Executes: fstool dot1x join txqalab-dc1 administrator aristo
 
         Raises:
             Exception: If the join command fails
         """
-        domain_dc = f"{domain_name}-dc1"
-        cmd = f"fstool dot1x join {domain_dc} {ad_username} {ad_password}"
+        cmd = f"fstool dot1x join {domain_name} {ad_username} {ad_password}"
 
-        log.info(f"Adding domain '{domain_name}' to User Directory (DC: {domain_dc})")
+        log.info(f"Adding domain '{domain_name}' to User Directory")
         try:
             output = self.exec_cmd(cmd, timeout=timeout)
             log.info(f"Domain join command output: {output}")
