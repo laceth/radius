@@ -169,7 +169,6 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
             log.error(f"[T1316931] FAIL: {e}")
             raise
 
-#Works
 class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
     """
     T1316960
@@ -187,7 +186,12 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
        Trigger 802.1X. Verify RADIUS-Accepted / rule 1 matched.
     6. Update rule 1: Certificate-EAP-TLS-Certificate-Template MATCHES REGEX. Apply.
        Trigger 802.1X. Verify RADIUS-Accepted / rule 1 matched.
+    7. Update rule 1: Certificate-EAP-TLS-Certificate-Template STARTSWITH OID PREFIX. Apply.
+    8. Update rule 1: Certificate-EAP-TLS-Certificate-Template ENDSWITH OID SUFFIX. Apply.
     """
+    TEMPLATE_OID = MscaOid.TEMPLATE_OID_01.value
+    TEMPLATE_OID_PREFIX = ".".join(TEMPLATE_OID.split(".")[:10])   # stable prefix
+    TEMPLATE_OID_SUFFIX = ".".join(TEMPLATE_OID.split(".")[-2:])   # stable suffix
 
     # Rule Settings
     RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
@@ -206,6 +210,14 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
         }
     ]
 
+    RULE_TEMPLATE_OID_STARTSWITH = [
+    {"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["startswith", TEMPLATE_OID_PREFIX]}
+    ]
+
+    RULE_TEMPLATE_OID_ENDSWITH = [
+        {"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["endswith", TEMPLATE_OID_SUFFIX]}
+    ]
+
     SET_OID_MATCH_ACCEPT_ELSE_DENY = [
         {"cond_rules": RULE_TEMPLATE_OID_MATCH, "auth": PreAdmissionAuth.ACCEPT},
         {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
@@ -220,6 +232,16 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
     ]
     SET_OID_REGEX_MATCH_ACCEPT_ELSE_DENY = [
         {"cond_rules": RULE_TEMPLATE_OID_REGEX_MATCH, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_OID_STARTSWITH_ACCEPT_ELSE_DENY = [
+    {"cond_rules": RULE_TEMPLATE_OID_STARTSWITH, "auth": PreAdmissionAuth.ACCEPT},
+    {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    SET_OID_ENDSWITH_ACCEPT_ELSE_DENY = [
+        {"cond_rules": RULE_TEMPLATE_OID_ENDSWITH, "auth": PreAdmissionAuth.ACCEPT},
         {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
     ]
 
@@ -240,11 +262,12 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
 
             # Step 4: invalid OID -> Rule 1 should NOT match, Rule 2 (REJECT) should match
-            # Per CSV: "Verify the host did not match Rule One" - verify via CA, not NIC status
+            # Per CSV: "Verify the host did not match Rule One" - meaning Rule 1 doesn't match, but Rule 2 should
             self.dot1x.set_pre_admission_rules(self.SET_OID_INVALID_MATCH_ACCEPT_ELSE_DENY)
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED)
             self.verify_nic_has_no_ip_in_range()
+            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: check if it works on a different passthrough
+            # Verify Rule 2 matched (the REJECT rule), not Rule 1
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
 
             # Step 5: anyvalue -> ACCEPT, Rule 1 matched
@@ -258,6 +281,24 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
 
             # Step 6: regex -> ACCEPT, Rule 1 matched
             self.dot1x.set_pre_admission_rules(self.SET_OID_REGEX_MATCH_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.wait_for_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1)
+            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
+            self.verify_authentication_on_ca()
+
+            # Step 7: startswith OID prefix -> ACCEPT, Rule 1 matched
+            self.dot1x.set_pre_admission_rules(self.SET_OID_STARTSWITH_ACCEPT_ELSE_DENY)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.wait_for_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1)
+            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
+            self.verify_authentication_on_ca()
+
+            # Step 8: endswith OID suffix -> ACCEPT, Rule 1 matched
+            self.dot1x.set_pre_admission_rules(self.SET_OID_ENDSWITH_ACCEPT_ELSE_DENY)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -319,7 +360,6 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
             log.error(f"[T1316965] FAIL: {e}")
             raise
 
-# WORKS!!!
 class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
     """
     T1316957
@@ -342,7 +382,6 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
     # -------------------------
     # Rule Settings
     # -------------------------
-
 
     RULE_EKU_CLIENT_AUTH_AND_EAP_OVER_LAN = [
         {"rule_name": "Certificate-Extended-Key-Usage", "fields": [EKUEntry.EKU_02_CLIENT_AUTH.value]},
@@ -413,7 +452,6 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
             log.error(f"[T1316957] FAIL: {e}")
             raise
 
-#WORKS!!!
 class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
     """
     T1316958

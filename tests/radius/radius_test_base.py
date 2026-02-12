@@ -297,27 +297,31 @@ class RadiusTestBase:
         except ValueError:
             return False
 
-    def verify_pre_admission_rule(self, rule_priority: int = 1):
+    def verify_pre_admission_rule(self, rule_priority: int = 1, auth_state: str = "Access-Accept"):
         """
         Verify that authentication was processed by the expected pre-admission rule.
 
         Args:
             rule_priority: The priority number of the pre-admission rule. Default: 1
+            auth_state: Expected auth state. Default: "Access-Accept"
         """
         host_id = self._get_host_id()
-        expected_value = f"Pre-Admission rule {rule_priority}"
+        expected_source = f"Pre-Admission rule {rule_priority}"
 
         log.info(f"Verifying pre-admission rule for host: {host_id}")
 
         # Debug: dump all dot1x properties
         self._dump_dot1x_properties(host_id)
 
+        # First verify auth_state is correct, then check auth_source
+        # If auth_state is Access-Reject, auth_source will be None
         properties_check_list = [
-            {"property_field": "dot1x_auth_source", "expected_value": expected_value}
+            {"property_field": "dot1x_auth_state", "expected_value": auth_state},
+            {"property_field": "dot1x_auth_source", "expected_value": expected_source}
         ]
 
         self.ca.check_properties(host_id, properties_check_list)
-        log.info(f"Pre-admission rule verified: {expected_value}")
+        log.info(f"Pre-admission rule verified: {expected_source}")
 
     def _dump_dot1x_properties(self, host_id: str):
         """Debug: dump all dot1x properties for a host."""
