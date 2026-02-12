@@ -52,8 +52,14 @@ class D1XStringCriterion(D1xOption):
 
 
 class D1XSimpleStringCriterion(D1xOption):
+    base_entry = (
+        '"field":"%s","text":"%s","value":"%s","critClass":"forescout.plugin.dot1x.default_policy.D1XSimpleStringCriterion"'
+    )
+
     def return_admission_rule_entry(self, rule_dict):
-        raise NotImplementedError
+        field = rule_dict["rule_name"]
+        value = rule_dict["fields"][0]
+        return self.base_entry % (field, value, value)
 
 
 class D1XEKUCheckboxListCriterion(D1xOption):
