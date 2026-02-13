@@ -87,7 +87,9 @@ class CiscoIOS(SwitchBase, SSHClient):
             output = self.session.send_command(cmd, delay_factor=2, max_loops=timeout)
         
         if log_output:
-            log.info(f"Command output:\n{output}")
+            log.info(f"Command output:")
+            for line in output.strip().split('\n'):
+                log.info(f"  {line}")            
         
         return output
 

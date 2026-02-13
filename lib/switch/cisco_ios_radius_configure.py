@@ -489,7 +489,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                     RadiusCmd.RADIUS_GROUP_DEADTIME.render(deadtime=deadtime),
                 )
 
-                if server_count == 1 and not self.config_has_strings(running_config, f"{server_name}") or server_count > 1:
+                if (server_count == 1 and not self.config_has_strings(running_config, f"{server_name}")) or server_count > 1:
                     if self._setup_count == 1 and not self._original_radius_server_group:
                         log.warning(f"{group_name} has an existing configuration, Backing up original group configuration.")
                         self._original_radius_server_group = running_config
