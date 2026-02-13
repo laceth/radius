@@ -644,7 +644,6 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
         except Exception as e:
             log.error(f"[T1316958] FAIL: {e}")
             raise
-
 class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
     """
     T1316959
@@ -658,21 +657,10 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
        - (.11 + .19)
        Apply.
     5. Install cert F. Trigger 802.1X. Verify RADIUS-Accepted / rule 2 matched (EAP-TLS).
+     [TODO] --need Fix for cert FIFO windows endpoint.
     """
 
     # Rule Settings
-    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
-
-    RULE_MSCA_VERSION_AND_SELF_CDP = [
-        {
-            "rule_name": "Certificate-MS-Certificate-Authority",
-            "fields": [
-                MSCAEntry.OID_21_01_MS_CERT_SERVICES_CA_VERSION.value,  # .1
-                MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value,           # .14
-            ],
-        }
-    ]
-
     # Two criteria rows (AND between rows)
     RULE_MSCA_CA_EXCHANGE_AND_APP_POLICY_WITH_EMAIL_REPL = [
         {
@@ -691,26 +679,26 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
         },
     ]
 
-    # Rule 2a: (.5 + .19)
-    RULE_MSCA_5_AND_19 = [
-        {
+    RULE_MSCA_VERSION_AND_SELF_CDP = [
+    {
         "rule_name": "Certificate-MS-Certificate-Authority",
-        "fields": [
-            MSCAEntry.OID_21_05_SZOID_KP_CA_EXCHANGE.value,        # .5
-            MSCAEntry.OID_21_19_SZOID_DS_EMAIL_REPLICATION.value,  # .19
-        ],
-        }
+        "fields": [MSCAEntry.OID_21_01_MS_CERT_SERVICES_CA_VERSION.value],  # .1
+    },
+    {
+        "rule_name": "Certificate-MS-Certificate-Authority",
+        "fields": [MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value],           # .14
+    },
     ]
 
-    # Rule 2b: (.11 + .19)
-    RULE_MSCA_11_AND_19 = [
-        {
+    RULE_MSCA_VERSION_AND_SELF_CDP = [
+    {
         "rule_name": "Certificate-MS-Certificate-Authority",
-        "fields": [
-            MSCAEntry.OID_21_11_SZOID_APPLICATION_POLICY_MAPPINGS.value,  # .11
-            MSCAEntry.OID_21_19_SZOID_DS_EMAIL_REPLICATION.value,         # .19
-        ],
-        }
+        "fields": [MSCAEntry.OID_21_01_MS_CERT_SERVICES_CA_VERSION.value],  # .1
+    },
+    {
+        "rule_name": "Certificate-MS-Certificate-Authority",
+        "fields": [MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value],           # .14
+    },
     ]
 
     # Set: Rule 1 accept, else deny
@@ -719,14 +707,12 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
         {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
     ]
 
-    # Set: Rule 1 accept, Rule 2 accept, Rule 3 accept, else deny
-    SET_RULE_1_AND_RULE_2_OR_RULE_3_ACCEPT_ELSE_DENY = [
-    {"cond_rules": RULE_MSCA_5_AND_19, "auth": PreAdmissionAuth.ACCEPT},              # rule 1
-    {"cond_rules": RULE_MSCA_VERSION_AND_SELF_CDP, "auth": PreAdmissionAuth.ACCEPT},  # rule 2
-    {"cond_rules": RULE_MSCA_11_AND_19, "auth": PreAdmissionAuth.ACCEPT},             # rule 3
-    {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    # Set: Rule 1 accept, Rule 2 accept, else deny
+    SET_RULE_1_AND_RULE_2_ACCEPT_ELSE_DENY = [
+    {"cond_rules": RULE_MSCA_VERSION_AND_SELF_CDP, "auth": PreAdmissionAuth.ACCEPT},  #1 rule
+    {"cond_rules": RULE_MSCA_CA_EXCHANGE_AND_APP_POLICY_WITH_EMAIL_REPL, "auth": PreAdmissionAuth.ACCEPT}, # 2 rule
+    {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY}, # 3 rule
     ]
-
 
     def do_test(self):
         auth_nic_profile = AuthNicProfile.EAP_TLS
@@ -739,31 +725,42 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
         try:
             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
 
-            # Step 1: Rule 1 only
+            # # Step 1: Rule 1 only
             self.dot1x.set_pre_admission_rules(self.SET_RULE_1_ACCEPT_ELSE_DENY)
 
-            # Step 2: cert E matches rule 1
+            #Step 2: cert E matches rule 1
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_E.value
             self.import_certificates(certificate_password=certificate_password)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=expected_status)
+            self.wait_for_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1)
+            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
+            self.verify_authentication_on_ca()
+            self.cleanup_all_test_certificates()
 
-            #self.verify_pre_admission_rule(rule_priority=1)
             # Step 3: cert G does NOT match rule 1 (but should still succeed)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_G.value
             self.import_certificates(certificate_password=certificate_password)
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=expected_status)
+            self.assert_authentication_status(expected_status=fail_status)
+            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
+            self.verify_nic_has_no_ip_in_range()
 
-            # # Step 4: add Rule 2 (re-apply full policy list)
-            self.dot1x.set_pre_admission_rules(self.SET_RULE_1_AND_RULE_2_OR_RULE_3_ACCEPT_ELSE_DENY)
+            # # # Step 4: add Rule 2 (re-apply full policy list)
+            self.dot1x.set_pre_admission_rules(self.SET_RULE_1_AND_RULE_2_ACCEPT_ELSE_DENY)
+            self.cleanup_all_test_certificates()
 
-            # Step 5: cert F matches rule 1
+            # Step 5: cert F matches rule 2
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_F.value
             self.import_certificates(certificate_password=certificate_password)
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=fail_status)
-            #self.verify_pre_admission_rule(rule_priority=1)
+            self.assert_authentication_status(expected_status=expected_status)
+            self.wait_for_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=2)
+            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
+            self.verify_authentication_on_ca()
+
         except Exception as e:
             log.error(f"[{case_id}] FAIL: {e}")
             raise
