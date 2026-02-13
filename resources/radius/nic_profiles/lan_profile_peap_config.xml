@@ -15,7 +15,7 @@ Older versions will ignore unknown XML parts, or fail to import the profile. -->
 <LANProfile xmlns="http://www.microsoft.com/networking/LAN/profile/v1">
     <MSM>
         <security>
-            <OneXEnforced>false</OneXEnforced>
+            <OneXEnforced>true</OneXEnforced>
             <OneXEnabled>true</OneXEnabled>
             <OneX xmlns="http://www.microsoft.com/networking/OneX/v1">
                 <cacheUserData>false</cacheUserData>
@@ -43,7 +43,7 @@ Older versions will ignore unknown XML parts, or fail to import the profile. -->
                                         <Type>26</Type>
                                         <EapType
                                                 xmlns="http://www.microsoft.com/provisioning/MsChapV2ConnectionPropertiesV1">
-                                            <UseWinLogonCredentials>true</UseWinLogonCredentials>
+                                            <UseWinLogonCredentials>false</UseWinLogonCredentials>
                                         </EapType>
                                     </Eap>
                                     <EnableQuarantineChecks>false</EnableQuarantineChecks>
