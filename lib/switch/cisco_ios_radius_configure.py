@@ -11,10 +11,10 @@ from lib.switch.radius_configure_base import RadiusConfigureBase
 
 class RadiusCmd(str, Enum):
     # SHOW commands
-    SHOW_INTERFACE = "show run | section ^interface {port}"
-    SHOW_AAA = "show running-config | section aaa"
+    SHOW_INTERFACE = "show run | section ^interface {port}$"
+    SHOW_AAA = "show running-config | include ^aaa (authentication|authorization|accounting)"
     SHOW_DOT1X = "show running-config | inc dot1x"
-    SHOW_RADIUS_GROUP = "show running-config | section aaa group server radius"
+    SHOW_RADIUS_GROUP = "show running-config | section aaa group server radius {group}"
     SHOW_RADIUS_SERVER = "show running-config | section radius server {name}"
     SHOW_RADIUS_SERVER_ALL = "show running-config | section ^radius server"
     SHOW_COA = "show running-config | section aaa server radius dynamic-author"
@@ -73,6 +73,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
         self._original_radius_aaa: List[str] = []
         self._original_radius_servers: Dict[str, List[str]] = {}
         self._original_radius_server_name: str = ""
+        self._original_radius_server_group: str = ""
         self._original_radius_coa_exist = bool(False)
         self._original_radius_coa_secret: Optional[str] = None
 
@@ -394,7 +395,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                 RadiusCmd.RADIUS_SERVER.render(name=self._radius_server_name),
                 RadiusCmd.RADIUS_ADDRESS.render(ip_family=ip_family, ip=server_ip),
             )
-            running_config = self.exec_command(RadiusCmd.SHOW_RADIUS_SERVER.render(name=self._radius_server_name))
+            running_config = self.exec_command(RadiusCmd.SHOW_RADIUS_SERVER.render(name=self._radius_server_name), log_output=True)
             if action == Action.SETUP:
                 if not secret:
                     log.error("Secret is required when setting up RADIUS server")
@@ -445,7 +446,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                     *([RadiusCmd.RADIUS_TIMEOUT.render(timeout=timeout)] if timeout != 5 else []),
                     *([RadiusCmd.RADIUS_RETRANSMIT.render(retransmit=retransmit)] if retransmit != 3 else []),
                 )
-                self.exec_command(commands_non_secret)
+                self.exec_command(commands_non_secret, log_output=True)
 
                 commands_with_secret = self.build_commands(expected_config[0], expected_config[2])
                 self.exec_command(commands_with_secret)
@@ -472,10 +473,12 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
         radius_group_exists = False
         try:
             # Check if group already exists
-            running_config = self.exec_command(RadiusCmd.SHOW_RADIUS_GROUP.value)
-
+            running_config = self.exec_command(RadiusCmd.SHOW_RADIUS_GROUP.render(group=group_name), log_output=True)
+            # Check if group has other server(s) configured
+            server_count = running_config.count("server name")
             if action == Action.SETUP:
-                radius_group_exists = self.config_has_strings(running_config, group_name, server_name, f"deadtime {deadtime}")
+                if server_count == 1 and self.config_has_strings(running_config, group_name, server_name, f"deadtime {deadtime}"):
+                    radius_group_exists = True
                 if radius_group_exists:
                     log.info(f"RADIUS group {group_name} already exists on {self.ip}")
                     return True
@@ -485,15 +488,27 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                     RadiusCmd.RADIUS_GROUP_SERVER.render(server=server_name),
                     RadiusCmd.RADIUS_GROUP_DEADTIME.render(deadtime=deadtime),
                 )
+
+                if (server_count == 1 and not self.config_has_strings(running_config, f"{server_name}")) or server_count > 1:
+                    if self._setup_count == 1 and not self._original_radius_server_group:
+                        log.warning(f"{group_name} has an existing configuration, Backing up original group configuration.")
+                        self._original_radius_server_group = running_config
+                    # Remove existing group and recreate with our server
+                    commands.insert(0, "no " + RadiusCmd.RADIUS_GROUP.render(group=group_name))
+
             else:  # teardown
                 radius_group_exists = group_name in running_config
                 if not radius_group_exists:
                     log.info(f"RADIUS group {group_name} not configured on {self.ip}")
                     return True
+                if self._original_radius_server_group:
+                    commands = []
+                    for line in self._original_radius_server_group.splitlines():
+                        commands.append(line)
+                else:
+                    commands = self.build_commands("no " + RadiusCmd.RADIUS_GROUP.render(group=group_name))
 
-                commands = self.build_commands("no " + RadiusCmd.RADIUS_GROUP.render(group=group_name))
-
-            self.exec_command(commands)
+            self.exec_command(commands, log_output=True)
             log.info(f"Succeed to {action.name.lower()} RADIUS group {group_name} on Cisco switch {self.ip}")
             return True
 
@@ -511,7 +526,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
             RadiusCmd.AAA_ACCT.render(auth_type=aaa_auth_type, group=group_name),
         )
         try:
-            running_config = self.exec_command(RadiusCmd.SHOW_AAA.value)
+            running_config = self.exec_command(RadiusCmd.SHOW_AAA.value, log_output=True)
             radius_aaa_exists = self.config_has_strings(running_config, *commands)
             # Capture presence of our AAA lines on first setup; restore to 'none' later
             if self._setup_count == 1 and not self._original_radius_aaa:
@@ -529,7 +544,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                 if radius_aaa_exists:
                     log.info(f"AAA already exists with group {group_name} on {self.ip}")
                     return True
-                self.exec_command(commands)
+                self.exec_command(commands, log_output=True)
                 log.info(f"Succeed to {action.name.lower()} AAA for group {group_name} on Cisco switch {self.ip}")
                 return True
             else:  # teardown
@@ -540,7 +555,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                 if self._original_radius_aaa:
                     for line in self._original_radius_aaa:
                         commands.append(line)
-                self.exec_command(commands)
+                self.exec_command(commands, log_output=True)
                 log.info(f"Succeed to {action.name.lower()} AAA for group {group_name} on Cisco switch {self.ip}")
                 return True
 
@@ -556,7 +571,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
         self._validate_action(action)
         radius_coa_exists = False
         try:
-            running_config = self.exec_command(RadiusCmd.SHOW_COA.value)
+            running_config = self.exec_command(RadiusCmd.SHOW_COA.value, log_output=True)
             radius_coa_exists = bool(re.search(rf"(?mi)^\s*client\s+{re.escape(server_ip)}\b", running_config))
             current_secret = self._extract_coa_secret(running_config, server_ip)
             if action == Action.SETUP:
@@ -603,7 +618,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                         RadiusCmd.COA_ENTER,
                         RadiusCmd.COA_CLIENT_NO.render(ip=server_ip),
                     )
-            self.exec_command(commands)
+            self.exec_command(commands, log_output=True)
             log.info(f"Succeed to {action.name.lower()} RADIUS dynamic-author client {server_ip} on Cisco switch {self.ip}")
             return True
         except Exception as e:
@@ -621,7 +636,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
 
             # Get current interface configuration
             if action == Action.SETUP:
-                current_config = self.exec_command(RadiusCmd.SHOW_INTERFACE.render(port=port))
+                current_config = self.exec_command(RadiusCmd.SHOW_INTERFACE.render(port=port), log_output=True)
                 access_vlan_prefix = RadiusCmd.SW_ACCESS_VLAN.value.split("{")[0].strip()
                 vlan_match = re.search(rf"{access_vlan_prefix} (\d+)", current_config)
                 current_vlan = 0
@@ -664,14 +679,14 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                     log.info(f"dot1x already configured on port {port} on Cisco switch {self.ip}")
                     return True
 
-                self.exec_command(setup_commands)
+                self.exec_command(setup_commands, log_output=True)
 
             else:  # teardown
                 if self._original_mab_state.get(port) is not None:
                     self._teardown_commands_on_port[port].append(
                         RadiusCmd.MAB.value if self._original_mab_state[port] else f"no {RadiusCmd.MAB.value}"
                     )
-                self.exec_command(self._teardown_commands_on_port[port])
+                self.exec_command(self._teardown_commands_on_port[port], log_output=True)
                 # Clear stored per-port teardown config to avoid reuse
                 self._teardown_commands_on_port.pop(port, None)
 
@@ -729,4 +744,4 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
             RadiusCmd.RADIUS_SERVER.render(name=server_name),
             address_line,
         ]
-        self.exec_command(cmds)
+        self.exec_command(cmds, log_output=True)

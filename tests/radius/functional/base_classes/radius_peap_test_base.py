@@ -74,11 +74,18 @@ class RadiusPeapTestBase(RadiusTestBase):
         # Use provided config or fall back to instance config
         config = peap_config or self.peap_config
 
+        # Determine tunneled user format (with or without domain prefix)
+        tunneled_user = config.peap_username if '\\' in config.peap_username else config.peap_user
+
         # Build PEAP-specific properties check list
         peap_properties_check_list = [
             {"property_field": "dot1x_user_auth_status", "expected_value": auth_status_value},
             {"property_field": "dot1x_rqeuested_domain", "expected_value": config.peap_domain},
             {"property_field": "dot1x_user", "expected_value": config.peap_user},
+            {"property_field": "dot1x_tunneled_user", "expected_value": tunneled_user},
+            {"property_field": "dot1x_fr_eap_type", "expected_value": "PEAP"},
+            {"property_field": "dot1x_domain", "expected_value": config.peap_domain, "case_insensitive": True},  # DOT-5760
+            {"property_field": "dot1x_login_type", "expected_value": "dot1x_user_login"},
         ]
 
         self.ca.check_properties(host_id, peap_properties_check_list)

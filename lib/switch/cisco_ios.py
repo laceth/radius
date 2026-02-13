@@ -78,18 +78,24 @@ class CiscoIOS(SwitchBase, SSHClient):
             log.warning(f"CiscoIOS enable not required on {self.ip}: {exc}")
         return self.session
 
-    def _execute(self, cmd, timeout=30):
+    def _execute(self, cmd, timeout=30, log_output=False):
         log.info(f"Executing command on CiscoIOS: {cmd}")
         if isinstance(cmd, list):
             secrets_in_list = any(isinstance(c, str) and self._is_secret_cmd(c) for c in cmd)
             output = self.session.send_config_set(cmd, cmd_verify=not secrets_in_list)
         else:
             output = self.session.send_command(cmd, delay_factor=2, max_loops=timeout)
+        
+        if log_output:
+            log.info(f"Command output:")
+            for line in output.strip().split('\n'):
+                log.info(f"  {line}")            
+        
         return output
 
-    def exec_command(self, cmd, timeout=30):
+    def exec_command(self, cmd, timeout=30, log_output=False):
         self.session = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
-        return self._execute(cmd, timeout)
+        return self._execute(cmd, timeout, log_output)
 
     @staticmethod
     def normalize_interface(ifname: str) -> str:

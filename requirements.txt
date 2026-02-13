@@ -17,6 +17,7 @@ charset-normalizer==3.4.4
 cryptography==46.0.3
     # via
     #   paramiko
+    #   pypsrp
     #   pyspnego
     #   requests-ntlm
 idna==3.11
@@ -42,10 +43,14 @@ pygments==2.19.2
     # via rich
 pynacl==1.6.1
     # via paramiko
+pypsrp==0.8.1
+    # via fstester (pyproject.toml)
 pyserial==3.5
     # via netmiko
 pyspnego==0.12.0
-    # via requests-ntlm
+    # via
+    #   pypsrp
+    #   requests-ntlm
 pywinrm==0.5.0
     # via fstester (pyproject.toml)
 pyyaml==6.0.3
@@ -54,6 +59,7 @@ pyyaml==6.0.3
     #   netmiko
 requests==2.32.5
     # via
+    #   pypsrp
     #   pywinrm
     #   requests-ntlm
 requests-ntlm==1.3.0
