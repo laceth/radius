@@ -1,4 +1,5 @@
 import re
+import time
 import paramiko
 from typing import List, Optional
 from framework.connection.ssh_client import SSHClient
@@ -195,12 +196,35 @@ class CounterActBase(SSHClient):
         if "Import policy completed" not in output:
             raise RuntimeError(f"Policy import failed: {output}")
 
-    def check_policy_match(self, policy_name: str, count: int = 1) -> bool:
+    def check_policy_match(self, policy_name: str, count: int = 1, timeout: int = 30, retry_interval: int = 5) -> bool:
+        """
+        Check if a policy matches the expected count, with retries until a timeout.
 
-        output = self.exec_command(f"fstool npstats | grep {policy_name}")
-        match = re.search(r'MATCH\s*:\s*(\d+)', output)
-        if match and int(match.group(1)) == count:
-            return True
+        Args:
+            policy_name: Name of the policy to check.
+            count: Expected match count (default: 1).
+            timeout: Maximum time in seconds to keep retrying (default: 30).
+            retry_interval: Delay between retries in seconds (default: 2).
+
+        Returns:
+            True if the policy matches the expected count within the timeout, False otherwise.
+        """
+        log.info(f"Checking policy match '{policy_name}'")
+        start_time = time.time()
+        while time.time() - start_time < timeout:
+            try:
+                output = self.exec_command(f"fstool npstats | grep '{policy_name}'")
+            except RuntimeError as e:
+                log.debug(f"Failed to get policy stats for '{policy_name}': {e}")
+                time.sleep(retry_interval)
+                continue
+            match = re.search(r'MATCH\s*:\s*(\d+)', output)
+            if match and int(match.group(1)) == count:
+                log.info(f"Policy '{policy_name}' matched expected count {count}")
+                return True
+            log.debug(f"Policy '{policy_name}' did not match. Retrying in {retry_interval} seconds...")
+            time.sleep(retry_interval)
+        log.info(f"Policy '{policy_name}' did not match the expected count within {timeout} seconds.")
         return False
 
     def get_host_ip_by_mac(self, mac_address: str) -> str:

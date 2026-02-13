@@ -1,3 +1,4 @@
+import copy
 import ipaddress
 import re
 from datetime import datetime
@@ -489,8 +490,9 @@ class RadiusTestBase:
             value: The value to match against the SAN property (e.g., "1.1.2" for endswith)
             match_case: Whether the match should be case sensitive. Default is False.
             inner_not: Whether to apply NOT operator to the inner condition. Default is False.
+            Returns: Policy name(str)
         """
-        fields = DEFAULT_RADIUS_POLICY_MAC_FIELDS.copy()
+        fields = copy.deepcopy(DEFAULT_RADIUS_POLICY_MAC_FIELDS)
         fields[0]["CONDITION"]["FILTER"]["VALUE"]["VALUE2"] = self.passthrough.mac
         fields.append(
             {
@@ -514,4 +516,6 @@ class RadiusTestBase:
                 }
             }
         )
-        self.em.simple_policy_condition("dot1xSimplePolicyCondition.xml", "policy_condition_dot1x_fr_client_x509_cert_subj_alt_name", fields)
+        policy_name = "policy_condition_dot1x_fr_client_x509_cert_subj_alt_name"
+        self.em.simple_policy_condition("dot1xSimplePolicyCondition.xml", policy_name, fields)
+        return policy_name
