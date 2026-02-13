@@ -490,7 +490,7 @@ class RadiusTestBase:
             value: The value to match against the SAN property (e.g., "1.1.2" for endswith)
             match_case: Whether the match should be case sensitive. Default is False.
             inner_not: Whether to apply NOT operator to the inner condition. Default is False.
-            returns: Policy name(str)
+            Returns: Policy name(str)
         """
         fields = copy.deepcopy(DEFAULT_RADIUS_POLICY_MAC_FIELDS)
         fields[0]["CONDITION"]["FILTER"]["VALUE"]["VALUE2"] = self.passthrough.mac
