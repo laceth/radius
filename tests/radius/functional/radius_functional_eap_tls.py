@@ -661,7 +661,6 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
     """
 
     # Rule Settings
-    # Two criteria rows (AND between rows)
     RULE_MSCA_CA_EXCHANGE_AND_APP_POLICY_WITH_EMAIL_REPL = [
         {
             "rule_name": "Certificate-MS-Certificate-Authority",
@@ -679,16 +678,6 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
         },
     ]
 
-    RULE_MSCA_VERSION_AND_SELF_CDP = [
-    {
-        "rule_name": "Certificate-MS-Certificate-Authority",
-        "fields": [MSCAEntry.OID_21_01_MS_CERT_SERVICES_CA_VERSION.value],  # .1
-    },
-    {
-        "rule_name": "Certificate-MS-Certificate-Authority",
-        "fields": [MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value],           # .14
-    },
-    ]
 
     RULE_MSCA_VERSION_AND_SELF_CDP = [
     {
