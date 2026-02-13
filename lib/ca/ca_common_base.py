@@ -224,7 +224,7 @@ class CounterActBase(SSHClient):
                 return True
             log.debug(f"Policy '{policy_name}' did not match. Retrying in {retry_interval} seconds...")
             time.sleep(retry_interval)
-        log.debug(f"Policy '{policy_name}' did not match the expected count within {timeout} seconds.")
+        log.info(f"Policy '{policy_name}' did not match the expected count within {timeout} seconds.")
         return False
 
     def get_host_ip_by_mac(self, mac_address: str) -> str:
