@@ -475,7 +475,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
             # Check if group already exists
             running_config = self.exec_command(RadiusCmd.SHOW_RADIUS_GROUP.render(group=group_name), log_output=True)
             # Check if group has other server(s) configured
-            server_count = running_config.count("server name")        
+            server_count = running_config.count("server name")
             if action == Action.SETUP:
                 if server_count == 1 and self.config_has_strings(running_config, group_name, server_name, f"deadtime {deadtime}"):
                     radius_group_exists = True
