@@ -117,8 +117,6 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
 #         except Exception as e:
 #             log.error(f"[{case_id}] FAIL: {e}")
 #             raise
-
-
 class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
     """
     T1316931 same as T1316932 (Wireless)
@@ -651,7 +649,7 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
     -------
     1. Configure pre-admission rule 1 (priority 1): MSCA includes (.1 and .14). Apply.
     2. Install cert E. Trigger 802.1X. Verify RADIUS-Accepted / rule 1 matched (EAP-TLS).
-    3. Install cert G. Trigger 802.1X. Verify authentication SUCCEEDED and rule 1 is NOT matched.
+    3. Install cert G. Trigger 802.1X. Verify authentication should fail and rule 1 is NOT matched.
     4. Configure pre-admission rule 2 (priority 2) with two MSCA criteria rows:
        - (.5 + .19)
        - (.11 + .19)
@@ -728,7 +726,7 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
             self.verify_authentication_on_ca()
             self.cleanup_all_test_certificates()
 
-            # Step 3: cert G does NOT match rule 1 (but should still succeed)
+            # Step 3: cert G does NOT match rule 1 (but should be failed)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_G.value
             self.import_certificates(certificate_password=certificate_password)
             self.toggle_nic()
