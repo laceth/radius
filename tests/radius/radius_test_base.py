@@ -55,6 +55,7 @@ class RadiusTestBase:
         self.test_start_time = None
         self.host_id_auth_time = set()        
         self.ad_config = ad or {}
+        self.default_ad_config = {}
 
     def do_setup(self):
         log.info("radius common setup")
@@ -147,7 +148,7 @@ class RadiusTestBase:
         self.passthrough.toggle_nic(self.nicname)
 
     def disable_nic(self):
-        """Didefault_ad_configsable the NIC."""
+        """Disable the NIC."""
         self.passthrough.disable_nic(self.nicname)
 
     def enable_nic(self):
