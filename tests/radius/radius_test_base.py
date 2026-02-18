@@ -53,8 +53,8 @@ class RadiusTestBase:
         self.nicname = self.passthrough.nicname
         self.rf = RadiusFactory(default_secret=self.DEFAULT_RADIUS_SECRET)
         self.test_start_time = None
+        self.host_id_auth_time = set()        
         self.ad_config = ad or {}
-        self._dumped_host_ids = set()
 
     def do_setup(self):
         log.info("radius common setup")
@@ -66,6 +66,7 @@ class RadiusTestBase:
         # Setup Active Directory domain from config (if configured)
         ad_config = self.dot1x.get_ad_config_from_dict(self.ad_config, 'ad1')
         if ad_config:
+            self.default_ad_config = ad_config
             self.dot1x.join_domain(ad_config['ad_name'], ad_config['ad_ud_user'], ad_config['ad_secret'])
             self.dot1x.set_auth_source_null(ad_config['ad_name'])
 
@@ -146,7 +147,7 @@ class RadiusTestBase:
         self.passthrough.toggle_nic(self.nicname)
 
     def disable_nic(self):
-        """Disable the NIC."""
+        """Didefault_ad_configsable the NIC."""
         self.passthrough.disable_nic(self.nicname)
 
     def enable_nic(self):
@@ -325,7 +326,7 @@ class RadiusTestBase:
         """
         host_id = self._get_host_id()
         # Debug: dump all dot1x properties (only on first verification)
-        self._dump_dot1x_properties(host_id)        
+        self._dump_dot1x_properties(host_id)
 
         expected_source = f"Pre-Admission rule {rule_priority}"
         log.info(f"Verifying pre-admission rule for host: {host_id}")
@@ -338,7 +339,7 @@ class RadiusTestBase:
         ]
 
         self.ca.check_properties(host_id, properties_check_list)
-        log.info(f"Pre-admission rule verified: {expected_source}")
+        log.debug(f"Pre-admission rule verified: {expected_source}")
 
     def _dump_dot1x_properties(self, host_id: str):
         """Debug: dump all dot1x properties for a host (once per authentication event)."""
@@ -347,14 +348,14 @@ class RadiusTestBase:
             auth_time = self.ca.get_property_value(host_id, "dot1x_auth_time")
             auth_key = (host_id, auth_time)
             
-            if auth_key in self._dumped_host_ids:
+            if auth_key in self.host_id_auth_time:
                 return
             
             output = self.ca.exec_command(f"fstool hostinfo {host_id} | grep dot1x")
             log.info(f"All dot1x properties for {host_id} (auth_time: {auth_time}):")
             for line in output.strip().split('\n'):
                 log.info(f"  {line}")
-            self._dumped_host_ids.add(auth_key)
+            self.host_id_auth_time.add(auth_key)
         except Exception as e:
             log.warning(f"Failed to dump dot1x properties: {e}")
 
@@ -367,7 +368,7 @@ class RadiusTestBase:
         """
         host_id = self._get_host_id()
         # Debug: dump all dot1x properties (only on first verification)
-        self._dump_dot1x_properties(host_id)        
+        self._dump_dot1x_properties(host_id)
 
         nas_port_id = nas_port_id or self.switch.port1['interface']
         log.info(f"Verifying wired properties for host: {host_id}")
@@ -414,7 +415,7 @@ class RadiusTestBase:
         if not auth_time_str:
             raise Exception(f"dot1x_auth_time not found for host {host_id}")
 
-        log.info(f"dot1x_auth_time: {auth_time_str}")
+        log.debug(f"dot1x_auth_time: {auth_time_str}")
 
         # Parse auth_time format: "Tue Jan 20 18:14:55 CST 2026" -> strip timezone
         match = re.match(r'^(\w{3} \w{3} \d{1,2} \d{2}:\d{2}:\d{2}) [A-Z]{3,4} (\d{4})$', auth_time_str.strip())
@@ -436,7 +437,7 @@ class RadiusTestBase:
                 f"  Authentication happened before test started."
             )
 
-        log.info(f"Auth time verified: {auth_time} >= {self.test_start_time}")
+        log.info(f"Property {'dot1x_auth_time':30s}: expected>{self.test_start_time:20s}, actual={auth_time:20s}, match=True")
 
     def verify_authentication_on_ca(
             self,

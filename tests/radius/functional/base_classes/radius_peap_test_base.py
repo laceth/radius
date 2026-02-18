@@ -99,11 +99,13 @@ class RadiusPeapTestBase(RadiusTestBase):
         else:
             # No domain in credentials - check if there's a default auth source configured
             auth_source = self.dot1x.get_auth_source_default()
+            domain_name = None
             if auth_source:
                 if auth_source == self.default_ad_config.get('ad_name', ''):
                     domain_name = 'TXQALAB'
-                if 'TXQALAB2' in auth_source.upper :
+                if 'TXQALAB2' in auth_source.upper() :
                     domain_name = 'TXQALAB2'
+            if domain_name:
                 peap_properties_check_list.append(
                     {"property_field": "dot1x_domain", "expected_value": domain_name}
                 )
@@ -111,27 +113,6 @@ class RadiusPeapTestBase(RadiusTestBase):
 
         self.ca.check_properties(host_id, peap_properties_check_list)
         log.info("PEAP authentication verification completed successfully")
-
-    def _get_auth_source_default(self) -> str:
-        """
-        Get the default auth source value from RADIUS server local.properties.
-        
-        Returns:
-            Auth source domain name (e.g., "txqalab-dc1") or empty string if not configured
-        """
-        try:
-            cmd = "grep '^config.auth_source_default.value=' /usr/local/forescout/plugin/dot1x/local.properties"
-            output = self.dot1x.exec_cmd(cmd, timeout=10)
-            
-            # Parse the value after the '=' sign
-            if '=' in output:
-                value = output.split('=', 1)[1].strip()
-                log.info(f"Auth source default: '{value}'")
-                return value
-            return ""
-        except Exception as e:
-            log.warning(f"Could not read auth_source_default from local.properties: {e}")
-            return ""
 
     # =========================================================================
     # PEAP Credentials Setup

@@ -378,11 +378,14 @@ class Radius(RadiusBase):
 
             for line in lines:
                 if line.startswith(f"{key}="):
-                    value = line.split("=", 1)[1].strip()
-                    log.info(f"Current property: {key}={value}")
-                    return value
-
-            log.info(f"Key {key} not found, returning empty string")
+                    parts = line.split("=", 1)
+                    if len(parts) == 2:
+                        value = parts[1].strip()
+                        log.debug(f"Current property: {key}={value}")
+                        return value
+                    else:
+                        log.debug(f"Current property: {key}=")
+                        return ""
             return ""
 
         finally:
