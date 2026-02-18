@@ -411,34 +411,35 @@ class RadiusTestBase:
         Raises:
             Exception: If auth_time is before test_start_time (stale authentication)
         """
-        auth_time_str = self.ca.get_property_value(host_id, "dot1x_auth_time")
+        property_field = "dot1x_auth_time"
+        auth_time_str = self.ca.get_property_value(host_id, property_field)
         if not auth_time_str:
-            raise Exception(f"dot1x_auth_time not found for host {host_id}")
+            raise Exception(f"{property_field} not found for host {host_id}")
 
-        log.debug(f"dot1x_auth_time: {auth_time_str}")
+        log.debug(f"{property_field}: {auth_time_str}")
 
         # Parse auth_time format: "Tue Jan 20 18:14:55 CST 2026" -> strip timezone
         match = re.match(r'^(\w{3} \w{3} \d{1,2} \d{2}:\d{2}:\d{2}) [A-Z]{3,4} (\d{4})$', auth_time_str.strip())
         if not match:
-            log.warning(f"Could not parse auth_time '{auth_time_str}', skipping time verification")
+            log.warning(f"Could not parse {property_field} '{auth_time_str}', skipping time verification")
             return
 
         try:
             auth_time = datetime.strptime(f"{match.group(1)} {match.group(2)}", "%a %b %d %H:%M:%S %Y")
         except ValueError:
-            log.warning(f"Could not parse auth_time '{auth_time_str}', skipping time verification")
+            log.warning(f"Could not parse {property_field} '{auth_time_str}', skipping time verification")
             return
 
         if self.test_start_time and auth_time < self.test_start_time:
             raise Exception(
                 f"Stale authentication detected!\n"
-                f"  dot1x_auth_time: {auth_time}\n"
+                f"  {property_field}: {auth_time}\n"
                 f"  test_start_time: {self.test_start_time}\n"
                 f"  Authentication happened before test started."
             )
 
         expected_time = self.test_start_time.strftime('%Y-%m-%d %H:%M:%S')
-        log.info(f"Property {'dot1x_auth_time':30s}: expected>{expected_time:20s}, actual={str(auth_time):20s}, match=True")
+        log.info(f"Property {property_field:30s}: expected>{expected_time:20s}, actual={str(auth_time):20s}, match=True")
 
     def verify_authentication_on_ca(
             self,
