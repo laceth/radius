@@ -55,7 +55,6 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
             log.error(f"[T1316924] FAIL: {e}")
             raise
 
-
 # class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
 #     """
 #     T1316925
@@ -117,6 +116,7 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
 #         except Exception as e:
 #             log.error(f"[{case_id}] FAIL: {e}")
 #             raise
+
 class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
     """
     T1316931 same as T1316932 (Wireless)
@@ -306,8 +306,6 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
         except Exception as e:
             log.error(f"[T1316960] FAIL: {e}")
             raise
-
-
 
 class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
     """
@@ -642,6 +640,7 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
         except Exception as e:
             log.error(f"[T1316958] FAIL: {e}")
             raise
+
 class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
     """
     T1316959

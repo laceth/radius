@@ -4,12 +4,17 @@ from framework.log.logger import log
 from lib.plugin.radius.pre_admission_rule import edit_pre_admission_rule, set_pre_admission_rules_remote
 from lib.plugin.radius.radius_base import RadiusBase
 from lib.plugin.radius.radius_plugin_settings import radius_setting_option_mapping, implicit_field_mapping
+import paramiko
+from contextlib import suppress
 
 DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_UPTIME_COMMAND = "fstool dot1x uptime"
 DOT1X_RESTART_TIMEOUT = 300
 DOT1X_CHECK_INTERVAL = 5
 DOT1X_RUNNING_VERIFICATION_STRING = " days"
+DEFAULT_LOCAL_PROPERTY_FILE_PATH = "/usr/local/forescout/plugin/dot1x/local.properties"
+AUTH_SOURCE_NULL_KEY = "config.auth_source_null.value"
+AUTH_SOURCE_DEFAULT_KEY = "config.auth_source_default.value"
 
 
 class Radius(RadiusBase):
@@ -151,9 +156,12 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to configure RADIUS plugin settings: {e}")
 
-    def add_domain(self, domain_name: str, ad_username: str, ad_password: str, timeout: int = 60) -> None:
+    def join_domain(self, domain_name: str, ad_username: str, ad_password: str, timeout: int = 60) -> None:
         """
         Join a domain in User Directory using fstool dot1x join command.
+
+        First checks if the domain is already joined using test_domain_join.
+        If already joined, skips the join operation. Otherwise, joins the domain.
 
         This adds the domain to the RADIUS plugin configuration for LDAP queries
         and authentication against Active Directory.
@@ -165,15 +173,25 @@ class Radius(RadiusBase):
             timeout: Command timeout in seconds (default: 60)
 
         Example:
-            dot1x.add_domain("txqalab-dc1", "administrator", "aristo")
+            dot1x.join_domain("txqalab-dc1", "administrator", "aristo")
             # Executes: fstool dot1x join txqalab-dc1 administrator aristo
 
         Raises:
             Exception: If the join command fails
         """
+        log.info(f"Configuring RADIUS Authentication Source with domain '{domain_name}'")
+        # Check if domain is already joined
+        try:
+            if self.test_domain_join(domain_name, timeout):
+                log.info(f"Domain '{domain_name}' is already joined, skipping join operation")
+                return
+        except Exception as e:
+            log.info(f"Domain '{domain_name}' is not joined yet, proceeding with join: {e}")
+        
+        # Domain not joined, proceed with join
         cmd = f"fstool dot1x join {domain_name} {ad_username} {ad_password}"
 
-        log.info(f"Adding domain '{domain_name}' to User Directory")
+        log.info(f"Joining domain '{domain_name}' for Radius plugin")
         try:
             output = self.exec_cmd(cmd, timeout=timeout)
             log.info(f"Domain join command output: {output}")
@@ -190,3 +208,186 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to add domain '{domain_name}': {e}")
 
+    def test_domain_join(self, domain_name: str, timeout: int = 60) -> bool:
+        """
+        Test domain join without actually joining using fstool dot1x testjoin command.
+
+        This verifies the domain configuration and credentials are correct
+        without modifying the RADIUS plugin configuration.
+
+        Args:
+            domain_name: Domain name to test (e.g., "txqalab-dc1", "mycompany-dc2")
+            timeout: Command timeout in seconds (default: 60)
+
+        Returns:
+            True if test join is successful
+
+        Example:
+            dot1x.test_domain_join("txqalab-dc1")
+            # Executes: fstool dot1x testjoin txqalab-dc1
+            # Expected output: Join OK [txqalab-dc1]
+
+        Raises:
+            Exception: If the test join command fails
+        """
+        cmd = f"fstool dot1x testjoin {domain_name}"
+
+        log.info(f"Testing domain '{domain_name}' joined status with testjoin command")
+        try:
+            output = self.exec_cmd(cmd, timeout=timeout)
+            log.info(f"Test join command output: {output}")
+
+            # Check for success indicator
+            if "Join OK" in output and domain_name in output:
+                log.info(f"Domain '{domain_name}' is already joined")
+                return True
+            else:
+                raise Exception(f"Domain '{domain_name}' is not joined: {output}")
+
+        except Exception as e:
+            raise Exception(f"Failed to test join domain '{domain_name}': {e}")
+
+    def get_ad_config_from_dict(self, ad_config: dict, domain_key: str = 'ad1') -> dict:
+        """
+        Read Active Directory domain configuration from configuration dictionary.
+
+        Args:
+            ad_config: Dictionary containing AD configuration (e.g., from YAML)
+            domain_key: Key to read from ad_config (default: 'ad1')
+
+        Returns:
+            Dictionary with 'ad_name', 'ad_ud_user', 'ad_secret' keys, or empty dict if not found
+
+        Example:
+            ad_config = {
+                'ad1': {
+                    'ad_name': 'txqalab-dc1',
+                    'ad_ud_user': 'administrator',
+                    'ad_secret': 'aristo'
+                }
+            }
+            config = dot1x.get_ad_config_from_dict(ad_config)
+            # Returns: {'ad_name': 'txqalab-dc1', 'ad_ud_user': 'administrator', 'ad_secret': 'aristo'}
+        """
+        try:
+            if domain_key not in ad_config:
+                log.info(f"No '{domain_key}' configuration found in ad_config")
+                return {}
+
+            domain_config = ad_config[domain_key]
+            ad_name = domain_config.get('ad_name')
+            
+            if not ad_name:
+                log.warning(f"No 'ad_name' specified in {domain_key} config")
+                return {}
+
+            username = domain_config.get('ad_ud_user', 'administrator')
+            password = domain_config.get('ad_secret', 'aristo')
+
+            return {
+                'ad_name': ad_name,
+                'ad_ud_user': username,
+                'ad_secret': password
+            }
+        except Exception as e:
+            raise Exception(f"Failed to get AD config from dict (domain_key='{domain_key}'): {e}")
+
+    def set_auth_source_null(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
+        """Set config.auth_source_null.value to specified auth_source (checks current value first)."""
+        try:
+            current_value = self._get_property(AUTH_SOURCE_NULL_KEY, file_path)
+            if current_value == auth_source:
+                log.info(f"Auth source null already set to '{auth_source}', skipping")
+                return
+            
+            log.info(f"Setting auth_source {auth_source} to Null (current: '{current_value}')")
+            self._update_property(AUTH_SOURCE_NULL_KEY, auth_source, file_path)
+        except Exception as e:
+            raise Exception(f"Failed to set auth source null to '{auth_source}': {e}")
+
+    def set_auth_source_default(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
+        """Set config.auth_source_default.value to specified auth_source (checks current value first)."""
+        try:
+            current_value = self.get_auth_source_default(file_path)
+            if current_value == auth_source:
+                log.info(f"Auth source default already set to '{auth_source}', skipping")
+                return
+            
+            log.info(f"Setting auth_source {auth_source} to Default (current: '{current_value}')")
+            self._update_property(AUTH_SOURCE_DEFAULT_KEY, auth_source, file_path)
+        except Exception as e:
+            raise Exception(f"Failed to set auth source default to '{auth_source}': {e}")
+
+    def get_auth_source_default(self, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> str:
+        """Get current value of config.auth_source_default.value."""
+        try:
+            return self._get_property(AUTH_SOURCE_DEFAULT_KEY, file_path)
+        except Exception as e:
+            raise Exception(f"Failed to get auth source default: {e}")
+
+    def _update_property(self, key: str, value: str, file_path: str) -> None:
+        """Update a single property in local.properties."""
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(self.platform.ipaddress, username=self.platform.username, password=self.platform.password)
+
+        sftp = None
+        try:
+            sftp = ssh.open_sftp()
+
+            # Read existing file
+            with sftp.open(file_path, "r") as f:
+                lines = f.readlines()
+
+            # Find and update the key, or append if not found
+            updated = False
+            for i, line in enumerate(lines):
+                if line.startswith(f"{key}="):
+                    lines[i] = f"{key}={value}\n"
+                    updated = True
+                    break
+
+            if not updated:
+                lines.append(f"{key}={value}\n")
+
+            # Write back
+            with sftp.open(file_path, "w") as f:
+                f.writelines(lines)
+
+            log.info(f"Updated property: {key}={value}")
+
+        finally:
+            with suppress(Exception):
+                if sftp:
+                    sftp.close()
+            with suppress(Exception):
+                ssh.close()
+
+    def _get_property(self, key: str, file_path: str) -> str:
+        """Read a single property value from local.properties."""
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(self.platform.ipaddress, username=self.platform.username, password=self.platform.password)
+
+        sftp = None
+        try:
+            sftp = ssh.open_sftp()
+
+            with sftp.open(file_path, "r") as f:
+                lines = f.readlines()
+
+            for line in lines:
+                if line.startswith(f"{key}="):
+                    value = line.split("=", 1)[1].strip()
+                    log.info(f"Current property: {key}={value}")
+                    return value
+
+            log.info(f"Key {key} not found, returning empty string")
+            return ""
+
+        finally:
+            with suppress(Exception):
+                if sftp:
+                    sftp.close()
+            with suppress(Exception):
+                ssh.close()

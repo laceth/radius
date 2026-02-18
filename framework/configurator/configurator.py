@@ -35,8 +35,10 @@ class Configurator:
         if "passthrough" in self.config:
             passthrough = ef.get_passthrough(self.config.get("passthrough"))
             instances["passthrough"] = passthrough
+        if "ad" in self.config:
+            instances["ad"] = self.config.get("ad")
         for key in self.config:
-            if key in ["ca", "em", "switch", "passthrough"]:
+            if key in ["ca", "em", "switch", "passthrough", "ad"]:
                 continue
             plugin = ef.get_plugin(ca, key, self.config.get(key))
             instances[key] = plugin

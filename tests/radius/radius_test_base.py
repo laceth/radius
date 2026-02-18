@@ -43,7 +43,7 @@ class RadiusTestBase:
     DEFAULT_RADIUS_SECRET = "aristo"
     DEFAULT_RADIUS_SETTINGS = RadiusPluginSettings()
 
-    def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
+    def __init__(self, ca, em, radius, switch, passthrough, ad=None, version="1.0.0"):
         self.ca = cast(CounterActBase, ca)
         self.em = cast(EnterpriseManager, em)
         self.version = version
@@ -53,6 +53,8 @@ class RadiusTestBase:
         self.nicname = self.passthrough.nicname
         self.rf = RadiusFactory(default_secret=self.DEFAULT_RADIUS_SECRET)
         self.test_start_time = None
+        self.ad_config = ad or {}
+        self._dumped_host_ids = set()
 
     def do_setup(self):
         log.info("radius common setup")
@@ -60,6 +62,12 @@ class RadiusTestBase:
         # Record test start time
         self.test_start_time = datetime.now()
         log.info(f"Test start time: {self.test_start_time}")
+
+        # Setup Active Directory domain from config (if configured)
+        ad_config = self.dot1x.get_ad_config_from_dict(self.ad_config, 'ad1')
+        if ad_config:
+            self.dot1x.join_domain(ad_config['ad_name'], ad_config['ad_ud_user'], ad_config['ad_secret'])
+            self.dot1x.set_auth_source_null(ad_config['ad_name'])
 
         # Configure RADIUS plugin with settings
         self.configure_radius_settings()
@@ -132,6 +140,9 @@ class RadiusTestBase:
 
     def toggle_nic(self):
         """Toggle NIC to trigger re-authentication."""
+        # Update test start time before triggering authentication
+        self.test_start_time = datetime.now()
+        log.info(f"Toggling NIC to trigger re-authentication (updated test_start_time: {self.test_start_time})")
         self.passthrough.toggle_nic(self.nicname)
 
     def disable_nic(self):
@@ -140,6 +151,9 @@ class RadiusTestBase:
 
     def enable_nic(self):
         """Enable the NIC."""
+        # Update test start time before triggering authentication
+        self.test_start_time = datetime.now()
+        log.info(f"Enabling NIC (updated test_start_time: {self.test_start_time})")
         self.passthrough.enable_nic(self.nicname)
 
     # =========================================================================
@@ -284,6 +298,9 @@ class RadiusTestBase:
             {"property_field": "dot1x_auth_state", "expected_value": auth_state},
         ]
 
+        # Debug: dump all dot1x properties
+        self._dump_dot1x_properties(host_id)
+
         self.ca.check_properties(host_id, properties_check_list)
 
         # Verify auth happened after test started
@@ -307,12 +324,11 @@ class RadiusTestBase:
             auth_state: Expected auth state. Default: "Access-Accept"
         """
         host_id = self._get_host_id()
+        # Debug: dump all dot1x properties (only on first verification)
+        self._dump_dot1x_properties(host_id)        
+
         expected_source = f"Pre-Admission rule {rule_priority}"
-
         log.info(f"Verifying pre-admission rule for host: {host_id}")
-
-        # Debug: dump all dot1x properties
-        self._dump_dot1x_properties(host_id)
 
         # First verify auth_state is correct, then check auth_source
         # If auth_state is Access-Reject, auth_source will be None
@@ -325,12 +341,20 @@ class RadiusTestBase:
         log.info(f"Pre-admission rule verified: {expected_source}")
 
     def _dump_dot1x_properties(self, host_id: str):
-        """Debug: dump all dot1x properties for a host."""
+        """Debug: dump all dot1x properties for a host (once per authentication event)."""
+        # Get current auth_time to track unique authentication events
         try:
+            auth_time = self.ca.get_property_value(host_id, "dot1x_auth_time")
+            auth_key = (host_id, auth_time)
+            
+            if auth_key in self._dumped_host_ids:
+                return
+            
             output = self.ca.exec_command(f"fstool hostinfo {host_id} | grep dot1x")
-            log.info(f"All dot1x properties for {host_id}:")
+            log.info(f"All dot1x properties for {host_id} (auth_time: {auth_time}):")
             for line in output.strip().split('\n'):
                 log.info(f"  {line}")
+            self._dumped_host_ids.add(auth_key)
         except Exception as e:
             log.warning(f"Failed to dump dot1x properties: {e}")
 
@@ -342,8 +366,10 @@ class RadiusTestBase:
             nas_port_id: Expected NAS Port ID (dot1x_NASPortIdStr). Defaults to self.switch.port1['interface']
         """
         host_id = self._get_host_id()
-        nas_port_id = nas_port_id or self.switch.port1['interface']
+        # Debug: dump all dot1x properties (only on first verification)
+        self._dump_dot1x_properties(host_id)        
 
+        nas_port_id = nas_port_id or self.switch.port1['interface']
         log.info(f"Verifying wired properties for host: {host_id}")
 
         properties_check_list = [
@@ -362,7 +388,8 @@ class RadiusTestBase:
             nas_port_id: Expected NAS Port ID (dot1x_NASPortIdStr). Example: "capwap_90000008"
         """
         host_id = self._get_host_id()
-
+        # Debug: dump all dot1x properties (only on first verification)
+        self._dump_dot1x_properties(host_id)
         log.info(f"Verifying wireless properties for host: {host_id}")
 
         properties_check_list = [

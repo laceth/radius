@@ -36,8 +36,8 @@ class RadiusCertificatesTestBase(RadiusTestBase):
     # Default auth profile - override in subclasses
     DEFAULT_AUTH_PROFILE = AuthNicProfile.EAP_TLS
 
-    def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
-        super().__init__(ca, em, radius, switch, passthrough, version)
+    def __init__(self, ca, em, radius, switch, passthrough, ad=None, version="1.0.0"):
+        super().__init__(ca, em, radius, switch, passthrough, ad=ad, version=version)
         self.cert_config = CertificateAuthConfig(auth_nic_profile=self.DEFAULT_AUTH_PROFILE)
         self.nicname = self.cert_config.nicname
         self.trusted_cert_thumbprint = None
