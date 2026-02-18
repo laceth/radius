@@ -437,7 +437,8 @@ class RadiusTestBase:
                 f"  Authentication happened before test started."
             )
 
-        log.info(f"Property {'dot1x_auth_time':30s}: expected>{self.test_start_time:20s}, actual={auth_time:20s}, match=True")
+        expected_time = self.test_start_time.strftime('%Y-%m-%d %H:%M:%S')
+        log.info(f"Property {'dot1x_auth_time':30s}: expected>{expected_time:20s}, actual={str(auth_time):20s}, match=True")
 
     def verify_authentication_on_ca(
             self,
