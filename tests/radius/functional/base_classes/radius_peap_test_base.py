@@ -103,7 +103,7 @@ class RadiusPeapTestBase(RadiusTestBase):
             if auth_source:
                 if auth_source == self.default_ad_config.get('ad_name', ''):
                     domain_name = 'TXQALAB'
-                if 'TXQALAB2' in auth_source.upper() :
+                elif 'TXQALAB2' in auth_source.upper():
                     domain_name = 'TXQALAB2'
             if domain_name:
                 peap_properties_check_list.append(
