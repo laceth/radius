@@ -138,8 +138,8 @@ class CouterActAppliance(CounterActBase):
         log.info(f"Starting property checks for ID: {id}")
         for item in properties_check_list:
             property_field = item.get('property_field')
-            expected_value = item.get('expected_value')            
-            result, actual_value, actual_resolved_by = self._property_check(id=id, **item)            
+            expected_value = item.get('expected_value')
+            result, actual_value, actual_resolved_by = self._property_check(id=id, **item)
             log.info(f"Property {property_field:30s}: expected={expected_value:20s}, actual={actual_value:20s}, match={result}")
             
             if not result:
