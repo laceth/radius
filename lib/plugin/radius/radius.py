@@ -196,8 +196,8 @@ class Radius(RadiusBase):
             output = self.exec_cmd(cmd, timeout=timeout)
             log.info(f"Domain join command output: {output}")
 
-            # Check for success indicators
-            if "error" in output.lower() or "failed" in output.lower():
+            # Check for success indicator
+            if "Result: SUCCES" not in output:
                 raise Exception(f"Domain join failed: {output}")
 
             log.info(f"Successfully joined domain '{domain_name}'")
@@ -206,7 +206,7 @@ class Radius(RadiusBase):
             self.restart_dot1x_plugin()
 
         except Exception as e:
-            raise Exception(f"Failed to add domain '{domain_name}': {e}")
+            raise Exception(f"Failed to join domain '{domain_name}': {e}")
 
     def test_domain_join(self, domain_name: str, timeout: int = 60) -> bool:
         """

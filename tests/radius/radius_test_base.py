@@ -53,7 +53,7 @@ class RadiusTestBase:
         self.nicname = self.passthrough.nicname
         self.rf = RadiusFactory(default_secret=self.DEFAULT_RADIUS_SECRET)
         self.test_start_time = None
-        self.host_id_auth_time = set()        
+        self.host_id_auth_time = set()
         self.ad_config = ad or {}
         self.default_ad_config = {}
 
