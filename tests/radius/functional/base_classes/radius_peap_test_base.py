@@ -12,7 +12,7 @@ from tests.radius.radius_test_base import RadiusTestBase
 class RadiusPeapTestBase(RadiusTestBase):
 
     def __init__(self, ca, em, radius, switch, passthrough, ad=None, version="1.0.0"):
-        super().__init__(ca, em, radius, switch, passthrough, ad, version)
+        super().__init__(ca, em, radius, switch, passthrough, ad=ad, version=version)
         self.peap_config = PEAPCredentialsConfig()
         self.nicname = self.peap_config.nicname
 
