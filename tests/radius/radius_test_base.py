@@ -157,7 +157,7 @@ class RadiusTestBase:
             ad_domain = ad_domain_config.get("ad_domain")
             ad_name = ad_domain_name_mapping.get(ad_domain, [None])[0]
             if not ad_name:
-                log.warning(f"No ad_name defined for ad_domain '{ad_domain} in User Directory.")
+                log.warning(f"No ad_name defined for ad_domain '{ad_domain}' in User Directory.")
                 continue
 
             config = {

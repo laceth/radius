@@ -197,7 +197,7 @@ class Radius(RadiusBase):
             log.info(f"Domain join command output: {output}")
 
             # Check for success indicator
-            if "Result: SUCCES" not in output:
+            if "Result: SUCCESS" not in output:
                 raise Exception(f"Domain join failed: {output}")
 
             log.info(f"Successfully joined domain '{domain_name}'")
