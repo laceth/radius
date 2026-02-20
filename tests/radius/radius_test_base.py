@@ -84,7 +84,7 @@ class RadiusTestBase:
         # Get Active Directory domain from DB (if configured in User Directory)
         self.build_ad_config()
         if self.ad_config1:
-            self.dot1x.join_domain(self.ad_config1["ad_name"], self.ad_config1["ad_ud_user"],self.ad_config1["ad_secret"])
+            self.dot1x.join_domain(self.ad_config1["ad_name"], self.ad_config1["ad_ud_user"], self.ad_config1["ad_secret"])
             self.dot1x.set_null(self.ad_config1["ad_name"])
         # Configure RADIUS plugin with settings
         self.configure_radius_settings()
@@ -148,6 +148,9 @@ class RadiusTestBase:
 
         Gets self.ad_config1, self.ad_config2, self.ad_config3 with ad_name/ad_ud_user/ad_secret/ad_domain.
         """
+        self.ad_config1 = {}
+        self.ad_config2 = {}
+        self.ad_config3 = {}
         ad_domain_name_mapping = self.ca.get_ad_domain_name_mapping()
 
         for idx, ad_domain_config in enumerate(self.AD_DOMAIN_CONFIGS):
@@ -155,7 +158,6 @@ class RadiusTestBase:
             ad_name = ad_domain_name_mapping.get(ad_domain, [None])[0]
             if not ad_name:
                 log.warning(f"No ad_name defined for ad_domain '{ad_domain} in User Directory.")
-                setattr(self, f"ad_config{idx + 1}", {})
                 continue
 
             config = {
