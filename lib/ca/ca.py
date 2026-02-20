@@ -1,7 +1,7 @@
 import ipaddress
 import re
 import time
-from typing import Optional
+from typing import Dict, List, Optional
 
 from framework.log.logger import log
 from lib.ca.ca_common_base import CounterActBase
@@ -160,4 +160,38 @@ class CouterActAppliance(CounterActBase):
         log.info("All property checks passed")
         return True
 
+    def get_ad_domain_name_mapping(self, domain_filter: Optional[str] = "forescout.local") -> Dict[str, List[str]]:
+        """
+        Query devinfo for AD domains and return a mapping of ad_domain -> list of ad_name (id).
 
+        Args:
+            domain_filter: Optional substring filter for ad_domain (SQL LIKE %filter%).
+
+        Returns:
+            Dict mapping ad_domain (field_value) to a list of ad_name (id) values.
+        """
+        ad_domain_query_base = (
+            "SELECT id, field_name, field_value "
+            "FROM devinfo "
+            "WHERE category='ad' AND field_name='ad_domain'"
+        )
+        query = ad_domain_query_base
+        if domain_filter:
+            query += f" AND field_value LIKE '%{domain_filter}%'"
+
+        cmd = f"psql -t -A -F '|' -c \"{query}\""
+        output = self.exec_command(cmd, log_output=True, log_command=True)
+        ad_domain_name_mapping: Dict[str, List[str]] = {}
+
+        for line in output.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            parts = [part.strip() for part in line.split("|")]
+            if len(parts) < 3:
+                continue
+            ad_name, ad_domain = parts[0], parts[2]    
+            ad_domain_name_mapping.setdefault(ad_domain, []).append(ad_name)
+
+        log.info(f"AD domain and ad name mapping retrieved: {ad_domain_name_mapping}")
+        return ad_domain_name_mapping

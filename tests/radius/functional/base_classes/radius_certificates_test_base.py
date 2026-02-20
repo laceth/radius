@@ -36,8 +36,8 @@ class RadiusCertificatesTestBase(RadiusTestBase):
     # Default auth profile - override in subclasses
     DEFAULT_AUTH_PROFILE = AuthNicProfile.EAP_TLS
 
-    def __init__(self, ca, em, radius, switch, passthrough, ad=None, version="1.0.0"):
-        super().__init__(ca, em, radius, switch, passthrough, ad=ad, version=version)
+    def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
+        super().__init__(ca, em, radius, switch, passthrough, version=version)
         self.cert_config = CertificateAuthConfig(auth_nic_profile=self.DEFAULT_AUTH_PROFILE)
         self.nicname = self.cert_config.nicname
         self.trusted_cert_thumbprint = None
@@ -89,15 +89,16 @@ class RadiusCertificatesTestBase(RadiusTestBase):
             certificate_name: Expected certificate name (dot1x_host). Defaults to certificate filename without .pfx
         """
         # Get host ID once using base class helper
-        host_id = self._get_host_id()
-        log.info(f"Verifying {self.DEFAULT_AUTH_PROFILE.name} authentication for host: {host_id}")
+        if not self.host_id:
+            self.host_id = self._get_host_id()
+        log.info(f"Verifying {self.DEFAULT_AUTH_PROFILE.name} authentication for host: {self.host_id}")
 
         # Convert enum to string value if needed
         auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
 
         # Verify common fields using base class helper
         self._verify_common_properties(
-            host_id=host_id,
+            host_id=self.host_id,
             switch_ip=switch_ip,
             ca_ip=ca_ip,
             auth_state=auth_status_value
@@ -117,7 +118,7 @@ class RadiusCertificatesTestBase(RadiusTestBase):
             {"property_field": "dot1x_host", "expected_value": cert_name},
         ]
 
-        self.ca.check_properties(host_id, cert_properties_check_list)
+        self.ca.check_properties(self.host_id, cert_properties_check_list)
         log.info(f"{self.DEFAULT_AUTH_PROFILE.name} authentication verification completed successfully")
 
     def _get_eap_type(self) -> str:

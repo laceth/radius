@@ -56,7 +56,7 @@ class Radius(RadiusBase):
         Raises:
             Exception: If the plugin fails to start within the timeout period.
         """
-        log.info("Restarting 802.1X plugin on RADIUS server")
+        log.info(f"Restarting 802.1X plugin on RADIUS server on {self.platform.ipaddress}")
         try:
             self.exec_cmd(DOT1X_RESTART_COMMAND)
             start_time = time.time()
@@ -113,7 +113,7 @@ class Radius(RadiusBase):
             }
         """
         cmd_list = []
-        log.info("Configuring RADIUS plugin settings")
+        log.info(f"Configuring RADIUS plugin settings on {self.platform.ipaddress}")
         try:
             for key, val in conf_dict.items():
                 # Skip empty/None values
@@ -136,9 +136,9 @@ class Radius(RadiusBase):
             self.restart_dot1x_plugin()
 
         except Exception as e:
-            log.error(f"Error configuring RADIUS plugin settings: {e}")
+            log.error(f"Error configuring RADIUS plugin settings on {self.platform.ipaddress}: {e}")
             raise e
-        log.info("RADIUS plugin settings configured successfully")
+        log.info(f"RADIUS plugin settings configured successfully on {self.platform.ipaddress}")
         return cmd_list
 
     def plugin_setting(self, conf_dict):
@@ -182,7 +182,7 @@ class Radius(RadiusBase):
         log.info(f"Configuring RADIUS Authentication Source with domain '{domain_name}'")
         # Check if domain is already joined
         try:
-            if self.test_domain_join(domain_name, timeout):
+            if self.test_join_domain(domain_name, timeout):
                 log.info(f"Domain '{domain_name}' is already joined, skipping join operation")
                 return
         except Exception as e:
@@ -208,7 +208,7 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to join domain '{domain_name}': {e}")
 
-    def test_domain_join(self, domain_name: str, timeout: int = 60) -> bool:
+    def test_join_domain(self, domain_name: str, timeout: int = 60) -> bool:
         """
         Test domain join without actually joining using fstool dot1x testjoin command.
 
@@ -223,7 +223,7 @@ class Radius(RadiusBase):
             True if test join is successful
 
         Example:
-            dot1x.test_domain_join("txqalab-dc1")
+            dot1x.test_join_domain("txqalab-dc1")
             # Executes: fstool dot1x testjoin txqalab-dc1
             # Expected output: Join OK [txqalab-dc1]
 
@@ -239,7 +239,7 @@ class Radius(RadiusBase):
 
             # Check for success indicator
             if "Join OK" in output and domain_name in output:
-                log.info(f"Domain '{domain_name}' is already joined")
+                log.debug(f"Domain '{domain_name}' is already joined")
                 return True
             else:
                 raise Exception(f"Domain '{domain_name}' is not joined: {output}")
@@ -247,52 +247,7 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to test join domain '{domain_name}': {e}")
 
-    def get_ad_config_from_dict(self, ad_config: dict, domain_key: str = 'ad1') -> dict:
-        """
-        Read Active Directory domain configuration from configuration dictionary.
-
-        Args:
-            ad_config: Dictionary containing AD configuration (e.g., from YAML)
-            domain_key: Key to read from ad_config (default: 'ad1')
-
-        Returns:
-            Dictionary with 'ad_name', 'ad_ud_user', 'ad_secret' keys, or empty dict if not found
-
-        Example:
-            ad_config = {
-                'ad1': {
-                    'ad_name': 'txqalab-dc1',
-                    'ad_ud_user': 'administrator',
-                    'ad_secret': 'aristo'
-                }
-            }
-            config = dot1x.get_ad_config_from_dict(ad_config)
-            # Returns: {'ad_name': 'txqalab-dc1', 'ad_ud_user': 'administrator', 'ad_secret': 'aristo'}
-        """
-        try:
-            if domain_key not in ad_config:
-                log.info(f"No '{domain_key}' configuration found in ad_config")
-                return {}
-
-            domain_config = ad_config[domain_key]
-            ad_name = domain_config.get('ad_name')
-            
-            if not ad_name:
-                log.warning(f"No 'ad_name' specified in {domain_key} config")
-                return {}
-
-            username = domain_config.get('ad_ud_user', 'administrator')
-            password = domain_config.get('ad_secret', 'aristo')
-
-            return {
-                'ad_name': ad_name,
-                'ad_ud_user': username,
-                'ad_secret': password
-            }
-        except Exception as e:
-            raise Exception(f"Failed to get AD config from dict (domain_key='{domain_key}'): {e}")
-
-    def set_auth_source_null(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
+    def set_null(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
         """Set config.auth_source_null.value to specified auth_source (checks current value first)."""
         try:
             current_value = self._get_property(AUTH_SOURCE_NULL_KEY, file_path)
@@ -305,10 +260,10 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to set auth source null to '{auth_source}': {e}")
 
-    def set_auth_source_default(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
+    def set_default(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
         """Set config.auth_source_default.value to specified auth_source (checks current value first)."""
         try:
-            current_value = self.get_auth_source_default(file_path)
+            current_value = self.get_default_auth_source(file_path)
             if current_value == auth_source:
                 log.info(f"Auth source default already set to '{auth_source}', skipping")
                 return
@@ -318,7 +273,7 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to set auth source default to '{auth_source}': {e}")
 
-    def get_auth_source_default(self, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> str:
+    def get_default_auth_source(self, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> str:
         """Get current value of config.auth_source_default.value."""
         try:
             return self._get_property(AUTH_SOURCE_DEFAULT_KEY, file_path)

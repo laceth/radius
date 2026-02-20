@@ -11,8 +11,8 @@ from tests.radius.radius_test_base import RadiusTestBase
 
 class RadiusPeapTestBase(RadiusTestBase):
 
-    def __init__(self, ca, em, radius, switch, passthrough, ad=None, version="1.0.0"):
-        super().__init__(ca, em, radius, switch, passthrough, ad=ad, version=version)
+    def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
+        super().__init__(ca, em, radius, switch, passthrough, version=version)
         self.peap_config = PEAPCredentialsConfig()
         self.nicname = self.peap_config.nicname
 
@@ -57,15 +57,16 @@ class RadiusPeapTestBase(RadiusTestBase):
             auth_status: Expected auth status (dot1x_user_auth_status). Default: RadiusAuthStatus.ACCESS_ACCEPT
         """
         # Get host ID once using base class helper
-        host_id = self._get_host_id()
-        log.info(f"Verifying PEAP authentication for host: {host_id}")
+        if not self.host_id:
+            self.host_id = self._get_host_id()
+        log.info(f"Verifying PEAP authentication for host: {self.host_id}")
 
         # Convert enum to string value if needed
         auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
 
         # Verify common fields using base class helper
         self._verify_common_properties(
-            host_id=host_id,
+            host_id=self.host_id,
             switch_ip=switch_ip,
             ca_ip=ca_ip,
             auth_state=auth_status_value
@@ -98,12 +99,12 @@ class RadiusPeapTestBase(RadiusTestBase):
             )
         else:
             # No domain in credentials - check if there's a default auth source configured
-            auth_source = self.dot1x.get_auth_source_default()
+            auth_source = self.dot1x.get_default_auth_source()
             domain_name = None
             if auth_source:
-                if auth_source == self.default_ad_config.get('ad_name', ''):
+                if auth_source == self.ad_config1.get('ad_name', ''):
                     domain_name = 'TXQALAB'
-                elif 'TXQALAB2' in auth_source.upper():
+                elif auth_source == self.ad_config2.get('ad_name', ''):
                     domain_name = 'TXQALAB2'
             if domain_name:
                 peap_properties_check_list.append(
@@ -111,7 +112,7 @@ class RadiusPeapTestBase(RadiusTestBase):
                 )
             # If auth_source is empty, skip dot1x_domain check (property won't be present)
 
-        self.ca.check_properties(host_id, peap_properties_check_list)
+        self.ca.check_properties(self.host_id, peap_properties_check_list)
         log.info("PEAP authentication verification completed successfully")
 
     # =========================================================================
