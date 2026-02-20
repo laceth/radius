@@ -181,12 +181,9 @@ class Radius(RadiusBase):
         """
         log.info(f"Configuring RADIUS Authentication Source with domain '{domain_name}'")
         # Check if domain is already joined
-        try:
-            if self.test_join_domain(domain_name, timeout):
-                log.info(f"Domain '{domain_name}' is already joined, skipping join operation")
-                return
-        except Exception as e:
-            log.info(f"Domain '{domain_name}' is not joined yet, proceeding with join: {e}")
+        if self.test_join_domain(domain_name, timeout):
+            log.info(f"Domain '{domain_name}' is already joined, skipping join operation")
+            return
         
         # Domain not joined, proceed with join
         cmd = f"fstool dot1x join {domain_name} {ad_username} {ad_password}"
@@ -241,8 +238,9 @@ class Radius(RadiusBase):
             if "Join OK" in output and domain_name in output:
                 log.debug(f"Domain '{domain_name}' is already joined")
                 return True
-            else:
-                raise Exception(f"Domain '{domain_name}' is not joined: {output}")
+
+            log.info(f"Domain '{domain_name}' is not joined: {output}")
+            return False
 
         except Exception as e:
             raise Exception(f"Failed to test join domain '{domain_name}': {e}")
