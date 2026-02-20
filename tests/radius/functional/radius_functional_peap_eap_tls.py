@@ -2,7 +2,7 @@ from dataclasses import field
 from framework.log.logger import log
 from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile, WindowsCert
 from lib.plugin.radius.enums import Dot1xAttribute, PreAdmissionAuth, MscaOid, EKUEntry, MSCAEntry
-from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
+from tests.radius.functional.base_classes.radius_peap_eap_tls_test_base import RadiusPeapEapTlsTestBase
 from lib.utils.vlan_mapping import get_vlan_from_ip, get_ip_range_from_vlan
 
 
@@ -10,7 +10,7 @@ RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["a
 RULE_EAP_TYPE_PEAP = [{"rule_name": "EAP-Type", "fields": ["PEAP"]}]
 CERT_PASSWORD = "aristo"
 
-class PEAPEAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
+class PEAPEAPTLSBasicAuthWiredTest(RadiusPeapEapTlsTestBase):
     """
     T1316930 same as T1316929 (Wireless)
     Steps

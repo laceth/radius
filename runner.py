@@ -31,8 +31,9 @@ def run_class(cls, results, test_config):
             instance.do_test()
             log.info(DEFAULT_MESSAGE_FORMAT.format(f"Test passed: {instance.__class__.__name__} Passed"))
             results.append(TestResult(cls.__name__, 'passed'))
-        except AssertionError as e:
+        except (AssertionError, Exception) as e:
             log.error(DEFAULT_MESSAGE_FORMAT.format(f"Test Failed: {instance.__class__.__name__} Failed"))
+            log.error(f"Error: {str(e)}")
             results.append(TestResult(cls.__name__, 'failed', str(e)))
         finally:
             instance.do_teardown()
@@ -52,9 +53,10 @@ def run_class(cls, results, test_config):
                 instance.do_test()
                 log.info(DEFAULT_MESSAGE_FORMAT.format(f"Test passed: {instance.__class__.__name__} Passed"))
                 results.append(TestResult(f"{cls.__name__}[{idx}]with {values}", 'passed'))
-            except AssertionError as e:
+            except (AssertionError, Exception) as e:
                 log.error(DEFAULT_MESSAGE_FORMAT.format(f"Test Failed: {instance.__class__.__name__} Failed"))
-                results.append(TestResult(f"{cls.__name__}[{idx}]with {values}", 'failed'))
+                log.error(f"Error: {str(e)}")
+                results.append(TestResult(f"{cls.__name__}[{idx}]with {values}", 'failed', str(e)))
             finally:
                 instance.do_teardown()
 
