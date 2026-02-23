@@ -48,8 +48,11 @@ class CouterActAppliance(CounterActBase):
         Returns:
             Property value or None if not found.
         """
-        if isinstance(ipaddress.ip_address(id), ipaddress.IPv6Address):
-            id = self.get_id_by_ipv6(id)
+        try:
+            if isinstance(ipaddress.ip_address(id), ipaddress.IPv6Address):
+                id = self.get_id_by_ipv6(id)
+        except ValueError:
+            pass  # id is not a valid IP (e.g., MAC address) — use as-is
         if not property_field or not id:
             raise Exception("property_field and id are required")
 
@@ -73,8 +76,11 @@ class CouterActAppliance(CounterActBase):
             Tuple of (result: bool, actual_value: str, actual_resolved_by: str)
         """
 
-        if isinstance(ipaddress.ip_address(id), ipaddress.IPv6Address):
-            id = self.get_id_by_ipv6(id)
+        try:
+            if isinstance(ipaddress.ip_address(id), ipaddress.IPv6Address):
+                id = self.get_id_by_ipv6(id)
+        except ValueError:
+            pass  # id is not a valid IP (e.g., MAC address) — use as-is
         if not property_field or not id:
             raise Exception("property_field and id are required")
 

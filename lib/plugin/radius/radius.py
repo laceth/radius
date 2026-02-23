@@ -7,11 +7,14 @@ from lib.plugin.radius.radius_plugin_settings import radius_setting_option_mappi
 import paramiko
 from contextlib import suppress
 
+import re
+
 DOT1X_RESTART_COMMAND = "fstool dot1x restart"
-DOT1X_UPTIME_COMMAND = "fstool dot1x uptime"
+DOT1X_STATUS_COMMAND = "fstool dot1x status"
 DOT1X_RESTART_TIMEOUT = 300
-DOT1X_CHECK_INTERVAL = 5
-DOT1X_RUNNING_VERIFICATION_STRING = " days"
+DOT1X_CHECK_INTERVAL = 10
+DOT1X_MIN_RADIUSD_UPTIME_SECONDS = 45
+
 DEFAULT_LOCAL_PROPERTY_FILE_PATH = "/usr/local/forescout/plugin/dot1x/local.properties"
 AUTH_SOURCE_NULL_KEY = "config.auth_source_null.value"
 AUTH_SOURCE_DEFAULT_KEY = "config.auth_source_default.value"
@@ -21,22 +24,87 @@ class Radius(RadiusBase):
     def exec_cmd(self, command: str, timeout: int = 15) -> str:
         return self.platform.exec_command(command, timeout)
 
-    def dot1x_plugin_running(self) -> bool:
+    @staticmethod
+    def _parse_running_time(time_str: str) -> int:
         """
-        Check if 802.1X plugin is running by verifying uptime output contains ' days'.
+        Parse a running-time string from 'fstool dot1x status' into total seconds.
+
+        Supported formats:
+            'MM:SS'                  →  e.g. '00:54'
+            'HH:MM:SS'              →  e.g. '01:02:03'
+            'DAYS-HH:MM:SS'         →  e.g. '145-19:21:22'
 
         Returns:
-            True if plugin is running, False otherwise.
+            Total seconds, or -1 if parsing fails.
+        """
+        time_str = time_str.strip().rstrip('.')
+
+        # DAYS-HH:MM:SS
+        m = re.match(r'^(\d+)-(\d{2}):(\d{2}):(\d{2})$', time_str)
+        if m:
+            return int(m.group(1)) * 86400 + int(m.group(2)) * 3600 + int(m.group(3)) * 60 + int(m.group(4))
+
+        # HH:MM:SS
+        m = re.match(r'^(\d{2,}):(\d{2}):(\d{2})$', time_str)
+        if m:
+            return int(m.group(1)) * 3600 + int(m.group(2)) * 60 + int(m.group(3))
+
+        # MM:SS
+        m = re.match(r'^(\d{2,}):(\d{2})$', time_str)
+        if m:
+            return int(m.group(1)) * 60 + int(m.group(2))
+
+        return -1
+
+    def _get_radiusd_uptime_seconds(self, status_output: str) -> int:
+        """
+        Extract radiusd uptime in seconds from 'fstool dot1x status' output.
+
+        Looks for a line like:
+            radiusd (pid 28055) is running for 00:54.
+
+        Returns:
+            Uptime in seconds, or -1 if radiusd line not found or not parseable.
+        """
+        for line in status_output.splitlines():
+            if 'radiusd' in line.lower() and 'is running for' in line:
+                # Extract the time portion after 'is running for '
+                m = re.search(r'is running for\s+(.+)', line)
+                if m:
+                    return self._parse_running_time(m.group(1))
+        return -1
+
+    def dot1x_plugin_running(self) -> bool:
+        """
+        Check if the 802.1X plugin is ready by verifying that radiusd has been
+        running for at least DOT1X_MIN_RADIUSD_UPTIME_SECONDS (45 s).
+
+        Uses 'fstool dot1x status' which reports the uptime of each sub-process
+        (radiusd, winbindd, redis-server).  The radiusd uptime is the one that
+        matters — the plugin restarts several times in the first seconds after
+        a restart command, so a stable radiusd uptime ≥ 45 s means it is truly
+        ready.
+
+        Returns:
+            True if radiusd uptime ≥ threshold, False otherwise.
         """
         log.info("Checking if 802.1X plugin is running on RADIUS server")
         try:
-            uptime_output = self.exec_cmd(DOT1X_UPTIME_COMMAND)
-            log.info(f"Uptime command output: {uptime_output}")
-            if DOT1X_RUNNING_VERIFICATION_STRING in uptime_output:
-                log.info("RADIUS server is running")
+            status_output = self.exec_cmd(DOT1X_STATUS_COMMAND)
+            log.info(f"dot1x status output:\n{status_output}")
+
+            radiusd_seconds = self._get_radiusd_uptime_seconds(status_output)
+
+            if radiusd_seconds >= DOT1X_MIN_RADIUSD_UPTIME_SECONDS:
+                log.info(f"radiusd is running (uptime: {radiusd_seconds}s)")
                 return True
+            elif radiusd_seconds >= 0:
+                log.warning(
+                    f"radiusd uptime is {radiusd_seconds}s, waiting for {DOT1X_MIN_RADIUSD_UPTIME_SECONDS}s"
+                )
+                return False
             else:
-                log.warning("RADIUS server is not yet running (uptime not showing days)")
+                log.warning(f"radiusd is not yet running or not found in status output")
                 return False
         except Exception as e:
             log.warning(f"Failed to check plugin status: {e}")
@@ -44,14 +112,14 @@ class Radius(RadiusBase):
 
     def restart_dot1x_plugin(self, timeout: int = DOT1X_RESTART_TIMEOUT, interval: int = DOT1X_CHECK_INTERVAL) -> None:
         """
-        Restart the 802.1X plugin and wait until it's running.
+        Restart the 802.1X plugin and wait until radiusd is stable.
 
-        Verification is done by checking 'fstool dot1x uptime' output for ' days' string,
-        which indicates the plugin is fully operational.
+        Verification uses 'fstool dot1x status' and waits until radiusd uptime
+        reaches DOT1X_MIN_RADIUSD_UPTIME_SECONDS (45 s).
 
         Args:
-            timeout: Maximum time in seconds to wait for the plugin to start (default: 300).
-            interval: Time in seconds between status checks (default: 5).
+            timeout: Maximum time in seconds to wait for the plugin to start (default: 500).
+            interval: Time in seconds between status checks (default: 10).
 
         Raises:
             Exception: If the plugin fails to start within the timeout period.
@@ -184,7 +252,7 @@ class Radius(RadiusBase):
         if self.test_join_domain(domain_name, timeout):
             log.info(f"Domain '{domain_name}' is already joined, skipping join operation")
             return
-        
+
         # Domain not joined, proceed with join
         cmd = f"fstool dot1x join {domain_name} {ad_username} {ad_password}"
 
@@ -252,7 +320,7 @@ class Radius(RadiusBase):
             if current_value == auth_source:
                 log.info(f"Auth source null already set to '{auth_source}', skipping")
                 return
-            
+
             log.info(f"Setting auth_source {auth_source} to Null (current: '{current_value}')")
             self._update_property(AUTH_SOURCE_NULL_KEY, auth_source, file_path)
         except Exception as e:
@@ -265,7 +333,7 @@ class Radius(RadiusBase):
             if current_value == auth_source:
                 log.info(f"Auth source default already set to '{auth_source}', skipping")
                 return
-            
+
             log.info(f"Setting auth_source {auth_source} to Default (current: '{current_value}')")
             self._update_property(AUTH_SOURCE_DEFAULT_KEY, auth_source, file_path)
         except Exception as e:

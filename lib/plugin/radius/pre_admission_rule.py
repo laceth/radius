@@ -108,8 +108,24 @@ class D1XTimeRestrictionsCriterion(D1xOption):
 
 
 class D1XBooleanCriterion(D1xOption):
-    def return_admission_rule_entry(self, rule_dict):
-        raise NotImplementedError
+    """
+    Boolean criteria handler for conditions like "MAC Found in MAR".
+
+    The value should be "True" or "False" (case-insensitive).
+    Output format: {"field":"MAC Found in MAR","checked":true,"value":"true","critClass":"...D1XBooleanCriterion"}
+    Note: "checked" is a JSON boolean (true/false), not a string.
+    """
+
+    def return_admission_rule_entry(self, rule_dict: Dict[str, Any]) -> str:
+        field = rule_dict["rule_name"]
+        value = rule_dict["fields"][0] if rule_dict.get("fields") else "True"
+        value_lower = str(value).lower()
+        if value_lower not in ("true", "false"):
+            raise Exception(f"Boolean criterion requires 'True' or 'False', got: {value}")
+        return (
+            '"field":"%s","checked":%s,"value":"%s","critClass":"forescout.plugin.dot1x.default_policy.D1XBooleanCriterion"'
+            % (field, value_lower, value_lower)
+        )
 
 
 class Context:

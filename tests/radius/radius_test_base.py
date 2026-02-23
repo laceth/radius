@@ -72,6 +72,7 @@ class RadiusTestBase:
         self.test_start_time = None
         self.host_id_auth_time = set()
         self.host_id = None
+        self._last_known_ip = None
 
     def do_setup(self):
         log.info("Radius Common Setup")
@@ -111,9 +112,9 @@ class RadiusTestBase:
 
     def log_test_devices(self):
         log.info(f"Radius Server IP: {self.ca.ipaddress}")
-        if self.switch.ip:          
+        if self.switch.ip:
             log.info(f"Switch IP: {self.switch.ip}")
-        if self.passthrough.mac:    
+        if self.passthrough.mac:
             log.info(f"Passthrough Management IP: {self.passthrough.ip}")
             log.info(f"Passthrough MAC: {self.passthrough.mac}")
 
@@ -249,6 +250,7 @@ class RadiusTestBase:
         """
         Wait for NIC to get an IP address in the target VLAN range.
         The IP range is derived from the switch port's VLAN configuration.
+        Stores the assigned IP in self._last_known_ip for use by _get_host_id().
 
         Args:
             timeout: Maximum time to wait in seconds
@@ -268,7 +270,9 @@ class RadiusTestBase:
         if not ip_range:
             raise ValueError(f"Could not determine IP range for VLAN {vlan}")
 
-        return self.passthrough.wait_for_nic_ip_in_range(self.nicname, ip_range, timeout=timeout)
+        ip = self.passthrough.wait_for_nic_ip_in_range(self.nicname, ip_range, timeout=timeout)
+        self._last_known_ip = ip
+        return ip
 
     def assert_authentication_and_ip_in_range(
             self,
@@ -322,13 +326,47 @@ class RadiusTestBase:
 
     def _get_host_id(self) -> str:
         """
-        Get host ID by MAC address from passthrough config.
+        Get host ID (IP address) for the endpoint.
+
+        Priority:
+        1. IP stored by wait_for_nic_ip_in_range() — guaranteed in correct VLAN range.
+        2. Current NIC IP — what the CA sees right now (works for accept and reject).
+        3. MAC-based lookup from CA with VLAN range preference as last resort.
 
         Returns:
             Host ID/IP address for the endpoint
         """
-        self.host_id = self.ca.get_host_ip_by_mac(self.passthrough.mac)
-        return self.host_id
+        if self._last_known_ip:
+            log.info(f"Using stored VLAN IP {self._last_known_ip} for host identification")
+            return self._last_known_ip
+
+        # Try current NIC IP — the CA associates properties with whatever IP the host has
+        # Skip APIPA (169.254.x) and multicast (224.x+) as the CA won't track hosts under those
+        try:
+            current_ip = self.passthrough.get_nic_ip(self.nicname)
+            if current_ip:
+                try:
+                    addr = ipaddress.ip_address(current_ip)
+                    if not addr.is_multicast and not addr.is_link_local:
+                        log.info(f"Using current NIC IP {current_ip} for host identification")
+                        return current_ip
+                    else:
+                        log.info(f"Skipping NIC IP {current_ip} (multicast/link-local)")
+                except ValueError:
+                    pass
+        except Exception:
+            pass
+
+        # Last resort: MAC lookup on CA with VLAN range preference
+        preferred_range = None
+        try:
+            vlan = self.switch.port1.get('vlan')
+            if vlan:
+                preferred_range = get_ip_range_from_vlan(vlan)
+        except Exception:
+            pass
+
+        return self.ca.get_host_ip_by_mac(self.passthrough.mac, preferred_range=preferred_range)
 
     def _verify_common_properties(
             self,
@@ -409,10 +447,10 @@ class RadiusTestBase:
         try:
             auth_time = self.ca.get_property_value(host_id, "dot1x_auth_time")
             auth_key = (host_id, auth_time)
-            
+
             if auth_key in self.host_id_auth_time:
                 return
-            
+
             output = self.ca.exec_command(f"fstool hostinfo {host_id} | grep dot1x")
             log.info(f"All dot1x properties for {host_id} (auth_time: {auth_time}):")
             for line in output.strip().split('\n'):
