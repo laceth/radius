@@ -267,22 +267,22 @@ class CounterActBase(SSHClient):
         """
         Get host IP by MAC address.
 
-        When multiple IPs are associated with the same MAC:
-        1. If preferred_range is given, returns first IP in that CIDR range
+        Selection priority:
+        1. If preferred_range is given, returns first IP inside that CIDR
         2. Otherwise prefers private unicast IPs over multicast/link-local
-        3. Returns whatever is found if only one IP exists
+        3. Falls back to the first candidate
 
-        Retries with a timeout for cases where the CA hasn't registered the host yet
-        (e.g., after a rejected MAB authentication the hostinfo entry may take time to appear).
+        Retries until *timeout* for cases where the CA hasn't registered the
+        host yet (e.g., right after a rejected MAB authentication).
 
         Args:
             mac_address: MAC address to search for
             preferred_range: Optional CIDR range to prefer (e.g., '10.16.148.128/26')
-            timeout: Maximum time in seconds to wait for the host to appear (default: 60)
-            interval: Time in seconds between retries (default: 5)
+            timeout: Maximum seconds to wait for the host to appear (default: 60)
+            interval: Seconds between retries (default: 5)
 
         Returns:
-            IP address if found
+            IP address string
 
         Raises:
             Exception: If MAC address not found on CA within timeout
@@ -297,7 +297,7 @@ class CounterActBase(SSHClient):
 
                 if output:
                     return self._parse_host_ip_from_output(output, mac_address, preferred_range)
-            except (RuntimeError, Exception) as e:
+            except Exception as e:
                 last_error = e
 
             elapsed = time.time() - start_time
@@ -309,47 +309,50 @@ class CounterActBase(SSHClient):
 
         raise Exception(f"MAC address {mac_address} not found on CA after {timeout}s: {last_error}")
 
-    def _parse_host_ip_from_output(self, output: str, mac_address: str, preferred_range: str = None) -> str:
-        """Parse host IP from fstool hostinfo grep output."""
+    @staticmethod
+    def _parse_host_ip_from_output(output: str, mac_address: str, preferred_range: str = None) -> str:
+        """
+        Parse host IP from ``fstool hostinfo`` grep output.
+
+        Args:
+            output: Raw multi-line grep output (each line starts with an IP).
+            mac_address: Used only for log messages.
+            preferred_range: Optional CIDR string — first IP inside wins.
+
+        Returns:
+            Best-matching IP address string.
+
+        Raises:
+            Exception: If no IP could be parsed from the output.
+        """
+        import ipaddress as _ipaddress
+
         log.info(f"Raw hostinfo output for MAC {mac_address}: {output.strip()[:500]}")
 
-        # Parse all IPs from output lines
-        candidates = []
-        for line in output.strip().split("\n"):
-            line = line.strip()
-            if not line:
-                continue
-            ip = line.split(',')[0].strip()
-            if ip:
-                candidates.append(ip)
+        candidates = [
+            line.split(',')[0].strip()
+            for line in output.strip().splitlines()
+            if line.strip()
+        ]
+        candidates = [ip for ip in candidates if ip]
 
         if not candidates:
             raise Exception(f"MAC address {mac_address} not found on CA")
 
         log.info(f"Found {len(candidates)} IP(s) for MAC {mac_address}: {candidates}")
 
-        # If only one IP, return it
-        if len(candidates) == 1:
-            log.info(f"Found IP {candidates[0]} for MAC {mac_address}")
-            return candidates[0]
-
-        import ipaddress as _ipaddress
-
-        # If preferred_range specified, try to find an IP in that range
+        # 1) preferred_range filter (applies even for a single candidate)
         if preferred_range:
-            try:
-                network = _ipaddress.ip_network(preferred_range, strict=False)
-                for ip in candidates:
-                    try:
-                        if _ipaddress.ip_address(ip) in network:
-                            log.info(f"Found IP {ip} for MAC {mac_address} (in preferred range {preferred_range})")
-                            return ip
-                    except ValueError:
-                        continue
-            except ValueError:
-                pass
+            network = _ipaddress.ip_network(preferred_range, strict=False)
+            for ip in candidates:
+                try:
+                    if _ipaddress.ip_address(ip) in network:
+                        log.info(f"Found IP {ip} for MAC {mac_address} (in preferred range {preferred_range})")
+                        return ip
+                except ValueError:
+                    continue
 
-        # Multiple IPs: prefer private unicast over multicast/link-local
+        # 2) prefer private unicast over multicast / link-local
         for ip in candidates:
             try:
                 addr = _ipaddress.ip_address(ip)
@@ -359,7 +362,7 @@ class CounterActBase(SSHClient):
             except ValueError:
                 continue
 
-        # No preferred IP found, return first candidate
+        # 3) fallback
         log.info(f"Found IP {candidates[0]} for MAC {mac_address}")
         return candidates[0]
 
