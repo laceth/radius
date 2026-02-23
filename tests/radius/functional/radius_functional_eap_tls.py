@@ -498,13 +498,9 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
         {"cond_rules": RULE_EKU_EAP_OVER_LAN_AND_CMC_ARCHIVE, "auth": PreAdmissionAuth.ACCEPT},
         {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
     ]
+
     SET_EKU_ALL_OPTIONS_ACCEPT_ELSE_DENY = [
         {"cond_rules": RULE_EKU_ALL_OPTIONS, "auth": PreAdmissionAuth.ACCEPT},
-        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
-    ]
-
-    SET_EKU_EAP_NO_OVER_LAN_DENY = [
-        {"cond_rules": RULE_EKU_EAP_NO_OVER_LAN, "auth": PreAdmissionAuth.ACCEPT},
         {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
     ]
 
@@ -528,12 +524,14 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
 
-            #Step 4: deselect .2 ->
-            self.dot1x.set_pre_admission_rules(self.SET_EKU_EAP_NO_OVER_LAN_DENY)
+            #Step 4: deselect .2 -> SUCCESS
+            self.dot1x.set_pre_admission_rules(self.SET_EKU_ALL_EXCEPT_CLIENT_AUTH_ACCEPT_ELSE_DENY)
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED)
-            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
-            self.verify_nic_has_no_ip_in_range()
+            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.wait_for_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1)
+            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
+            self.verify_authentication_on_ca()
 
             #Step 5: only (.14,.24) -> SUCCESS
             self.dot1x.set_pre_admission_rules(self.SET_EKU_EAP_OVER_LAN_AND_SEND_PROXY_ACCEPT_ELSE_DENY)
@@ -544,6 +542,7 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
             self.cleanup_all_test_certificates()
+
 
             # Step 6: only (.14,.29) + swap cert B->C -> SUCCESS
             self.dot1x.set_pre_admission_rules(self.SET_EKU_EAP_OVER_LAN_AND_CMC_ARCHIVE_ACCEPT_ELSE_DENY)
@@ -557,7 +556,7 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.verify_authentication_on_ca()
             self.cleanup_all_test_certificates()
 
-            # #Step 7: "ALL EKU options" + swap cert C->D (no EKUs) ->
+            # #Step 7: "ALL EKU options" + swap cert C->D (no EKUs) -> Fail
             self.dot1x.set_pre_admission_rules(self.SET_EKU_ALL_OPTIONS_ACCEPT_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_D.value
             self.import_certificates(certificate_password=certificate_password)
