@@ -98,13 +98,13 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
             2. Configure RADIUS server or change existing secret
             3. Configure RADIUS group
             4. Configure AAA authentication
-            5. Configure dot1x on the port, includes Enable or disable MAB on the port
+            5. Configure dot1x/MAB on the port
 
         Args:
             port: Switch port (e.g., "gi0/1", "GigabitEthernet0/1")
             radius_server_ip: IP address of the RADIUS server
             secret: Shared secret for RADIUS communication
-            mab: Whether to enable MAB on the port (default: False)
+            mab: If True, use MAB instead of dot1x pae authenticator (default: False)
             vlan: VLAN ID for the port (default: None - keeps existing VLAN)
             aaa_auth_type: Type of AAA authentication (default: "dot1x")
             deadtime: Deadtime for RADIUS group (default: 3 minutes)
@@ -166,11 +166,11 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                 log.error("Failed to configure RADIUS dynamic-author (CoA)")
                 return False
 
-            # Step 6: Configure dot1x on the port
+            # Step 6: Configure dot1x/MAB on the port
             step += 1
-            log.info(f"{start_log} {step}/{total_steps}: dot1x on port {self._port}")
+            log.info(f"{start_log} {step}/{total_steps}: {'MAB' if mab else 'dot1x'} on port {self._port}")
             if not self._configure_dot1x_on_port(action, self._port, mab, vlan):
-                log.error(f"Failed to configure dot1x on port {self._port}")
+                log.error(f"Failed to configure port {self._port}")
                 return False
 
             log.info(f"Successfully setup all RADIUS configuration on Cisco switch {self.ip}")
@@ -626,7 +626,14 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
             return False
 
     def _configure_dot1x_on_port(self, action: Action, port: str, mab: bool = False, vlan: Optional[int] = None) -> bool:
-        """Configure or remove 802.1x on a specific port."""
+        """Configure or remove 802.1x/MAB on a specific port.
+
+        Args:
+            action: Action.SETUP or Action.TEARDOWN
+            port: Switch port
+            mab: If True, use MAB instead of dot1x pae authenticator
+            vlan: VLAN ID for the port
+        """
         self._validate_action(action)
 
         try:
@@ -647,12 +654,21 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                 if self._original_mab_state.get(port) is None:
                     self._original_mab_state[port] = "mab" in current_config
 
+                # Store original dot1x pae state for teardown
+                original_dot1x_pae = RadiusCmd.DOT1X_PAE.value in current_config
+
                 expected_config: List[str] = [
                     RadiusCmd.SW_MODE_ACCESS.value,
                     RadiusCmd.AUTH_PORT_AUTO.value,
                     RadiusCmd.AUTH_PERIODIC.value,
-                    RadiusCmd.DOT1X_PAE.value,
                 ]
+
+                # mab=True: use MAB instead of dot1x pae authenticator
+                # mab=False: use dot1x pae authenticator (default)
+                if mab:
+                    expected_config.append(RadiusCmd.MAB.value)
+                else:
+                    expected_config.append(RadiusCmd.DOT1X_PAE.value)
 
                 # Only add VLAN config if vlan parameter is provided
                 if vlan is None and current_vlan is None:
@@ -664,19 +680,24 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                     expected_config.insert(1, RadiusCmd.SW_ACCESS_VLAN.render(vlan=vlan))
                 else:
                     expected_config.insert(1, RadiusCmd.SW_ACCESS_VLAN.render(vlan=current_vlan))
-                if mab:
-                    expected_config.append(RadiusCmd.MAB.value)
 
                 for cmd in expected_config:
                     cmd_text = cmd.value if isinstance(cmd, Enum) else cmd
                     if cmd_text not in current_config:
                         setup_commands.append(cmd_text)
                         self._append_teardown_for_cmd(port, cmd_text, access_vlan_prefix, vlan)
+
+                # If switching to MAB, remove dot1x pae if it exists
+                if mab and RadiusCmd.DOT1X_PAE.value in current_config:
+                    setup_commands.append(f"no {RadiusCmd.DOT1X_PAE.value}")
+                    self._teardown_commands_on_port[port].append(RadiusCmd.DOT1X_PAE.value)
+
+                # If switching to dot1x, remove MAB if it exists
                 if not mab and RadiusCmd.MAB.value in current_config:
                     setup_commands.append(f"no {RadiusCmd.MAB.value}")
 
                 if len(setup_commands) == 1:
-                    log.info(f"dot1x already configured on port {port} on Cisco switch {self.ip}")
+                    log.info(f"Port {port} already configured on Cisco switch {self.ip}")
                     return True
 
                 self.exec_command(setup_commands, log_output=True)
@@ -690,11 +711,11 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                 # Clear stored per-port teardown config to avoid reuse
                 self._teardown_commands_on_port.pop(port, None)
 
-            log.info(f"Succeed to {action.name.lower()} dot1x on port {port} on Cisco switch {self.ip}")
+            log.info(f"Succeed to {action.name.lower()} port config on {port} on Cisco switch {self.ip}")
             return True
 
         except Exception as e:
-            log.error(f"Failed to {action.name.lower()} dot1x on port {port} on Cisco switch {self.ip}: {e}")
+            log.error(f"Failed to {action.name.lower()} port config on {port} on Cisco switch {self.ip}: {e}")
             return False
 
     def _append_teardown_for_cmd(self, port: str, cmd: str, access_vlan_prefix: str, vlan: Optional[int]) -> None:

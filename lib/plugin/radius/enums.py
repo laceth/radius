@@ -92,3 +92,16 @@ class PreAdmissionCriterionAttribute(str, Enum):
 class PreAdmissionAuth:
     ACCEPT = "vlan:\tIsCOA:false"
     REJECT_DUMMY = "reject=dummy"
+
+
+# ---------------------------------------------------------------------------
+# MAR (MAC Address Repository) – dot1x-specific field names & auth values
+# ---------------------------------------------------------------------------
+# These constants are used by the CA-level MAR helpers (add_mac_to_mar, etc.)
+# and kept here because they are dot1x / RADIUS-plugin specific.
+MAR_FIELD_MAC = "dot1x_mac"
+MAR_FIELD_TARGET_ACCESS = "dot1x_target_access"
+MAR_FIELD_COMMENT = "dot1x_mar_comment"
+MAR_AUTH_ACCEPT = PreAdmissionAuth.ACCEPT   # "vlan:\tIsCOA:false"
+MAR_AUTH_REJECT = PreAdmissionAuth.REJECT_DUMMY  # "reject=dummy"
+

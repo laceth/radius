@@ -480,6 +480,27 @@ class WindowsPassthrough(PassthroughBase):
             pass
         return None
 
+    def get_nic_mac_address(self, nicname: str = None) -> str:
+        """
+        Get the MAC address of a network interface.
+
+        Args:
+            nicname: Network interface name (e.g., 'pciPassthru0').
+                    If None, uses self.nicname.
+
+        Returns:
+            MAC address as string (e.g., '98-F2-B3-01-A0-55')
+
+        Raises:
+            RuntimeError: If unable to get MAC address
+        """
+        if nicname is None:
+            nicname = self.nicname
+        cmd = f'(Get-NetAdapter -Name "{nicname}" -ErrorAction Stop).MacAddress'
+        result = self.execute_command(cmd).strip()
+        log.info(f"NIC '{nicname}' MAC address: {result}")
+        return result
+
     def is_ip_in_range(self, ip: str, ip_range: str) -> bool:
         """
         Check if an IP address is within a CIDR range.

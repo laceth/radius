@@ -11,10 +11,40 @@ REMOVE_ENDPOINT_CMD = "fstool cliapi host remove %s"
 GET_HOSTINFO_BASE_CMD = "fstool hostinfo %s"
 PROPERTY_CHECK_COMMAND = "fstool hostinfo %s | grep %s,"
 
+# Matches common MAC formats: aa:bb:cc:dd:ee:ff, aa-bb-cc-dd-ee-ff, aabbccddeeff
+_MAC_RE = re.compile(r'^([0-9a-fA-F]{2}[:\-]){5}[0-9a-fA-F]{2}$|^[0-9a-fA-F]{12}$')
+
+
+def _is_valid_mac(value: str) -> bool:
+    """Return True if *value* looks like a MAC address."""
+    return bool(_MAC_RE.match(value))
+
 
 class CouterActAppliance(CounterActBase):
     def __int__(self, ca: CounterActBase):
         super().__init__()
+
+    def _resolve_id(self, id: str) -> str:
+        """
+        Resolve the host identifier to an IPv4-based host ID.
+
+        * IPv4 addresses are returned as-is.
+        * IPv6 addresses are mapped to their corresponding IPv4 host ID.
+        * MAC addresses (colon/dash-separated or 12-hex-char) are returned as-is.
+        * Anything else raises ``ValueError``.
+        """
+        try:
+            addr = ipaddress.ip_address(id)
+            if isinstance(addr, ipaddress.IPv6Address):
+                return self.get_id_by_ipv6(id)
+            return id  # IPv4
+        except ValueError:
+            pass
+        if _is_valid_mac(id):
+            return id
+        raise ValueError(
+            f"'{id}' is not a valid IPv4/IPv6 address or MAC address"
+        )
 
     def clear_endpoint_by_id(self, id: str):
         log.info(f"Clearing endpoint with ID: {id}")
@@ -47,9 +77,11 @@ class CouterActAppliance(CounterActBase):
 
         Returns:
             Property value or None if not found.
+
+        Raises:
+            ValueError: If id is not a valid IPv4/IPv6 address or MAC address.
         """
-        if isinstance(ipaddress.ip_address(id), ipaddress.IPv6Address):
-            id = self.get_id_by_ipv6(id)
+        id = self._resolve_id(id)
         if not property_field or not id:
             raise Exception("property_field and id are required")
 
@@ -71,10 +103,12 @@ class CouterActAppliance(CounterActBase):
             case_insensitive: If True, perform case-insensitive comparison (default: False).
         returns:
             Tuple of (result: bool, actual_value: str, actual_resolved_by: str)
+
+        Raises:
+            ValueError: If id is not a valid IPv4/IPv6 address or MAC address.
         """
 
-        if isinstance(ipaddress.ip_address(id), ipaddress.IPv6Address):
-            id = self.get_id_by_ipv6(id)
+        id = self._resolve_id(id)
         if not property_field or not id:
             raise Exception("property_field and id are required")
 

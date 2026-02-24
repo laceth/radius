@@ -7,11 +7,15 @@ from lib.plugin.radius.radius_plugin_settings import radius_setting_option_mappi
 import paramiko
 from contextlib import suppress
 
+import re
+
 DOT1X_RESTART_COMMAND = "fstool dot1x restart"
-DOT1X_UPTIME_COMMAND = "fstool dot1x uptime"
+DOT1X_STATUS_COMMAND = "fstool dot1x status"
 DOT1X_RESTART_TIMEOUT = 300
-DOT1X_CHECK_INTERVAL = 5
-DOT1X_RUNNING_VERIFICATION_STRING = " days"
+DOT1X_CHECK_INTERVAL = 10
+DOT1X_MIN_RADIUSD_UPTIME_SECONDS = 45
+DOT1X_REQUIRED_PROCESSES = ("radiusd", "winbindd", "redis-server")
+
 DEFAULT_LOCAL_PROPERTY_FILE_PATH = "/usr/local/forescout/plugin/dot1x/local.properties"
 AUTH_SOURCE_NULL_KEY = "config.auth_source_null.value"
 AUTH_SOURCE_DEFAULT_KEY = "config.auth_source_default.value"
@@ -21,22 +25,93 @@ class Radius(RadiusBase):
     def exec_cmd(self, command: str, timeout: int = 15) -> str:
         return self.platform.exec_command(command, timeout)
 
-    def dot1x_plugin_running(self) -> bool:
+    def _get_process_uptime_seconds(self, status_output: str, process_name: str) -> int:
         """
-        Check if 802.1X plugin is running by verifying uptime output contains ' days'.
+        Extract a sub-process uptime in seconds from 'fstool dot1x status' output.
+
+        Looks for a line like:
+            radiusd (pid 28055) is running for 00:54.
+            winbindd (pid 27705) of txqalab is running for 01:01.
+
+        Supported time formats: 'MM:SS', 'HH:MM:SS', 'DAYS-HH:MM:SS'.
+
+        Args:
+            status_output: Full output of 'fstool dot1x status'.
+            process_name: Process to look for (e.g. 'radiusd', 'winbindd', 'redis-server').
 
         Returns:
-            True if plugin is running, False otherwise.
+            Uptime in seconds, or -1 if the process line is not found or not parseable.
         """
-        log.info("Checking if 802.1X plugin is running on RADIUS server")
+        for line in status_output.splitlines():
+            if process_name in line.lower() and 'is running for' in line:
+                m = re.search(r'is running for\s+(.+)', line)
+                if not m:
+                    continue
+
+                time_str = m.group(1).strip().rstrip('.')
+
+                # DAYS-HH:MM:SS
+                p = re.match(r'^(\d+)-(\d{2}):(\d{2}):(\d{2})$', time_str)
+                if p:
+                    return int(p.group(1)) * 86400 + int(p.group(2)) * 3600 + int(p.group(3)) * 60 + int(p.group(4))
+
+                # HH:MM:SS
+                p = re.match(r'^(\d{2,}):(\d{2}):(\d{2})$', time_str)
+                if p:
+                    return int(p.group(1)) * 3600 + int(p.group(2)) * 60 + int(p.group(3))
+
+                # MM:SS
+                p = re.match(r'^(\d{2,}):(\d{2})$', time_str)
+                if p:
+                    return int(p.group(1)) * 60 + int(p.group(2))
+
+                return -1
+        return -1
+
+    def dot1x_plugin_running(self) -> bool:
+        """
+        Check if the 802.1X plugin is ready by verifying that **all** required
+        sub-processes (radiusd, winbindd, redis-server) are running and that
+        radiusd has been up for at least DOT1X_MIN_RADIUSD_UPTIME_SECONDS.
+
+        Uses 'fstool dot1x status' which reports the uptime of each sub-process.
+        The radiusd uptime threshold guards against the plugin restarting several
+        times in the first seconds after a restart command.
+
+        Returns:
+            True if all sub-processes are running and radiusd uptime ≥ threshold,
+            False otherwise.
+        """
         try:
-            uptime_output = self.exec_cmd(DOT1X_UPTIME_COMMAND)
-            log.info(f"Uptime command output: {uptime_output}")
-            if DOT1X_RUNNING_VERIFICATION_STRING in uptime_output:
-                log.info("RADIUS server is running")
+            status_output = self.exec_cmd(DOT1X_STATUS_COMMAND)
+            log.debug(f"dot1x status output:\n{status_output}")
+
+            # Collect uptime for every required sub-process
+            uptimes = {}
+            not_running = []
+            for proc in DOT1X_REQUIRED_PROCESSES:
+                uptime = self._get_process_uptime_seconds(status_output, proc)
+                if uptime < 0:
+                    not_running.append(proc)
+                else:
+                    uptimes[proc] = uptime
+
+            # Build a single summary line
+            parts = [f"{p}={uptimes[p]}s" for p in DOT1X_REQUIRED_PROCESSES if p in uptimes]
+            if not_running:
+                parts += [f"{p}=DOWN" for p in not_running]
+            summary = ", ".join(parts)
+
+            if not_running:
+                log.info(f"dot1x status: {summary} — waiting for: {', '.join(not_running)}")
+                return False
+
+            radiusd_seconds = uptimes["radiusd"]
+            if radiusd_seconds >= DOT1X_MIN_RADIUSD_UPTIME_SECONDS:
+                log.info(f"dot1x status: {summary} — plugin is ready")
                 return True
             else:
-                log.warning("RADIUS server is not yet running (uptime not showing days)")
+                log.info(f"dot1x status: {summary} — radiusd not yet stable (need {DOT1X_MIN_RADIUSD_UPTIME_SECONDS}s)")
                 return False
         except Exception as e:
             log.warning(f"Failed to check plugin status: {e}")
@@ -44,14 +119,15 @@ class Radius(RadiusBase):
 
     def restart_dot1x_plugin(self, timeout: int = DOT1X_RESTART_TIMEOUT, interval: int = DOT1X_CHECK_INTERVAL) -> None:
         """
-        Restart the 802.1X plugin and wait until it's running.
+        Restart the 802.1X plugin and wait until all sub-processes are stable.
 
-        Verification is done by checking 'fstool dot1x uptime' output for ' days' string,
-        which indicates the plugin is fully operational.
+        Verification uses 'fstool dot1x status' and waits until radiusd,
+        winbindd, and redis-server are all running, with radiusd uptime
+        reaching DOT1X_MIN_RADIUSD_UPTIME_SECONDS.
 
         Args:
-            timeout: Maximum time in seconds to wait for the plugin to start (default: 300).
-            interval: Time in seconds between status checks (default: 5).
+            timeout: Maximum time in seconds to wait for the plugin to start (default: 500).
+            interval: Time in seconds between status checks (default: 10).
 
         Raises:
             Exception: If the plugin fails to start within the timeout period.
@@ -184,7 +260,7 @@ class Radius(RadiusBase):
         if self.test_join_domain(domain_name, timeout):
             log.info(f"Domain '{domain_name}' is already joined, skipping join operation")
             return
-        
+
         # Domain not joined, proceed with join
         cmd = f"fstool dot1x join {domain_name} {ad_username} {ad_password}"
 
@@ -252,7 +328,7 @@ class Radius(RadiusBase):
             if current_value == auth_source:
                 log.info(f"Auth source null already set to '{auth_source}', skipping")
                 return
-            
+
             log.info(f"Setting auth_source {auth_source} to Null (current: '{current_value}')")
             self._update_property(AUTH_SOURCE_NULL_KEY, auth_source, file_path)
         except Exception as e:
@@ -265,7 +341,7 @@ class Radius(RadiusBase):
             if current_value == auth_source:
                 log.info(f"Auth source default already set to '{auth_source}', skipping")
                 return
-            
+
             log.info(f"Setting auth_source {auth_source} to Default (current: '{current_value}')")
             self._update_property(AUTH_SOURCE_DEFAULT_KEY, auth_source, file_path)
         except Exception as e:
