@@ -12,7 +12,7 @@ from tests.radius.radius_test_base import RadiusTestBase
 class RadiusPeapTestBase(RadiusTestBase):
 
     def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
-        super().__init__(ca, em, radius, switch, passthrough, version)
+        super().__init__(ca, em, radius, switch, passthrough, version=version)
         self.peap_config = PEAPCredentialsConfig()
         self.nicname = self.peap_config.nicname
 
@@ -57,15 +57,16 @@ class RadiusPeapTestBase(RadiusTestBase):
             auth_status: Expected auth status (dot1x_user_auth_status). Default: RadiusAuthStatus.ACCESS_ACCEPT
         """
         # Get host ID once using base class helper
-        host_id = self._get_host_id()
-        log.info(f"Verifying PEAP authentication for host: {host_id}")
+        if not self.host_id:
+            self.host_id = self._get_host_id()
+        log.info(f"Verifying PEAP authentication for host: {self.host_id}")
 
         # Convert enum to string value if needed
         auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
 
         # Verify common fields using base class helper
         self._verify_common_properties(
-            host_id=host_id,
+            host_id=self.host_id,
             switch_ip=switch_ip,
             ca_ip=ca_ip,
             auth_state=auth_status_value
@@ -76,19 +77,42 @@ class RadiusPeapTestBase(RadiusTestBase):
 
         # Determine tunneled user format (with or without domain prefix)
         tunneled_user = config.peap_username if '\\' in config.peap_username else config.peap_user
+        
+        # Use "None given" for empty domain
+        requested_domain = config.peap_domain if config.peap_domain else "None given"
 
         # Build PEAP-specific properties check list
         peap_properties_check_list = [
             {"property_field": "dot1x_user_auth_status", "expected_value": auth_status_value},
-            {"property_field": "dot1x_rqeuested_domain", "expected_value": config.peap_domain},
+            {"property_field": "dot1x_rqeuested_domain", "expected_value": requested_domain},
             {"property_field": "dot1x_user", "expected_value": config.peap_user},
             {"property_field": "dot1x_tunneled_user", "expected_value": tunneled_user},
             {"property_field": "dot1x_fr_eap_type", "expected_value": "PEAP"},
-            {"property_field": "dot1x_domain", "expected_value": config.peap_domain, "case_insensitive": True},  # DOT-5760
             {"property_field": "dot1x_login_type", "expected_value": "dot1x_user_login"},
         ]
+        
+        # Handle dot1x_domain check based on peap_domain and auth_source configuration
+        if config.peap_domain:
+            # Domain specified in credentials - check it (case-insensitive)
+            peap_properties_check_list.append(
+                {"property_field": "dot1x_domain", "expected_value": config.peap_domain, "case_insensitive": True}
+            )
+        else:
+            # No domain in credentials - check if there's a default auth source configured
+            auth_source = self.dot1x.get_default_auth_source()
+            domain_name = None
+            if auth_source:
+                if auth_source == self.ad_config1.get('ad_name', ''):
+                    domain_name = 'TXQALAB'
+                elif auth_source == self.ad_config2.get('ad_name', ''):
+                    domain_name = 'TXQALAB2'
+            if domain_name:
+                peap_properties_check_list.append(
+                    {"property_field": "dot1x_domain", "expected_value": domain_name}
+                )
+            # If auth_source is empty, skip dot1x_domain check (property won't be present)
 
-        self.ca.check_properties(host_id, peap_properties_check_list)
+        self.ca.check_properties(self.host_id, peap_properties_check_list)
         log.info("PEAP authentication verification completed successfully")
 
     # =========================================================================

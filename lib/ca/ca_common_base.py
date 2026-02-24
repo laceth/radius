@@ -45,19 +45,26 @@ class CounterActBase(SSHClient):
         except Exception as e:
             raise ConnectionError(f"Failed to connect to {self.username}: {e}")
 
-    def _execute(self, cmd, timeout=30):
-        log.debug(f"Executing command on CounterAct: {cmd}")
+    def _execute(self, cmd, timeout=30, log_output: bool = False, log_command: bool = False):
+        if log_command:
+            log.info(f"Executing command on CounterAct: {cmd}")
+        else:
+            log.debug(f"Executing command on CounterAct: {cmd}")   
         stdin, stdout, stderr = self.client.exec_command(cmd, timeout=timeout)
         exit_code = stdout.channel.recv_exit_status()
         out = stdout.read().decode().strip()
         err = stderr.read().decode().strip()
+        if log_output and out:
+            log.info(f"Command output:")
+            for line in out.strip().split('\n'):
+                log.info(f"  {line}")
         if exit_code != 0:
             raise RuntimeError(f"Command '{cmd}' failed with exit code {exit_code}: {err}")
         return out
 
-    def exec_command(self, cmd: str, timeout: int = 15) -> str:
+    def exec_command(self, cmd: str, timeout: int = 15, log_output: bool = False, log_command: bool = False) -> str:
         self.client = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
-        return self._execute(cmd, timeout)
+        return self._execute(cmd, timeout, log_output=log_output, log_command=log_command)
 
     def scp_file(self, local_path: str, remote_path: str, direction: str = "upload", timeout: int = 15) -> None:
         """
