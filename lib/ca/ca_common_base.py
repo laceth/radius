@@ -215,7 +215,7 @@ class CounterActBase(SSHClient):
             xml_string = ET.tostring(root_element, encoding="unicode")
 
             # Replace escaped `&#9;` back to raw `&#9;`, different action might include different escaped characters,
-            # for now only handle `&#9;' for radius actions
+            # for now only handle `&#9;` for radius actions
 
             xml_string = xml_string.replace("&amp;#9;", "&#9;")
 

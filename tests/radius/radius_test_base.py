@@ -668,7 +668,6 @@ class RadiusTestBase:
 
         # Add the serialized action parameters
         action_params = {"authorization": value}
-        print(action_params)
         # Use the simple_action function to create the action
         self.em.simple_policy_action("radiusSimpleAction.xml", action_name, fields, action_name, action_params)
         return action_name
