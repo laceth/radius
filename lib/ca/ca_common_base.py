@@ -1,3 +1,4 @@
+import ipaddress as _ipaddress
 import re
 import time
 import paramiko
@@ -28,13 +29,15 @@ MAR_DEVINFO_REMOVE = "fstool devinfo remove mar {mac_id}"
 MAR_DEVINFO_DUMP = "fstool devinfo dump mar {mac_id}"
 MAR_DEVINFO_ENABLE_CATEGORY = "fstool set_property devinfo.enabled.categories sw,wireless,mar"
 
-# MAR field names
-MAR_FIELD_MAC = "dot1x_mac"
-MAR_FIELD_TARGET_ACCESS = "dot1x_target_access"
-
-# Internal dot1x authorization values (must match what GUI writes to devinfo)
-MAR_AUTH_ACCEPT = "vlan:\tIsCOA:false"
-MAR_AUTH_REJECT = "reject=dummy"
+# dot1x-specific MAR field names and authorization values are maintained at the
+# plugin level (lib.plugin.radius.enums) and imported here for use by the
+# generic MAR helpers.
+from lib.plugin.radius.enums import (  # noqa: E402
+    MAR_FIELD_MAC,
+    MAR_FIELD_TARGET_ACCESS,
+    MAR_AUTH_ACCEPT,
+    MAR_AUTH_REJECT,
+)
 
 
 class CounterActBase(SSHClient):
@@ -265,7 +268,7 @@ class CounterActBase(SSHClient):
 
     def get_host_ip_by_mac(self, mac_address: str, preferred_range: str = None, timeout: int = 60, interval: int = 5) -> str:
         """
-        Get host IP by MAC address.
+        Get host IP by MAC address using ``fstool hostinfo {mac}`` directly.
 
         Selection priority:
         1. If preferred_range is given, returns first IP inside that CIDR
@@ -287,16 +290,55 @@ class CounterActBase(SSHClient):
         Raises:
             Exception: If MAC address not found on CA within timeout
         """
+
         start_time = time.time()
         last_error = None
 
         while True:
             try:
-                cmd = f"fstool hostinfo all | grep 'mac,' | grep {mac_address}"
+                cmd = f"fstool hostinfo {mac_address} | grep mac,"
                 output = self.exec_command(cmd)
 
                 if output:
-                    return self._parse_host_ip_from_output(output, mac_address, preferred_range)
+                    log.info(f"Raw hostinfo output for MAC {mac_address}: {output.strip()[:500]}")
+
+                    candidates = [
+                        line.split(',')[0].strip()
+                        for line in output.strip().splitlines()
+                        if line.strip()
+                    ]
+                    candidates = [ip for ip in candidates if ip]
+
+                    if not candidates:
+                        raise Exception(f"MAC address {mac_address} not found on CA")
+
+                    log.info(f"Found {len(candidates)} IP(s) for MAC {mac_address}: {candidates}")
+
+                    # 1) preferred_range filter
+                    if preferred_range:
+                        network = _ipaddress.ip_network(preferred_range, strict=False)
+                        for ip in candidates:
+                            try:
+                                if _ipaddress.ip_address(ip) in network:
+                                    log.info(f"Found IP {ip} for MAC {mac_address} (in preferred range {preferred_range})")
+                                    return ip
+                            except ValueError:
+                                continue
+
+                    # 2) prefer private unicast over multicast / link-local
+                    for ip in candidates:
+                        try:
+                            addr = _ipaddress.ip_address(ip)
+                            if addr.is_private and not addr.is_multicast and not addr.is_link_local:
+                                log.info(f"Found IP {ip} for MAC {mac_address} (preferred from {len(candidates)} candidates)")
+                                return ip
+                        except ValueError:
+                            continue
+
+                    # 3) fallback
+                    log.info(f"Found IP {candidates[0]} for MAC {mac_address}")
+                    return candidates[0]
+
             except Exception as e:
                 last_error = e
 
@@ -308,63 +350,6 @@ class CounterActBase(SSHClient):
             time.sleep(interval)
 
         raise Exception(f"MAC address {mac_address} not found on CA after {timeout}s: {last_error}")
-
-    @staticmethod
-    def _parse_host_ip_from_output(output: str, mac_address: str, preferred_range: str = None) -> str:
-        """
-        Parse host IP from ``fstool hostinfo`` grep output.
-
-        Args:
-            output: Raw multi-line grep output (each line starts with an IP).
-            mac_address: Used only for log messages.
-            preferred_range: Optional CIDR string — first IP inside wins.
-
-        Returns:
-            Best-matching IP address string.
-
-        Raises:
-            Exception: If no IP could be parsed from the output.
-        """
-        import ipaddress as _ipaddress
-
-        log.info(f"Raw hostinfo output for MAC {mac_address}: {output.strip()[:500]}")
-
-        candidates = [
-            line.split(',')[0].strip()
-            for line in output.strip().splitlines()
-            if line.strip()
-        ]
-        candidates = [ip for ip in candidates if ip]
-
-        if not candidates:
-            raise Exception(f"MAC address {mac_address} not found on CA")
-
-        log.info(f"Found {len(candidates)} IP(s) for MAC {mac_address}: {candidates}")
-
-        # 1) preferred_range filter (applies even for a single candidate)
-        if preferred_range:
-            network = _ipaddress.ip_network(preferred_range, strict=False)
-            for ip in candidates:
-                try:
-                    if _ipaddress.ip_address(ip) in network:
-                        log.info(f"Found IP {ip} for MAC {mac_address} (in preferred range {preferred_range})")
-                        return ip
-                except ValueError:
-                    continue
-
-        # 2) prefer private unicast over multicast / link-local
-        for ip in candidates:
-            try:
-                addr = _ipaddress.ip_address(ip)
-                if addr.is_private and not addr.is_multicast and not addr.is_link_local:
-                    log.info(f"Found IP {ip} for MAC {mac_address} (preferred from {len(candidates)} candidates)")
-                    return ip
-            except ValueError:
-                continue
-
-        # 3) fallback
-        log.info(f"Found IP {candidates[0]} for MAC {mac_address}")
-        return candidates[0]
 
     def get_host_id_by_ip(self, host_ip: str) -> str:
         """
@@ -450,22 +435,6 @@ class CounterActBase(SSHClient):
 
     # ========== MAR (MAC Address Repository) Methods ==========
 
-    @staticmethod
-    def normalize_mac(mac: str) -> str:
-        """
-        Normalize MAC address to lowercase format without separators.
-
-        Args:
-            mac: MAC address in any format (e.g., "98:F2:B3:01:A0:55", "98-F2-B3-01-A0-55", "98f2b301a055")
-
-        Returns:
-            Normalized MAC address (e.g., "98f2b301a055")
-        """
-        mac = mac.lower()
-        mac = re.sub(r'[-:.]', '', mac)
-        mac = mac.replace('0x', '')
-        return mac
-
     def add_mac_to_mar(
         self,
         mac: str,
@@ -482,22 +451,23 @@ class CounterActBase(SSHClient):
         not on the CA object.
 
         Args:
-            mac: MAC address to add (any format, will be normalized)
+            mac: MAC address in any supported format (e.g., "98:F2:B3:01:A0:55",
+                 "98-F2-B3-01-A0-55", "98f2b301a055"). Normalized internally to
+                 bare lowercase hex for fstool devinfo commands.
             authorization: Authorization value. Defaults to MAR_AUTH_ACCEPT
                           which is the internal format the dot1x plugin uses for "accept".
 
         Raises:
             Exception: If the MAC address is invalid or the operation fails
         """
-        normalized_mac = self.normalize_mac(mac)
-        if len(normalized_mac) != 12:
+        mac_id = self._normalize_mac(mac)
+        if len(mac_id) != 12:
             raise ValueError(f"Invalid MAC address: {mac}")
 
         if authorization is None:
             authorization = MAR_AUTH_ACCEPT
 
-        mac_id = normalized_mac.lower()
-        log.info(f"Adding MAC '{mac_id}' to MAR via fstool devinfo on EM (auth={authorization})")
+        log.info(f"Adding MAC '{mac}' to MAR via fstool devinfo on EM (auth={authorization})")
 
         try:
             # Ensure mar category is enabled
@@ -512,9 +482,9 @@ class CounterActBase(SSHClient):
 
             # Verify the entry was created
             if self.mac_exists_in_mar(mac):
-                log.info(f"Successfully added MAC '{mac_id}' to MAR")
+                log.info(f"Successfully added MAC '{mac}' to MAR")
             else:
-                log.warning(f"MAC '{mac_id}' added but verification returned false — may need time to propagate")
+                log.warning(f"MAC '{mac}' added but verification returned false — may need time to propagate")
 
         except Exception as e:
             raise Exception(f"Failed to add MAC '{mac}' to MAR: {e}")
@@ -529,15 +499,13 @@ class CounterActBase(SSHClient):
         Note: This method must be called on the EM (Enterprise Manager) object.
 
         Args:
-            mac: MAC address to remove (any format, will be normalized)
+            mac: MAC address to remove (any format, normalized internally for fstool)
 
         Raises:
             Exception: If the operation fails
         """
-        normalized_mac = self.normalize_mac(mac)
-        mac_id = normalized_mac.lower()
-
-        log.info(f"Removing MAC '{mac_id}' from MAR via fstool devinfo on EM")
+        mac_id = self._normalize_mac(mac)
+        log.info(f"Removing MAC '{mac}' from MAR via fstool devinfo on EM")
 
         try:
             cmd = MAR_DEVINFO_REMOVE.format(mac_id=mac_id)
@@ -556,15 +524,13 @@ class CounterActBase(SSHClient):
         Note: This method must be called on the EM (Enterprise Manager) object.
 
         Args:
-            mac: MAC address to look up (any format, will be normalized)
+            mac: MAC address to look up (any format, normalized internally for fstool)
 
         Returns:
             Dictionary with MAR fields and values, or empty dict if not found
         """
-        normalized_mac = self.normalize_mac(mac)
-        mac_id = normalized_mac.lower()
-
-        log.info(f"Getting MAR entry for MAC '{mac_id}' via fstool devinfo dump")
+        mac_id = self._normalize_mac(mac)
+        log.info(f"Getting MAR entry for MAC '{mac}' via fstool devinfo dump")
 
         try:
             cmd = MAR_DEVINFO_DUMP.format(mac_id=mac_id)
@@ -582,9 +548,9 @@ class CounterActBase(SSHClient):
                         result[key] = value
 
             if result:
-                log.info(f"Found MAR entry for '{mac_id}': {result}")
+                log.info(f"Found MAR entry for '{mac}': {result}")
             else:
-                log.info(f"No MAR entry found for MAC '{mac_id}'")
+                log.info(f"No MAR entry found for MAC '{mac}'")
 
             return result
 
@@ -601,15 +567,14 @@ class CounterActBase(SSHClient):
         Note: This method must be called on the EM (Enterprise Manager) object.
 
         Args:
-            mac: MAC address to check (any format, will be normalized)
+            mac: MAC address to check (any format, normalized internally for fstool)
 
         Returns:
             True if MAC exists in MAR, False otherwise
         """
         entry = self.get_mar_entry(mac)
         exists = MAR_FIELD_MAC in entry
-        normalized_mac = self.normalize_mac(mac)
-        log.info(f"MAC '{normalized_mac}' exists in MAR: {exists}")
+        log.info(f"MAC '{mac}' exists in MAR: {exists}")
         return exists
 
     def update_mar_authorization(self, mac: str, authorization: str) -> None:
@@ -617,7 +582,7 @@ class CounterActBase(SSHClient):
         Update the authorization value for a MAC address in MAR.
 
         Args:
-            mac: MAC address to update (any format, will be normalized)
+            mac: MAC address to update (any format, normalized internally for fstool)
             authorization: New authorization value (e.g., "accept", "reject=dummy")
 
         Raises:
@@ -636,3 +601,13 @@ class CounterActBase(SSHClient):
             self.exec_command(cmd, timeout=30)
         except Exception as e:
             log.debug(f"Could not enable MAR category (may already be enabled): {e}")
+
+    def _normalize_mac(self, mac: str) -> str:
+        """
+        Normalize a MAC address to bare lowercase hex (e.g. ``98f2b301a055``).
+
+        ``fstool devinfo`` uses this format as the record key, so every MAR
+        helper must convert before talking to the CLI.
+        """
+        return re.sub(r'[-:.]', '', mac).replace('0x', '').lower()
+
