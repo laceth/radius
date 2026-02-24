@@ -35,6 +35,7 @@ MAR_DEVINFO_ENABLE_CATEGORY = "fstool set_property devinfo.enabled.categories sw
 from lib.plugin.radius.enums import (  # noqa: E402
     MAR_FIELD_MAC,
     MAR_FIELD_TARGET_ACCESS,
+    MAR_FIELD_COMMENT,
     MAR_AUTH_ACCEPT,
     MAR_AUTH_REJECT,
 )
@@ -439,13 +440,15 @@ class CounterActBase(SSHClient):
         self,
         mac: str,
         authorization: str = None,
+        comment: str = None,
     ) -> None:
         """
         Add a MAC address to the MAC Address Repository (MAR).
 
-        Uses `fstool devinfo update mar` which goes through the engine's devinfo
-        subsystem. The mar.pl daemon automatically syncs the change to Redis.
-        No CA restart or dot1x restart is needed.
+        Uses ``fstool devinfo update mar`` which is an **upsert** — if the MAC
+        already exists, every field included in the command is overwritten while
+        fields that are *not* included remain unchanged.  So calling this with
+        only ``authorization`` will not clear an existing comment, and vice-versa.
 
         Note: This method must be called on the EM (Enterprise Manager) object,
         not on the CA object.
@@ -456,6 +459,7 @@ class CounterActBase(SSHClient):
                  bare lowercase hex for fstool devinfo commands.
             authorization: Authorization value. Defaults to MAR_AUTH_ACCEPT
                           which is the internal format the dot1x plugin uses for "accept".
+            comment: Optional MAR comment (e.g., "automation test entry").
 
         Raises:
             Exception: If the MAC address is invalid or the operation fails
@@ -477,6 +481,8 @@ class CounterActBase(SSHClient):
             # Use shell double quotes to protect tab character in authorization value
             base_cmd = MAR_DEVINFO_UPDATE_BASE.format(mac_id=mac_id)
             cmd = f'{base_cmd} "dot1x_target_access={authorization}"'
+            if comment:
+                cmd += f' "{MAR_FIELD_COMMENT}={comment}"'
             output = self.exec_command(cmd, timeout=30)
             log.info(f"MAR devinfo update result: {output}")
 

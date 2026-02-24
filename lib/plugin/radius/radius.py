@@ -13,7 +13,8 @@ DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_STATUS_COMMAND = "fstool dot1x status"
 DOT1X_RESTART_TIMEOUT = 300
 DOT1X_CHECK_INTERVAL = 10
-DOT1X_MIN_RADIUSD_UPTIME_SECONDS = 45
+DOT1X_MIN_RADIUSD_UPTIME_SECONDS = 10
+DOT1X_REQUIRED_PROCESSES = ("radiusd", "winbindd", "redis-server")
 
 DEFAULT_LOCAL_PROPERTY_FILE_PATH = "/usr/local/forescout/plugin/dot1x/local.properties"
 AUTH_SOURCE_NULL_KEY = "config.auth_source_null.value"
@@ -24,87 +25,93 @@ class Radius(RadiusBase):
     def exec_cmd(self, command: str, timeout: int = 15) -> str:
         return self.platform.exec_command(command, timeout)
 
-    @staticmethod
-    def _parse_running_time(time_str: str) -> int:
+    def _get_process_uptime_seconds(self, status_output: str, process_name: str) -> int:
         """
-        Parse a running-time string from 'fstool dot1x status' into total seconds.
-
-        Supported formats:
-            'MM:SS'                  →  e.g. '00:54'
-            'HH:MM:SS'              →  e.g. '01:02:03'
-            'DAYS-HH:MM:SS'         →  e.g. '145-19:21:22'
-
-        Returns:
-            Total seconds, or -1 if parsing fails.
-        """
-        time_str = time_str.strip().rstrip('.')
-
-        # DAYS-HH:MM:SS
-        m = re.match(r'^(\d+)-(\d{2}):(\d{2}):(\d{2})$', time_str)
-        if m:
-            return int(m.group(1)) * 86400 + int(m.group(2)) * 3600 + int(m.group(3)) * 60 + int(m.group(4))
-
-        # HH:MM:SS
-        m = re.match(r'^(\d{2,}):(\d{2}):(\d{2})$', time_str)
-        if m:
-            return int(m.group(1)) * 3600 + int(m.group(2)) * 60 + int(m.group(3))
-
-        # MM:SS
-        m = re.match(r'^(\d{2,}):(\d{2})$', time_str)
-        if m:
-            return int(m.group(1)) * 60 + int(m.group(2))
-
-        return -1
-
-    def _get_radiusd_uptime_seconds(self, status_output: str) -> int:
-        """
-        Extract radiusd uptime in seconds from 'fstool dot1x status' output.
+        Extract a sub-process uptime in seconds from 'fstool dot1x status' output.
 
         Looks for a line like:
             radiusd (pid 28055) is running for 00:54.
+            winbindd (pid 27705) of txqalab is running for 01:01.
+
+        Supported time formats: 'MM:SS', 'HH:MM:SS', 'DAYS-HH:MM:SS'.
+
+        Args:
+            status_output: Full output of 'fstool dot1x status'.
+            process_name: Process to look for (e.g. 'radiusd', 'winbindd', 'redis-server').
 
         Returns:
-            Uptime in seconds, or -1 if radiusd line not found or not parseable.
+            Uptime in seconds, or -1 if the process line is not found or not parseable.
         """
         for line in status_output.splitlines():
-            if 'radiusd' in line.lower() and 'is running for' in line:
-                # Extract the time portion after 'is running for '
+            if process_name in line.lower() and 'is running for' in line:
                 m = re.search(r'is running for\s+(.+)', line)
-                if m:
-                    return self._parse_running_time(m.group(1))
+                if not m:
+                    continue
+
+                time_str = m.group(1).strip().rstrip('.')
+
+                # DAYS-HH:MM:SS
+                p = re.match(r'^(\d+)-(\d{2}):(\d{2}):(\d{2})$', time_str)
+                if p:
+                    return int(p.group(1)) * 86400 + int(p.group(2)) * 3600 + int(p.group(3)) * 60 + int(p.group(4))
+
+                # HH:MM:SS
+                p = re.match(r'^(\d{2,}):(\d{2}):(\d{2})$', time_str)
+                if p:
+                    return int(p.group(1)) * 3600 + int(p.group(2)) * 60 + int(p.group(3))
+
+                # MM:SS
+                p = re.match(r'^(\d{2,}):(\d{2})$', time_str)
+                if p:
+                    return int(p.group(1)) * 60 + int(p.group(2))
+
+                return -1
         return -1
 
     def dot1x_plugin_running(self) -> bool:
         """
-        Check if the 802.1X plugin is ready by verifying that radiusd has been
-        running for at least DOT1X_MIN_RADIUSD_UPTIME_SECONDS (45 s).
+        Check if the 802.1X plugin is ready by verifying that **all** required
+        sub-processes (radiusd, winbindd, redis-server) are running and that
+        radiusd has been up for at least DOT1X_MIN_RADIUSD_UPTIME_SECONDS.
 
-        Uses 'fstool dot1x status' which reports the uptime of each sub-process
-        (radiusd, winbindd, redis-server).  The radiusd uptime is the one that
-        matters — the plugin restarts several times in the first seconds after
-        a restart command, so a stable radiusd uptime ≥ 45 s means it is truly
-        ready.
+        Uses 'fstool dot1x status' which reports the uptime of each sub-process.
+        The radiusd uptime threshold guards against the plugin restarting several
+        times in the first seconds after a restart command.
 
         Returns:
-            True if radiusd uptime ≥ threshold, False otherwise.
+            True if all sub-processes are running and radiusd uptime ≥ threshold,
+            False otherwise.
         """
-        log.info("Checking if 802.1X plugin is running on RADIUS server")
         try:
             status_output = self.exec_cmd(DOT1X_STATUS_COMMAND)
-            log.info(f"dot1x status output:\n{status_output}")
+            log.debug(f"dot1x status output:\n{status_output}")
 
-            radiusd_seconds = self._get_radiusd_uptime_seconds(status_output)
+            # Collect uptime for every required sub-process
+            uptimes = {}
+            not_running = []
+            for proc in DOT1X_REQUIRED_PROCESSES:
+                uptime = self._get_process_uptime_seconds(status_output, proc)
+                if uptime < 0:
+                    not_running.append(proc)
+                else:
+                    uptimes[proc] = uptime
 
-            if radiusd_seconds >= DOT1X_MIN_RADIUSD_UPTIME_SECONDS:
-                log.info(f"radiusd is running (uptime: {radiusd_seconds}s)")
-                return True
-            elif radiusd_seconds >= 0:
-                log.warning(
-                    f"radiusd uptime is {radiusd_seconds}s, waiting for {DOT1X_MIN_RADIUSD_UPTIME_SECONDS}s"
-                )
+            # Build a single summary line
+            parts = [f"{p}={uptimes[p]}s" for p in DOT1X_REQUIRED_PROCESSES if p in uptimes]
+            if not_running:
+                parts += [f"{p}=DOWN" for p in not_running]
+            summary = ", ".join(parts)
+
+            if not_running:
+                log.info(f"dot1x status: {summary} — waiting for: {', '.join(not_running)}")
                 return False
+
+            radiusd_seconds = uptimes["radiusd"]
+            if radiusd_seconds >= DOT1X_MIN_RADIUSD_UPTIME_SECONDS:
+                log.info(f"dot1x status: {summary} — plugin is ready")
+                return True
             else:
-                log.warning(f"radiusd is not yet running or not found in status output")
+                log.info(f"dot1x status: {summary} — radiusd not yet stable (need {DOT1X_MIN_RADIUSD_UPTIME_SECONDS}s)")
                 return False
         except Exception as e:
             log.warning(f"Failed to check plugin status: {e}")
@@ -112,10 +119,11 @@ class Radius(RadiusBase):
 
     def restart_dot1x_plugin(self, timeout: int = DOT1X_RESTART_TIMEOUT, interval: int = DOT1X_CHECK_INTERVAL) -> None:
         """
-        Restart the 802.1X plugin and wait until radiusd is stable.
+        Restart the 802.1X plugin and wait until all sub-processes are stable.
 
-        Verification uses 'fstool dot1x status' and waits until radiusd uptime
-        reaches DOT1X_MIN_RADIUSD_UPTIME_SECONDS (45 s).
+        Verification uses 'fstool dot1x status' and waits until radiusd,
+        winbindd, and redis-server are all running, with radiusd uptime
+        reaching DOT1X_MIN_RADIUSD_UPTIME_SECONDS.
 
         Args:
             timeout: Maximum time in seconds to wait for the plugin to start (default: 500).

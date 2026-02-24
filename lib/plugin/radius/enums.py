@@ -101,6 +101,7 @@ class PreAdmissionAuth:
 # and kept here because they are dot1x / RADIUS-plugin specific.
 MAR_FIELD_MAC = "dot1x_mac"
 MAR_FIELD_TARGET_ACCESS = "dot1x_target_access"
+MAR_FIELD_COMMENT = "dot1x_mar_comment"
 MAR_AUTH_ACCEPT = PreAdmissionAuth.ACCEPT   # "vlan:\tIsCOA:false"
 MAR_AUTH_REJECT = PreAdmissionAuth.REJECT_DUMMY  # "reject=dummy"
 
