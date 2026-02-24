@@ -624,7 +624,7 @@ class RadiusTestBase:
             tunnel_type=13,
             tunnel_medium_type=6,
             iscoa=True,
-            action_params_list=[],
+            action_params_list=None,
             reject=False
     ):
         """
@@ -636,11 +636,13 @@ class RadiusTestBase:
             tunnel_type (int): Tunnel Type. Defaulted to 13.
             tunnel_medium_type (int): Tunnel Medium Type. Defaulted to 6.
             iscoa (bool): Whether IsCOA is enabled. Defaults to True.
-            **action_params_list: Additional parameters. ie. ["Cabletron-Protocol-Callable=IP-BR-Callable", "A-ESAM-QOS-Params=111"]
+            action_params_list: Additional parameters. ie. ["Cabletron-Protocol-Callable=IP-BR-Callable", "A-ESAM-QOS-Params=111"]
 
         Returns:
             str: The name of the created action.
         """
+        if action_params_list is None:
+            action_params_list = []
         if reject:
             params = ["reject=dummy"]
         else:

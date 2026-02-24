@@ -44,4 +44,4 @@ class EyesightFactory:
     def get_external_server(self, ocsp_config):
         """Currently only OCSP server is supported as external server, if more needed to support variant of tests, need to be a generic method
         """
-        return OcspServer(ocsp_config)
+        return OcspServer(**ocsp_config)
