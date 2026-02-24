@@ -505,18 +505,12 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
     ]
 
     def do_test(self):
-        auth_nic_profile = AuthNicProfile.EAP_TLS
-        expected_status = AuthenticationStatus.SUCCEEDED
-        fail_status = AuthenticationStatus.FAILED
-        certificate_password = CERT_PASSWORD
-        case_id = "T1316954"
-
         try:
-            self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
+            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.EAP_TLS)
             # Step 2-3: EKUs (.2,.4,.6,.8,.14,.16,.23,.29) -> cert B -> SUCCESS
             self.dot1x.set_pre_admission_rules(self.SET_EKU_CLIENT_AUTH_EMAIL_IPSEC_TIMESTAMP_EAP_SCVP_SENDROUTER_CMC_ACCEPT_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_B.value
-            self.import_certificates(certificate_password=certificate_password)
+            self.import_certificates(certificate_password=CERT_PASSWORD)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -543,11 +537,10 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.verify_authentication_on_ca()
             self.cleanup_all_test_certificates()
 
-
             # Step 6: only (.14,.29) + swap cert B->C -> SUCCESS
             self.dot1x.set_pre_admission_rules(self.SET_EKU_EAP_OVER_LAN_AND_CMC_ARCHIVE_ACCEPT_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_C.value
-            self.import_certificates(certificate_password=certificate_password)
+            self.import_certificates(certificate_password=CERT_PASSWORD)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -559,7 +552,7 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             # #Step 7: "ALL EKU options" + swap cert C->D (no EKUs) -> Fail
             self.dot1x.set_pre_admission_rules(self.SET_EKU_ALL_OPTIONS_ACCEPT_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_D.value
-            self.import_certificates(certificate_password=certificate_password)
+            self.import_certificates(certificate_password=CERT_PASSWORD)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED)
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
