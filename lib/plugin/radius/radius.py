@@ -13,7 +13,7 @@ DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_STATUS_COMMAND = "fstool dot1x status"
 DOT1X_RESTART_TIMEOUT = 300
 DOT1X_CHECK_INTERVAL = 10
-DOT1X_MIN_RADIUSD_UPTIME_SECONDS = 10
+DOT1X_MIN_RADIUSD_UPTIME_SECONDS = 45
 DOT1X_REQUIRED_PROCESSES = ("radiusd", "winbindd", "redis-server")
 
 DEFAULT_LOCAL_PROPERTY_FILE_PATH = "/usr/local/forescout/plugin/dot1x/local.properties"
