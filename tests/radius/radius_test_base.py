@@ -3,7 +3,6 @@ import ipaddress
 import re
 from datetime import datetime
 from typing import Union, cast
-
 from framework.log.logger import log
 from lib.ca.ca_common_base import CounterActBase
 from lib.ca.em import EnterpriseManager
@@ -110,7 +109,8 @@ class RadiusTestBase:
     # LAN Profile Management
     # =========================================================================
 
-    def configure_lan_profile(self, auth_nic_profile: AuthNicProfile, local_profile_path: str, remote_profiles_path: str):
+    def configure_lan_profile(self, auth_nic_profile: AuthNicProfile, local_profile_path: str,
+                              remote_profiles_path: str):
         """
         Configure LAN profile on the Windows endpoint.
 
@@ -483,7 +483,8 @@ class RadiusTestBase:
         self.ca.check_properties(host_id, properties_check_list)
         log.info(f"SAN verified: {expected_san}")
 
-    def add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(self, match_type, value, match_case=False, inner_not=False):
+    def add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(self, match_type, value, match_case=False,
+                                                                  inner_not=False):
         """
             Add a condition to the policy to check the 802.1x Client Cert Subject Alternative Name property.
             type: The type of match (e.g., "equals", "contains", "startswith", "endswith")
@@ -519,3 +520,56 @@ class RadiusTestBase:
         policy_name = "policy_condition_dot1x_fr_client_x509_cert_subj_alt_name"
         self.em.simple_policy_condition("dot1xSimplePolicyCondition.xml", policy_name, fields)
         return policy_name
+
+    def radius_authorize(
+            self,
+            vlan=None,
+            tunnel_type=13,
+            tunnel_medium_type=6,
+            iscoa=True,
+            action_params_list=[],
+            reject=False
+    ):
+        """
+        Add a predefined action 'dot1x_authorize' to the policy for RADIUS authorization.
+
+        Args:
+            vlan (str): VLAN ID. Defaults to None.
+            tunnel_private_group_id (str): Defaults to the value of `vlan`.
+            tunnel_type (int): Tunnel Type. Defaulted to 13.
+            tunnel_medium_type (int): Tunnel Medium Type. Defaulted to 6.
+            iscoa (bool): Whether IsCOA is enabled. Defaults to True.
+            **action_params_list: Additional parameters. ie. ["Cabletron-Protocol-Callable=IP-BR-Callable", "A-ESAM-QOS-Params=111"]
+
+        Returns:
+            str: The name of the created action.
+        """
+        if reject:
+            params = ["reject=dummy"]
+        else:
+            params = [
+                f"vlan:{vlan or ''}",
+                f"IsCOA:{str(iscoa).lower()}"
+            ]
+            if vlan is not None:
+                params = [
+                    f"vlan:{vlan or ''}",
+                    f"Tunnel-Private-Group-Id={vlan or ''}",
+                    f"Tunnel-Type={tunnel_type}",
+                    f"Tunnel-Medium-Type={tunnel_medium_type}",
+                    f"IsCOA:{str(iscoa).lower()}"
+                ]
+        for _iter in action_params_list:
+            params.append(_iter)
+        value = "&#9;".join(filter(None, params))
+
+        action_name = "dot1x_authorize"  # Predefined action name
+        fields = copy.deepcopy(DEFAULT_RADIUS_POLICY_MAC_FIELDS)
+        fields[0]["CONDITION"]["FILTER"]["VALUE"]["VALUE2"] = self.passthrough.mac
+
+        # Add the serialized action parameters
+        action_params = {"authorization": value}
+        print(action_params)
+        # Use the simple_action function to create the action
+        self.em.simple_policy_action("radiusSimpleAction.xml", action_name, fields, action_name, action_params)
+        return action_name

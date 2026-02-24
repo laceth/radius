@@ -1,4 +1,5 @@
 import importlib
+from lib.external_servers.ocsp_server import OcspServer
 from lib.passthrough.windows_passthrough import WindowsPassthrough
 from lib.switch.cisco_ios import CiscoIOS
 
@@ -26,6 +27,7 @@ class EyesightFactory:
         return ins
 
     def get_switch(self, switch_config):
+        # need to be replaced with switch factory
         return CiscoIOS(**switch_config)
 
     def get_passthrough(self, passthrough_config):
@@ -38,3 +40,8 @@ class EyesightFactory:
         cls = getattr(module, class_name)
         ins = cls(ca_instance, **plugin_config)
         return ins
+
+    def get_external_server(self, ocsp_config):
+        """Currently only OCSP server is supported as external server, if more needed to support variant of tests, need to be a generic method
+        """
+        return OcspServer(ocsp_config)

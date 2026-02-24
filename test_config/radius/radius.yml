@@ -1,11 +1,11 @@
 em:
-  ip: 10.16.177.65
+  ip: 10.16.147.129
   user_name: root
   password: aristo1
   version: 8.5.3
 
 ca:
-  ip: 10.16.177.66
+  ip: 10.16.147.130
   user_name: root
   password: aristo1
   version: 8.5.3
@@ -30,3 +30,7 @@ passthrough:
   password: aristo
   mac: 98f2b301a055
   nicname: pciPassthru0
+
+# optional
+#ocsp:
+#  ip:                       # ip address of ocsp server

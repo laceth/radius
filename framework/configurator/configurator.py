@@ -10,7 +10,7 @@ CONTEXTMAPPING = {
     'switch': 'lib.plugin.switch.cisco_ios.CiscoIOS'
 }
 
-
+PLUGIN_LIST = ["radius"]
 class Configurator:
     def __init__(self, config_path):
         with open(config_path, "r") as f:
@@ -35,8 +35,11 @@ class Configurator:
         if "passthrough" in self.config:
             passthrough = ef.get_passthrough(self.config.get("passthrough"))
             instances["passthrough"] = passthrough
+        if "ocsp" in self.config:
+            ocsp = ef.get_external_server(self.config.get("ocsp"))
+            instances["ocsp"] = ocsp
         for key in self.config:
-            if key in ["ca", "em", "switch", "passthrough"]:
+            if key not in PLUGIN_LIST:
                 continue
             plugin = ef.get_plugin(ca, key, self.config.get(key))
             instances[key] = plugin
