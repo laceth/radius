@@ -557,8 +557,8 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED)
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
             self.verify_nic_has_no_ip_in_range()
-            log.info("[OK] CA shows Access-Reject + EAP-TLS")
         except Exception as e:
+            log.error(f"[T1316957] FAIL: {e}")
             raise
 
 class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
