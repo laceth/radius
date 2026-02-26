@@ -340,37 +340,40 @@ class CounterActBase(SSHClient):
         if "Import policy completed" not in output:
             raise RuntimeError(f"Policy import failed: {output}")
 
+    
     def check_policy_match(self, policy_name: str, count: int = 1, timeout: int = 30, retry_interval: int = 5) -> bool:
         """
-        Check if a policy matches the expected count, with retries until a timeout.
-
-        Args:
-            policy_name: Name of the policy to check.
-            count: Expected match count (default: 1).
-            timeout: Maximum time in seconds to keep retrying (default: 30).
-            retry_interval: Delay between retries in seconds (default: 2).
-
-        Returns:
-            True if the policy matches the expected count within the timeout, False otherwise.
+        HA-safe policy match check:
+        - Use `fstool oneach` because MATCH counters may appear only on the node doing evaluation.
+        - Sum MATCH across all returned lines.
         """
-        log.info(f"Checking policy match '{policy_name}'")
+        log.info(f"Checking policy match '{policy_name}' (oneach)")
         start_time = time.time()
+
+        cmd = f"fstool oneach fstool npstats | grep -F '{policy_name}' || true"
+
         while time.time() - start_time < timeout:
-            try:
-                output = self.exec_command(f"fstool npstats | grep '{policy_name}'")
-            except RuntimeError as e:
-                log.debug(f"Failed to get policy stats for '{policy_name}': {e}")
+            output = self.exec_command(cmd, log_command=True, log_output=True).strip()
+
+            if not output:
                 time.sleep(retry_interval)
                 continue
-            match = re.search(r'MATCH\s*:\s*(\d+)', output)
-            if match and int(match.group(1)) == count:
-                log.info(f"Policy '{policy_name}' matched expected count {count}")
-                return True
-            log.debug(f"Policy '{policy_name}' did not match. Retrying in {retry_interval} seconds...")
-            time.sleep(retry_interval)
-        log.info(f"Policy '{policy_name}' did not match the expected count within {timeout} seconds.")
-        return False
 
+            total_match = 0
+            for line in output.splitlines():
+                # \bMATCH\b avoids matching inside UNMATCH
+                m = re.search(r'\bMATCH\b\s*:\s*(\d+)', line)
+                if m:
+                    total_match += int(m.group(1))
+
+            log.info(f"Total MATCH across nodes = {total_match} (expected={count})")
+            if total_match == count:
+                return True
+
+            time.sleep(retry_interval)
+
+        return False
+    
     def get_host_ip_by_mac(self, mac_address: str, preferred_range: str = None, timeout: int = 60, interval: int = 5) -> str:
         """
         Get host IP by MAC address using ``fstool hostinfo {mac}`` directly.
