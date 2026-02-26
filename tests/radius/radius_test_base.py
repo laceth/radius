@@ -620,29 +620,29 @@ class RadiusTestBase:
 
     def radius_authorize(
             self,
+            iscoa=True,
             vlan=None,
+            attribute_value_pair=None,
+            reject=False,
             tunnel_type=13,
             tunnel_medium_type=6,
-            iscoa=True,
-            action_params_list=None,
-            reject=False
     ):
         """
         Add a predefined action 'dot1x_authorize' to the policy for RADIUS authorization.
 
         Args:
             vlan (str): VLAN ID. Defaults to None.
-            tunnel_private_group_id (str): Defaults to the value of `vlan`.
             tunnel_type (int): Tunnel Type. Defaulted to 13.
             tunnel_medium_type (int): Tunnel Medium Type. Defaulted to 6.
-            iscoa (bool): Whether IsCOA is enabled. Defaults to True.
-            action_params_list: Additional parameters. ie. ["Cabletron-Protocol-Callable=IP-BR-Callable", "A-ESAM-QOS-Params=111"]
+            iscoa (bool): Whether IsCOA is enabled. Defaults to True. Force Re-authentication when False
+            attribute_value_pair: Additional parameters. elements can be extracted directly from policy xml files
+            i.e. ["Cabletron-Protocol-Callable=IP-BR-Callable", "A-ESAM-QOS-Params=111", "Cisco-AVPair=subscriber:command=reauthenticate"]
 
         Returns:
             str: The name of the created action.
         """
-        if action_params_list is None:
-            action_params_list = []
+        if attribute_value_pair is None:
+            attribute_value_pair = []
         if reject:
             params = ["reject=dummy"]
         else:
@@ -658,11 +658,13 @@ class RadiusTestBase:
                     f"Tunnel-Medium-Type={tunnel_medium_type}",
                     f"IsCOA:{str(iscoa).lower()}"
                 ]
-        for _iter in action_params_list:
+        for _iter in attribute_value_pair:
             params.append(_iter)
         value = "&#9;".join(filter(None, params))
 
         action_name = "dot1x_authorize"  # Predefined action name
+
+        # set condition for mac filter
         fields = copy.deepcopy(DEFAULT_RADIUS_POLICY_MAC_FIELDS)
         fields[0]["CONDITION"]["FILTER"]["VALUE"]["VALUE2"] = self.passthrough.mac
 

@@ -192,14 +192,14 @@ class CounterActBase(SSHClient):
         self.import_policy(remote_path)
         log.info(f"Policy {policy_name} added successfully")
 
-    def simple_policy_action(self, policy_file_name, policy_name, condition, action_name, action_params):
+    def simple_policy_action(self, policy_file_name, policy_name, conditions, action_name, action_params):
         """
         Build and import simple action policies with conditions and actions.
 
         Args:
             policy_file_name (str): Name of the policy file.
             policy_name (str): Name of the policy.
-            condition (list): List of dictionaries with condition details.
+            conditions (list): List of dictionaries with condition details.
             action_name (str): Name of the action.
             action_params (dict): Parameters for the action block, including nested elements.
         """
@@ -239,15 +239,17 @@ class CounterActBase(SSHClient):
             rule.set("NAME", policy_name)
         # Add or update the EXPRESSION block (condition)
         expression = ET.Element("EXPRESSION")
-        if len(condition) > 1:
+        if len(conditions) > 1:
             expression.set("EXPR_TYPE", "AND")
-            for field in condition:
+            for field in conditions:
                 sub_expression = ET.SubElement(expression, "EXPRESSION", {"EXPR_TYPE": field["EXPR_TYPE"]})
                 condition_element = ET.SubElement(sub_expression, "CONDITION", {**field["CONDITION"]})
                 filter_element = ET.SubElement(condition_element, "FILTER", {**field["CONDITION"]["FILTER"]})
                 ET.SubElement(filter_element, "VALUE", {**field["CONDITION"]["FILTER"]["VALUE"]})
         else:
-            field = condition[0]
+            if not conditions or len(conditions) == 0:
+                raise ValueError("At least one condition is required to build the policy.")
+            field = conditions[0]
             expression.set("EXPR_TYPE", field["EXPR_TYPE"])
             condition_element = ET.SubElement(expression, "CONDITION", {**field["CONDITION"]})
             filter_element = ET.SubElement(condition_element, "FILTER", {**field["CONDITION"]["FILTER"]})
