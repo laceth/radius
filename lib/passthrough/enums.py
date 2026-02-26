@@ -15,14 +15,6 @@ class AuthenticationStatus(Enum):
     MAB = "802.1X authentication not enabled" # 802.1X disabled for MAB testing
 
 
-class AuthNicProfile(Enum):
-    """802.1X NIC profile types with their corresponding LAN profile XML files."""
-
-    PEAP = "lan_profile_peap_config.xml"
-    EAP_TLS = "lan_profile_eap_tls_config.xml"
-    PEAP_EAP_TLS = "lan_profile_peap_eap_tls_config.xml"
-    EAP_TTLS = "lan_profile_eap_ttls_config.xml"
-    MAB = "lan_profile_mab_config.xml" # 802.1X disabled for MAB testing
 
 class WindowsCert(Enum):
     CERT_TEMPLATE_CON_CERT = "testdecodeA.pfx"

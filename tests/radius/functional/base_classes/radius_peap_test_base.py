@@ -3,7 +3,7 @@ from typing import Union
 
 from framework.log.logger import log
 from lib.passthrough import utils as passthrough_utils
-from lib.passthrough.enums import AuthNicProfile
+from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import RadiusAuthStatus
 from lib.plugin.radius.models.peap_config import PEAPCredentialsConfig
 from tests.radius.radius_test_base import RadiusTestBase
@@ -206,12 +206,16 @@ class RadiusPeapTestBase(RadiusTestBase):
     # LAN Profile Management (PEAP-specific override)
     # =========================================================================
 
-    def configure_lan_profile(self, auth_nic_profile: AuthNicProfile = AuthNicProfile.PEAP):
-        """Configure LAN profile using PEAP config paths."""
-        self.peap_config.auth_nic_profile = auth_nic_profile
+    def configure_lan_profile(
+        self,
+        lan_profile: LanProfile = None,
+        remote_profiles_path: str = None,
+    ):
+        """Configure LAN profile using a LanProfile builder."""
+        if lan_profile is None:
+            raise ValueError("lan_profile must be provided")
         super().configure_lan_profile(
-            auth_nic_profile=auth_nic_profile,
-            local_profile_path=self.peap_config.local_lan_profile_path,
-            remote_profiles_path=self.peap_config.profiles_path
+            lan_profile=lan_profile,
+            remote_profiles_path=remote_profiles_path or self.peap_config.profiles_path,
         )
 

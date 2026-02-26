@@ -11,8 +11,9 @@ import tempfile
 import os
 
 from framework.log.logger import log
+from lib.passthrough.enums import WindowsCert
+from lib.passthrough.lan_profile_builder import LanProfile
 from lib.external_servers.ocsp_server import OcspServer
-from lib.passthrough.enums import AuthNicProfile, WindowsCert
 from lib.plugin.radius.enums import RadiusAuthStatus
 from lib.plugin.radius.models.eap_tls_config import CertificateAuthConfig
 from tests.radius.radius_test_base import RadiusTestBase
@@ -34,12 +35,12 @@ class RadiusCertificatesTestBase(RadiusTestBase):
     TRUSTED_CERT_STORE = 'Root'
     STORE_LOCATION = 'LocalMachine'
 
-    # Default auth profile - override in subclasses
-    DEFAULT_AUTH_PROFILE = AuthNicProfile.EAP_TLS
+    # Default auth profile name - override in subclasses
+    DEFAULT_AUTH_PROFILE = "EAP_TLS"
 
-    def __init__(self, ca, em, radius, switch, passthrough, ocsp=None, version="1.0.0"):
-        super().__init__(ca, em, radius, switch, passthrough, version)
-        self.cert_config = CertificateAuthConfig(auth_nic_profile=self.DEFAULT_AUTH_PROFILE)
+    def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
+        super().__init__(ca, em, radius, switch, passthrough, version=version)
+        self.cert_config = CertificateAuthConfig()
         self.nicname = self.cert_config.nicname
         self.trusted_cert_thumbprint = None
         self.personal_cert_thumbprint = None
@@ -49,7 +50,7 @@ class RadiusCertificatesTestBase(RadiusTestBase):
 
     def do_setup(self):
         """Setup phase: prepare test environment."""
-        log.info(f"=== Starting {self.DEFAULT_AUTH_PROFILE.name} Test Setup ===")
+        log.info(f"=== Starting {self.DEFAULT_AUTH_PROFILE} Test Setup ===")
 
         # Run common setup (cleanup endpoint, configure switch)
         super().do_setup()
@@ -61,7 +62,7 @@ class RadiusCertificatesTestBase(RadiusTestBase):
 
     def do_teardown(self):
         """Cleanup phase: remove imported certificates."""
-        log.info(f"=== {self.DEFAULT_AUTH_PROFILE.name} Test Teardown ===")
+        log.info(f"=== {self.DEFAULT_AUTH_PROFILE} Test Teardown ===")
         try:
             self.remove_certificates()
         except Exception as e:
@@ -94,7 +95,7 @@ class RadiusCertificatesTestBase(RadiusTestBase):
         # Get host ID once using base class helper
         if not self.host_id:
             self.host_id = self._get_host_id()
-        log.info(f"Verifying {self.DEFAULT_AUTH_PROFILE.name} authentication for host: {self.host_id}")
+        log.info(f"Verifying {self.DEFAULT_AUTH_PROFILE} authentication for host: {self.host_id}")
 
         # Convert enum to string value if needed
         auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
@@ -122,13 +123,13 @@ class RadiusCertificatesTestBase(RadiusTestBase):
         ]
 
         self.ca.check_properties(self.host_id, cert_properties_check_list)
-        log.info(f"{self.DEFAULT_AUTH_PROFILE.name} authentication verification completed successfully")
+        log.info(f"{self.DEFAULT_AUTH_PROFILE} authentication verification completed successfully")
 
     def _get_eap_type(self) -> str:
         """Get the EAP type string based on the authentication profile."""
         eap_type_map = {
-            AuthNicProfile.EAP_TLS: "EAP-TLS",
-            AuthNicProfile.PEAP_EAP_TLS: "PEAP-EAP-TLS",
+            "EAP_TLS": "EAP-TLS",
+            "PEAP_EAP_TLS": "PEAP-EAP-TLS",
         }
         return eap_type_map.get(self.DEFAULT_AUTH_PROFILE, "EAP-TLS")
 
@@ -409,25 +410,19 @@ if ($deleted.Count -gt 0) {{ $deleted -join "`n" }} else {{ "No test certificate
 
     def configure_lan_profile(
         self,
-        auth_nic_profile: AuthNicProfile = None,
-        local_profile_path: str = None,
-        remote_profiles_path: str = None
+        lan_profile: LanProfile = None,
+        remote_profiles_path: str = None,
     ):
         """
-        Configure LAN profile using certificate auth config paths.
-
-        Overrides base class to provide simpler interface - paths are derived from cert_config.
+        Configure LAN profile using a LanProfile builder.
 
         Args:
-            auth_nic_profile: NIC profile type. Defaults to DEFAULT_AUTH_PROFILE.
-            local_profile_path: Ignored - uses cert_config paths
-            remote_profiles_path: Ignored - uses cert_config paths
+            lan_profile: A ``LanProfile`` instance. Required.
+            remote_profiles_path: Remote directory. Defaults to cert_config.profiles_path.
         """
-        if auth_nic_profile is None:
-            auth_nic_profile = self.DEFAULT_AUTH_PROFILE
-        self.cert_config.auth_nic_profile = auth_nic_profile
+        if lan_profile is None:
+            raise ValueError("lan_profile must be provided")
         super().configure_lan_profile(
-            auth_nic_profile=auth_nic_profile,
-            local_profile_path=self.cert_config.local_lan_profile_path,
-            remote_profiles_path=self.cert_config.profiles_path
+            lan_profile=lan_profile,
+            remote_profiles_path=remote_profiles_path or self.cert_config.profiles_path,
         )
