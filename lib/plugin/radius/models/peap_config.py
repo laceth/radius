@@ -4,8 +4,6 @@ Configuration dataclasses for RADIUS PEAP setup.
 from dataclasses import dataclass
 from pathlib import Path
 
-from lib.passthrough.enums import AuthNicProfile
-
 
 @dataclass
 class PEAPCredentialsConfig:
@@ -13,8 +11,7 @@ class PEAPCredentialsConfig:
     Configuration for PEAP credentials setup on Windows endpoint.
 
     Usage:
-        config = PEAPCredentialsConfig()  # Uses all defaults
-        config = PEAPCredentialsConfig(auth_nic_profile=AuthNicProfile.EAP_TLS)
+        config = PEAPCredentialsConfig()
     """
     # Remote Windows paths
     scripts_path: str = r'C:\Scripts'
@@ -25,17 +22,12 @@ class PEAPCredentialsConfig:
     # Script/execution configuration
     peap_script_filename: str = 'radius_nic_PEAP_credentials_config.ps1'
     execution_policy: str = 'Bypass'
-    auth_nic_profile: AuthNicProfile = AuthNicProfile.PEAP
     nicname: str = 'pciPassthru0'
 
     # PEAP credentials
     peap_domain: str = 'txqalab'
     peap_user: str = 'dotonex'
     peap_password: str = 'aristo'
-
-    @property
-    def lan_profile_filename(self) -> str:
-        return self.auth_nic_profile.value
 
     @property
     def psexec_path(self) -> str:
@@ -49,10 +41,6 @@ class PEAPCredentialsConfig:
     @property
     def local_script_path(self) -> str:
         return _find_resource(self.peap_script_filename)
-
-    @property
-    def local_lan_profile_path(self) -> str:
-        return _find_resource(self.lan_profile_filename)
 
     def validate(self):
         """Validate that required files exist."""
@@ -98,12 +86,10 @@ class LauncherScriptConfig:
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[4]
 _SCRIPTS_DIR = _PROJECT_ROOT / 'scripts'
-_RESOURCES_DIR = _PROJECT_ROOT / 'resources'
-_NIC_PROFILES_DIR = _RESOURCES_DIR / 'radius' / 'nic_profiles'
 
 
 def _find_resource(filename: str) -> str:
-    for directory in [_SCRIPTS_DIR, _RESOURCES_DIR, _NIC_PROFILES_DIR]:
+    for directory in [_SCRIPTS_DIR]:
         path = directory / filename
         if path.exists():
             return str(path)

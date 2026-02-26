@@ -56,6 +56,7 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
             self.assert_mac_in_mar()
 
             # Step 3: Attempt to authenticate - should FAIL (MAC in MAR + Deny Access rule)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.verify_nic_has_no_ip_in_range()
@@ -69,6 +70,7 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
             self.assert_mac_in_mar()
 
             # Step 5: Attempt to authenticate - should SUCCEED (MAC in MAR + ACCEPT rule)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.wait_for_nic_ip_in_range()

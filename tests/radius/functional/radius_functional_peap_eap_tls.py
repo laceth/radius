@@ -1,5 +1,6 @@
 from framework.log.logger import log
-from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile, WindowsCert
+from lib.passthrough.enums import AuthenticationStatus, WindowsCert
+from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import PreAdmissionAuth
 from tests.radius.functional.base_classes.radius_peap_eap_tls_test_base import RadiusPeapEapTlsTestBase
 
@@ -32,10 +33,11 @@ class PEAPEAPTLSBasicAuthWiredTest(RadiusPeapEapTlsTestBase):
 
     def do_test(self):
         try:
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.PEAP_EAP_TLS)
+            self.configure_lan_profile(lan_profile=LanProfile.peap_eap_tls())
             self.dot1x.set_pre_admission_rules(self.SET_BASIC_ACCEPT_PEAP_EAP_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_VALID.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -75,10 +77,11 @@ class PEAPEAPTLSRegexpPreAdmissionTest(RadiusPeapEapTlsTestBase):
 
     def do_test(self):
         try:
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.PEAP_EAP_TLS)
+            self.configure_lan_profile(lan_profile=LanProfile.peap_eap_tls())
             self.dot1x.set_pre_admission_rules(self.SET_USERNAME_HOST_REGEXP_ACCEPT_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_G.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()

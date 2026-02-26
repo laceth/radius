@@ -1,12 +1,15 @@
 import copy
 import ipaddress
+import os
 import re
+import tempfile
 from datetime import datetime
 from typing import Union, cast
 from framework.log.logger import log
 from lib.ca.ca_common_base import CounterActBase
 from lib.ca.em import EnterpriseManager
-from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile
+from lib.passthrough.enums import AuthenticationStatus
+from lib.passthrough.lan_profile_builder import LanProfile
 from lib.passthrough.passthrough_base import PassthroughBase
 from lib.plugin.radius.radius import Radius
 from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings
@@ -173,22 +176,39 @@ class RadiusTestBase:
     # LAN Profile Management
     # =========================================================================
 
-    def configure_lan_profile(self, auth_nic_profile: AuthNicProfile, local_profile_path: str,
-                              remote_profiles_path: str):
+    def configure_lan_profile(
+        self,
+        lan_profile: LanProfile = None,
+        remote_profiles_path: str = None,
+    ):
         """
-        Configure LAN profile on the Windows endpoint.
+        Configure LAN profile on the Windows endpoint using a ``LanProfile`` builder.
+
+        The XML is generated on-the-fly, written to a temp file, copied to the
+        remote machine, and applied via ``netsh lan``.
 
         Args:
-            auth_nic_profile: NIC profile type (determines XML filename)
-            local_profile_path: Local path to the profile XML file
-            remote_profiles_path: Remote directory for profiles
+            lan_profile: A ``LanProfile`` instance whose ``to_xml()`` will be used.
+            remote_profiles_path: Remote directory for profiles. Default: C:\\Profiles
         """
-        log.info(f"Configuring LAN profile: {auth_nic_profile.name} on {self.passthrough.ip}")
+        if lan_profile is None:
+            raise ValueError("lan_profile must be provided")
 
-        remote_profile_path = f"{remote_profiles_path}\\{auth_nic_profile.value}"
-        self.passthrough.copy_file_to_remote(local_profile_path, remote_profile_path)
-        self.passthrough.delete_lan_profile(self.nicname)
-        self.passthrough.add_lan_profile(remote_profile_path, self.nicname)
+        remote_dir = remote_profiles_path or r"C:\Profiles"
+        remote_filename = "lan_profile.xml"
+
+        log.info(f"Configuring LAN profile (builder) on {self.passthrough.ip}")
+        xml_content = lan_profile.to_xml()
+        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".xml", delete=False, encoding="utf-8")
+        try:
+            tmp.write(xml_content)
+            tmp.close()
+            remote_path = f"{remote_dir}\\{remote_filename}"
+            self.passthrough.copy_file_to_remote(tmp.name, remote_path)
+            self.passthrough.delete_lan_profile(self.nicname)
+            self.passthrough.add_lan_profile(remote_path, self.nicname)
+        finally:
+            os.unlink(tmp.name)
 
     # =========================================================================
     # NIC Management
@@ -217,6 +237,24 @@ class RadiusTestBase:
             f"on {self.passthrough.ip}"
         )
         self.passthrough.enable_nic(self.nicname)
+
+    # =========================================================================
+    # Plugin readiness
+    # =========================================================================
+
+    def wait_for_dot1x_ready(self, timeout: int = 300, interval: int = 10) -> None:
+        """
+        Block until the 802.1X plugin is fully operational.
+
+        Should be called in the test *after* all configuration / restart
+        calls and *before* the step that actually needs the plugin
+        (e.g. ``toggle_nic``).
+
+        Args:
+            timeout: Maximum wait in seconds.
+            interval: Seconds between polls.
+        """
+        self.dot1x.wait_until_running(timeout=timeout, interval=interval)
 
     # =========================================================================
     # Assertions

@@ -25,3 +25,15 @@ class PassthroughBase(ABC):
     def get_nic_ip(self, nicname):
         pass
 
+    @abstractmethod
+    def copy_file_to_remote(self, name, remote_path):
+        pass
+
+    @abstractmethod
+    def delete_lan_profile(self, nicname):
+        pass
+
+    @abstractmethod
+    def add_lan_profile(self, remote_path, nicname):
+        pass
+
