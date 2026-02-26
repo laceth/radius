@@ -159,7 +159,7 @@ class Radius(RadiusBase):
             self.restart_dot1x_plugin()
             self.has_change = False
         else:
-            log.info("Dot1x has no any changes, skipping restart")
+            log.info("Dot1x has no changes, skipping restart")
 
     def set_pre_admission_rules(self, rules: list, condition_slot: int = 1) -> None:
         """
@@ -350,7 +350,7 @@ class Radius(RadiusBase):
     def set_null(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
         """Set config.auth_source_null.value to specified auth_source (checks current value first)."""
         try:
-            current_value = self._get_property(file_path,AUTH_SOURCE_NULL_KEY)
+            current_value = self._get_property(file_path, AUTH_SOURCE_NULL_KEY)
             if current_value == auth_source:
                 log.info(f"Auth source null already set to '{auth_source}', skipping")
                 return
@@ -422,8 +422,8 @@ class Radius(RadiusBase):
         """Read property value(s) from local.properties via a single SFTP connection.
 
         Args:
-            key: Property key to look up, or None to return all key-value pairs as a dict.
             file_path: Remote path to local.properties.
+            key: Property key to look up, or None to return all key-value pairs as a dict.
 
         Returns:
             str: The value for the given key.
