@@ -164,7 +164,7 @@ class Radius(RadiusBase):
     def set_pre_admission_rules(self, rules: list, condition_slot: int = 1) -> None:
         """
         Set pre-admission rules on the RADIUS server by editing local.properties.
-
+        Then restart the dot1x plugin if there are changes.
         Args:
             rules (list): List of pre-admission rules to set.
             condition_slot (int): Which config.defpol_cond{slot}.value to edit.
