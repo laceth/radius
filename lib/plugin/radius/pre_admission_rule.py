@@ -220,7 +220,7 @@ def to_file(new_entry_string: str, node, file_path: str = DEFAULT_LOCAL_PROPERTY
     finally:
         sftp.close()
         ssh.close()
-    return changed_key    
+    return changed_key
 
 
 
