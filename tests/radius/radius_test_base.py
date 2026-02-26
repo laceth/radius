@@ -82,12 +82,10 @@ class RadiusTestBase:
         self.test_start_time = datetime.now()
         log.info(f"Test start time: {self.test_start_time}")
 
-        # Get Active Directory domain from DB (if configured in User Directory)
         self.build_ad_config()
         if self.ad_config1:
             self.dot1x.join_domain(self.ad_config1["ad_name"], self.ad_config1["ad_ud_user"], self.ad_config1["ad_secret"])
             self.dot1x.set_null(self.ad_config1["ad_name"])
-        # Configure RADIUS plugin with settings
         self.configure_radius_settings()
 
         # Cleanup any existing endpoint before test
@@ -108,8 +106,17 @@ class RadiusTestBase:
             mab=False,
             vlan=vlan,
         )
-        pass
 
+    def radius_special_setup(self):
+        log.info("radius special setup")
+
+    def do_teardown(self):
+        log.info("radius common teardown")
+        # self.rf.teardown(self.switch, port=self.switch.port1, radius_server_ip=self.ca.ipaddress)
+
+    # =========================================================================
+    # Common Helpers
+    # =========================================================================
     def log_test_devices(self):
         log.info(f"Radius Server IP: {self.ca.ipaddress}")
         if self.switch.ip:
@@ -132,13 +139,6 @@ class RadiusTestBase:
         else:
             settings = self.DEFAULT_RADIUS_SETTINGS
         self.dot1x.configure_radius_plugin(settings.to_dict())
-
-    def radius_special_setup(self):
-        log.info("radius special setup")
-
-    def do_teardown(self):
-        log.info("radius common teardown")
-        # self.rf.teardown(self.switch, port=self.switch.port1, radius_server_ip=self.ca.ipaddress)
 
     # =========================================================================
     # AD Domain Mapping Helpers

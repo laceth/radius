@@ -22,8 +22,12 @@ AUTH_SOURCE_DEFAULT_KEY = "config.auth_source_default.value"
 
 
 class Radius(RadiusBase):
-    def exec_cmd(self, command: str, timeout: int = 15) -> str:
-        return self.platform.exec_command(command, timeout)
+    def __init__(self, platform, version="1.0.0", username=None, password=None):
+        super().__init__(platform, version=version, username=username, password=password)
+        self.has_change = False
+
+    def exec_cmd(self, command: str, timeout: int = 15, log_output: bool = False, log_command: bool = False) -> str:
+        return self.platform.exec_command(command, timeout, log_output=log_output, log_command=log_command)
 
     def _get_process_uptime_seconds(self, status_output: str, process_name: str) -> int:
         """
@@ -134,7 +138,9 @@ class Radius(RadiusBase):
         """
         log.info(f"Restarting 802.1X plugin on RADIUS server on {self.platform.ipaddress}")
         try:
-            self.exec_cmd(DOT1X_RESTART_COMMAND)
+            output = self.exec_cmd(DOT1X_RESTART_COMMAND, timeout=20)
+            if "Done stopping RADIUS" not in output:
+                log.warning("'Done stopping RADIUS' not found in restart output, proceeding anyway")
             start_time = time.time()
             while time.time() - start_time < timeout:
                 if self.dot1x_plugin_running():
@@ -146,11 +152,19 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to restart 802.1X plugin: {e}")
 
+    def apply_dot1x_changes(self) -> None:
+        """Restart dot1x if has_change is set, otherwise skip."""
+        if self.has_change:
+            log.info("Restarting dot1x plugin to apply pending changes...")
+            self.restart_dot1x_plugin()
+            self.has_change = False
+        else:
+            log.info("Dot1x has no changes, skipping restart")
+
     def set_pre_admission_rules(self, rules: list, condition_slot: int = 1) -> None:
         """
-        Set pre-admission rules on the RADIUS server by editing local.properties,
-        then restart the dot1x plugin for multiple rules in local.properties.
-
+        Set pre-admission rules on the RADIUS server by editing local.properties.
+        Then restart the dot1x plugin if there are changes.
         Args:
             rules (list): List of pre-admission rules to set.
             condition_slot (int): Which config.defpol_cond{slot}.value to edit.
@@ -158,24 +172,25 @@ class Radius(RadiusBase):
         """
         log.info(f"Setting pre-admission rules: {len(rules)} rule(s)")
 
-
         try:
             if isinstance(rules, list) and rules and isinstance(rules[0], dict) and "auth" in rules[0]:
                 log.info("Using multi-rule format with auth values")
-                set_pre_admission_rules_remote(rules, self.platform)
-                self.restart_dot1x_plugin()
-                return
-
-            log.info(f"Using single condition format for slot {condition_slot}")
-            edit_pre_admission_rule(rules, self.platform, condition_slot=condition_slot)
-            self.restart_dot1x_plugin()
+                if set_pre_admission_rules_remote(rules, self.platform):
+                    self.has_change = True
+                    log.info(f"Pre-admission rules have changes, set self.has_change = {self.has_change}")
+            else:
+                log.info(f"Using single condition format for slot {condition_slot}")
+                if edit_pre_admission_rule(rules, self.platform, condition_slot=condition_slot):
+                    self.has_change = True
+                    log.info(f"Pre-admission rules have changes, set self.has_change = {self.has_change}")
         except Exception as e:
             raise Exception(f"Failed to set pre-admission rules: {e}")
+        self.apply_dot1x_changes()
 
     def configure_radius_plugin(self, conf_dict):
         """
         Configure RADIUS plugin settings based on the provided configuration dictionary.
-        Automatically restarts the dot1x plugin after configuration.
+        Automatically restarts the dot1x plugin after configuration has changed.
 
         Args:
             conf_dict: Dictionary of configuration options.
@@ -190,6 +205,14 @@ class Radius(RadiusBase):
         """
         cmd_list = []
         log.info(f"Configuring RADIUS plugin settings on {self.platform.ipaddress}")
+
+        # Preload all properties in one SFTP read to avoid a separate connection per property
+        current_props = {}
+        try:
+            current_props = self._get_property(DEFAULT_LOCAL_PROPERTY_FILE_PATH)
+        except Exception as e:
+            log.debug(f"Failed to preload dot1x properties: {e}")
+
         try:
             for key, val in conf_dict.items():
                 # Skip empty/None values
@@ -205,16 +228,22 @@ class Radius(RadiusBase):
                     if str(val).lower() not in implicit_field_mapping[prop_key.lower()]:
                         raise Exception("%s doesn't have a option for %s" % (prop_key, val))
                     val = implicit_field_mapping[prop_key.lower()][str(val).lower()]
-                cmd = "fstool dot1x set_property %s %s" % (prop_key, str(val).lower())
-                cmd_list.append(cmd)
-                self.platform.exec_command(cmd)
+                new_value = str(val).lower()
+                current_value = current_props.get(prop_key)
+                if current_value is not None and current_value.lower() == new_value:
+                    log.info(f"{prop_key} already set to '{current_value}', skipping")
+                    continue
 
-            self.restart_dot1x_plugin()
+                cmd = "fstool dot1x set_property %s %s" % (prop_key, new_value)
+                cmd_list.append(cmd)
+                self.exec_cmd(cmd, log_command=True)
+                if not self.has_change:
+                    self.has_change = True
 
         except Exception as e:
             log.error(f"Error configuring RADIUS plugin settings on {self.platform.ipaddress}: {e}")
             raise e
-        log.info(f"RADIUS plugin settings configured successfully on {self.platform.ipaddress}")
+        self.apply_dot1x_changes()
         return cmd_list
 
     def plugin_setting(self, conf_dict):
@@ -247,7 +276,6 @@ class Radius(RadiusBase):
             ad_username: Active Directory username (e.g., "administrator")
             ad_password: Active Directory password (e.g., "aristo")
             timeout: Command timeout in seconds (default: 60)
-
         Example:
             dot1x.join_domain("txqalab-dc1", "administrator", "aristo")
             # Executes: fstool dot1x join txqalab-dc1 administrator aristo
@@ -259,27 +287,25 @@ class Radius(RadiusBase):
         # Check if domain is already joined
         if self.test_join_domain(domain_name, timeout):
             log.info(f"Domain '{domain_name}' is already joined, skipping join operation")
-            return
+        else:
+            # Domain not joined, proceed with join
+            cmd = f"fstool dot1x join {domain_name} {ad_username} {ad_password}"
+            log.info(f"Joining domain '{domain_name}' for Radius plugin")
+            try:
+                output = self.exec_cmd(cmd, timeout=timeout)
+                log.info(f"Domain join command output: {output}")
 
-        # Domain not joined, proceed with join
-        cmd = f"fstool dot1x join {domain_name} {ad_username} {ad_password}"
+                # Check for success indicator
+                if "Result: SUCCESS" not in output:
+                    raise Exception(f"Domain join failed: {output}")
 
-        log.info(f"Joining domain '{domain_name}' for Radius plugin")
-        try:
-            output = self.exec_cmd(cmd, timeout=timeout)
-            log.info(f"Domain join command output: {output}")
+                log.info(f"Successfully joined domain '{domain_name}'")
+                self.has_change = True
+                log.info(f"Domain join has changes, set self.has_change = {self.has_change}")
 
-            # Check for success indicator
-            if "Result: SUCCESS" not in output:
-                raise Exception(f"Domain join failed: {output}")
-
-            log.info(f"Successfully joined domain '{domain_name}'")
-
-            # Restart plugin to apply changes
-            self.restart_dot1x_plugin()
-
-        except Exception as e:
-            raise Exception(f"Failed to join domain '{domain_name}': {e}")
+            except Exception as e:
+                raise Exception(f"Failed to join domain '{domain_name}': {e}")
+        self.apply_dot1x_changes()
 
     def test_join_domain(self, domain_name: str, timeout: int = 60) -> bool:
         """
@@ -307,7 +333,7 @@ class Radius(RadiusBase):
 
         log.info(f"Testing domain '{domain_name}' joined status with testjoin command")
         try:
-            output = self.exec_cmd(cmd, timeout=timeout)
+            output = self.exec_cmd(cmd, log_command=True, timeout=timeout)
             log.info(f"Test join command output: {output}")
 
             # Check for success indicator
@@ -324,7 +350,7 @@ class Radius(RadiusBase):
     def set_null(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
         """Set config.auth_source_null.value to specified auth_source (checks current value first)."""
         try:
-            current_value = self._get_property(AUTH_SOURCE_NULL_KEY, file_path)
+            current_value = self._get_property(file_path, AUTH_SOURCE_NULL_KEY)
             if current_value == auth_source:
                 log.info(f"Auth source null already set to '{auth_source}', skipping")
                 return
@@ -350,7 +376,7 @@ class Radius(RadiusBase):
     def get_default_auth_source(self, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> str:
         """Get current value of config.auth_source_default.value."""
         try:
-            return self._get_property(AUTH_SOURCE_DEFAULT_KEY, file_path)
+            return self._get_property(file_path, AUTH_SOURCE_DEFAULT_KEY)
         except Exception as e:
             raise Exception(f"Failed to get auth source default: {e}")
 
@@ -392,8 +418,17 @@ class Radius(RadiusBase):
             with suppress(Exception):
                 ssh.close()
 
-    def _get_property(self, key: str, file_path: str) -> str:
-        """Read a single property value from local.properties."""
+    def _get_property(self, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH, key: str = None) -> "str | dict":
+        """Read property value(s) from local.properties via a single SFTP connection.
+
+        Args:
+            file_path: Remote path to local.properties.
+            key: Property key to look up, or None to return all key-value pairs as a dict.
+
+        Returns:
+            str: The value for the given key.
+            dict: All key-value pairs when key is None.
+        """
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(self.platform.ipaddress, username=self.platform.username, password=self.platform.password)
@@ -404,6 +439,17 @@ class Radius(RadiusBase):
 
             with sftp.open(file_path, "r") as f:
                 lines = f.readlines()
+
+            if key is None:
+                props = {}
+                for line in lines:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    m = re.match(r"^([A-Za-z0-9_.]+)\s*=\s*(.*)$", line)
+                    if m:
+                        props[m.group(1)] = m.group(2)
+                return props
 
             for line in lines:
                 if line.startswith(f"{key}="):

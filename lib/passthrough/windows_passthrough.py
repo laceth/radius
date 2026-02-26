@@ -398,8 +398,8 @@ class WindowsPassthrough(PassthroughBase):
         cmd = f"Enable-NetAdapter -Name '{nicname}' -Confirm:$false"
         self.execute_command(cmd)
 
-        self._wait_for_nic_status(nicname, "Up", timeout)
-        log.info(f"[OK] NIC {nicname} is enabled")
+        self._wait_for_nic_media_state(nicname, "Connected", timeout)
+        log.info(f"[OK] NIC {nicname} is connected")
 
     def toggle_nic(self, nicname: str, timeout: int = 30):
         """
@@ -443,6 +443,39 @@ class WindowsPassthrough(PassthroughBase):
             time.sleep(interval)
 
         raise AssertionError(f"NIC {nicname} did not reach status '{expected_status}' within {timeout}s")
+
+    def _wait_for_nic_media_state(self, nicname: str, expected_state: str, timeout: int = 30, interval: int = 2):
+        """
+        Wait for a NIC to reach the expected MediaConnectionState.
+
+        Args:
+            nicname: Network interface name
+            expected_state: Expected media state (e.g., 'Connected')
+            timeout: Maximum time to wait in seconds
+            interval: Interval in seconds between checks
+
+        Raises:
+            AssertionError: If NIC doesn't reach expected state within timeout
+        """
+        log.info(f"Waiting for NIC '{nicname}' MediaConnectionState '{expected_state}' (max {timeout}s)...")
+        start_time = time.time()
+
+        while time.time() - start_time < timeout:
+            try:
+                cmd = f'(Get-NetAdapter -Name "{nicname}").MediaConnectionState'
+                state = self.execute_command(cmd).strip()
+                if expected_state in state:
+                    log.info(f"[OK] NIC '{nicname}' MediaConnectionState: '{state}'")
+                    return
+                log.debug(f"NIC {nicname} MediaConnectionState: {state}, waiting for: {expected_state}")
+            except RuntimeError as e:
+                log.debug(f"Error checking NIC MediaConnectionState: {e}")
+
+            time.sleep(interval)
+
+        raise AssertionError(
+            f"NIC {nicname} did not reach MediaConnectionState '{expected_state}' within {timeout}s"
+        )
 
     def get_nic_status(self, nicname: str) -> str:
         """

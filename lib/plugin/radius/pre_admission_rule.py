@@ -190,7 +190,7 @@ def _lookup_for_slot(condition_slot: int) -> str:
     return f"{DEFAULT_CONDITION_LOOKUP_PREFIX}{condition_slot}.value="
 
 
-def to_file(new_entry_string: str, node, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH, lookup: str = None):
+def to_file(new_entry_string: str, node, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH, lookup: str = None) -> bool:
     if lookup is None:
         lookup = _lookup_for_slot(1)
 
@@ -199,6 +199,7 @@ def to_file(new_entry_string: str, node, file_path: str = DEFAULT_LOCAL_PROPERTY
     ssh.connect(node.ipaddress, username=node.username, password=node.password)
 
     try:
+        changed_key = False
         sftp = ssh.open_sftp()
 
         with sftp.open(file_path, "r") as file:
@@ -207,15 +208,19 @@ def to_file(new_entry_string: str, node, file_path: str = DEFAULT_LOCAL_PROPERTY
         for i, line in enumerate(lines):
             if line.startswith(lookup):
                 lines[i] = f"{lookup}{new_entry_string}\n"
+                if line != lines[i]:
+                    changed_key = True
                 break
         else:
             lines.append(f"{lookup}{new_entry_string}\n")
-
-        with sftp.open(file_path, "w") as file:
-            file.writelines(lines)
+            changed_key = True
+        if changed_key:
+            with sftp.open(file_path, "w") as file:
+                file.writelines(lines)
     finally:
         sftp.close()
         ssh.close()
+    return changed_key
 
 
 
@@ -225,20 +230,18 @@ def edit_pre_admission_rule(rules: List[Dict[str, Any]], node, condition_slot: i
     Set pre-admission rules by editing config.defpol_cond{slot}.value in local.properties.
     """
     if len(rules) == 1 and rules[0].get("rule_name") == "Plain":
-        to_file(rules[0]["fields"][0], node, lookup=_lookup_for_slot(condition_slot))
-        return
+        return to_file(rules[0]["fields"][0], node, lookup=_lookup_for_slot(condition_slot))
 
     context = Context()
     new_entry_string = context.get_line(rules)
-    to_file(new_entry_string, node, lookup=_lookup_for_slot(condition_slot))
-
+    return to_file(new_entry_string, node, lookup=_lookup_for_slot(condition_slot))
 
 def set_pre_admission_rules_remote(
     rules: List[Dict[str, Any]],
     node,
     file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH,
     max_slots: int = 10,
-) -> None:
+) -> bool:
     """
     rules example (recommended):
       [
@@ -281,15 +284,15 @@ def set_pre_admission_rules_remote(
         kv[f"config.defpol_cond{idx}.value"] = ""
         kv[f"config.defpol_auth{idx}.value"] = ""
 
-    _to_file_multi(kv, node, file_path=file_path)
+    return _to_file_multi(kv, node, file_path=file_path)
 
 
-def _to_file_multi(kv: Dict[str, str], node, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
+def _to_file_multi(kv: Dict[str, str], node, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> bool:
     """
     Remote upsert multiple 'key=value' entries in local.properties in ONE SSH/SFTP session.
     Preserves other lines and comments.
     """
-    log.info(f"Writing {len(kv)} key-value pairs to {file_path} on {node.ipaddress}")
+    log.info(f"Check {len(kv)} key-value pairs properties in {file_path} on {node.ipaddress}")
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(node.ipaddress, username=node.username, password=node.password)
@@ -301,17 +304,25 @@ def _to_file_multi(kv: Dict[str, str], node, file_path: str = DEFAULT_LOCAL_PROP
         with sftp.open(file_path, "r") as f:
             lines = f.readlines()
 
-        # index existing keys -> line index
+        # index existing keys -> line index/value
         key_to_idx: Dict[str, int] = {}
+        key_to_val: Dict[str, str] = {}
         for i, line in enumerate(lines):
             if not line or line.lstrip().startswith("#"):
                 continue
             m = re.match(r"^([A-Za-z0-9_.]+)\s*=\s*(.*)$", line)
             if m:
                 key_to_idx[m.group(1)] = i
+                key_to_val[m.group(1)] = m.group(2).strip()
+
+        changed_keys = []
 
         def upsert(key: str, value: str) -> None:
             new_line = f"{key}={value}\n"
+            current_val = key_to_val.get(key)
+            if current_val == value:
+                return
+            changed_keys.append(key)
             if key in key_to_idx:
                 lines[key_to_idx[key]] = new_line
             else:
@@ -320,6 +331,10 @@ def _to_file_multi(kv: Dict[str, str], node, file_path: str = DEFAULT_LOCAL_PROP
 
         for k, v in kv.items():
             upsert(k, v)
+
+        if not changed_keys:
+            log.info(f"No pre-admission rule changes detected for {file_path}")
+            return False
 
         with sftp.open(file_path, "w") as f:
             f.writelines(lines)
@@ -341,3 +356,5 @@ def _to_file_multi(kv: Dict[str, str], node, file_path: str = DEFAULT_LOCAL_PROP
                 sftp.close()
         with suppress(Exception):
             ssh.close()
+
+    return True

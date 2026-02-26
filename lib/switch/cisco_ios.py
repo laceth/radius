@@ -84,7 +84,7 @@ class CiscoIOS(SwitchBase, SSHClient):
             secrets_in_list = any(isinstance(c, str) and self._is_secret_cmd(c) for c in cmd)
             output = self.session.send_config_set(cmd, cmd_verify=not secrets_in_list)
         else:
-            output = self.session.send_command(cmd, delay_factor=2, max_loops=timeout)
+            output = self.session.send_command(cmd, read_timeout=timeout)
         
         if log_output:
             log.info(f"Command output:")
