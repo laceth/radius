@@ -12,6 +12,7 @@ CERT_PASSWORD = "aristo"
 
 RULE_EAP_TYPE_TLS = [{"criterion_name": "EAP-Type", "criterion_value": ["TLS"]}]
 RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
+EXPECTED_SAN = "URI:E2EQADeviceId://qae2e-san-testid-12345"
 
 
 class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
@@ -50,72 +51,91 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
-            self.verify_san(expected_san="URI:E2EQADeviceId://qae2e-san-testid-12345")
+            self.verify_san(expected_san=EXPECTED_SA)
         except Exception as e:
             log.error(f"[T1316924] FAIL: {e}")
             raise
 
-# class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
-#     """
-#     T1316925
-#     Steps
-#     -----
-#     1. From the Policy tab, add a **Custom** policy named "Radius SAN" with condition **802.1x Client Cert Subject Alternative Name – Contains = san-testid**, apply configuration, and verify the policy appears under **Views** on the Home tab with no errors.
-#     2. From the Home tab, select policy **"Radius SAN"** in the Views pane, view the policy results, select the host, and verify the SAN value from the certificate is shown in the results (including Reported at / Reported by when hovering the condition).
-#     3. Edit policy **"Radius SAN"**, change the condition to **Contains = <invalid value>**, apply configuration, and verify the host no longer matches the policy.
-#     4. Edit policy **"Radius SAN"** again, change the condition to **Contains = san-testid (or another valid SAN fragment)**, apply configuration, and verify the host matches the policy again and the SAN value appears in the results.
-#       TODO REQUIRES POLICY API BY HAO
-#     """
+class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
+    """
+    T1316925
+    Steps
+    -----
+    1. Create Custom policy "Radius SAN" with condition:
+       802.1x Client Cert Subject Alternative Name CONTAINS "san-testid"
+       Apply and verify it matches the host.
+    2. Edit policy: change condition to CONTAINS "invalid"
+       Apply and verify host no longer matches.
+    3. Edit policy back to CONTAINS "san-testid"
+       Apply and verify host matches again.
+    """
 
-#     # Rule Settings
-#     RULE_USER_NAME_ANY = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
-#     RULE_SAN_CONTAINS_SAN_TESTID = [
-#         {"criterion_name": Dot1xAttribute.CERT_FROM_SUBJECT_ALTERNATIVE_NAME.value, "criterion_value": ["contains", "san-testid"]}
-#     ]
-#     RULE_SAN_CONTAINS_INVALID = [
-#         {"criterion_name": Dot1xAttribute.CERT_FROM_SUBJECT_ALTERNATIVE_NAME.value, "criterion_value": ["contains", "invalid"]}
-#     ]
+    SET_ACCEPT_TLS_ELSE_DENY = [
+        {"cond_rules": RULE_EAP_TYPE_TLS, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
 
-#     SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY = [
-#         {"cond_rules": RULE_SAN_CONTAINS_SAN_TESTID, "auth": PreAdmissionAuth.ACCEPT},
-#         {"cond_rules": RULE_USER_NAME_ANY, "auth": PreAdmissionAuth.REJECT_DUMMY},
-#     ]
+    EXPECTED_SAN = "URI:E2EQADeviceId://qae2e-san-testid-12345"
 
-#     SET_SAN_CONTAINS_INVALID_ACCEPT_ELSE_DENY = [
-#         {"cond_rules": RULE_SAN_CONTAINS_INVALID, "auth": PreAdmissionAuth.ACCEPT},
-#         {"cond_rules": RULE_USER_NAME_ANY, "auth": PreAdmissionAuth.REJECT_DUMMY},
-#     ]
-
-#     def do_test(self):
-#         auth_nic_profile = AuthNicProfile.EAP_TLS
-#         expected_status = AuthenticationStatus.SUCCEEDED
-#         fail_status = AuthenticationStatus.FAILED
-#         certificate_password = CERT_PASSWORD
-#         ca_endpoint_reject = "Access-Reject"
-#         expected_sanid = "URI:E2EQADeviceId://qae2e-san-testid-12345"
-#         case_id = "T1316925"
-
-#         try:
-#             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
-#             self.cert_config.certificate_filename = WindowsCert. CERT_Client_SAN.value
-#             self.import_certificates(certificate_password=certificate_password)
-#             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY)
-#             self.toggle_nic()
-#             self.assert_nic_authentication_status(expected_status=expected_status)
-#             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_INVALID_ACCEPT_ELSE_DENY)
-#             self.toggle_nic()
-#             self.assert_nic_authentication_status(expected_status=fail_status)
-#
-#             self.verify_pre_admission_rule(rule_priority=2)
-#             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY)
-#             self.toggle_nic()
-#             self.assert_nic_authentication_status(expected_status=expected_status)
-#             self.verify_nic_ip_in_range()
-#
-#             self.verify_san(expected_san=expected_sanid)
-#         except Exception as e:
-#             log.error(f"[{case_id}] FAIL: {e}")
-#             raise
+    def do_test(self):
+        try:
+            # --- Preconditions: endpoint authenticates via EAP-TLS ---
+            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
+            self.cert_config.certificate_filename = WindowsCert.CERT_Client_SAN.value
+            self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.dot1x.set_pre_admission_rules(self.SET_ACCEPT_TLS_ELSE_DENY)
+            # Admission #1: create/update endpoint and populate properties (including SAN)
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.wait_for_nic_ip_in_range()
+            self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            # Validate SAN is present on the endpoint (good sanity check)
+            self.verify_san(expected_san=self.EXPECTED_SAN)
+            # ---------- Step 1: Policy contains "san-testid" ----------
+            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
+                match_type="contains",
+                value="san-testid",
+                match_case=False,
+            )
+            # Admission #2: force policy evaluation after policy import/update
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.wait_for_nic_ip_in_range()
+            self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.em.check_policy_match(policy_name, count=1, timeout=180), (
+                f"Policy '{policy_name}' should match 1 endpoint"
+            )
+            # ---------- Step 2: Update policy to contains "invalid" ----------
+            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
+                match_type="contains",
+                value="invalid",
+                match_case=False,
+            )
+            # Admission #3: force re-eval after update
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.wait_for_nic_ip_in_range()
+            self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.em.check_policy_match(policy_name, count=0, timeout=180), (
+                f"Policy '{policy_name}' should match 0 endpoints after invalid update"
+            )
+            # ---------- Step 3: Revert policy back to contains "san-testid" ----------
+            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
+                match_type="contains",
+                value="san-testid",
+                match_case=False,
+            )
+            # Admission #4: force re-eval after revert
+            self.toggle_nic()
+            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.wait_for_nic_ip_in_range()
+            self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.em.check_policy_match(policy_name, count=1, timeout=180), (
+                f"Policy '{policy_name}' should match 1 endpoint again after reverting"
+            )
+        except Exception as e:
+            log.error(f"[T1316925] FAIL: {e}")
+            raise
 
 class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
     """
