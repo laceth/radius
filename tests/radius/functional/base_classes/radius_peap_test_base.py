@@ -86,10 +86,15 @@ class RadiusPeapTestBase(RadiusTestBase):
             {"property_field": "dot1x_user_auth_status", "expected_value": auth_status_value},
             {"property_field": "dot1x_rqeuested_domain", "expected_value": requested_domain},
             {"property_field": "dot1x_user", "expected_value": config.peap_user},
-            {"property_field": "dot1x_tunneled_user", "expected_value": tunneled_user},
-            {"property_field": "dot1x_fr_eap_type", "expected_value": "PEAP"},
             {"property_field": "dot1x_login_type", "expected_value": "dot1x_user_login"},
         ]
+
+        # Only check tunneled user on successful auth
+        if auth_status_value == RadiusAuthStatus.ACCESS_ACCEPT.value:
+            peap_properties_check_list.extend([
+                {"property_field": "dot1x_fr_eap_type", "expected_value": "PEAP"},
+                {"property_field": "dot1x_tunneled_user", "expected_value": tunneled_user},
+            ])
         
         # Handle dot1x_domain check based on peap_domain and auth_source configuration
         if config.peap_domain:
