@@ -225,6 +225,110 @@ class CounterActBase(SSHClient):
         self.import_policy(remote_path)
         log.info(f"Policy {policy_name} added successfully")
 
+    def simple_policy_action(self, policy_file_name, policy_name, conditions, action_name, action_params):
+        """
+        Build and import simple action policies with conditions and actions.
+
+        Args:
+            policy_file_name (str): Name of the policy file.
+            policy_name (str): Name of the policy.
+            conditions (list): List of dictionaries with condition details.
+            action_name (str): Name of the action.
+            action_params (dict): Parameters for the action block, including nested elements.
+        """
+        def write_raw_xml(file_path, root_element):
+            """
+            Write XML to a file without escaping special characters like &#9;.
+
+            Args:
+                file_path (str): Path to the output XML file.
+                root_element (xml.etree.ElementTree.Element): Root XML element.
+            """
+            # Serialize the XML tree to a string
+            xml_string = ET.tostring(root_element, encoding="unicode")
+
+            # Replace escaped `&#9;` back to raw `&#9;`, different action might include different escaped characters,
+            # for now only handle `&#9;` for radius actions
+
+            xml_string = xml_string.replace("&amp;#9;", "&#9;")
+
+            # Write the raw XML string to the file
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(xml_string)
+
+        log.info(f"******** adding policy {policy_name} with action {action_name} ********")
+        modified_policy_path = f"/tmp/{policy_file_name}"
+        current_dir = os.path.dirname(__file__)
+        relative_path = os.path.join(current_dir, '../../resources/policy/simple_condition_base_policy.xml')
+
+        os.system(f"cp {relative_path} {modified_policy_path}")
+
+        # Parse the XML file
+        tree = ET.parse(modified_policy_path)
+        root = tree.getroot()
+        # Update the policy name
+        rule = root.find("./RULE")
+        if rule is not None:
+            rule.set("NAME", policy_name)
+        # Add or update the EXPRESSION block (condition)
+        expression = ET.Element("EXPRESSION")
+        if len(conditions) > 1:
+            expression.set("EXPR_TYPE", "AND")
+            for field in conditions:
+                sub_expression = ET.SubElement(expression, "EXPRESSION", {"EXPR_TYPE": field["EXPR_TYPE"]})
+                condition_element = ET.SubElement(sub_expression, "CONDITION", {**field["CONDITION"]})
+                filter_element = ET.SubElement(condition_element, "FILTER", {**field["CONDITION"]["FILTER"]})
+                ET.SubElement(filter_element, "VALUE", {**field["CONDITION"]["FILTER"]["VALUE"]})
+        else:
+            if not conditions or len(conditions) == 0:
+                raise ValueError("At least one condition is required to build the policy.")
+            field = conditions[0]
+            expression.set("EXPR_TYPE", field["EXPR_TYPE"])
+            condition_element = ET.SubElement(expression, "CONDITION", {**field["CONDITION"]})
+            filter_element = ET.SubElement(condition_element, "FILTER", {**field["CONDITION"]["FILTER"]})
+            ET.SubElement(filter_element, "VALUE", {**field["CONDITION"]["FILTER"]["VALUE"]})
+
+        # Insert the EXPRESSION block into the RULE
+        existing_expression = rule.find("./EXPRESSION")
+        if existing_expression is not None:
+            rule.remove(existing_expression)
+        rule.append(expression)
+
+        # Add the ACTION block
+        action = ET.Element("ACTION", {"DISABLED": "false", "NAME": action_name})
+        for param_name, param_value in action_params.items():
+            if isinstance(param_value, dict):  # Handle nested elements
+                nested_element = ET.SubElement(action, param_name.upper(), {**param_value})
+            elif isinstance(param_value, list):  # Handle nested lists (e.g., RANGES in HTTPEXCEPTIONS)
+                nested_element = ET.SubElement(action, param_name.upper())
+                for item in param_value:
+                    ET.SubElement(nested_element, item["tag"], {**item["attributes"]})
+            else:
+                ET.SubElement(action, "PARAM", {"NAME": param_name, "VALUE": param_value})
+
+        # Add the SCHEDULE block
+        schedule = ET.SubElement(action, "SCHEDULE")
+        ET.SubElement(schedule, "START", {"Class": "Immediately"})
+        ET.SubElement(schedule, "OCCURENCE", {"onStart": "true"})
+
+        # Insert the ACTION block into the RULE
+        existing_action = rule.find("./ACTION")
+        if existing_action is not None:
+            rule.remove(existing_action)
+        rule.append(action)
+
+        # Save the modified XML file
+        write_raw_xml(modified_policy_path, root)
+        remote_path = f"/tmp/{policy_file_name}"
+        self.scp_file(local_path=modified_policy_path, remote_path=remote_path, direction="upload")
+        try:
+            log.info(f"removing {policy_name} if exists")
+            self.remove_policy(policy_name)
+        except RuntimeError as e:
+            log.debug(f"Policy {policy_name} removal failed or not exist, continue to add new policy: {e}")
+        self.import_policy(remote_path)
+        log.info(f"Policy {policy_name} with action {action_name} added successfully")
+
     def remove_policy(self, policy_name: str) -> None:
         output = self.exec_command(f"fstool cliapi policy remove {policy_name}")
         if "removed" not in output:

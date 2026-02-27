@@ -4,13 +4,14 @@ Base class for certificate-based RADIUS authentication tests (EAP-TLS, PEAP-EAP-
 This module provides the RadiusCertificatesTestBase class that handles
 certificate import operations shared by both EAP-TLS and PEAP-EAP-TLS tests.
 """
-from typing import Union
+from typing import Union, cast
 from cryptography.hazmat.primitives.serialization import pkcs12, Encoding
 from cryptography.hazmat.primitives import hashes
 import tempfile
 import os
 
 from framework.log.logger import log
+from lib.external_servers.ocsp_server import OcspServer
 from lib.passthrough.enums import AuthNicProfile, WindowsCert
 from lib.plugin.radius.enums import RadiusAuthStatus
 from lib.plugin.radius.models.eap_tls_config import CertificateAuthConfig
@@ -36,13 +37,15 @@ class RadiusCertificatesTestBase(RadiusTestBase):
     # Default auth profile - override in subclasses
     DEFAULT_AUTH_PROFILE = AuthNicProfile.EAP_TLS
 
-    def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
-        super().__init__(ca, em, radius, switch, passthrough, version=version)
+    def __init__(self, ca, em, radius, switch, passthrough, ocsp=None, version="1.0.0"):
+        super().__init__(ca, em, radius, switch, passthrough, version)
         self.cert_config = CertificateAuthConfig(auth_nic_profile=self.DEFAULT_AUTH_PROFILE)
         self.nicname = self.cert_config.nicname
         self.trusted_cert_thumbprint = None
         self.personal_cert_thumbprint = None
         self._trusted_cert_der = None
+        if ocsp:
+            self.ocsp = cast(OcspServer, ocsp)
 
     def do_setup(self):
         """Setup phase: prepare test environment."""
