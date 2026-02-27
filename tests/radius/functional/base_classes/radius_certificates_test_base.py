@@ -38,7 +38,7 @@ class RadiusCertificatesTestBase(RadiusTestBase):
     # EAP type label used in logs and host-property verification — override in subclasses
     DEFAULT_EAP_TYPE = "EAP-TLS"
 
-    def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
+    def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0", ocsp=None):
         super().__init__(ca, em, radius, switch, passthrough, version=version)
         self.cert_config = CertificateAuthConfig()
         self.nicname = self.cert_config.nicname
