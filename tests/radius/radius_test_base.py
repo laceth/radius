@@ -208,7 +208,14 @@ class RadiusTestBase:
             self.passthrough.delete_lan_profile(self.nicname)
             self.passthrough.add_lan_profile(remote_path, self.nicname)
         finally:
-            os.unlink(tmp.name)
+            try:
+                os.unlink(tmp.name)
+            except FileNotFoundError:
+                # Best-effort cleanup: file already gone is fine.
+                pass
+            except PermissionError as exc:
+                # Do not mask main errors, but log cleanup issues.
+                log.warning(f"Failed to delete temporary LAN profile file {tmp.name}: {exc}")
 
     # =========================================================================
     # NIC Management
