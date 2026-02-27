@@ -23,9 +23,9 @@ SET_ACCEPT_PEAP_ELSE_DENY = [
 
 @parametrize("ldap_port", [
     ("STANDARD_LDAP_TLS",),       # T1316870
-    # ("STANDARD_LDAP",),           # T1316879
-    # ("GLOBAL_CATALOG",),          # T1316888
-    # ("GLOBAL_CATALOG_TLS",),      # T1316897
+    ("STANDARD_LDAP",),           # T1316879
+    ("GLOBAL_CATALOG",),          # T1316888
+    ("GLOBAL_CATALOG_TLS",),      # T1316897
 ])
 class PeapHostAuthenticationWired(RadiusPeapTestBase):
     """
@@ -73,9 +73,9 @@ class PeapHostAuthenticationWired(RadiusPeapTestBase):
 
 @parametrize("ldap_port", [
     ("STANDARD_LDAP_TLS",),       # T1316870 (negative)
-    # ("STANDARD_LDAP",),           # T1316879 (negative)
-    # ("GLOBAL_CATALOG",),          # T1316888 (negative)
-    # ("GLOBAL_CATALOG_TLS",),      # T1316897 (negative)
+    ("STANDARD_LDAP",),           # T1316879 (negative)
+    ("GLOBAL_CATALOG",),          # T1316888 (negative)
+    ("GLOBAL_CATALOG_TLS",),      # T1316897 (negative)
 ])
 class PeapHostAuthenticationWiredNegative(RadiusPeapTestBase):
     """
@@ -120,9 +120,9 @@ class PeapHostAuthenticationWiredNegative(RadiusPeapTestBase):
 
 @parametrize("ldap_port", [
     ("STANDARD_LDAP_TLS",),       # T1316874
-    # ("STANDARD_LDAP",),           # T1316883
-    # ("GLOBAL_CATALOG",),          # T1316892
-    # ("GLOBAL_CATALOG_TLS",),      # T1316901
+    ("STANDARD_LDAP",),           # T1316883
+    ("GLOBAL_CATALOG",),          # T1316892
+    ("GLOBAL_CATALOG_TLS",),      # T1316901
 ])
 class PeapHostAuthenticationWiredWithoutDomain(RadiusPeapTestBase):
     """
