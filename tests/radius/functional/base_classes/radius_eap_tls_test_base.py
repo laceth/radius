@@ -3,7 +3,7 @@ from tests.radius.functional.base_classes.radius_certificates_test_base import R
 
 class RadiusEapTlsTestBase(RadiusCertificatesTestBase):
     """Base class for EAP-TLS authentication tests."""
-    DEFAULT_AUTH_PROFILE = "EAP_TLS"
+    DEFAULT_EAP_TYPE = "EAP-TLS"
 
     def import_eap_tls_certificates(self, certificate_password: str = 'aristo'):
         """Import EAP-TLS certificates. Alias for import_certificates()."""

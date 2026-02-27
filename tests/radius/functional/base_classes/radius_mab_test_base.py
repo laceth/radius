@@ -26,8 +26,6 @@ class RadiusMabTestBase(RadiusTestBase):
     5. RADIUS server returns Accept/Reject based on rules
     """
 
-    # Default profile for MAB - 802.1X disabled
-    DEFAULT_AUTH_PROFILE = "MAB"
 
     def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
         super().__init__(ca, em, radius, switch, passthrough, version)
