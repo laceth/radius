@@ -372,8 +372,7 @@ def _pretty(root: Element) -> str:
 
     raw = tostring(root, encoding="unicode")
 
-    # Build reverse map:  prefix -> URI
-    prefix_to_uri = {v: k for k, v in _NS_MAP.items()}
+    # Use the namespace map (prefix -> URI) to inline namespaces into elements
 
     # Replace <prefix:Tag … > with <Tag xmlns="…" … > and </prefix:Tag> with </Tag>
     for prefix, uri in _NS_MAP.items():
