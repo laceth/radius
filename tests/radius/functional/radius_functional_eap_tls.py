@@ -25,7 +25,7 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
     2. Add column "802.1x Client Cert Subject Alternative Name" to the ALL Host table.
     3. Disconnect/reconnect the Windows NIC to trigger 802.1x and obtain an IP from the configured VLAN.
     4. Verify the ALL Host table SAN column shows the SAN value from the client certificate (e.g., URL=E2EQADeviceId:/qae2e-san-testid-12345).
-    5. On the host Profile â†’ Authentication header, verify: Pre-Admission rule 1, RADIUS-Accepted, EAP-TLS.
+    5. On the host Profile -> Authentication header, verify: Pre-Admission rule 1, RADIUS-Accepted, EAP-TLS.
     """
 
     # Rule Settings
