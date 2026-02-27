@@ -857,3 +857,10 @@ class RadiusTestBase(FSTestCommonBase):
         self.em.simple_policy_action("radiusSimpleAction.xml", action_name, fields, action_name, action_params)
         return action_name
 
+    def verify_policy_match(self, policy_name: str, expected_count: int = 1) -> None:
+        """
+        Verify that a policy matches expected_count endpoints.
+        Timeout/retry/error formatting stays inside the framework.
+        """
+        ok = self.em.check_policy_match(policy_name, count=expected_count, timeout=280)
+        assert ok, f"Policy '{policy_name}' should match {expected_count} endpoint(s)"

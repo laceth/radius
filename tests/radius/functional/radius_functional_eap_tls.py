@@ -84,11 +84,13 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             self.cert_config.certificate_filename = WindowsCert.CERT_Client_SAN.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.dot1x.set_pre_admission_rules(self.SET_ACCEPT_TLS_ELSE_DENY)
+            
             # Admission #1: create/update endpoint and populate properties (including SAN)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            
             # Validate SAN is present on the endpoint (good sanity check)
             self.verify_san(expected_san=self.EXPECTED_SAN)
             # ---------- Step 1: Policy contains "san-testid" ----------
@@ -102,9 +104,8 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
-            self.em.check_policy_match(policy_name, count=1, timeout=180), (
-                f"Policy '{policy_name}' should match 1 endpoint"
-            )
+            self.verify_policy_match(policy_name, expected_count=1)
+                        
             # ---------- Step 2: Update policy to contains "invalid" ----------
             policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
                 match_type="contains",
@@ -116,9 +117,8 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
-            self.em.check_policy_match(policy_name, count=0, timeout=180), (
-                f"Policy '{policy_name}' should match 0 endpoints after invalid update"
-            )
+            self.verify_policy_match(policy_name, expected_count=0)
+            
             # ---------- Step 3: Revert policy back to contains "san-testid" ----------
             policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
                 match_type="contains",
@@ -130,9 +130,8 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
-            self.em.check_policy_match(policy_name, count=1, timeout=180), (
-                f"Policy '{policy_name}' should match 1 endpoint again after reverting"
-            )
+            self.verify_policy_match(policy_name, expected_count=1)
+            
         except Exception as e:
             log.error(f"[T1316925] FAIL: {e}")
             raise
