@@ -244,10 +244,10 @@ class LanProfile:
             onex_enabled=True,
             auth_mode=AuthMode.USER,
             eap_method=EapType.PEAP,
-            eap_config=PeapMsChapV2Config(use_win_logon_credentials=True),
+            eap_config=PeapMsChapV2Config(use_win_logon_credentials=False),
         )
     """
-    onex_enforced: bool = False
+    onex_enforced: bool = True
     onex_enabled: bool = True
     cache_user_data: bool = False
     auth_mode: AuthMode = AuthMode.MACHINE
@@ -262,7 +262,7 @@ class LanProfile:
         """Create EAP-TLS profile with sensible defaults."""
         tls_config = overrides.pop("eap_config", EapTlsConfig())
         return cls(
-            onex_enforced=False,
+            onex_enforced=True,
             onex_enabled=True,
             auth_mode=AuthMode.MACHINE,
             eap_method=EapType.TLS,
@@ -288,7 +288,7 @@ class LanProfile:
         """Create PEAP/EAP-TLS profile with sensible defaults."""
         peap_tls_config = overrides.pop("eap_config", PeapEapTlsConfig())
         return cls(
-            onex_enforced=False,
+            onex_enforced=True,
             onex_enabled=True,
             auth_mode=AuthMode.MACHINE,
             eap_method=EapType.PEAP,
