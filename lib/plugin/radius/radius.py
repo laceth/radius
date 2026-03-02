@@ -121,36 +121,48 @@ class Radius(RadiusBase):
             log.warning(f"Failed to check plugin status: {e}")
             return False
 
-    def restart_dot1x_plugin(self, timeout: int = DOT1X_RESTART_TIMEOUT, interval: int = DOT1X_CHECK_INTERVAL) -> None:
+    def restart_dot1x_plugin(self) -> None:
         """
-        Restart the 802.1X plugin and wait until all sub-processes are stable.
+        Restart the 802.1X plugin and wait for 'Done starting RADIUS.' confirmation.
 
-        Verification uses 'fstool dot1x status' and waits until radiusd,
-        winbindd, and redis-server are all running, with radiusd uptime
-        reaching DOT1X_MIN_RADIUSD_UPTIME_SECONDS.
+        The command blocks until the plugin outputs its full stop/start sequence.
+        After confirmation, sleeps for 5 seconds to allow sub-processes to stabilise.
+
+        Does **not** poll sub-process readiness.  Call ``wait_until_running()``
+        afterwards when the plugin must be fully operational before the next step.
+        """
+        log.info(f"Restarting 802.1X plugin on {self.platform.ipaddress}")
+        output = self.exec_cmd(DOT1X_RESTART_COMMAND, timeout=120)
+        if "Done starting RADIUS." in output:
+            log.info("Received 'Done starting RADIUS.' confirmation")
+        else:
+            log.warning(f"'Done starting RADIUS.' not found in restart output:\n{output}")
+        log.info("Sleeping 5 seconds for sub-processes to stabilise")
+        time.sleep(5)
+
+    def wait_until_running(self, timeout: int = DOT1X_RESTART_TIMEOUT, interval: int = DOT1X_CHECK_INTERVAL) -> None:
+        """
+        Poll 'fstool dot1x status' until all sub-processes are stable.
+
+        Waits until radiusd, winbindd, and redis-server are all running
+        and radiusd uptime reaches ``DOT1X_MIN_RADIUSD_UPTIME_SECONDS``.
 
         Args:
-            timeout: Maximum time in seconds to wait for the plugin to start (default: 500).
-            interval: Time in seconds between status checks (default: 10).
+            timeout: Maximum wait in seconds (default: 300).
+            interval: Seconds between polls (default: 10).
 
         Raises:
-            Exception: If the plugin fails to start within the timeout period.
+            Exception: If the plugin is not ready within *timeout* seconds.
         """
-        log.info(f"Restarting 802.1X plugin on RADIUS server on {self.platform.ipaddress}")
-        try:
-            output = self.exec_cmd(DOT1X_RESTART_COMMAND, timeout=20)
-            if "Done stopping RADIUS" not in output:
-                log.warning("'Done stopping RADIUS' not found in restart output, proceeding anyway")
-            start_time = time.time()
-            while time.time() - start_time < timeout:
-                if self.dot1x_plugin_running():
-                    log.info("802.1X plugin restarted successfully and is running")
-                    return
-                log.info(f"Waiting for plugin to start... Retrying in {interval} second(s)")
-                time.sleep(interval)
-            raise Exception(f"802.1X plugin is not running after {timeout} seconds")
-        except Exception as e:
-            raise Exception(f"Failed to restart 802.1X plugin: {e}")
+        log.info(f"Waiting for 802.1X plugin to become ready on {self.platform.ipaddress} (timeout={timeout}s)")
+        start_time = time.time()
+        while time.time() - start_time < timeout:
+            if self.dot1x_plugin_running():
+                log.info("802.1X plugin is ready")
+                return
+            log.info(f"Waiting for plugin to start... Retrying in {interval} second(s)")
+            time.sleep(interval)
+        raise Exception(f"802.1X plugin is not running after {timeout} seconds")
 
     def apply_dot1x_changes(self) -> None:
         """Restart dot1x if has_change is set, otherwise skip."""

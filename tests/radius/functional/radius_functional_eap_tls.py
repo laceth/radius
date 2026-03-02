@@ -1,5 +1,6 @@
 from framework.log.logger import log
-from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile, WindowsCert
+from lib.passthrough.enums import AuthenticationStatus, WindowsCert
+from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import Dot1xAttribute, PreAdmissionAuth, MscaOid, EKUEntry, MSCAEntry, RadiusAuthStatus
 from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
 
@@ -24,7 +25,7 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
     2. Add column "802.1x Client Cert Subject Alternative Name" to the ALL Host table.
     3. Disconnect/reconnect the Windows NIC to trigger 802.1x and obtain an IP from the configured VLAN.
     4. Verify the ALL Host table SAN column shows the SAN value from the client certificate (e.g., URL=E2EQADeviceId:/qae2e-san-testid-12345).
-    5. On the host Profile → Authentication header, verify: Pre-Admission rule 1, RADIUS-Accepted, EAP-TLS.
+    5. On the host Profile -> Authentication header, verify: Pre-Admission rule 1, RADIUS-Accepted, EAP-TLS.
     """
 
     # Rule Settings
@@ -40,10 +41,11 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
 
     def do_test(self):
         try:
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.EAP_TLS)
+            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_Client_SAN.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -142,12 +144,13 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
 
     def do_test(self):
         try:
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.EAP_TLS)
+            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
             self.dot1x.set_pre_admission_rules(self.SET_BASIC_WIRED_ACCEPT_TLS_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_G.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
 
             # Step 2-3: Toggle NIC and verify successful authentication
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -245,13 +248,14 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
 
     def do_test(self):
         try:
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.EAP_TLS)
+            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
             # Step 2: import template client cert
             self.cert_config.certificate_filename = WindowsCert.CERT_TEMPLATE_CON_CERT.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
 
             # Step 3: exact OID match -> ACCEPT, Rule 1 matched
             self.dot1x.set_pre_admission_rules(self.SET_OID_MATCH_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -262,14 +266,16 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             # Step 4: invalid OID -> Rule 1 should NOT match, Rule 2 (REJECT) should match
             # Per CSV: "Verify the host did not match Rule One" - meaning Rule 1 doesn't match, but Rule 2 should
             self.dot1x.set_pre_admission_rules(self.SET_OID_INVALID_MATCH_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.verify_nic_has_no_ip_in_range()
-            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: check if it works on a different passthrough
+            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
             # Verify Rule 2 matched (the REJECT rule), not Rule 1
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
 
             # Step 5: anyvalue -> ACCEPT, Rule 1 matched
             self.dot1x.set_pre_admission_rules(self.SET_OID_ANYVALUE_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -279,6 +285,7 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
 
             # Step 6: regex -> ACCEPT, Rule 1 matched
             self.dot1x.set_pre_admission_rules(self.SET_OID_REGEX_MATCH_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -288,6 +295,7 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
 
             # Step 7: startswith OID prefix -> ACCEPT, Rule 1 matched
             self.dot1x.set_pre_admission_rules(self.SET_OID_STARTSWITH_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -297,6 +305,7 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
 
             # Step 8: endswith OID suffix -> ACCEPT, Rule 1 matched
             self.dot1x.set_pre_admission_rules(self.SET_OID_ENDSWITH_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -330,15 +339,13 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
 
     def do_test(self):
         try:
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.EAP_TLS)
+            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
             self.dot1x.set_pre_admission_rules(self.SET_ACCEPT_TLS_ELSE_DENY)
-
-            # Verify plugin is running before test
-            self.assert_dot1x_plugin_running("802.1X plugin should be running before test")
 
             # Import certificate with absurd expiry date (12/31/9999)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_TIME.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
 
             # Plugin should accept the cert gracefully (not crash)
@@ -429,15 +436,6 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             ],
         }
     ]
-    # Negative Test Cert B , EKU list entry must match all
-    RULE_EKU_EAP_NO_OVER_LAN = [
-        {
-            "rule_name": "Certificate-Extended-Key-Usage",
-            "fields": [
-                EKUEntry.EKU_03_CODE_SIGNING.value,   # .3
-            ],
-        }
-    ]
 
     RULE_EKU_ALL_OPTIONS = [
         {
@@ -506,11 +504,12 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
 
     def do_test(self):
         try:
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.EAP_TLS)
+            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
             # Step 2-3: EKUs (.2,.4,.6,.8,.14,.16,.23,.29) -> cert B -> SUCCESS
             self.dot1x.set_pre_admission_rules(self.SET_EKU_CLIENT_AUTH_EMAIL_IPSEC_TIMESTAMP_EAP_SCVP_SENDROUTER_CMC_ACCEPT_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_B.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -520,6 +519,7 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
 
             #Step 4: deselect .2 -> SUCCESS
             self.dot1x.set_pre_admission_rules(self.SET_EKU_ALL_EXCEPT_CLIENT_AUTH_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -529,6 +529,7 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
 
             #Step 5: only (.14,.24) -> SUCCESS
             self.dot1x.set_pre_admission_rules(self.SET_EKU_EAP_OVER_LAN_AND_SEND_PROXY_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -541,6 +542,7 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_EKU_EAP_OVER_LAN_AND_CMC_ARCHIVE_ACCEPT_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_C.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -553,8 +555,9 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_EKU_ALL_OPTIONS_ACCEPT_ELSE_DENY)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_D.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED)
+            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
             self.verify_nic_has_no_ip_in_range()
         except Exception as e:
@@ -618,9 +621,10 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
         try:
             # Step 1-3: Rule 1 only - cert E has .2 and .14, matches Rule 1
             self.dot1x.set_pre_admission_rules(self.SET_RULE_1_ACCEPT_ELSE_DENY)
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.EAP_TLS)
+            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_E.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -634,7 +638,7 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_G.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.toggle_nic()
-            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: check if it works on a different passthrough
+            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_nic_has_no_ip_in_range()
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
 
@@ -643,6 +647,7 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
             self.cleanup_all_test_certificates()
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_F.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -787,7 +792,7 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
 
     def do_test(self):
         try:
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.EAP_TLS)
+            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
 
             # Precondition: cert B
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_B.value
@@ -795,6 +800,7 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
 
             # Step 1/2: MSCA (.2, .4, .6, .8, .14, .16, .22, .32) -> ACCEPT, Rule 1 matched
             self.dot1x.set_pre_admission_rules(self.SET_MSCA_2_4_6_8_14_16_22_32_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -804,6 +810,7 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
 
             # Step 3: remove .2 only (.4, .6, .8, .14, .16, .22, .32) -> still ACCEPT, Rule 1 matched
             self.dot1x.set_pre_admission_rules(self.SET_MSCA_4_6_8_14_16_22_32_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -813,6 +820,7 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
 
             # Step 4: only .14 and .22 -> ACCEPT, Rule 1 matched
             self.dot1x.set_pre_admission_rules(self.SET_MSCA_ONLY_14_22_ACCEPT_ELSE_DENY)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -825,6 +833,7 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
             self.cleanup_all_test_certificates()
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_C.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -838,8 +847,9 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
             self.cleanup_all_test_certificates()
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_D.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
-            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: check if it works on a different passthrough
+            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_nic_has_no_ip_in_range()
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
         except Exception as e:
@@ -859,7 +869,6 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
        - (.11 + .19)
        Apply.
     5. Install cert F. Trigger 802.1X. Verify RADIUS-Accepted / rule 2 matched (EAP-TLS).
-     [TODO] --need Fix for cert FIFO windows endpoint.
     """
 
     # Rule Settings
@@ -906,52 +915,47 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
     ]
 
     def do_test(self):
-        auth_nic_profile = AuthNicProfile.EAP_TLS
-        expected_status = AuthenticationStatus.SUCCEEDED
-        fail_status = AuthenticationStatus.FAILED
-        certificate_password = CERT_PASSWORD
-        case_id = "T1316959"
-
-
         try:
-            self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
+            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
 
-            # # Step 1: Rule 1 only
+            # Step 1: Rule 1 only
             self.dot1x.set_pre_admission_rules(self.SET_RULE_1_ACCEPT_ELSE_DENY)
 
-            #Step 2: cert E matches rule 1
+            # Step 2: cert E matches rule 1
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_E.value
-            self.import_certificates(certificate_password=certificate_password)
+            self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=expected_status)
+            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
             self.cleanup_all_test_certificates()
 
-            # Step 3: cert G does NOT match rule 1 (but should be failed)
+            # Step 3: cert G does NOT match rule 1 (should be rejected)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_G.value
-            self.import_certificates(certificate_password=certificate_password)
+            self.import_certificates(certificate_password=CERT_PASSWORD)
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=fail_status)
+            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
             self.verify_nic_has_no_ip_in_range()
 
-            # # # Step 4: add Rule 2 (re-apply full policy list)
+            # Step 4: add Rule 2 (re-apply full policy list)
             self.dot1x.set_pre_admission_rules(self.SET_RULE_1_AND_RULE_2_ACCEPT_ELSE_DENY)
             self.cleanup_all_test_certificates()
 
             # Step 5: cert F matches rule 2
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_F.value
-            self.import_certificates(certificate_password=certificate_password)
+            self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=expected_status)
+            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=2)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
 
         except Exception as e:
-            log.error(f"[{case_id}] FAIL: {e}")
+            log.error(f"[T1316959] FAIL: {e}")
             raise

@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import Union
 
 from framework.log.logger import log
-from lib.passthrough.enums import AuthNicProfile
+from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import RadiusAuthStatus
 from lib.plugin.radius.models.mab_config import MABConfig
 from tests.radius.radius_test_base import RadiusTestBase
@@ -26,8 +26,6 @@ class RadiusMabTestBase(RadiusTestBase):
     5. RADIUS server returns Accept/Reject based on rules
     """
 
-    # Default profile for MAB - 802.1X disabled
-    DEFAULT_AUTH_PROFILE = AuthNicProfile.MAB
 
     def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
         super().__init__(ca, em, radius, switch, passthrough, version)
@@ -86,13 +84,10 @@ class RadiusMabTestBase(RadiusTestBase):
     def configure_mab_profile(self):
         """
         Configure the endpoint with MAB LAN profile (802.1X disabled).
+        Uses the LanProfile builder to generate XML on-the-fly.
         """
         log.info("Configuring MAB LAN profile (802.1X disabled)")
-        super().configure_lan_profile(
-            auth_nic_profile=AuthNicProfile.MAB,
-            local_profile_path=self.mab_config.local_lan_profile_path,
-            remote_profiles_path=self.mab_config.profiles_path
-        )
+        super().configure_lan_profile(lan_profile=LanProfile.mab())
 
     def verify_authentication_on_ca(
             self,

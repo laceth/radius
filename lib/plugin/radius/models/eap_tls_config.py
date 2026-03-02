@@ -4,8 +4,6 @@ Configuration dataclasses for RADIUS certificate-based authentication (EAP-TLS, 
 from dataclasses import dataclass
 from pathlib import Path
 
-from lib.passthrough.enums import AuthNicProfile
-
 
 @dataclass
 class CertificateAuthConfig:
@@ -15,8 +13,7 @@ class CertificateAuthConfig:
     Supports both EAP-TLS and PEAP-EAP-TLS which use the same certificate import mechanism.
 
     Usage:
-        config = CertificateAuthConfig()  # Defaults to EAP-TLS
-        config = CertificateAuthConfig(auth_nic_profile=AuthNicProfile.PEAP_EAP_TLS)
+        config = CertificateAuthConfig()
     """
     # Remote Windows paths
     certificates_path: str = r'C:\Certificates'
@@ -26,21 +23,12 @@ class CertificateAuthConfig:
     certificate_filename: str = 'Dot1x-CLT-G.pfx'
     certificate_password: str = 'aristo'
 
-    # Execution configuration
-    auth_nic_profile: AuthNicProfile = AuthNicProfile.EAP_TLS
+    # NIC configuration
     nicname: str = 'pciPassthru0'
-
-    @property
-    def lan_profile_filename(self) -> str:
-        return self.auth_nic_profile.value
 
     @property
     def local_certificate_path(self) -> str:
         return _find_resource(self.certificate_filename)
-
-    @property
-    def local_lan_profile_path(self) -> str:
-        return _find_resource(self.lan_profile_filename)
 
     def validate(self):
         """Validate that required files exist."""
@@ -56,18 +44,17 @@ class CertificateAuthConfig:
 _PROJECT_ROOT = Path(__file__).resolve().parents[4]
 _RESOURCES_DIR = _PROJECT_ROOT / 'resources'
 _CERTIFICATES_DIR = _RESOURCES_DIR / 'radius' / 'certificates'
-_NIC_PROFILES_DIR = _RESOURCES_DIR / 'radius' / 'nic_profiles'
 
 
 def _find_resource(filename: str) -> str:
     # First check direct paths
-    for directory in [_CERTIFICATES_DIR, _NIC_PROFILES_DIR, _RESOURCES_DIR]:
+    for directory in [_CERTIFICATES_DIR, _RESOURCES_DIR]:
         path = directory / filename
         if path.exists():
             return str(path)
 
     # Search subdirectories recursively
-    for directory in [_CERTIFICATES_DIR, _NIC_PROFILES_DIR, _RESOURCES_DIR]:
+    for directory in [_CERTIFICATES_DIR, _RESOURCES_DIR]:
         for path in directory.rglob(filename):
             if path.exists():
                 return str(path)

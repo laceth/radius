@@ -1,6 +1,7 @@
 from framework.decorator.prametrizor import parametrize
 from framework.log.logger import log
-from lib.passthrough.enums import AuthenticationStatus, AuthNicProfile
+from lib.passthrough.enums import AuthenticationStatus
+from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import LdapPorts, PreAdmissionAuth, RadiusAuthStatus
 from tests.radius.functional.base_classes.radius_peap_test_base import RadiusPeapTestBase
 
@@ -52,10 +53,11 @@ class PeapHostAuthenticationWired(RadiusPeapTestBase):
             self.dot1x.set_pre_admission_rules(SET_ACCEPT_PEAP_ELSE_DENY)
 
             # Step 2: Configure LAN profile and PEAP credentials with domain
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.PEAP)
+            self.configure_lan_profile(lan_profile=LanProfile.peap())
             self.setup_peap_credentials(PEAP_DOMAIN, PEAP_USER)
 
             # Step 3: Toggle NIC to trigger authentication
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -99,10 +101,11 @@ class PeapHostAuthenticationWiredNegative(RadiusPeapTestBase):
             self.dot1x.set_pre_admission_rules(SET_ACCEPT_PEAP_ELSE_DENY)
 
             # Step 2: Configure LAN profile and PEAP credentials with INVALID user
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.PEAP)
+            self.configure_lan_profile(lan_profile=LanProfile.peap())
             self.setup_peap_credentials(PEAP_DOMAIN, PEAP_USER_INVALID)
 
             # Step 3: Toggle NIC to trigger authentication
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED)
 
@@ -147,10 +150,11 @@ class PeapHostAuthenticationWiredWithoutDomain(RadiusPeapTestBase):
             self.dot1x.set_pre_admission_rules(SET_ACCEPT_PEAP_ELSE_DENY)
 
             # Step 2: Configure LAN profile and PEAP credentials WITHOUT domain
-            self.configure_lan_profile(auth_nic_profile=AuthNicProfile.PEAP)
+            self.configure_lan_profile(lan_profile=LanProfile.peap())
             self.setup_peap_credentials("", PEAP_USER)  # Empty domain
 
             # Step 3: Toggle NIC to trigger authentication
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
