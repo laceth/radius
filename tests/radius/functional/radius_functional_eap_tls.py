@@ -7,13 +7,11 @@ from tests.radius.functional.base_classes.radius_eap_tls_test_base import Radius
 
 DOT1X_CLIENT_CERT_VALID = getattr(WindowsCert, "DOT1X_CLT_RADIUS_SET1", WindowsCert.CERT_DOT1X_VALID)
 DOT1X_CLIENT_CERT_REVOKED = getattr(WindowsCert, "DOT1X_CLT_RADIUS_SET2", WindowsCert.CERT_DOT1X_REVOKED)
-
 CERT_PASSWORD = "aristo"
 
 RULE_EAP_TYPE_TLS = [{"criterion_name": "EAP-Type", "criterion_value": ["TLS"]}]
 RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
 EXPECTED_SAN = "URI:E2EQADeviceId://qae2e-san-testid-12345"
-
 
 class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
     """
@@ -79,24 +77,26 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
 
     def do_test(self):
         try:
-            # --- Preconditions: endpoint authenticates via EAP-TLS ---
+            # --- Step 1  Preconditions: endpoint authenticates via EAP-TLS ---
             self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
             self.cert_config.certificate_filename = WindowsCert.CERT_Client_SAN.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.dot1x.set_pre_admission_rules(self.SET_ACCEPT_TLS_ELSE_DENY)
-            
-            # Admission #1: create/update endpoint and populate properties (including SAN)
+
+            # Admission 1 : create/update endpoint and populate properties (including SAN)
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
-            
+            self.verify_authentication_on_ca()
+
             # Validate SAN is present on the endpoint (good sanity check)
             self.verify_san(expected_san=self.EXPECTED_SAN)
-            # ---------- Step 1: Policy contains "san-testid" ----------
+
+            # ---------- Step 2: Policy contains "anyvalue" ----------
             policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
                 match_type="contains",
-                value="san-testid",
+                value="12345",
                 match_case=False,
             )
             # Admission #2: force policy evaluation after policy import/update
@@ -104,9 +104,11 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.verify_authentication_on_ca()
             self.verify_policy_match(policy_name, expected_count=1)
-                        
-            # ---------- Step 2: Update policy to contains "invalid" ----------
+            self.verify_authentication_on_ca()
+
+            # ---------- Step 3: Update policy to contains "invalid" ----------
             policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
                 match_type="contains",
                 value="invalid",
@@ -117,21 +119,25 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.verify_authentication_on_ca()
             self.verify_policy_match(policy_name, expected_count=0)
-            
-            # ---------- Step 3: Revert policy back to contains "san-testid" ----------
+            self.verify_authentication_on_ca()
+
+            # ---------- Step 4: Policy contains "san-testid" ----------
             policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
                 match_type="contains",
                 value="san-testid",
                 match_case=False,
             )
-            # Admission #4: force re-eval after revert
+
+            # Admission #4: force re-eval afte update
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.verify_authentication_on_ca()
             self.verify_policy_match(policy_name, expected_count=1)
-            
+            self.verify_authentication_on_ca()
         except Exception as e:
             log.error(f"[T1316925] FAIL: {e}")
             raise
@@ -932,8 +938,20 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
     ]
 
     def do_test(self):
+<<<<<<< HEAD
         try:
             self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
+=======
+        lan_profile = LanProfile.eap_tls()
+        expected_status = AuthenticationStatus.SUCCEEDED
+        fail_status = AuthenticationStatus.FAILED
+        certificate_password = CERT_PASSWORD
+        case_id = "T1316959"
+
+
+        try:
+            self.configure_lan_profile(lan_profile=lan_profile)
+>>>>>>> 35bc36a (AA-865: udpate to JH PR comments)
 
             # Step 1: Rule 1 only
             self.dot1x.set_pre_admission_rules(self.SET_RULE_1_ACCEPT_ELSE_DENY)
