@@ -3,8 +3,10 @@ import ipaddress
 import os
 import re
 import tempfile
+import time
 from datetime import datetime
 from typing import Union, cast
+from framework.ca_log_handler.remote_log_streamer import RemoteLogStreamer
 from framework.log.logger import log
 from lib.ca.ca_common_base import CounterActBase
 from lib.ca.em import EnterpriseManager
@@ -18,6 +20,8 @@ from lib.switch.radius_factory import RadiusFactory
 from lib.utils.vlan_mapping import get_ip_range_from_vlan
 
 # CONSTANTS
+RADIUS_DEFAULT_TIMEOUTS_LOG_PATH = "/usr/local/forescout/log/plugin/dot1x/dot1x.log"
+
 DEFAULT_RADIUS_POLICY_MAC_FIELDS = [
     {
         "EXPR_TYPE": "SIMPLE",
@@ -75,8 +79,22 @@ class RadiusTestBase:
         self.host_id_auth_time = set()
         self.host_id = None
         self._last_known_ip = None
+        # dummy for injection
+        self.test_log_dir: str = ""
+
 
     def do_setup(self):
+        log.info("Starting collecting logs from %s for log file: %s" % (self.ca.ipaddress, RADIUS_DEFAULT_TIMEOUTS_LOG_PATH))
+        timestamp = time.strftime("%Y%m%d_%H%M%S")
+        full_path = os.path.join(self.test_log_dir, f"{self.__class__.__name__}_{timestamp}.log")
+        self.dot1x_log_collector = RemoteLogStreamer(
+            remote_host=self.ca.ipaddress,
+            username=self.ca.username,
+            password=self.ca.password,
+            log_file_path=full_path,
+            remote_log_path=RADIUS_DEFAULT_TIMEOUTS_LOG_PATH
+        )
+        self.dot1x_log_collector.start()
         log.info("Radius Common Setup")
         self.log_test_devices()
 
@@ -114,7 +132,8 @@ class RadiusTestBase:
 
     def do_teardown(self):
         log.info("radius common teardown")
-        # self.rf.teardown(self.switch, port=self.switch.port1, radius_server_ip=self.ca.ipaddress)
+        self.rf.teardown(self.switch, port=self.switch.port1, radius_server_ip=self.ca.ipaddress)
+        self.dot1x_log_collector.stop()
 
     # =========================================================================
     # Common Helpers
