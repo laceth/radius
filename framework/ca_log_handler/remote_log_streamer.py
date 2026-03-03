@@ -119,3 +119,7 @@ class RemoteLogStreamer:
     def stop(self):
         self.running = False
         self._cleanup_ssh()
+
+        # Wait for the background thread to finish cleanly
+        if self.thread and self.thread.is_alive():
+            self.thread.join(timeout=10)

@@ -27,12 +27,13 @@ def set_up_logging(log_level="info", log_dir="./logs"):
     :param log_dir: Base directory to create the timestamped log folder (default: None)
     :return: The path to the created log directory
     """
-    numeric_level = getattr(log, log_level.upper(), logging.INFO)
+    numeric_level = getattr(logging, log_level.upper(), logging.INFO)
     log.setLevel(numeric_level)
 
-    # Clear existing handlers to prevent duplicates
-    if log.handlers:
-        log.handlers.clear()
+    # Clear existing handlers to prevent duplicates and close them properly
+    for handler in list(log.handlers):
+        log.removeHandler(handler)
+        handler.close()
 
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -64,7 +65,7 @@ def run_class(cls, results, test_config, log_dir_path):
     configurator = Configurator(test_config)
     if not param_data:
         try:
-            #todo: as framework evolves, inject logic need to be seperate in resposibilities, not overkilling it now.
+            # TODO: As the framework evolves, the injection logic should be separated into distinct responsibilities; we are keeping it simple for now.
             instance = configurator.inject(cls, configurator.eyesight_config())
             #inject base log dir path to testcases.
             instance.test_log_dir = log_dir_path
