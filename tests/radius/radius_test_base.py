@@ -16,6 +16,8 @@ from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings
 from lib.switch.cisco_ios import CiscoIOS
 from lib.switch.radius_factory import RadiusFactory
 from lib.utils.vlan_mapping import get_ip_range_from_vlan
+import time
+
 
 # CONSTANTS
 DEFAULT_RADIUS_POLICY_MAC_FIELDS = [
@@ -762,5 +764,92 @@ class RadiusTestBase:
         Verify that a policy matches expected_count endpoints.
         Timeout/retry/error formatting stays inside the framework.
         """
-        ok = self.em.check_policy_match(policy_name, count=expected_count, timeout=280)
+        ok = self.em.check_policy_match(policy_name, count=expected_count, timeout=120)
         assert ok, f"Policy '{policy_name}' should match {expected_count} endpoint(s)"
+
+    def verify_policy_subrule_match(self, policy_name: str, subrule: str, expected_count: int = 1) -> None:
+        """
+        Verify MATCH count for a specific subrule (Policy -> subrule).
+        """
+        stats = self.get_policy_stats(policy_name, timeout=120, retry_interval=5)
+        actual = stats["by_subrule"].get(subrule, {}).get("match", 0)
+        assert actual == expected_count, (
+            f"Policy '{policy_name}' subrule '{subrule}' MATCH should be {expected_count}, got {actual}. "
+            f"raw={stats['raw']}"
+        )
+
+    def get_policy_stats(self, policy_name: str, timeout: int = 30, retry_interval: int = 5) -> dict:
+        """
+        Return policy stats aggregated across nodes (HA-safe).
+        Supports optional '-> subrule' lines and returns both MATCH/UNMATCH.
+
+        Output examples:
+        10.100.49.78: PolicyName : MATCH : 1
+        10.100.49.78: PolicyName : UNMATCH : 15
+        10.16.177.82: Test Script -> d  : MATCH : 26
+        10.16.177.82: Test Script -> tt : MATCH : 7
+        """
+        start_time = time.time()
+        cmd = f"fstool oneach fstool npstats | grep -F '{policy_name}' || true"
+
+        last = ""
+        while time.time() - start_time < timeout:
+            # IMPORTANT: execute on EM  exec_command
+            out = self.em.exec_command(cmd, timeout=30, log_command=True, log_output=True).strip()
+            if out:
+                last = out
+                break
+            time.sleep(retry_interval)
+
+        pat = re.compile(
+            r"^(?:(?P<node>\S+):\s*)?"
+            r"(?P<policy>.+?)(?:\s*->\s*(?P<subrule>[^:]+))?\s*:\s*"
+            r"(?P<kind>MATCH|UNMATCH)\s*:\s*(?P<count>\d+)\s*$"
+        )
+
+        stats = {
+            # totals across ALL lines (including subrules)
+            "match_total": 0,
+            "unmatch_total": 0,
+
+            # base-only totals (lines WITHOUT -> subrule)
+            "match_base": 0,
+            "unmatch_base": 0,
+            "saw_base_line": False,
+
+            # per-subrule totals
+            "by_subrule": {},  # subrule -> {"match": x, "unmatch": y}
+
+            "raw": last,
+        }
+
+        for line in (last.splitlines() if last else []):
+            m = pat.match(line.strip())
+            if not m:
+                continue
+
+            kind = m.group("kind")
+            cnt = int(m.group("count"))
+            sub = (m.group("subrule") or "").strip() or None
+
+            # totals
+            if kind == "MATCH":
+                stats["match_total"] += cnt
+            else:
+                stats["unmatch_total"] += cnt
+
+            # base vs subrule
+            if sub is None:
+                stats["saw_base_line"] = True
+                if kind == "MATCH":
+                    stats["match_base"] += cnt
+                else:
+                    stats["unmatch_base"] += cnt
+            else:
+                bucket = stats["by_subrule"].setdefault(sub, {"match": 0, "unmatch": 0})
+                if kind == "MATCH":
+                    bucket["match"] += cnt
+                else:
+                    bucket["unmatch"] += cnt
+
+        return stats
