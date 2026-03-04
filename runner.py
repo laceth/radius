@@ -124,7 +124,8 @@ def runner(test_suite, test_config=None, testbed_config=None, report_config=None
             run_class(cls, results, test_config, log_dir_path)
     if CONNECTION_POOL is not None:
         CONNECTION_POOL.close_all()
-    HTMLReportGenerator(results, title="Radius Tests Report").generate("radius_report.html")
+
+    HTMLReportGenerator(results, title="Radius Tests Report").generate(os.path.join(log_dir_path, "report.html"))
     json_results = [result.__dict__ for result in results]
     with open("radius_report.json", "w", encoding="utf-8") as json_file:
         json.dump(json_results, json_file, indent=4)
