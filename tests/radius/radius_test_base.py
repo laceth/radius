@@ -21,7 +21,7 @@ from lib.utils.vlan_mapping import get_ip_range_from_vlan
 
 # CONSTANTS
 DOT1X_PLUGIN_LOG_PATH = "/usr/local/forescout/log/plugin/dot1x/dot1x.log"
-RADIUSD_LOG_PATH = "/usr/local/forescout/log/radiusd/radiusd.log"
+RADIUSD_LOG_PATH = "/usr/local/forescout/log/plugin/dot1x/radiusd.log"
 
 DEFAULT_RADIUS_POLICY_MAC_FIELDS = [
     {
