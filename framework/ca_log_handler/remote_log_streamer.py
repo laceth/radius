@@ -7,12 +7,12 @@ from framework.log.logger import log
 
 
 class RemoteLogStreamer:
-    def __init__(self, remote_host, username, password, log_file_path, remote_log_path):
+    def __init__(self, remote_host, username, password, local_log_file_path, remote_log_path):
         self.thread = None
         self.remote_host = remote_host
         self.username = username
         self.password = password
-        self.log_file_path = log_file_path
+        self.local_log_file_path = local_log_file_path
         self.remote_log_path = remote_log_path # Renamed for clarity
         self.ssh_client = None
         self.running = False
@@ -90,7 +90,7 @@ class RemoteLogStreamer:
                 self._connect()
                 stdin, stdout, stderr = self.ssh_client.exec_command(f"tail -F {self.remote_log_path}")
 
-                with open(self.log_file_path, "a", buffering=1) as local_file:
+                with open(self.local_log_file_path, "a", buffering=1) as local_file:
                     for line in stdout:
                         if not self.running:
                             break

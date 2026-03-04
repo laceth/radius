@@ -20,7 +20,7 @@ from lib.switch.radius_factory import RadiusFactory
 from lib.utils.vlan_mapping import get_ip_range_from_vlan
 
 # CONSTANTS
-DOT1X_PLUGIN_LOG_PATH = "/usr/local/forescout/log/plugin/dot1x/dot1x.log"
+DOT1X_LOG_PATH = "/usr/local/forescout/log/plugin/dot1x/dot1x.log"
 RADIUSD_LOG_PATH = "/usr/local/forescout/log/plugin/dot1x/radiusd.log"
 
 DEFAULT_RADIUS_POLICY_MAC_FIELDS = [
@@ -86,15 +86,15 @@ class RadiusTestBase:
 
     def do_setup(self):
         # set up remote log streaming for both dot1x plugin logs and radiusd logs
-        log.info("Starting collecting logs from %s for log file: %s" % (self.ca.ipaddress, DOT1X_PLUGIN_LOG_PATH))
+        log.info("Starting collecting logs from %s for log file: %s" % (self.ca.ipaddress, DOT1X_LOG_PATH))
         timestamp = time.strftime("%Y%m%d_%H%M%S")
         full_path = os.path.join(self.test_log_dir, f"{self.__class__.__name__}_dot1x_{timestamp}.log")
         self.dot1x_plugin_log_collector = RemoteLogStreamer(
             remote_host=self.ca.ipaddress,
             username=self.ca.username,
             password=self.ca.password,
-            log_file_path=full_path,
-            remote_log_path=DOT1X_PLUGIN_LOG_PATH
+            local_log_file_path=full_path,
+            remote_log_path=DOT1X_LOG_PATH
         )
         self.dot1x_plugin_log_collector.start()
         log.info("Starting collecting logs from %s for log file: %s" % (self.ca.ipaddress, RADIUSD_LOG_PATH))
@@ -103,7 +103,7 @@ class RadiusTestBase:
             remote_host=self.ca.ipaddress,
             username=self.ca.username,
             password=self.ca.password,
-            log_file_path=full_path,
+            local_log_file_path=full_path,
             remote_log_path=RADIUSD_LOG_PATH
         )
         self.radiusd_log_collector.start()
