@@ -4,6 +4,8 @@ Base class for MAB (MAC Authentication Bypass) functional tests.
 MAB is used for endpoints that don't have 802.1X supplicants (e.g., printers, IP phones).
 The switch authenticates the endpoint based on its MAC address via RADIUS.
 """
+import os
+import tempfile
 from datetime import datetime
 from typing import Union
 
@@ -11,6 +13,7 @@ from framework.log.logger import log
 from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import RadiusAuthStatus
 from lib.plugin.radius.models.mab_config import MABConfig
+from lib.plugin.radius.models.mar_entry import MAREntry
 from tests.radius.radius_test_base import RadiusTestBase
 
 
@@ -168,6 +171,59 @@ class RadiusMabTestBase(RadiusTestBase):
         mac = mac or self.nic_mac
         assert not self.em.mac_exists_in_mar(mac), f"MAC {mac} should NOT exist in MAR"
         log.info(f"Verified MAC {mac} does not exist in MAR")
+
+    def ensure_mac_not_in_mar(self, mac: str = None):
+        """
+        Remove MAC from MAR if it exists. No-op if absent.
+
+        Args:
+            mac: MAC address to clean up. Defaults to self.nic_mac
+        """
+        mac = mac or self.nic_mac
+        if self.em.mac_exists_in_mar(mac):
+            self.em.remove_mac_from_mar(mac)
+            log.info(f"Cleaned up MAC {mac} from MAR")
+        else:
+            log.info(f"MAC {mac} not in MAR, nothing to clean up")
+
+    def bulk_import_mar_entries(self, count: int, comment: str = "bulk_test") -> str:
+        """
+        Generate random MAR entries, write to a temp CSV, and bulk-import to the EM.
+
+        Args:
+            count: Number of random MAR entries to generate and import.
+            comment: Comment to set on each generated entry.
+
+        Returns:
+            Path to the generated CSV file (caller is responsible for cleanup
+            via ``bulk_cleanup_mar``).
+        """
+        entries = MAREntry.generate_entries(count, comment=comment)
+        csv_path = os.path.join(tempfile.gettempdir(), "mar_bulk_import.csv")
+        MAREntry.to_csv_file(entries, csv_path)
+        log.info(f"Generated {len(entries)} MAR entries to {csv_path}")
+
+        imported = self.em.bulk_import_mar_csv(csv_path)
+        log.info(f"Bulk MAR import complete: {imported} entries submitted")
+        return csv_path
+
+    def bulk_cleanup_mar(self, csv_path: str) -> None:
+        """
+        Remove all MAR entries from a previously imported CSV and delete the file.
+
+        Args:
+            csv_path: Path to the CSV file used for bulk import.
+        """
+        if not csv_path or not os.path.isfile(csv_path):
+            return
+        try:
+            removed = self.em.bulk_remove_mar_csv(csv_path)
+            log.info(f"Bulk MAR cleanup complete: {removed} entries removed")
+        except Exception as e:
+            log.warning(f"Bulk MAR cleanup failed: {e}")
+        finally:
+            os.remove(csv_path)
+            log.info(f"Deleted temp CSV: {csv_path}")
 
 
 

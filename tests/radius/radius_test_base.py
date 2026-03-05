@@ -3,6 +3,7 @@ import ipaddress
 import os
 import re
 import tempfile
+from dataclasses import replace as dataclass_replace
 import time
 from datetime import datetime
 from typing import Union, cast
@@ -13,7 +14,7 @@ from lib.ca.em import EnterpriseManager
 from lib.passthrough.enums import AuthenticationStatus
 from lib.passthrough.lan_profile_builder import LanProfile
 from lib.passthrough.passthrough_base import PassthroughBase
-from lib.plugin.radius.radius import Radius
+from lib.plugin.radius.radius import Radius, DOT1X_STATUS_COMMAND, DOT1X_REQUIRED_PROCESSES
 from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings
 from lib.switch.cisco_ios import CiscoIOS
 from lib.switch.radius_factory import RadiusFactory
@@ -194,8 +195,7 @@ class RadiusTestBase(FSTestCommonBase):
                          e.g., active_directory_port_for_ldap_queries="standard ldap over tls"
         """
         if overrides:
-            from dataclasses import replace
-            settings = replace(self.DEFAULT_RADIUS_SETTINGS, **overrides)
+            settings = dataclass_replace(self.DEFAULT_RADIUS_SETTINGS, **overrides)
         else:
             settings = self.DEFAULT_RADIUS_SETTINGS
         self.dot1x.configure_radius_plugin(settings.to_dict())
@@ -337,7 +337,49 @@ class RadiusTestBase(FSTestCommonBase):
         """
         assert self.dot1x.dot1x_plugin_running(), message
 
-    def assert_nic_authentication_status(
+    def assert_dot1x_processes_running(self):
+        """
+        Assert all required dot1x sub-processes are running.
+
+        Fetches ``fstool dot1x status`` once and checks every process in
+        ``DOT1X_REQUIRED_PROCESSES``.
+
+        Raises:
+            AssertionError: If any process is not running.
+
+        Returns:
+            dict: process name → uptime in seconds (for reuse by callers).
+        """
+        status_output = self.dot1x.exec_cmd(DOT1X_STATUS_COMMAND)
+        log.info(f"dot1x status:\n{status_output}")
+        uptimes = {}
+        for proc in DOT1X_REQUIRED_PROCESSES:
+            uptime = self.dot1x._get_process_uptime_seconds(status_output, proc)
+            assert uptime >= 0, f"Process '{proc}' is not running"
+            log.info(f"  {proc}: running for {uptime}s")
+            uptimes[proc] = uptime
+        return uptimes
+
+    def assert_dot1x_stable(self, min_radiusd_uptime: int = 45):
+        """
+        Assert the dot1x plugin is running **and** radiusd has been up long
+        enough to be considered stable (not in a restart loop).
+
+        Args:
+            min_radiusd_uptime: Minimum radiusd uptime in seconds.
+
+        Raises:
+            AssertionError: If any sub-process is down or radiusd uptime is
+                            below the threshold.
+        """
+        self.assert_dot1x_plugin_running()
+        uptimes = self.assert_dot1x_processes_running()
+        assert uptimes["radiusd"] >= min_radiusd_uptime, (
+            f"radiusd uptime is only {uptimes['radiusd']}s — plugin may be unstable/restarting "
+            f"(need >= {min_radiusd_uptime}s)"
+        )
+
+    def assert_authentication_status(
             self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
     ):
         """

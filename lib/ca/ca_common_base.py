@@ -1,13 +1,17 @@
 import ipaddress as _ipaddress
+import os
 import re
 import time
-import paramiko
+import xml.etree.ElementTree as ET
+from pathlib import Path
 from typing import List, Optional, Dict
+
+import paramiko
+
+from framework.connection.connection_pool import CONNECTION_POOL
 from framework.connection.ssh_client import SSHClient
 from framework.log.logger import log
-from framework.connection.connection_pool import CONNECTION_POOL
-import xml.etree.ElementTree as ET
-import os
+from lib.utils.mac import normalize_mac
 
 # MAR (MAC Address Repository) storage
 # MAR entries are managed via `fstool devinfo` on the Enterprise Manager (EM).
@@ -29,15 +33,22 @@ MAR_DEVINFO_REMOVE = "fstool devinfo remove mar {mac_id}"
 MAR_DEVINFO_DUMP = "fstool devinfo dump mar {mac_id}"
 MAR_DEVINFO_ENABLE_CATEGORY = "fstool set_property devinfo.enabled.categories sw,wireless,mar"
 
+# Bulk MAR Perl helpers — call the engine's cutil API directly.
+# Uploaded to /tmp on the EM at runtime and cleaned up after execution.
+MAR_BULK_IMPORT_SCRIPT = "mar_bulk_import.pl"
+MAR_BULK_REMOVE_SCRIPT = "mar_bulk_remove.pl"
+
+_REMOTE_BULK_IMPORT_SCRIPT = "/tmp/fs_mar_bulk_import.pl"
+_REMOTE_BULK_REMOVE_SCRIPT = "/tmp/fs_mar_bulk_remove.pl"
+
+
 # dot1x-specific MAR field names and authorization values are maintained at the
 # plugin level (lib.plugin.radius.enums) and imported here for use by the
 # generic MAR helpers.
 from lib.plugin.radius.enums import (  # noqa: E402
     MAR_FIELD_MAC,
-    MAR_FIELD_TARGET_ACCESS,
     MAR_FIELD_COMMENT,
     MAR_AUTH_ACCEPT,
-    MAR_AUTH_REJECT,
 )
 
 
@@ -603,7 +614,7 @@ class CounterActBase(SSHClient):
         Raises:
             Exception: If the MAC address is invalid or the operation fails
         """
-        mac_id = self._normalize_mac(mac)
+        mac_id = normalize_mac(mac)
         if len(mac_id) != 12:
             raise ValueError(f"Invalid MAC address: {mac}")
 
@@ -619,7 +630,7 @@ class CounterActBase(SSHClient):
             # Add/update MAR entry via devinfo
             # Use shell double quotes to protect tab character in authorization value
             base_cmd = MAR_DEVINFO_UPDATE_BASE.format(mac_id=mac_id)
-            cmd = f'{base_cmd} "dot1x_target_access={authorization}"'
+            cmd = f'{base_cmd} "dot1x_target_access={authorization}" "dot1x_approved_by=by_import"'
             if comment:
                 cmd += f' "{MAR_FIELD_COMMENT}={comment}"'
             output = self.exec_command(cmd, timeout=30)
@@ -649,7 +660,7 @@ class CounterActBase(SSHClient):
         Raises:
             Exception: If the operation fails
         """
-        mac_id = self._normalize_mac(mac)
+        mac_id = normalize_mac(mac)
         log.info(f"Removing MAC '{mac}' from MAR via fstool devinfo on EM")
 
         try:
@@ -659,6 +670,102 @@ class CounterActBase(SSHClient):
 
         except Exception as e:
             raise Exception(f"Failed to remove MAC '{mac}' from MAR: {e}")
+
+    def _deploy_perl_script(self, script_body: str, remote_path: str) -> None:
+        """Upload a Perl script to the EM if not already present."""
+        self.client = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
+        with self.client.open_sftp() as sftp:
+            with sftp.open(remote_path, "w") as fh:
+                fh.write(script_body)
+
+    def _read_script(self, filename: str) -> str:
+        """Read a Perl script from the scripts/ directory in the project root."""
+        for d in Path(__file__).resolve().parents:
+            candidate = d / "scripts" / filename
+            if candidate.exists():
+                return candidate.read_text()
+        raise FileNotFoundError(f"Script not found: {filename}")
+
+    def _run_perl_bulk_script(self, script_body: str, remote_script: str,
+                              csv_path: str, timeout: int) -> int:
+        """
+        Upload a CSV to the EM, deploy a Perl script, execute it, and return
+        the ``ok`` count from the ``done ok=N ...`` output line.
+        """
+        if not os.path.isfile(csv_path):
+            raise FileNotFoundError(f"CSV file not found: {csv_path}")
+
+        self._ensure_mar_category_enabled()
+
+        remote_csv = "/tmp/fs_mar_bulk_data.csv"
+        try:
+            # Upload CSV and Perl script
+            self.client = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
+            with self.client.open_sftp() as sftp:
+                sftp.put(csv_path, remote_csv)
+                with sftp.open(remote_script, "w") as fh:
+                    fh.write(script_body)
+
+            cmd = (
+                f'cd /usr/local/forescout && '
+                f'perl -X -I lib/perl/inc {remote_script} {remote_csv} 2>&1'
+            )
+            log.info(f"Running bulk MAR script {remote_script} (timeout={timeout}s)")
+            output = self.exec_command(cmd, timeout=timeout)
+            log.info(f"Bulk MAR result: {output}")
+
+            m = re.search(r"ok=(\d+)", output)
+            return int(m.group(1)) if m else 0
+        finally:
+            for f in (remote_csv, remote_script):
+                try:
+                    self.exec_command(f"rm -f {f}", timeout=10)
+                except Exception:
+                    pass
+
+    def bulk_import_mar_csv(self, csv_path: str, timeout: int = 300) -> int:
+        """
+        Bulk-import MAR entries from a CSV — mirrors the GUI "Import CSV in MAR".
+
+        Uses a single Perl process connected to the CounterACT engine via
+        ``cutil_update_devinfo``, achieving ~1000 entries/second.  Each entry
+        gets ``dot1x_approved_by=by_import`` (same as the GUI).
+
+        The CSV must follow the Forescout MAR export format::
+
+            dot1x_mac,dot1x_auth_method,dot1x_target_access,...
+            000000021d85,bypass,vlan:222	IsCOA:false,...
+
+        Must be called on the **EM** object.
+
+        Args:
+            csv_path: Local path to the CSV file.
+            timeout: SSH command timeout in seconds (default 300).
+
+        Returns:
+            Number of entries successfully imported.
+        """
+        return self._run_perl_bulk_script(
+            self._read_script(MAR_BULK_IMPORT_SCRIPT), _REMOTE_BULK_IMPORT_SCRIPT, csv_path, timeout
+        )
+
+    def bulk_remove_mar_csv(self, csv_path: str, timeout: int = 500) -> int:
+        """
+        Bulk-remove MAR entries whose MACs appear in a CSV file.
+
+        Uses a single Perl process connected to the engine via
+        ``cutil_rm_devinfo``, achieving ~100 entries/second.
+
+        Args:
+            csv_path: Local path to the CSV file (first column = MAC).
+            timeout: SSH command timeout in seconds (default 500).
+
+        Returns:
+            Number of entries successfully removed.
+        """
+        return self._run_perl_bulk_script(
+            self._read_script(MAR_BULK_REMOVE_SCRIPT), _REMOTE_BULK_REMOVE_SCRIPT, csv_path, timeout
+        )
 
     def get_mar_entry(self, mac: str) -> Dict[str, str]:
         """
@@ -674,7 +781,7 @@ class CounterActBase(SSHClient):
         Returns:
             Dictionary with MAR fields and values, or empty dict if not found
         """
-        mac_id = self._normalize_mac(mac)
+        mac_id = normalize_mac(mac)
         log.info(f"Getting MAR entry for MAC '{mac}' via fstool devinfo dump")
 
         try:
@@ -722,37 +829,13 @@ class CounterActBase(SSHClient):
         log.info(f"MAC '{mac}' exists in MAR: {exists}")
         return exists
 
-    def update_mar_authorization(self, mac: str, authorization: str) -> None:
-        """
-        Update the authorization value for a MAC address in MAR.
-
-        Args:
-            mac: MAC address to update (any format, normalized internally for fstool)
-            authorization: New authorization value (e.g., "accept", "reject=dummy")
-
-        Raises:
-            Exception: If the operation fails
-        """
-        log.info(f"Updating MAR authorization for MAC '{mac}' to '{authorization}'")
-        self.add_mac_to_mar(mac=mac, authorization=authorization)
-
     def _ensure_mar_category_enabled(self) -> None:
         """
         Ensure the 'mar' category is enabled for fstool devinfo commands.
         This is a one-time setup that persists across restarts.
         """
         try:
-            cmd = MAR_DEVINFO_ENABLE_CATEGORY
-            self.exec_command(cmd, timeout=30)
+            self.exec_command(MAR_DEVINFO_ENABLE_CATEGORY, timeout=30)
         except Exception as e:
             log.debug(f"Could not enable MAR category (may already be enabled): {e}")
-
-    def _normalize_mac(self, mac: str) -> str:
-        """
-        Normalize a MAC address to bare lowercase hex (e.g. ``98f2b301a055``).
-
-        ``fstool devinfo`` uses this format as the record key, so every MAR
-        helper must convert before talking to the CLI.
-        """
-        return re.sub(r'[-:.]', '', mac).replace('0x', '').lower()
 
