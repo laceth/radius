@@ -19,6 +19,9 @@ DOT1X_REQUIRED_PROCESSES = ("radiusd", "winbindd", "redis-server")
 DEFAULT_LOCAL_PROPERTY_FILE_PATH = "/usr/local/forescout/plugin/dot1x/local.properties"
 AUTH_SOURCE_NULL_KEY = "config.auth_source_null.value"
 AUTH_SOURCE_DEFAULT_KEY = "config.auth_source_default.value"
+AUTH_SOURCE_KEY = "config.auth_source{slot}.value"
+AUTH_SOURCE_SIZE_KEY = "config.authsource.size.value"
+AUTH_SOURCE_MAX_SLOTS = 3
 
 
 class Radius(RadiusBase):
@@ -273,6 +276,46 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to configure RADIUS plugin settings: {e}")
 
+    def add_auth_source(self, auth_source_name: str, username: str = "administrator", auth_source_type: str = "ad") -> None:
+        """
+        A functions combines "Add" and "Configure" buttons of CounterAct -> Options -> Radius -> Authentication Sources.
+
+        Args:
+            auth_source_name: auth source name (e.g. "txqalab-dc1")
+            username: account used to access the source (default: "administrator")            
+            auth_source_type: auth source type (default: "ad")
+        """
+        auth_value = f"{auth_source_name}\\:{auth_source_type}\\:\\:testuser\\|{username}"
+        auth_source_size_raw = self._get_property(DEFAULT_LOCAL_PROPERTY_FILE_PATH, AUTH_SOURCE_SIZE_KEY)
+        auth_source_size = int(auth_source_size_raw) if auth_source_size_raw and auth_source_size_raw.strip() else 0
+        for slot in range(1, AUTH_SOURCE_MAX_SLOTS + 1):
+            auth_key = AUTH_SOURCE_KEY.format(slot=slot)
+            current = self._get_property(DEFAULT_LOCAL_PROPERTY_FILE_PATH, auth_key)
+
+            if not current:
+                log.info(f"Adding auth source: {auth_key}={auth_value}")
+                self._set_property(auth_key, auth_value)
+                self._set_property(AUTH_SOURCE_SIZE_KEY, str(slot))
+                self.has_change = True
+                self.apply_dot1x_changes()
+                return
+
+            current_name = current.split("\\:")[0]
+            if current_name == auth_source_name:
+                log.info(f"Current: {auth_key}={auth_value}")
+                if auth_source_size < slot:
+                    log.info(f"Updating auth source size from {auth_source_size} to {slot}")
+                    self._set_property(AUTH_SOURCE_SIZE_KEY, str(slot))
+                    self.has_change = True
+                    self.apply_dot1x_changes()
+                return
+
+            log.info(f"Checking next slot because: {auth_key}={current}")
+
+        raise Exception(
+            f"No free auth source slot found for '{auth_source_name}' (Please checked {AUTH_SOURCE_MAX_SLOTS} slots)"
+        )
+
     def join_domain(self, domain_name: str, ad_username: str, ad_password: str, timeout: int = 60) -> None:
         """
         Join a domain in User Directory using fstool dot1x join command.
@@ -295,13 +338,13 @@ class Radius(RadiusBase):
         Raises:
             Exception: If the join command fails
         """
-        log.info(f"Configuring RADIUS Authentication Source with domain '{domain_name}'")
+        log.info(f"Checking RADIUS Authentication Source joined domain '{domain_name}'")
         # Check if domain is already joined
         if self.test_join_domain(domain_name, timeout):
             log.info(f"Domain '{domain_name}' is already joined, skipping join operation")
         else:
             # Domain not joined, proceed with join
-            cmd = f"fstool dot1x join {domain_name} {ad_username} {ad_password}"
+            cmd = f"sudo fstool dot1x join {domain_name} {ad_username} {ad_password}"
             log.info(f"Joining domain '{domain_name}' for Radius plugin")
             try:
                 output = self.exec_cmd(cmd, timeout=timeout)
@@ -368,7 +411,7 @@ class Radius(RadiusBase):
                 return
 
             log.info(f"Setting auth_source {auth_source} to Null (current: '{current_value}')")
-            self._update_property(AUTH_SOURCE_NULL_KEY, auth_source, file_path)
+            self._set_property(AUTH_SOURCE_NULL_KEY, auth_source, file_path)
         except Exception as e:
             raise Exception(f"Failed to set auth source null to '{auth_source}': {e}")
 
@@ -381,7 +424,7 @@ class Radius(RadiusBase):
                 return
 
             log.info(f"Setting auth_source {auth_source} to Default (current: '{current_value}')")
-            self._update_property(AUTH_SOURCE_DEFAULT_KEY, auth_source, file_path)
+            self._set_property(AUTH_SOURCE_DEFAULT_KEY, auth_source, file_path)
         except Exception as e:
             raise Exception(f"Failed to set auth source default to '{auth_source}': {e}")
 
@@ -392,7 +435,7 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to get auth source default: {e}")
 
-    def _update_property(self, key: str, value: str, file_path: str) -> None:
+    def _set_property(self, key: str, value: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
         """Update a single property in local.properties."""
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())

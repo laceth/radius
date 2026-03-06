@@ -34,9 +34,22 @@ class PEAPCredentialsConfig:
         return f'{self.pstools_path}\\PsExec.exe'
 
     @property
+    def is_upn(self) -> bool:
+        """True when domain is a FQDN (contains '.'), indicating UPN format."""
+        return '.' in self.peap_domain
+
+    @property
     def peap_username(self) -> str:
-        """Full PEAP username in domain\\user format."""
-        return f'{self.peap_domain}\\{self.peap_user}' if self.peap_domain else self.peap_user
+        """Full credential string sent to the NIC:
+          - UPN format (FQDN domain):  user@domain  e.g. robh@txqalab.forescout.local
+          - SAM format (short domain):  domain\\user  e.g. txqalab\\dotonex
+          - No domain:                 user           e.g. dotonex
+        """
+        if not self.peap_domain:
+            return self.peap_user
+        if self.is_upn:
+            return f'{self.peap_user}@{self.peap_domain}'
+        return f'{self.peap_domain}\\{self.peap_user}'
 
     @property
     def local_script_path(self) -> str:

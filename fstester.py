@@ -13,7 +13,7 @@ def main():
     parser.add_argument("-ctlog", "--ctlog-file", required=False, help="Path to the ctlog file.")
     parser.add_argument("-u", "--update-result", required=False, help="Update the report to portal")
     args = parser.parse_args()
-    runner(args.test_suite, test_config=args.config_file)
+    runner(args.test_suite, test_config=args.config_file, report_config=args.report_file)
 
 
 if __name__ == "__main__":

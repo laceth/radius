@@ -27,8 +27,8 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
     """
 
     # Rule Settings
-    RULE_MAC_FOUND_IN_MAR_TRUE = [{"rule_name": "MAC Found in MAR", "fields": ["True"]}]
-    RULE_USER_NAME_MATCH_ANY = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+    RULE_MAC_FOUND_IN_MAR_TRUE = [{"criterion_name": "MAC Found in MAR", "criterion_value": ["True"]}]
+    RULE_USER_NAME_MATCH_ANY = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
 
     # "Deny Access" checked: MAC Found in MAR -> REJECT, fallback -> REJECT
     SET_MAC_IN_MAR_DENY_ACCESS = [
@@ -58,7 +58,7 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
             # Step 3: Attempt to authenticate - should FAIL (MAC in MAR + Deny Access rule)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.verify_nic_has_no_ip_in_range()
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
 
@@ -72,8 +72,8 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
             # Step 5: Attempt to authenticate - should SUCCEED (MAC in MAR + ACCEPT rule)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])

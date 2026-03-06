@@ -12,7 +12,7 @@ class RadiusPluginSettings:
     counteract_radius_authentication_port: str = "1812"
     counteract_radius_accounting_port: str = "1813"
     active_directory_port_for_ldap_queries: str = "standard ldap over tls"
-    minimum_tls_version: str = "1.2"
+    minimum_tls_version: str = "v1_2"
     fragment_size: str = "1024"
 
     # RadSec

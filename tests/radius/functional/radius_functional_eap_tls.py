@@ -5,15 +5,13 @@ from lib.plugin.radius.enums import Dot1xAttribute, PreAdmissionAuth, MscaOid, E
 from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
 
 
-
-
 DOT1X_CLIENT_CERT_VALID = getattr(WindowsCert, "DOT1X_CLT_RADIUS_SET1", WindowsCert.CERT_DOT1X_VALID)
 DOT1X_CLIENT_CERT_REVOKED = getattr(WindowsCert, "DOT1X_CLT_RADIUS_SET2", WindowsCert.CERT_DOT1X_REVOKED)
 
 CERT_PASSWORD = "aristo"
 
-RULE_EAP_TYPE_TLS = [{"rule_name": "EAP-Type", "fields": ["TLS"]}]
-RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+RULE_EAP_TYPE_TLS = [{"criterion_name": "EAP-Type", "criterion_value": ["TLS"]}]
+RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
 
 
 class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
@@ -29,9 +27,9 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
     """
 
     # Rule Settings
-    RULE_USER_NAME_ANY = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+    RULE_USER_NAME_ANY = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
     RULE_SAN_CONTAINS_SAN_TESTID = [
-        {"rule_name": Dot1xAttribute.CERT_FROM_SUBJECT_ALTERNATIVE_NAME.value, "fields": ["contains", "san-testid"]}
+        {"criterion_name": Dot1xAttribute.CERT_FROM_SUBJECT_ALTERNATIVE_NAME.value, "criterion_value": ["contains", "san-testid"]}
     ]
 
     SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY = [
@@ -47,8 +45,8 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -70,12 +68,12 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
 #     """
 
 #     # Rule Settings
-#     RULE_USER_NAME_ANY = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+#     RULE_USER_NAME_ANY = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
 #     RULE_SAN_CONTAINS_SAN_TESTID = [
-#         {"rule_name": Dot1xAttribute.CERT_FROM_SUBJECT_ALTERNATIVE_NAME.value, "fields": ["contains", "san-testid"]}
+#         {"criterion_name": Dot1xAttribute.CERT_FROM_SUBJECT_ALTERNATIVE_NAME.value, "criterion_value": ["contains", "san-testid"]}
 #     ]
 #     RULE_SAN_CONTAINS_INVALID = [
-#         {"rule_name": Dot1xAttribute.CERT_FROM_SUBJECT_ALTERNATIVE_NAME.value, "fields": ["contains", "invalid"]}
+#         {"criterion_name": Dot1xAttribute.CERT_FROM_SUBJECT_ALTERNATIVE_NAME.value, "criterion_value": ["contains", "invalid"]}
 #     ]
 
 #     SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY = [
@@ -103,16 +101,16 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
 #             self.import_certificates(certificate_password=certificate_password)
 #             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY)
 #             self.toggle_nic()
-#             self.assert_authentication_status(expected_status=expected_status)
+#             self.assert_nic_authentication_status(expected_status=expected_status)
 #             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_INVALID_ACCEPT_ELSE_DENY)
 #             self.toggle_nic()
-#             self.assert_authentication_status(expected_status=fail_status)
+#             self.assert_nic_authentication_status(expected_status=fail_status)
 #
 #             self.verify_pre_admission_rule(rule_priority=2)
 #             self.dot1x.set_pre_admission_rules(self.SET_SAN_CONTAINS_EXPECTED_ACCEPT_ELSE_DENY)
 #             self.toggle_nic()
-#             self.assert_authentication_status(expected_status=expected_status)
-#             self.wait_for_nic_ip_in_range()
+#             self.assert_nic_authentication_status(expected_status=expected_status)
+#             self.verify_nic_ip_in_range()
 #
 #             self.verify_san(expected_san=expected_sanid)
 #         except Exception as e:
@@ -152,8 +150,8 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
             # Step 2-3: Toggle NIC and verify successful authentication
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -161,7 +159,7 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
             # Step 4: Move CA cert from Trusted Root to Personal and verify RADIUS-Rejected
             self.move_ca_cert_to_personal_store()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED)
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.FAILED)
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
             # Verify NIC no longer has an IP address in the configured VLAN range
             self.verify_nic_has_no_ip_in_range()
@@ -195,28 +193,28 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
     TEMPLATE_OID_SUFFIX = ".".join(TEMPLATE_OID.split(".")[-2:])   # stable suffix
 
     # Rule Settings
-    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
 
     RULE_TEMPLATE_OID_MATCH = [
-        {"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["matches", MscaOid.TEMPLATE_OID_01.value]}
+        {"criterion_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "criterion_value": ["matches", MscaOid.TEMPLATE_OID_01.value]}
     ]
     RULE_TEMPLATE_OID_INVALID_MATCH = [
-        {"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["matches", "INVALID_OID_VALUE"]}
+        {"criterion_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "criterion_value": ["matches", "INVALID_OID_VALUE"]}
     ]
-    RULE_TEMPLATE_OID_ANYVALUE = [{"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["anyvalue"]}]
+    RULE_TEMPLATE_OID_ANYVALUE = [{"criterion_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "criterion_value": ["anyvalue"]}]
     RULE_TEMPLATE_OID_REGEX_MATCH = [
         {
-            "rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value,
-            "fields": ["matchesexpression", MscaOid.TEMPLATE_OID_02_REGEX.value],
+            "criterion_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value,
+            "criterion_value": ["matchesexpression", MscaOid.TEMPLATE_OID_02_REGEX.value],
         }
     ]
 
     RULE_TEMPLATE_OID_STARTSWITH = [
-    {"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["startswith", TEMPLATE_OID_PREFIX]}
+    {"criterion_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "criterion_value": ["startswith", TEMPLATE_OID_PREFIX]}
     ]
 
     RULE_TEMPLATE_OID_ENDSWITH = [
-        {"rule_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "fields": ["endswith", TEMPLATE_OID_SUFFIX]}
+        {"criterion_name": Dot1xAttribute.CERT_EAP_TLS_TEMPLATE.value, "criterion_value": ["endswith", TEMPLATE_OID_SUFFIX]}
     ]
 
     SET_OID_MATCH_ACCEPT_ELSE_DENY = [
@@ -257,8 +255,8 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_OID_MATCH_ACCEPT_ELSE_DENY)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
@@ -269,7 +267,7 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.verify_nic_has_no_ip_in_range()
-            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.FAILED, timeout=120) #TODO: implement something instead of FAILED to verify the passthrough failure
             # Verify Rule 2 matched (the REJECT rule), not Rule 1
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
 
@@ -277,8 +275,8 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_OID_ANYVALUE_ACCEPT_ELSE_DENY)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -287,8 +285,8 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_OID_REGEX_MATCH_ACCEPT_ELSE_DENY)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -297,8 +295,8 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_OID_STARTSWITH_ACCEPT_ELSE_DENY)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -307,8 +305,8 @@ class EAPTLSPreAdmissionMSCATemplateTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_OID_ENDSWITH_ACCEPT_ELSE_DENY)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -329,8 +327,8 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
     """
 
     # Rule Settings
-    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
-    RULE_EAP_TYPE_TLS = [{"rule_name": "EAP-Type", "fields": ["TLS"]}]
+    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
+    RULE_EAP_TYPE_TLS = [{"criterion_name": "EAP-Type", "criterion_value": ["TLS"]}]
 
     SET_ACCEPT_TLS_ELSE_DENY = [
         {"cond_rules": RULE_EAP_TYPE_TLS, "auth": PreAdmissionAuth.ACCEPT},
@@ -349,8 +347,8 @@ class EAPTLSAbsurdExpiryDateTest(RadiusEapTlsTestBase):
             self.toggle_nic()
 
             # Plugin should accept the cert gracefully (not crash)
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -384,12 +382,12 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
     # -------------------------
     # Rule Settings
     # -------------------------
-    #RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+    #RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
 
     RULE_EKU_CLIENT_AUTH_EMAIL_IPSEC_TIMESTAMP_EAP_SCVP_SENDROUTER_CMC = [
         {
-            "rule_name": "Certificate-Extended-Key-Usage",
-            "fields": [
+            "criterion_name": "Certificate-Extended-Key-Usage",
+            "criterion_value": [
                 EKUEntry.EKU_02_CLIENT_AUTH.value,       # .2
                 EKUEntry.EKU_04_EMAIL_PROTECTION.value,  # .4
                 EKUEntry.EKU_06_IPSEC_TUNNEL.value,       # .6
@@ -404,8 +402,8 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
 
     RULE_EKU_ALL_EXCEPT_CLIENT_AUTH = [
         {
-            "rule_name": "Certificate-Extended-Key-Usage",
-            "fields": [
+            "criterion_name": "Certificate-Extended-Key-Usage",
+            "criterion_value": [
                 EKUEntry.EKU_04_EMAIL_PROTECTION.value,
                 EKUEntry.EKU_06_IPSEC_TUNNEL.value,
                 EKUEntry.EKU_08_TIMESTAMPING.value,
@@ -419,8 +417,8 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
 
     RULE_EKU_EAP_OVER_LAN_AND_SEND_PROXY = [
         {
-            "rule_name": "Certificate-Extended-Key-Usage",
-            "fields": [
+            "criterion_name": "Certificate-Extended-Key-Usage",
+            "criterion_value": [
                 EKUEntry.EKU_14_EAP_OVER_LAN.value,  # .14
                 EKUEntry.EKU_24_SEND_PROXY.value,    # .24
             ],
@@ -429,8 +427,8 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
 
     RULE_EKU_EAP_OVER_LAN_AND_CMC_ARCHIVE = [
         {
-            "rule_name": "Certificate-Extended-Key-Usage",
-            "fields": [
+            "criterion_name": "Certificate-Extended-Key-Usage",
+            "criterion_value": [
                 EKUEntry.EKU_14_EAP_OVER_LAN.value,  # .14
                 EKUEntry.EKU_29_CMC_ARCHIVE.value,   # .29
             ],
@@ -439,8 +437,8 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
 
     RULE_EKU_ALL_OPTIONS = [
         {
-            "rule_name": "Certificate-Extended-Key-Usage",
-            "fields": [
+            "criterion_name": "Certificate-Extended-Key-Usage",
+            "criterion_value": [
             EKUEntry.EKU_01_SERVER_AUTH.value,
             EKUEntry.EKU_02_CLIENT_AUTH.value,
             EKUEntry.EKU_03_CODE_SIGNING.value,
@@ -511,8 +509,8 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -521,8 +519,8 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_EKU_ALL_EXCEPT_CLIENT_AUTH_ACCEPT_ELSE_DENY)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -531,8 +529,8 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_EKU_EAP_OVER_LAN_AND_SEND_PROXY_ACCEPT_ELSE_DENY)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -544,8 +542,8 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -557,7 +555,7 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.FAILED) #TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
             self.verify_nic_has_no_ip_in_range()
         except Exception as e:
@@ -588,18 +586,18 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
     # -------------------------
 
     RULE_EKU_CLIENT_AUTH_AND_EAP_OVER_LAN = [
-        {"rule_name": "Certificate-Extended-Key-Usage", "fields": [EKUEntry.EKU_02_CLIENT_AUTH.value]},
-        {"rule_name": "Certificate-Extended-Key-Usage", "fields": [EKUEntry.EKU_14_EAP_OVER_LAN.value]},
+        {"criterion_name": "Certificate-Extended-Key-Usage", "criterion_value": [EKUEntry.EKU_02_CLIENT_AUTH.value]},
+        {"criterion_name": "Certificate-Extended-Key-Usage", "criterion_value": [EKUEntry.EKU_14_EAP_OVER_LAN.value]},
     ]
 
     RULE_EKU_SCVP_OR_SSHCLIENT__AND__OCSP_OR_SIPDOMAIN = [
         {
-            "rule_name": "Certificate-Extended-Key-Usage",
-            "fields": [EKUEntry.EKU_16_SCVP_CLIENT.value, EKUEntry.EKU_21_SECURE_SHELL_CLIENT.value],
+            "criterion_name": "Certificate-Extended-Key-Usage",
+            "criterion_value": [EKUEntry.EKU_16_SCVP_CLIENT.value, EKUEntry.EKU_21_SECURE_SHELL_CLIENT.value],
         },
         {
-            "rule_name": "Certificate-Extended-Key-Usage",
-            "fields": [EKUEntry.EKU_09_OCSP_SIGNING.value, EKUEntry.EKU_20_SIP_DOMAIN.value],
+            "criterion_name": "Certificate-Extended-Key-Usage",
+            "criterion_value": [EKUEntry.EKU_09_OCSP_SIGNING.value, EKUEntry.EKU_20_SIP_DOMAIN.value],
         },
     ]
 
@@ -626,8 +624,8 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -638,7 +636,7 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_G.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.toggle_nic()
-            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.FAILED) #TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_nic_has_no_ip_in_range()
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
 
@@ -649,8 +647,8 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=2)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -679,12 +677,12 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
     """
 
     # Rule Settings
-    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
 
     RULE_MSCA_2_4_6_8_14_16_22_32 = [
         {
-            "rule_name": "Certificate-MS-Certificate-Authority",
-            "fields": [
+            "criterion_name": "Certificate-MS-Certificate-Authority",
+            "criterion_value": [
                 MSCAEntry.OID_21_02_SZOID_CERTSRV_PREVIOUS_CERT_HASH.value,  # .2
                 MSCAEntry.OID_21_04_SZOID_CRL_NEXT_PUBLISH.value,            # .4
                 MSCAEntry.OID_21_06_SZOID_KP_KEY_RECOVERY_AGENT.value,       # .6
@@ -699,8 +697,8 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
 
     RULE_MSCA_4_6_8_14_16_22_32 = [
         {
-            "rule_name": "Certificate-MS-Certificate-Authority",
-            "fields": [
+            "criterion_name": "Certificate-MS-Certificate-Authority",
+            "criterion_value": [
                 MSCAEntry.OID_21_04_SZOID_CRL_NEXT_PUBLISH.value,            # .4
                 MSCAEntry.OID_21_06_SZOID_KP_KEY_RECOVERY_AGENT.value,       # .6
                 MSCAEntry.OID_21_08_SZOID_ENTERPRISE_OID_ROOT.value,         # .8
@@ -714,8 +712,8 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
 
     RULE_MSCA_ONLY_14_22 = [
         {
-            "rule_name": "Certificate-MS-Certificate-Authority",
-            "fields": [
+            "criterion_name": "Certificate-MS-Certificate-Authority",
+            "criterion_value": [
                 MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value,            # .14
                 MSCAEntry.OID_21_22_SZOID_CERTSRV_CROSSCA_VERSION.value, # .22
             ],
@@ -724,8 +722,8 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
 
     RULE_MSCA_ONLY_14_32 = [
         {
-            "rule_name": "Certificate-MS-Certificate-Authority",
-            "fields": [
+            "criterion_name": "Certificate-MS-Certificate-Authority",
+            "criterion_value": [
                 MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value,              # .14
                 MSCAEntry.OID_21_32_USER_CREDENTIALS_LOW_ASSURANCE.value, # .32
             ],
@@ -735,8 +733,8 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
     # ALL MSCA options for Step 6 (using all available MSCAEntry values)
     RULE_MSCA_ALL = [
         {
-            "rule_name": "Certificate-MS-Certificate-Authority",
-            "fields": [
+            "criterion_name": "Certificate-MS-Certificate-Authority",
+            "criterion_value": [
                 MSCAEntry.OID_21_01_MS_CERT_SERVICES_CA_VERSION.value,       # .1
                 MSCAEntry.OID_21_02_SZOID_CERTSRV_PREVIOUS_CERT_HASH.value,  # .2
                 MSCAEntry.OID_21_03_SZOID_CRL_VIRTUAL_BASE.value,            # .3
@@ -802,8 +800,8 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_MSCA_2_4_6_8_14_16_22_32_ACCEPT_ELSE_DENY)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -812,8 +810,8 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_MSCA_4_6_8_14_16_22_32_ACCEPT_ELSE_DENY)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -822,8 +820,8 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
             self.dot1x.set_pre_admission_rules(self.SET_MSCA_ONLY_14_22_ACCEPT_ELSE_DENY)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -835,8 +833,8 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -849,7 +847,7 @@ class EAPTLSPreAdmissionMSCAMultipleValuesTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.FAILED) #TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_nic_has_no_ip_in_range()
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
         except Exception as e:
@@ -874,15 +872,15 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
     # Rule Settings
     RULE_MSCA_CA_EXCHANGE_AND_APP_POLICY_WITH_EMAIL_REPL = [
         {
-            "rule_name": "Certificate-MS-Certificate-Authority",
-            "fields": [
+            "criterion_name": "Certificate-MS-Certificate-Authority",
+            "criterion_value": [
                 MSCAEntry.OID_21_05_SZOID_KP_CA_EXCHANGE.value,       # .5
                 MSCAEntry.OID_21_19_SZOID_DS_EMAIL_REPLICATION.value, # .19
             ],
         },
         {
-            "rule_name": "Certificate-MS-Certificate-Authority",
-            "fields": [
+            "criterion_name": "Certificate-MS-Certificate-Authority",
+            "criterion_value": [
                 MSCAEntry.OID_21_11_SZOID_APPLICATION_POLICY_MAPPINGS.value, # .11
                 MSCAEntry.OID_21_19_SZOID_DS_EMAIL_REPLICATION.value,        # .19
             ],
@@ -892,12 +890,12 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
 
     RULE_MSCA_VERSION_AND_SELF_CDP = [
     {
-        "rule_name": "Certificate-MS-Certificate-Authority",
-        "fields": [MSCAEntry.OID_21_01_MS_CERT_SERVICES_CA_VERSION.value],  # .1
+        "criterion_name": "Certificate-MS-Certificate-Authority",
+        "criterion_value": [MSCAEntry.OID_21_01_MS_CERT_SERVICES_CA_VERSION.value],  # .1
     },
     {
-        "rule_name": "Certificate-MS-Certificate-Authority",
-        "fields": [MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value],           # .14
+        "criterion_name": "Certificate-MS-Certificate-Authority",
+        "criterion_value": [MSCAEntry.OID_21_14_SZOID_CRL_SELF_CDP.value],           # .14
     },
     ]
 
@@ -926,8 +924,8 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -937,7 +935,7 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_G.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.toggle_nic()
-            # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.FAILED) #TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
             self.verify_nic_has_no_ip_in_range()
 
@@ -950,8 +948,8 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=2)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()

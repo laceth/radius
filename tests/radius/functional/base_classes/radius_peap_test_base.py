@@ -76,10 +76,16 @@ class RadiusPeapTestBase(RadiusTestBase):
         config = peap_config or self.peap_config
 
         # Determine tunneled user format (with or without domain prefix)
-        tunneled_user = config.peap_username if '\\' in config.peap_username else config.peap_user
+        tunneled_user = config.peap_username if ('\\' in config.peap_username or '@' in config.peap_username) else config.peap_user
         
-        # Use "None given" for empty domain
-        requested_domain = config.peap_domain if config.peap_domain else "None given"
+        # dot1x_rqeuested_domain always shows the short/NetBIOS name.
+        # For UPN (FQDN domain like txqalab.forescout.local), take only the first segment.
+        if not config.peap_domain:
+            requested_domain = "None given"
+        elif config.is_upn:
+            requested_domain = config.peap_domain.split('.')[0]
+        else:
+            requested_domain = config.peap_domain
 
         # Build PEAP-specific properties check list
         peap_properties_check_list = [
@@ -98,9 +104,11 @@ class RadiusPeapTestBase(RadiusTestBase):
         
         # Handle dot1x_domain check based on peap_domain and auth_source configuration
         if config.peap_domain:
-            # Domain specified in credentials - check it (case-insensitive)
+            # dot1x_domain always holds the short/NetBIOS name.
+            # For UPN (FQDN domain like txqalab.forescout.local), take only the first segment.
+            expected_domain = config.peap_domain.split('.')[0] if config.is_upn else config.peap_domain
             peap_properties_check_list.append(
-                {"property_field": "dot1x_domain", "expected_value": config.peap_domain, "case_insensitive": True}
+                {"property_field": "dot1x_domain", "expected_value": expected_domain.upper(), "case_insensitive": True}
             )
         else:
             # No domain in credentials - check if there's a default auth source configured
