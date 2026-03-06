@@ -27,8 +27,8 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
     """
 
     # Rule Settings
-    RULE_MAC_FOUND_IN_MAR_TRUE = [{"rule_name": "MAC Found in MAR", "fields": ["True"]}]
-    RULE_USER_NAME_MATCH_ANY = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
+    RULE_MAC_FOUND_IN_MAR_TRUE = [{"criterion_name": "MAC Found in MAR", "criterion_value": ["True"]}]
+    RULE_USER_NAME_MATCH_ANY = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
 
     # "Deny Access" checked: MAC Found in MAR -> REJECT, fallback -> REJECT
     SET_MAC_IN_MAR_DENY_ACCESS = [

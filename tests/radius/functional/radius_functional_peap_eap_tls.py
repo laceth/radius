@@ -4,8 +4,8 @@ from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import PreAdmissionAuth
 from tests.radius.functional.base_classes.radius_peap_eap_tls_test_base import RadiusPeapEapTlsTestBase
 
-RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
-RULE_EAP_TYPE_PEAP = [{"rule_name": "EAP-Type", "fields": ["PEAP"]}]
+RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
+RULE_EAP_TYPE_PEAP = [{"criterion_name": "EAP-Type", "criterion_value": ["PEAP"]}]
 CERT_PASSWORD = "aristo"
 
 class PEAPEAPTLSBasicAuthWiredTest(RadiusPeapEapTlsTestBase):
@@ -67,7 +67,7 @@ class PEAPEAPTLSRegexpPreAdmissionTest(RadiusPeapEapTlsTestBase):
     """
 
     RULE_USER_NAME_MATCHES_HOST_REGEXP = [
-        {"rule_name": "User-Name", "fields": ["matchesexpression", "host/(.*)"]}
+        {"criterion_name": "User-Name", "criterion_value": ["matchesexpression", "host/(.*)"]}
     ]
 
     SET_USERNAME_HOST_REGEXP_ACCEPT_ELSE_DENY = [

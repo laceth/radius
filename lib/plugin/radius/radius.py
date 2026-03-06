@@ -1,5 +1,4 @@
 import time
-from unicodedata import name
 
 from framework.log.logger import log
 from lib.plugin.radius.pre_admission_rule import edit_pre_admission_rule, set_pre_admission_rules_remote
