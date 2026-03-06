@@ -60,11 +60,25 @@ def set_up_logging(log_level="info", log_dir="./logs"):
 
 
 def _flush_report(results, report_name, log_dir_path=None):
-    """Write HTML and JSON reports with current results."""
-    html_path = os.path.join(log_dir_path, f"{report_name}.html") if log_dir_path else f"{report_name}.html"
-    HTMLReportGenerator(results, title="Radius Tests Report").generate(html_path)
+    """Write HTML and JSON reports with current results.
+
+    report_name may be a bare stem ("radius_report"), a name with a known
+    extension ("radius_report.html"), or a full path ("/tmp/out/report").
+    The extension is always stripped so we control it; when only a basename is
+    given (no directory component) the files are placed inside log_dir_path.
+    """
+    stem, ext = os.path.splitext(report_name)
+    if ext.lower() in (".html", ".json"):
+        report_name = stem
+
+    if log_dir_path and not os.path.dirname(report_name):
+        base = os.path.join(log_dir_path, report_name)
+    else:
+        base = report_name
+
+    HTMLReportGenerator(results, title="Radius Tests Report").generate(f"{base}.html")
     json_results = [result.__dict__ for result in results]
-    with open(f"{report_name}.json", "w", encoding="utf-8") as json_file:
+    with open(f"{base}.json", "w", encoding="utf-8") as json_file:
         json.dump(json_results, json_file, indent=4)
 
 

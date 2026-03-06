@@ -286,7 +286,8 @@ class Radius(RadiusBase):
             auth_source_type: auth source type (default: "ad")
         """
         auth_value = f"{auth_source_name}\\:{auth_source_type}\\:\\:testuser\\|{username}"
-        auth_source_size = self._get_property(DEFAULT_LOCAL_PROPERTY_FILE_PATH, AUTH_SOURCE_SIZE_KEY)
+        auth_source_size_raw = self._get_property(DEFAULT_LOCAL_PROPERTY_FILE_PATH, AUTH_SOURCE_SIZE_KEY)
+        auth_source_size = int(auth_source_size_raw) if auth_source_size_raw and auth_source_size_raw.strip() else 0
         for slot in range(1, AUTH_SOURCE_MAX_SLOTS + 1):
             auth_key = AUTH_SOURCE_KEY.format(slot=slot)
             current = self._get_property(DEFAULT_LOCAL_PROPERTY_FILE_PATH, auth_key)
@@ -302,7 +303,7 @@ class Radius(RadiusBase):
             current_name = current.split("\\:")[0]
             if current_name == auth_source_name:
                 log.info(f"Current: {auth_key}={auth_value}")
-                if int(auth_source_size) < slot:
+                if auth_source_size < slot:
                     log.info(f"Updating auth source size from {auth_source_size} to {slot}")
                     self._set_property(AUTH_SOURCE_SIZE_KEY, str(slot))
                     self.has_change = True

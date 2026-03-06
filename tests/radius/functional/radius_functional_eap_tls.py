@@ -3,9 +3,6 @@ from lib.passthrough.enums import AuthenticationStatus, WindowsCert
 from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import Dot1xAttribute, PreAdmissionAuth, MscaOid, EKUEntry, MSCAEntry, RadiusAuthStatus
 from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
-from tests.radius.functional.base_classes.radius_peap_test_base import RadiusPeapTestBase
-
-
 
 
 DOT1X_CLIENT_CERT_VALID = getattr(WindowsCert, "DOT1X_CLT_RADIUS_SET1", WindowsCert.CERT_DOT1X_VALID)
