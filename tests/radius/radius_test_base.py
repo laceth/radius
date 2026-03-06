@@ -47,7 +47,7 @@ DEFAULT_RADIUS_POLICY_MAC_FIELDS = [
 ]
 
 
-class RadiusTestBase(TestBase):
+class RadiusTestBase:
     DEFAULT_RADIUS_SECRET = "aristo"
     DEFAULT_RADIUS_SETTINGS = RadiusPluginSettings()
     configure_radius_settings_in_test = False
