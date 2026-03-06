@@ -59,9 +59,10 @@ def set_up_logging(log_level="info", log_dir="./logs"):
     return log_path
 
 
-def _flush_report(results, report_name):
+def _flush_report(results, report_name, log_dir_path=None):
     """Write HTML and JSON reports with current results."""
-    HTMLReportGenerator(results, title="Radius Tests Report").generate(f"{report_name}.html")
+    html_path = os.path.join(log_dir_path, f"{report_name}.html") if log_dir_path else f"{report_name}.html"
+    HTMLReportGenerator(results, title="Radius Tests Report").generate(html_path)
     json_results = [result.__dict__ for result in results]
     with open(f"{report_name}.json", "w", encoding="utf-8") as json_file:
         json.dump(json_results, json_file, indent=4)
@@ -89,7 +90,7 @@ def run_class(cls, results, test_config, log_dir_path=None, report_name=None):
         finally:
             instance.do_teardown()
             if report_name:
-                _flush_report(results, report_name)
+                _flush_report(results, report_name, log_dir_path)
     else:
         log.info(DEFAULT_DECORATE_FORMAT.format(f"Running Parametrized test {cls.__name__}"))
         arg_names, arg_values_list = param_data
@@ -116,7 +117,7 @@ def run_class(cls, results, test_config, log_dir_path=None, report_name=None):
             finally:
                 instance.do_teardown()
                 if report_name:
-                    _flush_report(results, report_name)
+                    _flush_report(results, report_name, log_dir_path)
 
 
 def runner(test_suite, test_config=None, testbed_config=None, report_config=None):
@@ -139,7 +140,7 @@ def runner(test_suite, test_config=None, testbed_config=None, report_config=None
     if CONNECTION_POOL is not None:
         CONNECTION_POOL.close_all()
     if report_config:
-        _flush_report(results, report_config)
+        _flush_report(results, report_config, log_dir_path)
 
 
 if __name__ == "__main__":
