@@ -82,6 +82,8 @@ class RadiusTestBase(TestBase):
         self.host_id_auth_time = set()
         self.host_id = None
         self._last_known_ip = None
+        self.dot1x_plugin_log_collector = None
+        self.radiusd_log_collector = None
         # dummy for injection
         self.test_log_dir: str = ""
 
@@ -149,9 +151,11 @@ class RadiusTestBase(TestBase):
 
     def do_teardown(self):
         log.info("radius common teardown")
-        # self.rf.teardown(self.switch, port=self.switch.port1['interface'], radius_server_ip=self.ca.ipaddress)
-        self.dot1x_plugin_log_collector.stop()
-        self.radiusd_log_collector.stop()
+        self.rf.teardown(self.switch, port=self.switch.port1['interface'], radius_server_ip=self.ca.ipaddress)
+        if self.dot1x_plugin_log_collector is not None:
+            self.dot1x_plugin_log_collector.stop()
+        if self.radiusd_log_collector is not None:
+            self.radiusd_log_collector.stop()
 
     # =========================================================================
     # Common Helpers
@@ -379,7 +383,7 @@ class RadiusTestBase(TestBase):
             The IP address that was assigned
         """
         self.assert_nic_authentication_status(expected_status=expected_status, timeout=auth_timeout)
-        return self.wait_for_nic_ip_in_range(timeout=ip_timeout)
+        return self.verify_nic_ip_in_range(timeout=ip_timeout)
 
     def verify_nic_has_no_ip_in_range(self):
         """

@@ -230,7 +230,7 @@ def edit_pre_admission_rule(rules: List[Dict[str, Any]], node, condition_slot: i
     Set pre-admission rules by editing config.defpol_cond{slot}.value in local.properties.
     """
     if len(rules) == 1 and rules[0].get("criterion_name") == "Plain":
-        return to_file(rules[0]["fields"][0], node, lookup=_lookup_for_slot(condition_slot))
+        return to_file(rules[0]["criterion_value"][0], node, lookup=_lookup_for_slot(condition_slot))
 
     context = Context()
     new_entry_string = context.get_line(rules)

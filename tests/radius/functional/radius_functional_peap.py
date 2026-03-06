@@ -353,4 +353,3 @@ class TC_9346_PeapMultiDomainsAuthentication(RadiusPeapTestBase):
         except Exception as e:
             log.error(f"Test {self.testCaseId} with LDAP port {self.test_params['ldap_port']} failed: {e}")
             raise
-

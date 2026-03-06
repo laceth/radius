@@ -3,6 +3,7 @@ from lib.passthrough.enums import AuthenticationStatus, WindowsCert
 from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import Dot1xAttribute, PreAdmissionAuth, MscaOid, EKUEntry, MSCAEntry, RadiusAuthStatus
 from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
+from tests.radius.functional.base_classes.radius_peap_test_base import RadiusPeapTestBase
 
 
 
@@ -557,7 +558,7 @@ class EAPTLSPreAdmissionEKUMultipleValuesTest(RadiusEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.FAILED) #TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
             self.verify_nic_has_no_ip_in_range()
         except Exception as e:

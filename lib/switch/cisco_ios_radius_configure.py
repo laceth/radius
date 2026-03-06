@@ -70,7 +70,8 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
         self._debug_sample_len = 50
         self._original_vlan: int = 4095
         self._original_mab_state: Dict[str, bool] = {}
-        self._original_radius_aaa: List[str] = []
+        self._original_dot1x_pae_state: Dict[str, bool] = {}
+        self._original_radius_aaa: str = ""
         self._original_radius_servers: Dict[str, List[str]] = {}
         self._original_radius_server_name: str = ""
         self._original_radius_server_group: str = ""
@@ -240,6 +241,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                 return False
 
             log.info(f"Successfully teardown all RADIUS configuration on Cisco switch {self.ip}")
+            self._setup_count -= 1
             return True
 
         except Exception as e:
@@ -454,12 +456,15 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
             else:  # teardown
                 radius_server_exists = self._radius_server_name in running_config
                 if not radius_server_exists:
-                    log.info(f"RADIUS server {self._radius_server_name} not configured on {self.ip}")
-                else:
-                    commands = ["no " + expected_config[0]]
-                    self.exec_command(commands)
+                    log.info(f"RADIUS server {self._radius_server_name} not configured on {self.ip}, skipping teardown")
+                    return True
                 if self._original_radius_server_name:
+                    commands = ["no " + expected_config[0]]
+                    self.exec_command(commands)                    
                     self._restore_address_to_radius_server(self._original_radius_server_name, expected_config[1])
+                else:    
+                    log.info(f"RADIUS server {self._radius_server_name} was configured on {self.ip} before setup, skipping teardown")
+                    return True
             log.info(f"Succeed to {action.name.lower()} RADIUS server {self._radius_server_name} on Cisco switch {self.ip}")
             return True
 
@@ -488,27 +493,30 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                     RadiusCmd.RADIUS_GROUP_SERVER.render(server=server_name),
                     RadiusCmd.RADIUS_GROUP_DEADTIME.render(deadtime=deadtime),
                 )
-
-                if (server_count == 1 and not self.config_has_strings(running_config, f"{server_name}")) or server_count > 1:
+                if (server_count == 1 and not self.config_has_strings(running_config, server_name)) or server_count > 1:
                     if self._setup_count == 1 and not self._original_radius_server_group:
                         log.warning(f"{group_name} has an existing configuration, Backing up original group configuration.")
                         self._original_radius_server_group = running_config
-                    # Remove existing group and recreate with our server
+                    # Remove existing group before recreating with our server
                     commands.insert(0, "no " + RadiusCmd.RADIUS_GROUP.render(group=group_name))
+                self.exec_command(commands, log_output=True)
 
             else:  # teardown
                 radius_group_exists = group_name in running_config
                 if not radius_group_exists:
-                    log.info(f"RADIUS group {group_name} not configured on {self.ip}")
+                    log.info(f"RADIUS group {group_name} not configured on {self.ip}, skipping teardown")
                     return True
                 if self._original_radius_server_group:
-                    commands = []
+                    # Restore original group config
+                    commands = ["no " + RadiusCmd.RADIUS_GROUP.render(group=group_name)]
                     for line in self._original_radius_server_group.splitlines():
-                        commands.append(line)
-                else:
-                    commands = self.build_commands("no " + RadiusCmd.RADIUS_GROUP.render(group=group_name))
-
-            self.exec_command(commands, log_output=True)
+                        stripped = line.strip()
+                        if stripped:
+                            commands.append(stripped)
+                    self.exec_command(commands, log_output=True)
+                else:    
+                    log.info(f"RADIUS group {group_name} was configured on {self.ip} before setup, skipping teardown")
+                    return True                    
             log.info(f"Succeed to {action.name.lower()} RADIUS group {group_name} on Cisco switch {self.ip}")
             return True
 
@@ -517,9 +525,8 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
             return False
 
     def _configure_radius_aaa(self, action: Action, group_name: str, aaa_auth_type: str) -> bool:
-        """Configure or remove AAA authentication & authorization &accouting for dot1x."""
+        """Configure or remove AAA authentication & authorization & accounting for dot1x."""
         self._validate_action(action)
-        radius_aaa_exists = False
         commands = self.build_commands(
             RadiusCmd.AAA_AUTH.render(auth_type=aaa_auth_type, group=group_name),
             RadiusCmd.AAA_AUTHZ.render(group=group_name),
@@ -528,35 +535,35 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
         try:
             running_config = self.exec_command(RadiusCmd.SHOW_AAA.value, log_output=True)
             radius_aaa_exists = self.config_has_strings(running_config, *commands)
-            # Capture presence of our AAA lines on first setup; restore to 'none' later
+
+            # On first setup, snapshot the original AAA state so teardown can restore it
             if self._setup_count == 1 and not self._original_radius_aaa:
-                no_group_commands = self.build_commands(
-                    RadiusCmd.AAA_AUTH.render(auth_type=aaa_auth_type, group=""),
-                    RadiusCmd.AAA_AUTHZ.render(group=""),
-                    RadiusCmd.AAA_ACCT.render(auth_type=aaa_auth_type, group=""),
-                )
-                self._original_radius_aaa = [
-                    line
-                    for line in running_config.splitlines()
-                    if any(self.config_has_strings(line, cmd) for cmd in no_group_commands)
-                ]
+                self._original_radius_aaa = running_config
+
             if action == Action.SETUP:
                 if radius_aaa_exists:
                     log.info(f"AAA already exists with group {group_name} on {self.ip}")
                     return True
                 self.exec_command(commands, log_output=True)
-                log.info(f"Succeed to {action.name.lower()} AAA for group {group_name} on Cisco switch {self.ip}")
+                log.info(f"Succeed to setup AAA for group {group_name} on Cisco switch {self.ip}")
                 return True
+
             else:  # teardown
                 if not radius_aaa_exists:
-                    log.info(f"AAA not exists with group {group_name} on {self.ip}")
+                    log.info(f"AAA not configured with group {group_name} on {self.ip}, skipping teardown")
                     return True
-                commands = ["no " + cmd for cmd in commands]
-                if self._original_radius_aaa:
-                    for line in self._original_radius_aaa:
-                        commands.append(line)
-                self.exec_command(commands, log_output=True)
-                log.info(f"Succeed to {action.name.lower()} AAA for group {group_name} on Cisco switch {self.ip}")
+                # If original already had our group's commands, setup made no changes — skip teardown
+                if self.config_has_strings(self._original_radius_aaa, *commands):
+                    log.info(f"AAA was already configured with group {group_name} before setup, skipping teardown")
+                    return True
+                # Remove our group's commands, then restore the original AAA lines
+                teardown_commands = ["no " + cmd for cmd in commands]
+                for line in self._original_radius_aaa.splitlines():
+                    line = line.strip()
+                    if line:
+                        teardown_commands.append(line)
+                self.exec_command(teardown_commands, log_output=True)
+                log.info(f"Succeed to teardown AAA to original state on Cisco switch {self.ip}")
                 return True
 
         except Exception as e:
@@ -611,7 +618,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                             f"client {server_ip} server-key {escaped_secret}",
                         )
                     else:
-                        log.info(f"Preserving RADIUS dynamic-author client {server_ip} as it existed before setup")
+                        log.info(f"Preserving RADIUS dynamic-author client {server_ip} as it existed before setup, skipping teardown")
                         return True
                 else:
                     commands = self.build_commands(
@@ -652,10 +659,9 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                 if self._original_vlan == 4095:
                     self._original_vlan = current_vlan
                 if self._original_mab_state.get(port) is None:
-                    self._original_mab_state[port] = "mab" in current_config
-
-                # Store original dot1x pae state for teardown
-                original_dot1x_pae = RadiusCmd.DOT1X_PAE.value in current_config
+                    self._original_mab_state[port] = RadiusCmd.MAB.value in current_config
+                if self._original_dot1x_pae_state.get(port) is None:
+                    self._original_dot1x_pae_state[port] = RadiusCmd.DOT1X_PAE.value in current_config
 
                 expected_config: List[str] = [
                     RadiusCmd.SW_MODE_ACCESS.value,
@@ -707,7 +713,15 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                     self._teardown_commands_on_port[port].append(
                         RadiusCmd.MAB.value if self._original_mab_state[port] else f"no {RadiusCmd.MAB.value}"
                     )
-                self.exec_command(self._teardown_commands_on_port[port], log_output=True)
+                if self._original_dot1x_pae_state.get(port) is not None:
+                    self._teardown_commands_on_port[port].append(
+                        RadiusCmd.DOT1X_PAE.value if self._original_dot1x_pae_state[port] else f"no {RadiusCmd.DOT1X_PAE.value}"
+                    )                                    
+                if port not in self._teardown_commands_on_port or len(self._teardown_commands_on_port[port]) == 1:
+                    log.info(f"Port {port} has been configured on Cisco switch {self.ip} before setup, skipping teardown")
+                    return True
+                else:                    
+                    self.exec_command(self._teardown_commands_on_port[port], log_output=True)
                 # Clear stored per-port teardown config to avoid reuse
                 self._teardown_commands_on_port.pop(port, None)
 
