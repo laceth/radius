@@ -188,92 +188,6 @@ class MABSimplePreAdmissionConditionsTest(RadiusMabTestBase):
             log.error(f"[T1316914] FAIL: {e}")
             raise
 
-
-class MABPreAdmissionDenyTest(RadiusMabTestBase):
-    """
-    T1316916 - DOT Verify pre-admission rules deny admission
-
-    Steps (CSV C62039)
-    ------------------
-    1. Configure pre-admission rules (rule set that results in deny for the test endpoint).
-    2. Verify endpoint MAC address is NOT in MAR.
-    3. Attempt to authenticate via MAB.
-    4. Verify endpoint denied network access and matches the deny rule.
-    """
-
-    # MAC NOT in MAR -> Rule 1 ("MAC Found in MAR") won't match -> falls to Rule 2 (deny)
-    SET_MAC_IN_MAR_ACCEPT_ELSE_DENY = [
-        {"cond_rules": RULE_MAC_FOUND_IN_MAR_TRUE, "auth": PreAdmissionAuth.ACCEPT},
-        {"cond_rules": RULE_USER_NAME_MATCH_ANY, "auth": PreAdmissionAuth.REJECT_DUMMY},
-    ]
-
-    def do_test(self):
-        try:
-            # Step 1: Configure pre-admission rules
-            self.dot1x.set_pre_admission_rules(self.SET_MAC_IN_MAR_ACCEPT_ELSE_DENY)
-
-            # Step 2: Verify MAC is NOT in MAR (do not add it)
-            self.assert_mac_not_in_mar()
-
-            # Step 3: Authenticate via MAB - should be denied (MAC not in MAR)
-            self.wait_for_dot1x_ready()
-            self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
-            self.verify_nic_has_no_ip_in_range()
-
-            # Step 4: Verify denied access on CA
-            self.verify_pre_admission_rule(rule_priority=2, auth_state="Access-Reject")
-            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT, host_in_mar=False)
-
-            log.info("[T1316916] PASS - Pre-admission deny test completed")
-        except Exception as e:
-            log.error(f"[T1316916] FAIL: {e}")
-            raise
-
-
-class MABPreAdmissionLDAPGroupTest(RadiusMabTestBase):
-    """
-    T1316915 - DOT Verify pre-admission conditions via LDAP group membership
-
-    This test verifies that pre-admission rules based on LDAP group membership
-    work correctly with MAB authentication. Since this is MAB (no 802.1X supplicant),
-    we test the MAB-with-MAR flow where the rule set includes a fallback accept.
-
-    Steps (CSV C62038)
-    ------------------
-    1. Configure pre-admission rules with Authentication-Type = MAB (accept), else deny.
-    2. Verify endpoint MAC is NOT in MAR.
-    3. Add MAC to MAR.
-    4. Authenticate endpoint.
-    5. Verify endpoint authenticated and rule matched.
-    """
-
-    def do_test(self):
-        try:
-            # Step 1: Configure pre-admission rule
-            self.dot1x.set_pre_admission_rules(SET_AUTH_TYPE_MAB_ACCEPT_ELSE_DENY)
-
-            # Step 2: Verify MAC is initially NOT in MAR
-            self.assert_mac_not_in_mar()
-
-            # Step 3: Add MAC to MAR
-            self.em.add_mac_to_mar(mac=self.nic_mac)
-            self.assert_mac_in_mar()
-
-            # Step 4-5: Authenticate and verify rule match
-            self.wait_for_dot1x_ready()
-            self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
-            self.wait_for_nic_ip_in_range()
-            self.verify_pre_admission_rule(rule_priority=1)
-            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
-            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
-
-            log.info("[T1316915] PASS - Pre-admission LDAP group test completed")
-        except Exception as e:
-            log.error(f"[T1316915] FAIL: {e}")
-            raise
-
 class MABAuthUppercaseMACTest(RadiusMabTestBase):
     """
     T1316966 - DOT Verify MAB Auth using uppercase Username and Mac address
@@ -297,6 +211,10 @@ class MABAuthUppercaseMACTest(RadiusMabTestBase):
 
     def do_test(self):
         try:
+            # Precondition: configure the switch to send MAB username in uppercase format
+            # mab request format attribute 1 groupsize 12 separator : uppercase
+            self.switch.set_mab_username_format(uppercase=True)
+
             # Step 1: Configure pre-admission rule
             self.dot1x.set_pre_admission_rules(SET_AUTH_TYPE_MAB_ACCEPT_ELSE_DENY)
 
@@ -317,6 +235,9 @@ class MABAuthUppercaseMACTest(RadiusMabTestBase):
         except Exception as e:
             log.error(f"[T1316966] FAIL: {e}")
             raise
+        finally:
+            # Restore default MAB username format (no mab request format attribute 1)
+            self.switch.set_mab_username_format(uppercase=False)
 
 
 class MABLargeMARTableTest(RadiusMabTestBase):

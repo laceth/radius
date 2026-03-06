@@ -397,7 +397,7 @@ class CiscoIosRadiusConfigure(CiscoIOS, RadiusConfigureBase):
                 RadiusCmd.RADIUS_SERVER.render(name=self._radius_server_name),
                 RadiusCmd.RADIUS_ADDRESS.render(ip_family=ip_family, ip=server_ip),
             )
-            running_config = self.exec_command(RadiusCmd.SHOW_RADIUS_SERVER.render(name=self._radius_server_name), log_output=True)
+            running_config = self.exec_command(RadiusCmd.SHOW_RADIUS_SERVER.render(name=self._radius_server_name), log_output=True, timeout=60)
             if action == Action.SETUP:
                 if not secret:
                     log.error("Secret is required when setting up RADIUS server")
