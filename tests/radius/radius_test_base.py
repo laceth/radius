@@ -18,6 +18,7 @@ from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings
 from lib.switch.cisco_ios import CiscoIOS
 from lib.switch.radius_factory import RadiusFactory
 from lib.utils.vlan_mapping import get_ip_range_from_vlan
+from tests.test_base import TestBase
 
 # CONSTANTS
 DOT1X_LOG_PATH = "/usr/local/forescout/log/plugin/dot1x/dot1x.log"
@@ -46,9 +47,10 @@ DEFAULT_RADIUS_POLICY_MAC_FIELDS = [
 ]
 
 
-class RadiusTestBase:
+class RadiusTestBase(TestBase):
     DEFAULT_RADIUS_SECRET = "aristo"
     DEFAULT_RADIUS_SETTINGS = RadiusPluginSettings()
+    configure_radius_settings_in_test = False
     AD_DOMAIN_CONFIGS = [
         {
             "ad_domain": "txqalab.forescout.local",
@@ -117,12 +119,14 @@ class RadiusTestBase:
 
         self.build_ad_config()
         if self.ad_config1:
+            self.dot1x.add_auth_source(self.ad_config1["ad_name"], self.ad_config1["ad_ud_user"])
             self.dot1x.join_domain(self.ad_config1["ad_name"], self.ad_config1["ad_ud_user"], self.ad_config1["ad_secret"])
             self.dot1x.set_null(self.ad_config1["ad_name"])
-        self.configure_radius_settings()
+        if not self.configure_radius_settings_in_test:
+            self.configure_radius_settings()
 
         # Cleanup any existing endpoint before test
-        self.cleanup_endpoint_by_mac(self.passthrough.mac)
+        self.cleanup_endpoint_by_mac(self.passthrough.mac, timeout=0)
 
         # Get VLAN and IP range from switch port config
         vlan = self.switch.port1['vlan']
@@ -145,13 +149,18 @@ class RadiusTestBase:
 
     def do_teardown(self):
         log.info("radius common teardown")
-        self.rf.teardown(self.switch, port=self.switch.port1, radius_server_ip=self.ca.ipaddress)
+        # self.rf.teardown(self.switch, port=self.switch.port1['interface'], radius_server_ip=self.ca.ipaddress)
         self.dot1x_plugin_log_collector.stop()
         self.radiusd_log_collector.stop()
 
     # =========================================================================
     # Common Helpers
     # =========================================================================
+    @property
+    def testCaseId(self) -> str:
+        m = re.match(r'^TC_(\d+)_', self.__class__.__name__)
+        return f"TC-{m.group(1)}" if m else "UNKNOWN"
+
     def log_test_devices(self):
         log.info(f"Radius Server IP: {self.ca.ipaddress}")
         if self.switch.ip:
@@ -312,7 +321,7 @@ class RadiusTestBase:
         """
         assert self.dot1x.dot1x_plugin_running(), message
 
-    def assert_authentication_status(
+    def assert_nic_authentication_status(
             self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
     ):
         """
@@ -324,7 +333,7 @@ class RadiusTestBase:
         """
         self.passthrough.wait_for_nic_authentication(self.nicname, expected_status=expected_status, timeout=timeout)
 
-    def wait_for_nic_ip_in_range(self, timeout: int = 90):
+    def verify_nic_ip_in_range(self, timeout: int = 90):
         """
         Wait for NIC to get an IP address in the target VLAN range.
         The IP range is derived from the switch port's VLAN configuration.
@@ -369,7 +378,7 @@ class RadiusTestBase:
         Returns:
             The IP address that was assigned
         """
-        self.assert_authentication_status(expected_status=expected_status, timeout=auth_timeout)
+        self.assert_nic_authentication_status(expected_status=expected_status, timeout=auth_timeout)
         return self.wait_for_nic_ip_in_range(timeout=ip_timeout)
 
     def verify_nic_has_no_ip_in_range(self):
@@ -648,7 +657,7 @@ class RadiusTestBase:
     # Endpoint Cleanup
     # =========================================================================
 
-    def cleanup_endpoint_by_mac(self, mac_address: str) -> bool:
+    def cleanup_endpoint_by_mac(self, mac_address: str, timeout: int = 60) -> bool:
         """
         Cleanup endpoint by MAC address.
         Combines getting host IP, deleting endpoint, and cleaning dbObject table.
@@ -662,7 +671,7 @@ class RadiusTestBase:
         log.info(f"Starting endpoint cleanup for MAC: {mac_address}")
         try:
             # Task 1: Get host IP by MAC address
-            endpoint_ip = self.ca.get_host_ip_by_mac(mac_address)
+            endpoint_ip = self.ca.get_host_ip_by_mac(mac_address, timeout=timeout)
 
             if endpoint_ip:
                 # Task 2: Parse IP (in case of extra data)

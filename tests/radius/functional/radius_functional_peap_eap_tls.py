@@ -39,8 +39,8 @@ class PEAPEAPTLSBasicAuthWiredTest(RadiusPeapEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
@@ -51,7 +51,7 @@ class PEAPEAPTLSBasicAuthWiredTest(RadiusPeapEapTlsTestBase):
 
 class PEAPEAPTLSRegexpPreAdmissionTest(RadiusPeapEapTlsTestBase):
     """
-    T1316933 (C143274)
+    TC-9286 (C143274)
     DOT | Verify Host authentication using regexp pre authentication rule PEAP-EAP-TLS (wired)
 
     Steps
@@ -83,13 +83,13 @@ class PEAPEAPTLSRegexpPreAdmissionTest(RadiusPeapEapTlsTestBase):
             self.import_certificates(certificate_password=CERT_PASSWORD)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
         except Exception as e:
-            log.error(f"[T1316933] FAIL: {e}")
+            log.error(f"[TC-9286] FAIL: {e}")
             raise
 
 

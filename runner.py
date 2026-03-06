@@ -59,7 +59,15 @@ def set_up_logging(log_level="info", log_dir="./logs"):
     return log_path
 
 
-def run_class(cls, results, test_config, log_dir_path):
+def _flush_report(results, report_name):
+    """Write HTML and JSON reports with current results."""
+    HTMLReportGenerator(results, title="Radius Tests Report").generate(f"{report_name}.html")
+    json_results = [result.__dict__ for result in results]
+    with open(f"{report_name}.json", "w", encoding="utf-8") as json_file:
+        json.dump(json_results, json_file, indent=4)
+
+
+def run_class(cls, results, test_config, log_dir_path=None, report_name=None):
     """Run all test methods in a class"""
     param_data = getattr(cls, "_parametrize_args", None)
     configurator = Configurator(test_config)
@@ -80,29 +88,35 @@ def run_class(cls, results, test_config, log_dir_path):
             results.append(TestResult(cls.__name__, 'failed', str(e)))
         finally:
             instance.do_teardown()
+            if report_name:
+                _flush_report(results, report_name)
     else:
         log.info(DEFAULT_DECORATE_FORMAT.format(f"Running Parametrized test {cls.__name__}"))
         arg_names, arg_values_list = param_data
         for idx, values in enumerate(arg_values_list, 1):
+            test_name = f"{cls.__name__}[{idx}] with {values}"
             instance = configurator.inject(cls, configurator.eyesight_config())
             instance.test_log_dir = log_dir_path
             instance.test_params = {}
-            log.info(DEFAULT_DECORATE_FORMAT.format(f"Running {cls.__name__}[{idx}] with {values}"))
-            kwargs = dict(zip(arg_names, values))
+            log.info(DEFAULT_DECORATE_FORMAT.format(f"Running {test_name}"))
+            wrapped = [values] if isinstance(values, (str, int, float, bool)) else values
+            kwargs = dict(zip(arg_names, wrapped))
             for k, v in kwargs.items():
                 instance.test_params[k] = v
             try:
                 instance.do_setup()
-                log.info(DEFAULT_DECORATE_FORMAT.format(f"Running test: {cls.__name__}[{idx}]"))
+                log.info(DEFAULT_DECORATE_FORMAT.format(f"Running test: {test_name}"))
                 instance.do_test()
-                log.info(DEFAULT_DECORATE_FORMAT.format(f"Test passed: {instance.__class__.__name__} Passed"))
-                results.append(TestResult(f"{cls.__name__}[{idx}]with {values}", 'passed'))
+                log.info(DEFAULT_DECORATE_FORMAT.format(f"Test passed: {test_name} Passed"))
+                results.append(TestResult(test_name, 'passed'))
             except (AssertionError, Exception) as e:
-                log.error(DEFAULT_DECORATE_FORMAT.format(f"Test Failed: {instance.__class__.__name__} Failed"))
+                log.error(DEFAULT_DECORATE_FORMAT.format(f"Test Failed: {test_name} Failed"))
                 log.error(f"Error: {str(e)}")
-                results.append(TestResult(f"{cls.__name__}[{idx}]with {values}", 'failed', str(e)))
+                results.append(TestResult(test_name, 'failed', str(e)))
             finally:
                 instance.do_teardown()
+                if report_name:
+                    _flush_report(results, report_name)
 
 
 def runner(test_suite, test_config=None, testbed_config=None, report_config=None):
@@ -121,14 +135,11 @@ def runner(test_suite, test_config=None, testbed_config=None, report_config=None
             if single_test_class and name != test_suite.split("::")[-1]:
                 continue
             log.info(f"\nRunning class: {name}")
-            run_class(cls, results, test_config, log_dir_path)
+            run_class(cls, results, test_config, log_dir_path=log_dir_path, report_name=report_config)
     if CONNECTION_POOL is not None:
         CONNECTION_POOL.close_all()
-
-    HTMLReportGenerator(results, title="Radius Tests Report").generate(os.path.join(log_dir_path, "report.html"))
-    json_results = [result.__dict__ for result in results]
-    with open("radius_report.json", "w", encoding="utf-8") as json_file:
-        json.dump(json_results, json_file, indent=4)
+    if report_config:
+        _flush_report(results, report_config)
 
 
 if __name__ == "__main__":

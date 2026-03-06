@@ -82,9 +82,9 @@ class CiscoIOS(SwitchBase, SSHClient):
         log.info(f"Executing command on CiscoIOS: {cmd}")
         if isinstance(cmd, list):
             secrets_in_list = any(isinstance(c, str) and self._is_secret_cmd(c) for c in cmd)
-            output = self.session.send_config_set(cmd, cmd_verify=not secrets_in_list)
+            output = self.session.send_config_set(cmd, cmd_verify=not secrets_in_list, read_timeout=timeout)
         else:
-            output = self.session.send_command(cmd, read_timeout=timeout)
+            output = self.session.send_command(cmd, expect_string=r"#", read_timeout=timeout)
         
         if log_output:
             log.info(f"Command output:")

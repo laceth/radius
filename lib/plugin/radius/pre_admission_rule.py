@@ -24,8 +24,8 @@ class D1XComboStringCriterion(D1xOption):
     )
 
     def return_admission_rule_entry(self, rule_dict):
-        option = rule_dict["rule_name"]
-        selected = rule_dict["fields"][0]
+        option = rule_dict["criterion_name"]
+        selected = rule_dict["criterion_value"][0]
         return self.base_entry % (option, selected, selected)
 
 
@@ -40,14 +40,14 @@ class D1XStringCriterion(D1xOption):
     }
 
     def return_admission_rule_entry(self, rule_dict):
-        if rule_dict["fields"][0].lower().replace(" ", "") not in self.map:
-            raise Exception("Invalid match type: %s" % rule_dict["fields"][0])
-        if rule_dict["fields"][0].lower().replace(" ", "") == "anyvalue":
-            return self.map["anyvalue"] % (rule_dict["rule_name"])
-        return self.map[rule_dict["fields"][0].lower().replace(" ", "")] % (
-            rule_dict["fields"][1],
-            rule_dict["rule_name"],
-            rule_dict["fields"][1],
+        if rule_dict["criterion_value"][0].lower().replace(" ", "") not in self.map:
+            raise Exception("Invalid match type: %s" % rule_dict["criterion_value"][0])
+        if rule_dict["criterion_value"][0].lower().replace(" ", "") == "anyvalue":
+            return self.map["anyvalue"] % (rule_dict["criterion_name"])
+        return self.map[rule_dict["criterion_value"][0].lower().replace(" ", "")] % (
+            rule_dict["criterion_value"][1],
+            rule_dict["criterion_name"],
+            rule_dict["criterion_value"][1],
         )
 
 
@@ -57,8 +57,8 @@ class D1XSimpleStringCriterion(D1xOption):
     )
 
     def return_admission_rule_entry(self, rule_dict):
-        field = rule_dict["rule_name"]
-        value = rule_dict["fields"][0]
+        field = rule_dict["criterion_name"]
+        value = rule_dict["criterion_value"][0]
         return self.base_entry % (field, value, value)
 
 
@@ -72,8 +72,8 @@ class D1XEKUCheckboxListCriterion(D1xOption):
     )
 
     def return_admission_rule_entry(self, rule_dict: Dict[str, Any]) -> str:
-        field = rule_dict["rule_name"]
-        entries = rule_dict.get("fields", [])
+        field = rule_dict["criterion_name"]
+        entries = rule_dict.get("criterion_value", [])
         if not entries:
             raise Exception("EKU criterion requires at least one entry")
 
@@ -90,8 +90,8 @@ class D1XMSCACheckboxListCriterion(D1xOption):
     base_entry = '"field":"%s","value":"%s","critClass":"forescout.plugin.dot1x.default_policy.D1XMSCACheckboxListCriterion","selected":"%s"'
 
     def return_admission_rule_entry(self, rule_dict: Dict[str, Any]) -> str:
-        field = rule_dict["rule_name"]
-        entries = rule_dict.get("fields", [])
+        field = rule_dict["criterion_name"]
+        entries = rule_dict.get("criterion_value", [])
         if not entries:
             raise Exception("MSCA criterion requires at least one entry")
 
@@ -117,8 +117,8 @@ class D1XBooleanCriterion(D1xOption):
     """
 
     def return_admission_rule_entry(self, rule_dict: Dict[str, Any]) -> str:
-        field = rule_dict["rule_name"]
-        value = rule_dict["fields"][0] if rule_dict.get("fields") else "True"
+        field = rule_dict["criterion_name"]
+        value = rule_dict["criterion_value"][0] if rule_dict.get("criterion_value") else "True"
         value_lower = str(value).lower()
         if value_lower not in ("true", "false"):
             raise Exception(f"Boolean criterion requires 'True' or 'False', got: {value}")
@@ -154,26 +154,26 @@ class Context:
     boolean_set = ["MAC Found in MAR"]
 
     def get_handler(self, rule):
-        if rule["rule_name"] in self.combo_string_set:
+        if rule["criterion_name"] in self.combo_string_set:
             return D1XComboStringCriterion()
-        if rule["rule_name"] in self.string_set:
+        if rule["criterion_name"] in self.string_set:
             return D1XStringCriterion()
-        if rule["rule_name"] in self.simple_string_set:
+        if rule["criterion_name"] in self.simple_string_set:
             return D1XSimpleStringCriterion()
-        if rule["rule_name"] in self.ku_checkbox_set:
+        if rule["criterion_name"] in self.ku_checkbox_set:
             return D1XEKUCheckboxListCriterion()
-        if rule["rule_name"] in self.sca_checkbox_set:
+        if rule["criterion_name"] in self.sca_checkbox_set:
             return D1XMSCACheckboxListCriterion()
-        if rule["rule_name"] in self.time_restriction_set:
+        if rule["criterion_name"] in self.time_restriction_set:
             return D1XTimeRestrictionsCriterion()
-        if rule["rule_name"] in self.boolean_set:
+        if rule["criterion_name"] in self.boolean_set:
             return D1XBooleanCriterion()
-        raise Exception("%s does not match any existing options" % rule["rule_name"])
+        raise Exception("%s does not match any existing options" % rule["criterion_name"])
 
     def get_rule(self, rule):
         handler = self.get_handler(rule)
         if not handler:
-            raise Exception("no handler for rule %s" % rule["rule_name"])
+            raise Exception("no handler for rule %s" % rule["criterion_name"])
         return "{%s}" % (handler.return_admission_rule_entry(rule))
 
     def get_line(self, rules):
@@ -229,7 +229,7 @@ def edit_pre_admission_rule(rules: List[Dict[str, Any]], node, condition_slot: i
     """
     Set pre-admission rules by editing config.defpol_cond{slot}.value in local.properties.
     """
-    if len(rules) == 1 and rules[0].get("rule_name") == "Plain":
+    if len(rules) == 1 and rules[0].get("criterion_name") == "Plain":
         return to_file(rules[0]["fields"][0], node, lookup=_lookup_for_slot(condition_slot))
 
     context = Context()
