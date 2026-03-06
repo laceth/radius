@@ -14,7 +14,7 @@ from lib.ca.em import EnterpriseManager
 from lib.passthrough.enums import AuthenticationStatus
 from lib.passthrough.lan_profile_builder import LanProfile
 from lib.passthrough.passthrough_base import PassthroughBase
-from lib.plugin.radius.radius import Radius, DOT1X_STATUS_COMMAND, DOT1X_REQUIRED_PROCESSES
+from lib.plugin.radius.radius import Radius
 from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings
 from lib.switch.cisco_ios import CiscoIOS
 from lib.switch.radius_factory import RadiusFactory
@@ -165,9 +165,9 @@ class RadiusTestBase(FSTestCommonBase):
 
     def do_teardown(self):
         log.info("radius common teardown")
-        if self.dot1x_plugin_log_collector is not None:
+        if self.dot1x_plugin_log_collector:
             self.dot1x_plugin_log_collector.stop()
-        if self.radiusd_log_collector is not None:
+        if self.radiusd_log_collector:
             self.radiusd_log_collector.stop()
 
     # =========================================================================
@@ -341,8 +341,8 @@ class RadiusTestBase(FSTestCommonBase):
         """
         Assert all required dot1x sub-processes are running.
 
-        Fetches ``fstool dot1x status`` once and checks every process in
-        ``DOT1X_REQUIRED_PROCESSES``.
+        Uses the public ``Radius.get_process_uptimes()`` API to retrieve
+        parsed uptimes for every required sub-process.
 
         Raises:
             AssertionError: If any process is not running.
@@ -350,14 +350,11 @@ class RadiusTestBase(FSTestCommonBase):
         Returns:
             dict: process name → uptime in seconds (for reuse by callers).
         """
-        status_output = self.dot1x.exec_cmd(DOT1X_STATUS_COMMAND)
-        log.info(f"dot1x status:\n{status_output}")
-        uptimes = {}
-        for proc in DOT1X_REQUIRED_PROCESSES:
-            uptime = self.dot1x._get_process_uptime_seconds(status_output, proc)
+        uptimes = self.dot1x.get_process_uptimes()
+        log.info("dot1x process uptimes:")
+        for proc, uptime in uptimes.items():
             assert uptime >= 0, f"Process '{proc}' is not running"
             log.info(f"  {proc}: running for {uptime}s")
-            uptimes[proc] = uptime
         return uptimes
 
     def assert_dot1x_stable(self, min_radiusd_uptime: int = 45):

@@ -7,6 +7,7 @@ via their MAC address instead of 802.1X credentials.
 from framework.log.logger import log
 from lib.passthrough.enums import AuthenticationStatus
 from lib.plugin.radius.enums import PreAdmissionAuth, RadiusAuthStatus
+from lib.utils.mac import generate_random_mac
 from tests.radius.functional.base_classes.radius_mab_test_base import RadiusMabTestBase
 
 
@@ -42,6 +43,7 @@ class MABBasicAuthWiredTest(RadiusMabTestBase):
     """
 
     def do_test(self):
+        unmatched_mac = None
         try:
             # Step 1: Configure pre-admission rule: Authentication-Type = MAB
             self.dot1x.set_pre_admission_rules(SET_AUTH_TYPE_MAB_ACCEPT_ELSE_DENY)
@@ -59,19 +61,29 @@ class MABBasicAuthWiredTest(RadiusMabTestBase):
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
 
-            # Step 7: Remove MAC from MAR (simulates invalid MAC entry), re-authenticate, verify rejection
+            # Step 7: Replace endpoint MAC with an unmatched MAC in MAR, re-authenticate, verify rejection
             self.em.remove_mac_from_mar(self.nic_mac)
-            self.assert_mac_not_in_mar()
+            unmatched_mac = generate_random_mac()
+            self.em.add_mac_to_mar(mac=unmatched_mac)
+            log.info(f"Replaced endpoint MAC with unmatched MAC '{unmatched_mac}' in MAR")
+            self.assert_mac_not_in_mar()  # endpoint MAC should not be in MAR
 
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.verify_nic_has_no_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=2, auth_state="Access-Reject")
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT, host_in_mar=False)
 
             log.info("[T1316995] PASS - MAB basic wired authentication test completed")
         except Exception as e:
             log.error(f"[T1316995] FAIL: {e}")
             raise
+        finally:
+            if unmatched_mac:
+                try:
+                    self.em.remove_mac_from_mar(unmatched_mac)
+                except Exception as cleanup_err:
+                    log.warning(f"Failed to clean up unmatched MAC '{unmatched_mac}': {cleanup_err}")
 
 
 class MABMACInMARMismatchTest(RadiusMabTestBase):
@@ -116,6 +128,7 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
             self.toggle_nic()
             self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.verify_nic_has_no_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1, auth_state="Access-Reject")
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
 
             # Step 4: Change rule to Allow Access (restarts dot1x again)
@@ -209,6 +222,7 @@ class MABPreAdmissionDenyTest(RadiusMabTestBase):
             self.verify_nic_has_no_ip_in_range()
 
             # Step 4: Verify denied access on CA
+            self.verify_pre_admission_rule(rule_priority=2, auth_state="Access-Reject")
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT, host_in_mar=False)
 
             log.info("[T1316916] PASS - Pre-admission deny test completed")
@@ -334,7 +348,8 @@ class MABLargeMARTableTest(RadiusMabTestBase):
             self.dot1x.set_pre_admission_rules(SET_AUTH_TYPE_MAB_ACCEPT_ELSE_DENY)
 
             # Step 3: Add real endpoint MAC to MAR
-            self.em.add_mac_to_mar(mac=self.nic_mac)
+            # Use approved_by="by_import" to match the bulk-imported entries
+            self.em.add_mac_to_mar(mac=self.nic_mac, approved_by="by_import")
             self.assert_mac_in_mar()
 
             # Step 4-5: Authenticate and verify

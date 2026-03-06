@@ -13,7 +13,9 @@ from framework.log.logger import log
 from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import RadiusAuthStatus
 from lib.plugin.radius.models.mab_config import MABConfig
-from lib.plugin.radius.models.mar_entry import MAREntry
+from lib.plugin.radius.models.mar_entry import MAREntry, MAR_CSV_HEADER
+from lib.utils.csv import write_csv
+from lib.utils.mac import normalize_mac, generate_unique_random_macs
 from tests.radius.radius_test_base import RadiusTestBase
 
 
@@ -117,8 +119,7 @@ class RadiusMabTestBase(RadiusTestBase):
         # For Access-Reject: use MAC as host ID (no valid IP in VLAN range)
         # For Access-Accept: use IP from _get_host_id()
         if auth_status_value == RadiusAuthStatus.ACCESS_REJECT.value:
-            normalized_mac = self.nic_mac.replace("-", "").replace(":", "").lower() if self.nic_mac else ""
-            host_id = normalized_mac
+            host_id = normalize_mac(self.nic_mac) if self.nic_mac else ""
             log.info(f"Using MAC '{host_id}' as host ID for Access-Reject verification")
         else:
             host_id = self._get_host_id()
@@ -131,7 +132,7 @@ class RadiusMabTestBase(RadiusTestBase):
 
 
         # Normalize MAC to lowercase without separators for dot1x_user check
-        normalized_mac = self.nic_mac.replace("-", "").replace(":", "").lower() if self.nic_mac else ""
+        normalized_mac = normalize_mac(self.nic_mac) if self.nic_mac else ""
 
         # Build MAB properties check list
         # Note: dot1x_auth_state is NOT checked for MAB, use dot1x_mab_auth_status instead
@@ -198,9 +199,10 @@ class RadiusMabTestBase(RadiusTestBase):
             Path to the generated CSV file (caller is responsible for cleanup
             via ``bulk_cleanup_mar``).
         """
-        entries = MAREntry.generate_entries(count, comment=comment)
-        csv_path = os.path.join(tempfile.gettempdir(), "mar_bulk_import.csv")
-        MAREntry.to_csv_file(entries, csv_path)
+        entries = [MAREntry.accept(mac, comment=comment) for mac in generate_unique_random_macs(count)]
+        fd, csv_path = tempfile.mkstemp(prefix="mar_bulk_import_", suffix=".csv")
+        os.close(fd)
+        write_csv(entries, csv_path, MAR_CSV_HEADER)
         log.info(f"Generated {len(entries)} MAR entries to {csv_path}")
 
         imported = self.em.bulk_import_mar_csv(csv_path)

@@ -75,6 +75,24 @@ class Radius(RadiusBase):
                 return -1
         return -1
 
+    def get_process_uptimes(self) -> dict[str, int]:
+        """
+        Return the uptime in seconds for each required dot1x sub-process.
+
+        Fetches ``fstool dot1x status`` once and parses the output.
+        Processes that are not running are reported with an uptime of ``-1``.
+
+        Returns:
+            dict mapping process name to uptime in seconds (or -1 if down).
+            Example: ``{"radiusd": 120, "winbindd": 118, "redis-server": 125}``
+        """
+        status_output = self.exec_cmd(DOT1X_STATUS_COMMAND)
+        log.debug(f"dot1x status output:\n{status_output}")
+        uptimes: dict[str, int] = {}
+        for proc in DOT1X_REQUIRED_PROCESSES:
+            uptimes[proc] = self._get_process_uptime_seconds(status_output, proc)
+        return uptimes
+
     def dot1x_plugin_running(self) -> bool:
         """
         Check if the 802.1X plugin is ready by verifying that **all** required

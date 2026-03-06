@@ -591,6 +591,7 @@ class CounterActBase(SSHClient):
         mac: str,
         authorization: str = None,
         comment: str = None,
+        approved_by: Optional[str] = None,
     ) -> None:
         """
         Add a MAC address to the MAC Address Repository (MAR).
@@ -610,6 +611,11 @@ class CounterActBase(SSHClient):
             authorization: Authorization value. Defaults to MAR_AUTH_ACCEPT
                           which is the internal format the dot1x plugin uses for "accept".
             comment: Optional MAR comment (e.g., "automation test entry").
+            approved_by: Optional ``dot1x_approved_by`` value.  When *None*
+                        (the default) the field is **not** sent, so any
+                        existing value on the MAR entry is preserved.  Pass
+                        ``"by_import"`` explicitly to mirror the bulk-import
+                        behaviour, or any other value the workflow requires.
 
         Raises:
             Exception: If the MAC address is invalid or the operation fails
@@ -630,7 +636,9 @@ class CounterActBase(SSHClient):
             # Add/update MAR entry via devinfo
             # Use shell double quotes to protect tab character in authorization value
             base_cmd = MAR_DEVINFO_UPDATE_BASE.format(mac_id=mac_id)
-            cmd = f'{base_cmd} "dot1x_target_access={authorization}" "dot1x_approved_by=by_import"'
+            cmd = f'{base_cmd} "dot1x_target_access={authorization}"'
+            if approved_by is not None:
+                cmd += f' "dot1x_approved_by={approved_by}"'
             if comment:
                 cmd += f' "{MAR_FIELD_COMMENT}={comment}"'
             output = self.exec_command(cmd, timeout=30)
