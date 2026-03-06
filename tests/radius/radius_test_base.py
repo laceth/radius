@@ -18,7 +18,6 @@ from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings
 from lib.switch.cisco_ios import CiscoIOS
 from lib.switch.radius_factory import RadiusFactory
 from lib.utils.vlan_mapping import get_ip_range_from_vlan
-from tests.test_base import TestBase
 
 # CONSTANTS
 DOT1X_LOG_PATH = "/usr/local/forescout/log/plugin/dot1x/dot1x.log"
