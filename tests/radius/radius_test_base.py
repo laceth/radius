@@ -18,6 +18,7 @@ from lib.plugin.radius.radius_plugin_settings import RadiusPluginSettings
 from lib.switch.cisco_ios import CiscoIOS
 from lib.switch.radius_factory import RadiusFactory
 from lib.utils.vlan_mapping import get_ip_range_from_vlan
+from tests.fs_test_common_base.test_base import FSTestCommonBase
 
 # CONSTANTS
 DOT1X_LOG_PATH = "/usr/local/forescout/log/plugin/dot1x/dot1x.log"
@@ -46,7 +47,7 @@ DEFAULT_RADIUS_POLICY_MAC_FIELDS = [
 ]
 
 
-class RadiusTestBase:
+class RadiusTestBase(FSTestCommonBase):
     DEFAULT_RADIUS_SECRET = "aristo"
     DEFAULT_RADIUS_SETTINGS = RadiusPluginSettings()
     configure_radius_settings_in_test = False
@@ -86,6 +87,14 @@ class RadiusTestBase:
         # dummy for injection
         self.test_log_dir: str = ""
 
+    def suite_setup(self):
+        # suit level setup, runs once before all tests in the suite
+        log.info("set up radius test suite")
+        pass
+    def suite_teardown(self):
+        # suit level teardown, runs once after all tests in the suite
+        log.info("teardown radius suite")
+        pass
 
     def do_setup(self):
         # set up remote log streaming for both dot1x plugin logs and radiusd logs
