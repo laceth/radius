@@ -88,11 +88,12 @@ class RadiusTestBase(FSTestCommonBase):
         self.test_log_dir: str = ""
 
     def suite_setup(self):
-        # suit level setup, runs once before all tests in the suite
+        # suite level setup, runs once before all tests in the suite
         log.info("set up radius test suite")
         pass
+
     def suite_teardown(self):
-        # suit level teardown, runs once after all tests in the suite
+        # suite level teardown, runs once after all tests in the suite
         log.info("teardown radius suite")
         pass
 
