@@ -107,10 +107,7 @@ def run_tests(objects, results):
             log.info(DEFAULT_DECORATE_FORMAT.format("Running Suite Setup"))
             first_instance.suite_setup()
         except Exception as e:
-            log.error(f"Suite Setup Failed: {e}")
-            results.append(TestResult(f"suite_setup", 'failed', str(e)))
-            # Critical Fix: Abort the test run immediately if suite setup fails
-            return
+            raise Exception(f"Aborting test run due to suite setup failure: {e}")
 
 
     # 2. TEST LIFECYCLE (Iterate all objects)
@@ -141,7 +138,6 @@ def run_tests(objects, results):
             first_instance.suite_teardown()
         except Exception as e:
             log.error(f"Suite Teardown Failed: {e}")
-            results.append(TestResult(f"suite_teardown", 'failed', str(e)))
 
 
 def load_module_from_file(filepath):
