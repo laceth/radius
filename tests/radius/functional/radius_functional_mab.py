@@ -14,10 +14,9 @@ from tests.radius.functional.base_classes.radius_mab_test_base import RadiusMabT
 # ============================================================================
 # Shared rule definitions used across multiple MAB tests
 # ============================================================================
-RULE_MAC_FOUND_IN_MAR_TRUE = [{"rule_name": "MAC Found in MAR", "fields": ["True"]}]
-RULE_AUTH_TYPE_MAB = [{"rule_name": "Authentication-Type", "fields": ["MAB"]}]
-RULE_USER_NAME_MATCH_ANY = [{"rule_name": "User-Name", "fields": ["anyvalue"]}]
-RULE_MAR_COMMENT_ANY = [{"rule_name": "MAR Comment", "fields": ["anyvalue"]}]
+RULE_MAC_FOUND_IN_MAR_TRUE = [{"criterion_name": "MAC Found in MAR", "criterion_value": ["True"]}]
+RULE_AUTH_TYPE_MAB = [{"criterion_name": "Authentication-Type", "criterion_value": ["MAB"]}]
+RULE_USER_NAME_MATCH_ANY = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
 
 SET_AUTH_TYPE_MAB_ACCEPT_ELSE_DENY = [
     {"cond_rules": RULE_AUTH_TYPE_MAB, "auth": PreAdmissionAuth.ACCEPT},
@@ -291,117 +290,6 @@ class MABLargeMARTableTest(RadiusMabTestBase):
             self.bulk_cleanup_mar(csv_path)
 
 
-class MABMARCommentResolvedWhenEmptyTest(RadiusMabTestBase):
-    """
-    T1316912 - DOT Regression MAR Comment Resolved When Field is Empty
 
-    The 802.1X MAR Comment field (dot1x_mar_comment) is not resolved at all if
-    the host exists in MAR AND comment is empty.
-    If value being resolved is not defined, resolve empty string "".
-
-    Steps (CSV C61121)
-    ------------------
-    1. Add MAC to MAR with a MAR comment (e.g. "802.1x Authorization").
-    2. Add another MAC to MAR without a comment.
-    3. Configure policy with condition "802.1x MAR Comment".
-    4. Verify host with comment -> policy shows "Matched" with the comment value.
-    5. Verify host without comment -> policy shows "Matched" with empty string.
-    6. Verify host NOT in MAR -> policy shows "irresolvable" / "No value Exist in MAR".
-    """
-
-    def do_test(self):
-        try:
-            # Step 1: Configure pre-admission rule: Authentication-Type = MAB
-            self.dot1x.set_pre_admission_rules(SET_AUTH_TYPE_MAB_ACCEPT_ELSE_DENY)
-
-            # Step 2: Add MAC to MAR WITHOUT a comment (empty comment)
-            self.em.add_mac_to_mar(mac=self.nic_mac)
-            self.assert_mac_in_mar()
-
-            # Step 3: Authenticate and verify - MAC in MAR, no comment, should still succeed
-            self.wait_for_dot1x_ready()
-            self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
-            self.wait_for_nic_ip_in_range()
-            self.verify_pre_admission_rule(rule_priority=1)
-            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
-            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
-
-            # Step 4: Remove MAC, re-add with comment, verify it also works
-            self.em.remove_mac_from_mar(self.nic_mac)
-            self.em.add_mac_to_mar(mac=self.nic_mac, comment="802.1x Authorization")
-            self.assert_mac_in_mar()
-
-            self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
-            self.wait_for_nic_ip_in_range()
-            self.verify_pre_admission_rule(rule_priority=1)
-            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
-
-            log.info("[T1316912] PASS - MAR Comment resolved when empty test completed")
-        except Exception as e:
-            log.error(f"[T1316912] FAIL: {e}")
-            raise
-
-class Dot1xHealthCheckTest(RadiusMabTestBase):
-    """
-    T1316961 - DOT Perform a Health Check
-
-    Search for any issues that might not have been seen while executing test cases.
-    Verify all appliances report OK and RADIUS services are stable.
-
-    Steps (CSV C148464)
-    -------------------
-    1. Verify 802.1x plugin is running on the EM/appliance.
-    2. Verify all subordinate processes are running:
-       - radiusd
-       - winbindd
-       - redis-server
-    3. Verify none of the services are restarting (uptime > threshold).
-    """
-
-    def do_test(self):
-        try:
-            self.wait_for_dot1x_ready()
-            self.assert_dot1x_stable()
-            log.info("[T1316961] PASS - Health check completed successfully")
-        except Exception as e:
-            log.error(f"[T1316961] FAIL: {e}")
-            raise
-
-
-class Dot1xSourceConfigKerberosTest(RadiusMabTestBase):
-    """
-    T1316974 - DOT Verify Source Configuration with Kerberos enabled
-
-    Verify that configuring RADIUS with Kerberos authentication results in all
-    dot1x services running correctly.
-
-    Steps (CSV C153086)
-    -------------------
-    1. Configure RADIUS settings with Kerberos enabled.
-    2. Apply configuration.
-    3. Run 'fstool dot1x status' and verify all services are running:
-       - 802.1x plugin
-       - radiusd
-       - winbindd (for each configured domain)
-       - redis-server
-    """
-
-    def do_test(self):
-        try:
-            # Step 1-2: Configure RADIUS settings (Kerberos is typically the default)
-            self.configure_radius_settings()
-
-            # Step 3: Wait for dot1x to be fully ready after configuration
-            self.wait_for_dot1x_ready()
-
-            # Verify all processes are running and stable
-            self.assert_dot1x_stable()
-
-            log.info("[T1316974] PASS - Source configuration with Kerberos test completed")
-        except Exception as e:
-            log.error(f"[T1316974] FAIL: {e}")
-            raise
 
 

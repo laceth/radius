@@ -357,7 +357,7 @@ class RadiusTestBase(FSTestCommonBase):
             log.info(f"  {proc}: running for {uptime}s")
         return uptimes
 
-    def assert_dot1x_stable(self, min_radiusd_uptime: int = 45):
+    def assert_dot1x_stable(self, min_radiusd_uptime: int = 180):
         """
         Assert the dot1x plugin is running **and** radiusd has been up long
         enough to be considered stable (not in a restart loop).
@@ -388,6 +388,12 @@ class RadiusTestBase(FSTestCommonBase):
         """
         self.passthrough.wait_for_nic_authentication(self.nicname, expected_status=expected_status, timeout=timeout)
 
+    # Alias for backward compatibility
+    def assert_nic_authentication_status(
+            self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
+    ):
+        return self.assert_authentication_status(expected_status=expected_status, timeout=timeout)
+
     def verify_nic_ip_in_range(self, timeout: int = 90):
         """
         Wait for NIC to get an IP address in the target VLAN range.
@@ -415,6 +421,10 @@ class RadiusTestBase(FSTestCommonBase):
         ip = self.passthrough.wait_for_nic_ip_in_range(self.nicname, ip_range, timeout=timeout)
         self._last_known_ip = ip
         return ip
+
+    # Alias for backward compatibility
+    def wait_for_nic_ip_in_range(self, timeout: int = 90):
+        return self.verify_nic_ip_in_range(timeout=timeout)
 
     def assert_authentication_and_ip_in_range(
             self,

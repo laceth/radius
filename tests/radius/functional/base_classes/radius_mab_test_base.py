@@ -70,6 +70,7 @@ class RadiusMabTestBase(RadiusTestBase):
 
         # Get NIC MAC for MAR operations
         self.nic_mac = self.passthrough.get_nic_mac_address(self.nicname)
+        self.host_id = normalize_mac(self.nic_mac)
         log.info(f"Test NIC MAC address: {self.nic_mac}")
 
     def do_teardown(self):
@@ -116,14 +117,9 @@ class RadiusMabTestBase(RadiusTestBase):
         # Convert enum to string value if needed
         auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
 
-        # For Access-Reject: use MAC as host ID (no valid IP in VLAN range)
-        # For Access-Accept: use IP from _get_host_id()
-        if auth_status_value == RadiusAuthStatus.ACCESS_REJECT.value:
-            host_id = normalize_mac(self.nic_mac) if self.nic_mac else ""
-            log.info(f"Using MAC '{host_id}' as host ID for Access-Reject verification")
-        else:
-            host_id = self._get_host_id()
-
+        # Always identify the host by MAC — immune to IP-address drift between
+        # the NIC's DHCP lease and the IP CounterAct has on record.
+        host_id = normalize_mac(self.nic_mac) if self.nic_mac else self._get_host_id()
         log.info(f"Verifying MAB/MAR authentication for host: {host_id}")
 
         # Set defaults from test configuration
@@ -226,6 +222,7 @@ class RadiusMabTestBase(RadiusTestBase):
         finally:
             os.remove(csv_path)
             log.info(f"Deleted temp CSV: {csv_path}")
+
 
 
 

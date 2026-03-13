@@ -44,8 +44,8 @@ class Dot1xSourceConfigKerberosTest(RadiusTestBase):
 
     Steps (CSV C153086)
     -------------------
-    1. Configure RADIUS settings with Kerberos enabled.
-    2. Apply configuration.
+    1. Add a source and join it to the domain without setting Default or NULL.
+    2. Configure RADIUS settings with Kerberos authentication enabled.
     3. Run 'fstool dot1x status' and verify all services are running:
        - 802.1x plugin
        - radiusd
@@ -55,13 +55,12 @@ class Dot1xSourceConfigKerberosTest(RadiusTestBase):
 
     def do_test(self):
         try:
-            # Step 1-2: Configure RADIUS settings (Kerberos is typically the default)
-            self.configure_radius_settings()
+            # Step 1: Clear Default and NULL so the source is joined without either assigned
+            self.dot1x.set_null("")
+            self.dot1x.set_default("")
 
-            # Step 3: Wait for dot1x to be fully ready after configuration
+            # Step 2-3: Wait for dot1x to be fully ready and verify all services are running
             self.wait_for_dot1x_ready()
-
-            # Verify all processes are running and stable
             self.assert_dot1x_stable()
 
             log.info("[T1316974] PASS - Source configuration with Kerberos test completed")

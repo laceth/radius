@@ -1,6 +1,25 @@
 import random
 import re
 
+# Matches common MAC formats: aa:bb:cc:dd:ee:ff, aa-bb-cc-dd-ee-ff, aabbccddeeff
+_MAC_RE = re.compile(r'^([0-9a-fA-F]{2}[:\-]){5}[0-9a-fA-F]{2}$|^[0-9a-fA-F]{12}$')
+
+
+def is_valid_mac(value: str) -> bool:
+    """Return True if *value* looks like a MAC address.
+
+    Accepts colon-separated (``aa:bb:cc:dd:ee:ff``), dash-separated
+    (``aa-bb-cc-dd-ee-ff``), or bare 12-hex-char (``aabbccddeeff``) formats.
+
+    Example::
+
+        >>> is_valid_mac("aa:bb:cc:dd:ee:ff")
+        True
+        >>> is_valid_mac("not-a-mac")
+        False
+    """
+    return bool(_MAC_RE.match(value))
+
 
 def normalize_mac(mac: str) -> str:
     """
