@@ -5,19 +5,13 @@ from typing import Dict, List, Optional
 
 from framework.log.logger import log
 from lib.ca.ca_common_base import CounterActBase
+from lib.utils.hostinfo import parse_property_value
+from lib.utils.mac import is_valid_mac
 
 # Command
 REMOVE_ENDPOINT_CMD = "fstool cliapi host remove %s"
 GET_HOSTINFO_BASE_CMD = "fstool hostinfo %s"
 PROPERTY_CHECK_COMMAND = "fstool hostinfo %s | grep %s,"
-
-# Matches common MAC formats: aa:bb:cc:dd:ee:ff, aa-bb-cc-dd-ee-ff, aabbccddeeff
-_MAC_RE = re.compile(r'^([0-9a-fA-F]{2}[:\-]){5}[0-9a-fA-F]{2}$|^[0-9a-fA-F]{12}$')
-
-
-def _is_valid_mac(value: str) -> bool:
-    """Return True if *value* looks like a MAC address."""
-    return bool(_MAC_RE.match(value))
 
 
 class CouterActAppliance(CounterActBase):
@@ -40,7 +34,7 @@ class CouterActAppliance(CounterActBase):
             return id  # IPv4
         except ValueError:
             pass
-        if _is_valid_mac(id):
+        if is_valid_mac(id):
             return id
         raise ValueError(
             f"'{id}' is not a valid IPv4/IPv6 address or MAC address"
@@ -76,7 +70,7 @@ class CouterActAppliance(CounterActBase):
             property_field: The property field to retrieve.
 
         Returns:
-            Property value or None if not found.
+            Property value or None if not found (property absent / irresolvable).
 
         Raises:
             ValueError: If id is not a valid IPv4/IPv6 address or MAC address.
@@ -85,9 +79,13 @@ class CouterActAppliance(CounterActBase):
         if not property_field or not id:
             raise Exception("property_field and id are required")
 
-        output = self.exec_command(PROPERTY_CHECK_COMMAND % (id, property_field))
-        parts = output.split(", ")
-        return parts[3] if len(parts) > 3 else None
+        try:
+            output = self.exec_command(PROPERTY_CHECK_COMMAND % (id, property_field))
+        except RuntimeError:
+            # grep exits with code 1 when there is no match — property is absent/irresolvable
+            return None
+
+        return parse_property_value(output)
 
     def _property_check(self, id: str, property_field: str, expected_value: str, resolved_by: str = "", timeout: int = 60, case_insensitive: bool = False):
         """
@@ -120,7 +118,7 @@ class CouterActAppliance(CounterActBase):
         while time.time() - start_time < timeout:
             try:
                 output = self.exec_command(PROPERTY_CHECK_COMMAND % (id, property_field))
-                field_value = output.split(", ")[3] if len(output.split(", ")) > 4 else None
+                field_value = parse_property_value(output)
                 resolved_by_plugin = re.search(r'\((\w+)@', output).group(1) if re.search(r'\((\w+)@', output) else None
             except RuntimeError as e:
                 # grep returns exit code 1 when no match found - this is expected when property doesn't exist yet

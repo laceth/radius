@@ -1,9 +1,10 @@
 import ipaddress as _ipaddress
 import os
 import re
+import shutil
+import tempfile
 import time
 import xml.etree.ElementTree as ET
-from pathlib import Path
 from typing import List, Optional, Dict
 
 import paramiko
@@ -33,15 +34,6 @@ MAR_DEVINFO_REMOVE = "fstool devinfo remove mar {mac_id}"
 MAR_DEVINFO_DUMP = "fstool devinfo dump mar {mac_id}"
 MAR_DEVINFO_ENABLE_CATEGORY = "fstool set_property devinfo.enabled.categories sw,wireless,mar"
 
-# Bulk MAR Perl helpers — call the engine's cutil API directly.
-# Uploaded to /tmp on the EM at runtime and cleaned up after execution.
-MAR_BULK_IMPORT_SCRIPT = "mar_bulk_import.pl"
-MAR_BULK_REMOVE_SCRIPT = "mar_bulk_remove.pl"
-
-_REMOTE_BULK_IMPORT_SCRIPT = "/tmp/fs_mar_bulk_import.pl"
-_REMOTE_BULK_REMOVE_SCRIPT = "/tmp/fs_mar_bulk_remove.pl"
-
-
 # dot1x-specific MAR field names and authorization values are maintained at the
 # plugin level (lib.plugin.radius.enums) and imported here for use by the
 # generic MAR helpers.
@@ -49,6 +41,10 @@ from lib.plugin.radius.enums import (  # noqa: E402
     MAR_FIELD_MAC,
     MAR_FIELD_COMMENT,
     MAR_AUTH_ACCEPT,
+)
+from lib.plugin.radius.mar_bulk_ops import (  # noqa: E402
+    bulk_import_mar_csv as _bulk_import_mar_csv,
+    bulk_remove_mar_csv as _bulk_remove_mar_csv,
 )
 
 
@@ -223,11 +219,11 @@ class CounterActBase(SSHClient):
             em_policy_path (str): Path to save the modified policy file.
         """
         log.info(f"******** adding policy {policy_name} ********")
-        modified_policy_path = f"/tmp/{policy_file_name}"
+        modified_policy_path = os.path.join(tempfile.gettempdir(), policy_file_name)
         current_dir = os.path.dirname(__file__)
         relative_path = os.path.join(current_dir, '../../resources/policy/simple_condition_base_policy.xml')
 
-        os.system(f"cp {relative_path} {modified_policy_path}")
+        shutil.copy2(relative_path, modified_policy_path)
 
         # Parse the XML file
         tree = ET.parse(modified_policy_path)
@@ -302,11 +298,11 @@ class CounterActBase(SSHClient):
                 f.write(xml_string)
 
         log.info(f"******** adding policy {policy_name} with action {action_name} ********")
-        modified_policy_path = f"/tmp/{policy_file_name}"
+        modified_policy_path = os.path.join(tempfile.gettempdir(), policy_file_name)
         current_dir = os.path.dirname(__file__)
         relative_path = os.path.join(current_dir, '../../resources/policy/simple_condition_base_policy.xml')
 
-        os.system(f"cp {relative_path} {modified_policy_path}")
+        shutil.copy2(relative_path, modified_policy_path)
 
         # Parse the XML file
         tree = ET.parse(modified_policy_path)
@@ -386,6 +382,19 @@ class CounterActBase(SSHClient):
         if "Import policy completed" not in output:
             raise RuntimeError(f"Policy import failed: {output}")
 
+    def recheck_policy(self, policy_name: str) -> None:
+        """
+        Force the policy engine to immediately re-evaluate all hosts against a policy.
+
+        Without this, a newly imported policy uses its MATCH_TIMING RATE (default 8 h)
+        before it evaluates any hosts, so ``check_policy_match`` would time out.
+
+        Args:
+            policy_name: Name of the policy to recheck.
+        """
+        log.info(f"Forcing recheck of policy '{policy_name}'")
+        self.exec_command(f"fstool cliapi policy recheck_all {policy_name}")
+
     def check_policy_match(self, policy_name: str, count: int = 1, timeout: int = 30, retry_interval: int = 5) -> bool:
         """
         Check if a policy matches the expected count, with retries until a timeout.
@@ -417,7 +426,7 @@ class CounterActBase(SSHClient):
         log.info(f"Policy '{policy_name}' did not match the expected count within {timeout} seconds.")
         return False
 
-    def get_host_ip_by_mac(self, mac_address: str, preferred_range: str = None, timeout: int = 60, interval: int = 5) -> str:
+    def get_host_ip_by_mac(self, mac_address: str, preferred_range: str = None, timeout: int = 30, interval: int = 5) -> str:
         """
         Get host IP by MAC address using ``fstool hostinfo {mac}`` directly.
 
@@ -555,6 +564,75 @@ class CounterActBase(SSHClient):
             log.error(f"Failed to remove endpoint {endpoint_ip}: {e}")
             return False
 
+    def add_learner_endpoint(self, ip: str, mac: str = None) -> None:
+        """
+        Create a synthetic (Learner) endpoint on the CounterAct appliance.
+
+        Uses ``fstool learner learn`` to inject a host with a known IP and
+        optionally a MAC address without requiring real network traffic.
+
+        - IP only (no MAC)::
+
+            fstool learner learn <IP> online true
+
+        - IP + MAC::
+
+            fstool learner learn <IP> mac <MAC> online true
+
+        Args:
+            ip:  IPv4 address to assign to the learner host (e.g. ``"10.0.0.1"``).
+            mac: Optional MAC address in any common format — colon, dash, or bare hex.
+                 If omitted the endpoint has no MAC (used to test "Missing MAC Address"
+                 irresolvable reason).
+
+        Raises:
+            RuntimeError: If the ``fstool`` command fails.
+
+        Example::
+
+            # IP-only endpoint (no MAC):
+            self.ca.add_learner_endpoint(ip="192.0.2.1")
+            # Endpoint with MAC:
+            self.ca.add_learner_endpoint(ip="192.0.2.2", mac="aa:bb:cc:dd:ee:02")
+        """
+        if mac:
+            mac_norm = normalize_mac(mac)
+            mac_colon = ":".join(mac_norm[i:i+2] for i in range(0, 12, 2)).upper()
+            cmd = f"fstool learner learn {ip} mac {mac_colon} online true"
+            log.info(f"Adding learner endpoint with MAC: IP={ip}, MAC={mac_colon}")
+        else:
+            cmd = f"fstool learner learn {ip} online true"
+            log.info(f"Adding learner endpoint (IP only, no MAC): IP={ip}")
+        output = self.exec_command(cmd)
+        log.info(f"add_learner_endpoint result: {output}")
+
+    def remove_learner_endpoint(self, ip: str) -> bool:
+        """
+        Remove a synthetic (Learner) endpoint from the CounterAct appliance.
+
+        Uses ``fstool cliapi host remove`` directly — not ``fstool oneach``,
+        which is restricted to the Enterprise Manager.
+
+        Args:
+            ip: IPv4 address of the learner host to remove.
+
+        Returns:
+            True if removed successfully, False otherwise.
+
+        Example::
+
+            self.ca.remove_learner_endpoint("192.0.2.1")
+        """
+        try:
+            log.info(f"Removing learner endpoint: {ip}")
+            cmd = f"fstool cliapi host remove {ip}"
+            output = self.exec_command(cmd)
+            log.info(f"remove_learner_endpoint result: {output}")
+            return True
+        except Exception as e:
+            log.error(f"Failed to remove learner endpoint {ip}: {e}")
+            return False
+
     def check_properties(self, id: str, properties_check_list: List[dict]) -> None:
         """
         Check multiple properties of a host.
@@ -679,58 +757,6 @@ class CounterActBase(SSHClient):
         except Exception as e:
             raise Exception(f"Failed to remove MAC '{mac}' from MAR: {e}")
 
-    def _deploy_perl_script(self, script_body: str, remote_path: str) -> None:
-        """Upload a Perl script to the EM if not already present."""
-        self.client = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
-        with self.client.open_sftp() as sftp:
-            with sftp.open(remote_path, "w") as fh:
-                fh.write(script_body)
-
-    def _read_script(self, filename: str) -> str:
-        """Read a Perl script from the scripts/ directory in the project root."""
-        for d in Path(__file__).resolve().parents:
-            candidate = d / "scripts" / filename
-            if candidate.exists():
-                return candidate.read_text()
-        raise FileNotFoundError(f"Script not found: {filename}")
-
-    def _run_perl_bulk_script(self, script_body: str, remote_script: str,
-                              csv_path: str, timeout: int) -> int:
-        """
-        Upload a CSV to the EM, deploy a Perl script, execute it, and return
-        the ``ok`` count from the ``done ok=N ...`` output line.
-        """
-        if not os.path.isfile(csv_path):
-            raise FileNotFoundError(f"CSV file not found: {csv_path}")
-
-        self._ensure_mar_category_enabled()
-
-        remote_csv = "/tmp/fs_mar_bulk_data.csv"
-        try:
-            # Upload CSV and Perl script
-            self.client = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
-            with self.client.open_sftp() as sftp:
-                sftp.put(csv_path, remote_csv)
-                with sftp.open(remote_script, "w") as fh:
-                    fh.write(script_body)
-
-            cmd = (
-                f'cd /usr/local/forescout && '
-                f'perl -X -I lib/perl/inc {remote_script} {remote_csv} 2>&1'
-            )
-            log.info(f"Running bulk MAR script {remote_script} (timeout={timeout}s)")
-            output = self.exec_command(cmd, timeout=timeout)
-            log.info(f"Bulk MAR result: {output}")
-
-            m = re.search(r"ok=(\d+)", output)
-            return int(m.group(1)) if m else 0
-        finally:
-            for f in (remote_csv, remote_script):
-                try:
-                    self.exec_command(f"rm -f {f}", timeout=10)
-                except Exception:
-                    pass
-
     def bulk_import_mar_csv(self, csv_path: str, timeout: int = 300) -> int:
         """
         Bulk-import MAR entries from a CSV — mirrors the GUI "Import CSV in MAR".
@@ -753,9 +779,7 @@ class CounterActBase(SSHClient):
         Returns:
             Number of entries successfully imported.
         """
-        return self._run_perl_bulk_script(
-            self._read_script(MAR_BULK_IMPORT_SCRIPT), _REMOTE_BULK_IMPORT_SCRIPT, csv_path, timeout
-        )
+        return _bulk_import_mar_csv(self, csv_path, timeout)
 
     def bulk_remove_mar_csv(self, csv_path: str, timeout: int = 500) -> int:
         """
@@ -771,9 +795,7 @@ class CounterActBase(SSHClient):
         Returns:
             Number of entries successfully removed.
         """
-        return self._run_perl_bulk_script(
-            self._read_script(MAR_BULK_REMOVE_SCRIPT), _REMOTE_BULK_REMOVE_SCRIPT, csv_path, timeout
-        )
+        return _bulk_remove_mar_csv(self, csv_path, timeout)
 
     def get_mar_entry(self, mac: str) -> Dict[str, str]:
         """
