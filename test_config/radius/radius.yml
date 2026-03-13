@@ -14,16 +14,24 @@ radius:
   version: 1.0.0
 
 switch:
-  ip: 10.16.128.33
+  ip: 10.16.128.21
   user_name: admin
   password: aristo
   port1:
-    interface: gi0/1
+    interface: fa0/1
+    vlan: 1570
+  port2:
+    interface: fa0/2
     vlan: 1570
 
 passthrough:
-  ip: 10.16.133.143
+  ip: 10.16.133.134
   user_name: Administrator
   password: aristo
-  mac: 288023b82d59
+  mac: 98f2b301a055
   nicname: pciPassthru0
+
+# optional
+#ocsp:
+#  ip:                                                  # ip address of ocsp server
+

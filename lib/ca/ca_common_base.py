@@ -382,18 +382,6 @@ class CounterActBase(SSHClient):
         if "Import policy completed" not in output:
             raise RuntimeError(f"Policy import failed: {output}")
 
-    def recheck_policy(self, policy_name: str) -> None:
-        """
-        Force the policy engine to immediately re-evaluate all hosts against a policy.
-
-        Without this, a newly imported policy uses its MATCH_TIMING RATE (default 8 h)
-        before it evaluates any hosts, so ``check_policy_match`` would time out.
-
-        Args:
-            policy_name: Name of the policy to recheck.
-        """
-        log.info(f"Forcing recheck of policy '{policy_name}'")
-        self.exec_command(f"fstool cliapi policy recheck_all {policy_name}")
 
     def check_policy_match(self, policy_name: str, count: int = 1, timeout: int = 30, retry_interval: int = 5) -> bool:
         """
@@ -426,7 +414,7 @@ class CounterActBase(SSHClient):
         log.info(f"Policy '{policy_name}' did not match the expected count within {timeout} seconds.")
         return False
 
-    def get_host_ip_by_mac(self, mac_address: str, preferred_range: str = None, timeout: int = 30, interval: int = 5) -> str:
+    def get_host_ip_by_mac(self, mac_address: str, preferred_range: str = None, timeout: int = 60, interval: int = 5) -> str:
         """
         Get host IP by MAC address using ``fstool hostinfo {mac}`` directly.
 
