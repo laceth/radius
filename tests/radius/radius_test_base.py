@@ -69,6 +69,10 @@ class RadiusTestBase(FSTestCommonBase):
         },
     ]
 
+    ad_config1: dict = {}
+    ad_config2: dict = {}
+    ad_config3: dict = {}
+
     def __init__(self, ca, em, radius, switch, passthrough, version="1.0.0"):
         self.ca = cast(CounterActBase, ca)
         self.em = cast(EnterpriseManager, em)
@@ -95,7 +99,7 @@ class RadiusTestBase(FSTestCommonBase):
     def suite_teardown(self):
         # suite level teardown, runs once after all tests in the suite
         log.info("teardown radius suite")
-        pass
+        self.rf.teardown(self.switch, port=self.switch.port1['interface'], radius_server_ip=self.ca.ipaddress)
 
     def do_setup(self):
         # set up remote log streaming for both dot1x plugin logs and radiusd logs
@@ -160,7 +164,6 @@ class RadiusTestBase(FSTestCommonBase):
 
     def do_teardown(self):
         log.info("radius common teardown")
-        self.rf.teardown(self.switch, port=self.switch.port1['interface'], radius_server_ip=self.ca.ipaddress)
         if self.dot1x_plugin_log_collector is not None:
             self.dot1x_plugin_log_collector.stop()
         if self.radiusd_log_collector is not None:
@@ -753,6 +756,48 @@ class RadiusTestBase(FSTestCommonBase):
             }
         )
         policy_name = "policy_condition_dot1x_fr_client_x509_cert_subj_alt_name"
+        self.em.simple_policy_condition("dot1xSimplePolicyCondition.xml", policy_name, fields)
+        return policy_name
+
+    def add_dot1x_policy_eap_type(self, eap_type: str = "EAP-TLS") -> str:
+        """
+        Add a CounterAct condition policy that matches on 802.1x Authentication Type
+        (``dot1x_fr_eap_type``) for the endpoint under test.
+
+        The policy uses MAC address + EAP-type as compound condition so it only
+        matches the specific test endpoint.
+
+        Args:
+            eap_type: Expected EAP type string (e.g. "TTLS", "PEAP", "EAP-TLS").
+                      Default: "EAP-TLS".
+
+        Returns:
+            str: The created policy name (pass to ``self.ca.check_policy_match()``).
+        """
+        fields = copy.deepcopy(DEFAULT_RADIUS_POLICY_MAC_FIELDS)
+        fields[0]["CONDITION"]["FILTER"]["VALUE"]["VALUE2"] = self.passthrough.mac
+        fields.append(
+            {
+                "EXPR_TYPE": "SIMPLE",
+                "CONDITION": {
+                    "EMPTY_LIST_VALUE": "false",
+                    "FIELD_NAME": "dot1x_fr_eap_type",
+                    "LABEL": "802.1x Authentication Type",
+                    "LEFT_PARENTHESIS": "0",
+                    "LOGIC": "AND",
+                    "RET_VALUE_ON_UKNOWN": "IRRESOLVED",
+                    "RIGHT_PARENTHESIS": "0",
+                    "FILTER": {
+                        "CASE_SENSITIVE": "false",
+                        "TYPE": "equals",
+                        "VALUE": {
+                            "VALUE2": eap_type
+                        }
+                    }
+                }
+            }
+        )
+        policy_name = f"Auth_Type_{eap_type}"
         self.em.simple_policy_condition("dot1xSimplePolicyCondition.xml", policy_name, fields)
         return policy_name
 

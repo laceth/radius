@@ -1,4 +1,5 @@
 from framework.log.logger import log
+import time
 
 
 class ConnectionPool:
@@ -30,8 +31,28 @@ class ConnectionPool:
             if creator is None:
                 raise ValueError(f"No connection for key: {key} and no creator provided")
             log.debug(f"[POOL] Creating connection for key: {key}")
-            self._pools[key] = creator()
+            last_exc = None
+            for attempt in range(3):
+                try:
+                    self._pools[key] = creator()
+                    break
+                except Exception as e:
+                    last_exc = e
+                    if attempt < 2:
+                        wait = 5 * (attempt + 1)  # 5s then 10s
+                        log.warning(
+                            f"[POOL] Connection creation failed for key {key!r} "
+                            f"(attempt {attempt + 1}/3), retrying in {wait}s: {e!r}"
+                        )
+                        time.sleep(wait)
+                    else:
+                        raise last_exc
         return self._pools[key]
+
+    def evict(self, key) -> None:
+        """Remove a connection from the pool, forcing recreation on next get()."""
+        if self._pools.pop(key, None) is not None:
+            log.info(f"[POOL] Evicted connection for key: {key}")
 
     def close_all(self):
         log.info("Closing all connections")

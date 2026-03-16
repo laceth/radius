@@ -79,7 +79,8 @@ class RadiusCertificatesTestBase(RadiusTestBase):
             ca_ip: str = None,
             auth_status: Union[RadiusAuthStatus, str] = RadiusAuthStatus.ACCESS_ACCEPT,
             login_type: str = "dot1x_computer_login",
-            certificate_name: str = None
+            certificate_name: str = None,
+            eap_type: str = None,
     ):
         """
         Verify certificate-based authentication properties on CounterAct.
@@ -91,6 +92,9 @@ class RadiusCertificatesTestBase(RadiusTestBase):
             auth_status: Expected auth status (dot1x_host_auth_status). Default: RadiusAuthStatus.ACCESS_ACCEPT
             login_type: Expected login type (dot1x_login_type). Default: "dot1x_computer_login"
             certificate_name: Expected certificate name (dot1x_host). Defaults to certificate filename without .pfx
+            eap_type: Expected EAP type (dot1x_fr_eap_type). Defaults to self.DEFAULT_EAP_TYPE.
+                      Pass "TTLS" when verifying EAP-TTLS/Cert (outer tunnel is TTLS,
+                      inner method is EAP-TLS).
         """
         # Get host ID once using base class helper
         if not self.host_id:
@@ -108,8 +112,8 @@ class RadiusCertificatesTestBase(RadiusTestBase):
             auth_state=auth_status_value
         )
 
-        # Determine EAP type based on auth profile
-        eap_type = self.DEFAULT_EAP_TYPE
+        # Determine EAP type: use explicit override or fall back to class default
+        eap_type = eap_type or self.DEFAULT_EAP_TYPE
 
         # Get certificate name (without .pfx extension)
         cert_name = certificate_name or self.cert_config.certificate_filename.replace('.pfx', '')

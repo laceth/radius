@@ -44,7 +44,7 @@ class RadiusMabTestBase(RadiusTestBase):
         self.configure_radius_settings()
 
         # Cleanup any existing endpoint before test
-        self.cleanup_endpoint_by_mac(self.passthrough.mac)
+        self.cleanup_endpoint_by_mac(self.passthrough.mac, timeout=0)
 
         # Get VLAN from switch port config
         vlan = self.switch.port1.get('vlan')

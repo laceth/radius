@@ -43,11 +43,12 @@ class RadiusPeapTestBase(RadiusTestBase):
         peap_config: PEAPCredentialsConfig = None,
         switch_ip: str = None,
         ca_ip: str = None,
-        auth_status: Union[RadiusAuthStatus, str] = RadiusAuthStatus.ACCESS_ACCEPT
+        auth_status: Union[RadiusAuthStatus, str] = RadiusAuthStatus.ACCESS_ACCEPT,
+        eap_type: str = "PEAP",
     ):
         """
-        Verify PEAP authentication properties on CounterAct.
-        Extends base class verify_authentication_on_ca with PEAP-specific fields.
+        Verify PEAP or EAP-TTLS-MSCHAPv2 authentication properties on CounterAct.
+        Extends base class verify_authentication_on_ca with credential-specific fields.
 
         Args:
             peap_config: PEAPCredentialsConfig object containing domain/user info.
@@ -59,7 +60,7 @@ class RadiusPeapTestBase(RadiusTestBase):
         # Get host ID once using base class helper
         if not self.host_id:
             self.host_id = self._get_host_id()
-        log.info(f"Verifying PEAP authentication for host: {self.host_id}")
+        log.info(f"Verifying {eap_type} authentication for host: {self.host_id}")
 
         # Convert enum to string value if needed
         auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
@@ -98,7 +99,7 @@ class RadiusPeapTestBase(RadiusTestBase):
         # Only check tunneled user on successful auth
         if auth_status_value == RadiusAuthStatus.ACCESS_ACCEPT.value:
             peap_properties_check_list.extend([
-                {"property_field": "dot1x_fr_eap_type", "expected_value": "PEAP"},
+                {"property_field": "dot1x_fr_eap_type", "expected_value": eap_type},
                 {"property_field": "dot1x_tunneled_user", "expected_value": tunneled_user},
             ])
         
@@ -126,7 +127,7 @@ class RadiusPeapTestBase(RadiusTestBase):
             # If auth_source is empty, skip dot1x_domain check (property won't be present)
 
         self.ca.check_properties(self.host_id, peap_properties_check_list)
-        log.info("PEAP authentication verification completed successfully")
+        log.info(f"{eap_type} authentication verification completed successfully")
 
     # =========================================================================
     # PEAP Credentials Setup

@@ -2,7 +2,8 @@
 LAN Profile XML builder for Windows 802.1X NIC configuration.
 
 Replaces hardcoded XML files with a parametrizable dataclass that generates
-the XML on-the-fly. Supports EAP-TLS, PEAP/MSCHAPv2, PEAP/EAP-TLS, and MAB profiles.
+the XML on-the-fly. Supports EAP-TLS, PEAP/MSCHAPv2, PEAP/EAP-TLS, MAB, and
+EAP-TTLS (PAP, CHAP, MS-CHAP, MS-CHAP v2, EAP-MSCHAPv2, EAP-TLS/cert) profiles.
 """
 from dataclasses import dataclass, field
 from enum import Enum
@@ -26,6 +27,7 @@ NS_PEAP_V1 = "http://www.microsoft.com/provisioning/MsPeapConnectionPropertiesV1
 NS_PEAP_V2 = "http://www.microsoft.com/provisioning/MsPeapConnectionPropertiesV2"
 NS_PEAP_V3 = "http://www.microsoft.com/provisioning/MsPeapConnectionPropertiesV3"
 NS_MSCHAPV2 = "http://www.microsoft.com/provisioning/MsChapV2ConnectionPropertiesV1"
+NS_EAPTTLS_V1 = "http://www.microsoft.com/provisioning/EapTtlsConnectionPropertiesV1"
 
 # Map namespace URIs to short prefixes for registration.
 # ElementTree serialization will use these; _pretty() cleans up the output.
@@ -41,6 +43,7 @@ _NS_MAP = {
     "peap2": NS_PEAP_V2,
     "peap3": NS_PEAP_V3,
     "mschapv2": NS_MSCHAPV2,
+    "eapttls1": NS_EAPTTLS_V1,
 }
 for _p, _u in _NS_MAP.items():
     ET.register_namespace(_p, _u)
@@ -51,6 +54,7 @@ class EapType(Enum):
     TLS = 13
     PEAP = 25
     MSCHAPV2 = 26
+    TTLS = 21
 
 
 class AuthMode(Enum):
@@ -98,6 +102,21 @@ class EapTlsConfig:
             self.perform_server_validation
         )
         SubElement(eap_type, f"{{{NS_EAPTLS_V2}}}AcceptServerName").text = _bool(self.accept_server_name)
+
+
+@dataclass
+class MsChapV2Config:
+    """Inner EAP-MSCHAPv2 configuration (used as inner method in EAP-TTLS)."""
+    use_win_logon_credentials: bool = False
+
+    def build(self, parent: Element):
+        """Build MSCHAPv2 <Eap> block under parent <Config> element."""
+        eap = SubElement(parent, f"{{{NS_BASEEAP}}}Eap")
+        SubElement(eap, f"{{{NS_BASEEAP}}}Type").text = str(EapType.MSCHAPV2.value)
+        eap_type = SubElement(eap, f"{{{NS_MSCHAPV2}}}EapType")
+        SubElement(eap_type, f"{{{NS_MSCHAPV2}}}UseWinLogonCredentials").text = _bool(
+            self.use_win_logon_credentials
+        )
 
 
 # ============================================================================
@@ -210,6 +229,153 @@ class PeapEapTlsConfig:
 
 
 # ============================================================================
+# EAP-TTLS: inner method classes + unified outer config
+# ============================================================================
+
+def _build_inner_eap_host_config(parent: Element, eap_type_val: int, author_id: int = 0) -> Element:
+    """Build a nested EapHostConfig+EapMethod block; returns the Config element for the caller to populate."""
+    inner_host = SubElement(parent, "EapHostConfig", xmlns=NS_EAPHOST)
+    inner_method = SubElement(inner_host, "EapMethod")
+    SubElement(inner_method, "Type", xmlns=NS_EAPCOMMON).text = str(eap_type_val)
+    SubElement(inner_method, "VendorId", xmlns=NS_EAPCOMMON).text = "0"
+    SubElement(inner_method, "VendorType", xmlns=NS_EAPCOMMON).text = "0"
+    SubElement(inner_method, "AuthorId", xmlns=NS_EAPCOMMON).text = str(author_id)
+    return SubElement(inner_host, "Config", xmlns=NS_EAPHOST)
+
+
+# ---------------------------------------------------------------------------
+# Non-EAP inner methods  (Phase2Authentication → single element / simple block)
+# ---------------------------------------------------------------------------
+
+@dataclass
+class TtlsInnerPap:
+    """Non-EAP inner method: PAP.
+    Windows XML: <PAPAuthentication/>
+    """
+    default_auth_mode = AuthMode.USER  # class var — read by LanProfile.eap_ttls()
+
+    def build_phase2(self, phase2: Element):
+        SubElement(phase2, f"{{{NS_EAPTTLS_V1}}}PAPAuthentication")
+
+
+@dataclass
+class TtlsInnerChap:
+    """Non-EAP inner method: CHAP.
+    Windows XML: <CHAPAuthentication/>
+    """
+    default_auth_mode = AuthMode.USER
+
+    def build_phase2(self, phase2: Element):
+        SubElement(phase2, f"{{{NS_EAPTTLS_V1}}}CHAPAuthentication")
+
+
+@dataclass
+class TtlsInnerMsChap:
+    """Non-EAP inner method: MS-CHAP v1.
+    Windows XML: <MSCHAPAuthentication/>
+    """
+    default_auth_mode = AuthMode.USER
+
+    def build_phase2(self, phase2: Element):
+        SubElement(phase2, f"{{{NS_EAPTTLS_V1}}}MSCHAPAuthentication")
+
+
+@dataclass
+class TtlsInnerMsChapV2:
+    """Non-EAP inner method: MS-CHAP v2 (no EAP framing).
+    Distinct from TtlsInnerEapMsChapV2 which wraps MSCHAPv2 inside EAP (Type=26).
+    Windows XML: <MSCHAPv2Authentication><UseWinlogonCredentials>false</...>
+    Note: element is UseWinlogonCredentials (lowercase 'l') vs the EAP variant UseWinLogonCredentials.
+    """
+    use_winlogon_credentials: bool = False
+    default_auth_mode = AuthMode.USER
+
+    def build_phase2(self, phase2: Element):
+        el = SubElement(phase2, f"{{{NS_EAPTTLS_V1}}}MSCHAPv2Authentication")
+        SubElement(el, f"{{{NS_EAPTTLS_V1}}}UseWinlogonCredentials").text = _bool(
+            self.use_winlogon_credentials
+        )
+
+
+# ---------------------------------------------------------------------------
+# EAP inner methods  (Phase2Authentication → full EapHostConfig block)
+# ---------------------------------------------------------------------------
+
+@dataclass
+class TtlsInnerEapMsChapV2:
+    """EAP inner method: EAP-MSCHAPv2 (MSCHAPv2 wrapped in EAP framing, Type=26).
+    Distinct from TtlsInnerMsChapV2 which sends MSCHAPv2 directly without EAP.
+    Windows XML: Phase2Authentication → EapHostConfig(Type=26) → <Eap><Type>26 ...
+    Note: element is UseWinLogonCredentials (capital 'L') vs the non-EAP variant.
+    """
+    inner_mschapv2: MsChapV2Config = field(default_factory=MsChapV2Config)
+    default_auth_mode = AuthMode.USER
+
+    def build_phase2(self, phase2: Element):
+        inner_config = _build_inner_eap_host_config(phase2, EapType.MSCHAPV2.value, author_id=0)
+        self.inner_mschapv2.build(inner_config)
+
+
+@dataclass
+class TtlsInnerEapTls:
+    """EAP inner method: EAP-TLS (certificate-based, Type=13). Computer authentication.
+    Windows XML: Phase2Authentication → EapHostConfig(Type=13) → <Eap><Type>13 ...
+    """
+    inner_tls: EapTlsConfig = field(default_factory=EapTlsConfig)
+    default_auth_mode = AuthMode.MACHINE
+
+    def build_phase2(self, phase2: Element):
+        inner_config = _build_inner_eap_host_config(phase2, EapType.TLS.value, author_id=0)
+        self.inner_tls.build(inner_config)
+
+
+# ---------------------------------------------------------------------------
+# Unified EAP-TTLS outer config
+# ---------------------------------------------------------------------------
+
+@dataclass
+class EapTtlsConfig:
+    """
+    Unified EAP-TTLS outer configuration with a pluggable inner method.
+
+    Supported inner methods:
+        Non-EAP:  TtlsInnerPap, TtlsInnerChap, TtlsInnerMsChap, TtlsInnerMsChapV2
+        EAP:      TtlsInnerEapMsChapV2, TtlsInnerEapTls
+
+    Example:
+        EapTtlsConfig(inner=TtlsInnerPap())
+        EapTtlsConfig(inner=TtlsInnerEapMsChapV2())
+        EapTtlsConfig(inner=TtlsInnerEapTls())
+    """
+    inner: Union[
+        TtlsInnerPap, TtlsInnerChap, TtlsInnerMsChap, TtlsInnerMsChapV2,
+        TtlsInnerEapMsChapV2, TtlsInnerEapTls,
+    ] = field(default_factory=TtlsInnerEapMsChapV2)
+    disable_user_prompt_for_server_validation: bool = False
+    server_names: str = ""
+    trusted_root_ca: Optional[str] = "fb b8 8c 61 b9 2b 92 8e 24 a3 bf 72 21 95 74 e3 ef 12 cb e1"
+    enable_identity_privacy: bool = False
+
+    def build(self, parent: Element):
+        """Build EAP-TTLS XML under parent <Config> element."""
+        ttls = SubElement(parent, f"{{{NS_EAPTTLS_V1}}}EapTtls")
+
+        sv = SubElement(ttls, f"{{{NS_EAPTTLS_V1}}}ServerValidation")
+        SubElement(sv, f"{{{NS_EAPTTLS_V1}}}ServerNames").text = self.server_names or None
+        if self.trusted_root_ca:
+            SubElement(sv, f"{{{NS_EAPTTLS_V1}}}TrustedRootCAHash").text = self.trusted_root_ca
+        SubElement(sv, f"{{{NS_EAPTTLS_V1}}}DisablePrompt").text = _bool(
+            self.disable_user_prompt_for_server_validation
+        )
+
+        phase2 = SubElement(ttls, f"{{{NS_EAPTTLS_V1}}}Phase2Authentication")
+        self.inner.build_phase2(phase2)
+
+        phase1 = SubElement(ttls, f"{{{NS_EAPTTLS_V1}}}Phase1Identity")
+        SubElement(phase1, f"{{{NS_EAPTTLS_V1}}}IdentityPrivacy").text = _bool(self.enable_identity_privacy)
+
+
+# ============================================================================
 # Top-level LAN profile
 # ============================================================================
 @dataclass
@@ -239,6 +405,17 @@ class LanProfile:
         # MAB (802.1X disabled)
         profile = LanProfile.mab()
 
+        # EAP-TTLS (generic factory — inner method is explicit):
+        profile = LanProfile.eap_ttls(inner=TtlsInnerEapMsChapV2())
+
+        # EAP-TTLS convenience factories:
+        profile = LanProfile.eap_ttls_eap_cert()           # EAP inner: EAP-TLS / certificate (computer)
+        profile = LanProfile.eap_ttls_eap_mschapv2()       # EAP inner: EAP-MSCHAPv2 (user)
+        profile = LanProfile.eap_ttls_non_eap_pap()        # non-EAP: PAP (user)
+        profile = LanProfile.eap_ttls_non_eap_chap()       # non-EAP: CHAP (user)
+        profile = LanProfile.eap_ttls_non_eap_mschap()     # non-EAP: MS-CHAP v1 (user)
+        profile = LanProfile.eap_ttls_non_eap_mschapv2()   # non-EAP: MS-CHAP v2 (user)
+
         # Fully custom
         profile = LanProfile(
             onex_enabled=True,
@@ -252,7 +429,8 @@ class LanProfile:
     cache_user_data: bool = False
     auth_mode: AuthMode = AuthMode.MACHINE
     eap_method: Optional[EapType] = EapType.TLS
-    eap_config: Optional[Union[EapTlsConfig, PeapMsChapV2Config, PeapEapTlsConfig]] = field(default_factory=EapTlsConfig)
+    eap_config: Optional[Union[EapTlsConfig, MsChapV2Config, PeapMsChapV2Config, PeapEapTlsConfig, EapTtlsConfig]] = field(default_factory=EapTlsConfig)
+    author_id: int = 0  # 0 for EAP-TLS/PEAP, 311 for EAP-TTLS (Microsoft built-in)
 
     # ------------------------------------------------------------------
     # Factory methods
@@ -306,6 +484,62 @@ class LanProfile:
             eap_config=None,
         )
 
+    @classmethod
+    def eap_ttls(cls, inner=None, **overrides) -> "LanProfile":
+        """Generic EAP-TTLS factory. Auth mode is inferred from the inner method.
+
+        Args:
+            inner: An inner method instance. Defaults to TtlsInnerEapMsChapV2().
+            **overrides: Any LanProfile field can be overridden (e.g. auth_mode).
+
+        Example:
+            LanProfile.eap_ttls(inner=TtlsInnerPap())
+            LanProfile.eap_ttls(inner=TtlsInnerEapTls())
+        """
+        if inner is None:
+            inner = TtlsInnerEapMsChapV2()
+        ttls_config = overrides.pop("eap_config", EapTtlsConfig(inner=inner))
+        auth_mode = overrides.pop("auth_mode", inner.default_auth_mode)
+        return cls(
+            onex_enforced=True,
+            onex_enabled=True,
+            auth_mode=auth_mode,
+            eap_method=EapType.TTLS,
+            eap_config=ttls_config,
+            author_id=311,
+            **overrides,
+        )
+
+    @classmethod
+    def eap_ttls_eap_cert(cls, **overrides) -> "LanProfile":
+        """EAP-TTLS with inner EAP-TLS (certificate). Computer authentication."""
+        return cls.eap_ttls(inner=TtlsInnerEapTls(), **overrides)
+
+    @classmethod
+    def eap_ttls_eap_mschapv2(cls, **overrides) -> "LanProfile":
+        """EAP-TTLS with inner EAP-MSCHAPv2 (EAP-framed). User authentication."""
+        return cls.eap_ttls(inner=TtlsInnerEapMsChapV2(), **overrides)
+
+    @classmethod
+    def eap_ttls_non_eap_pap(cls, **overrides) -> "LanProfile":
+        """EAP-TTLS with non-EAP PAP. User authentication."""
+        return cls.eap_ttls(inner=TtlsInnerPap(), **overrides)
+
+    @classmethod
+    def eap_ttls_non_eap_chap(cls, **overrides) -> "LanProfile":
+        """EAP-TTLS with non-EAP CHAP. User authentication."""
+        return cls.eap_ttls(inner=TtlsInnerChap(), **overrides)
+
+    @classmethod
+    def eap_ttls_non_eap_mschap(cls, **overrides) -> "LanProfile":
+        """EAP-TTLS with non-EAP MS-CHAP v1. User authentication."""
+        return cls.eap_ttls(inner=TtlsInnerMsChap(), **overrides)
+
+    @classmethod
+    def eap_ttls_non_eap_mschapv2(cls, **overrides) -> "LanProfile":
+        """EAP-TTLS with non-EAP MS-CHAP v2 (no EAP framing). User authentication."""
+        return cls.eap_ttls(inner=TtlsInnerMsChapV2(), **overrides)
+
     # ------------------------------------------------------------------
     # XML generation
     # ------------------------------------------------------------------
@@ -337,7 +571,7 @@ class LanProfile:
         SubElement(eap_method_el, "Type", xmlns=NS_EAPCOMMON).text = str(self.eap_method.value)
         SubElement(eap_method_el, "VendorId", xmlns=NS_EAPCOMMON).text = "0"
         SubElement(eap_method_el, "VendorType", xmlns=NS_EAPCOMMON).text = "0"
-        SubElement(eap_method_el, "AuthorId", xmlns=NS_EAPCOMMON).text = "0"
+        SubElement(eap_method_el, "AuthorId", xmlns=NS_EAPCOMMON).text = str(self.author_id)
 
         # Config block — delegates to the specific EAP config dataclass
         config_el = SubElement(eap_host, "Config", xmlns=NS_EAPHOST)
@@ -418,12 +652,3 @@ def _pretty(root: Element) -> str:
 
     lines = dom.toprettyxml(indent="  ").split("\n")
     return "\n".join(line for line in lines if not line.startswith("<?xml") and line.strip())
-
-
-
-
-
-
-
-
-

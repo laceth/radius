@@ -98,7 +98,7 @@ class RemoteLogStreamer:
                         local_file.flush()
                         self._dispatch_line(line)
             except (SSHException, socket.error) as e:
-                log.info(f"Remote log collector Connection lost: {e}. Reconnecting...")
+                log.info(f"Remote log collector Connection lost to {self.remote_host} (user={self.username}, log={self.remote_log_path}): {e}. Reconnecting...")
                 time.sleep(5)
             finally:
                 self._cleanup_ssh()

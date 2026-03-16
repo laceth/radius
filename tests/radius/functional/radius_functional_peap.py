@@ -17,6 +17,8 @@ PEAP_USER_STARTWITH_N = "NLevi"
 PEAP_USER_STARTWITH_R = "Rthangaraj"
 PEAP_USER_STARTWITH_T = "THampton"
 PEAP_USER_ADM_SUFFIX = "-adm"
+PEAP_USER_TESTUSER1 = "testuser1"
+PEAP_USER_TESTUSER111 = "testuser111"
 PEAP_UPN_USER_ROBH = "robh"
 PEAP_UPN_DOMAIN = "txqalab.forescout.local"
 
@@ -59,7 +61,7 @@ RULES_ACCEPT_LDAP_GROUP_OR_PEAP = [
     "GLOBAL_CATALOG",          # TS-2407
     "GLOBAL_CATALOG_TLS",      # TS-2408
 ])
-class TC_9338_PeapUPNAndLogonNameDiffer(RadiusPeapTestBase):
+class TC_9338_PEAPUPNAndLogonNameDiffer(RadiusPeapTestBase):
     """
     TS-2405 / TS-2406 / TS-2407 / TS-2408
     TC-9338: DOT | UPN and logon name differ (DOT-4142)
@@ -126,7 +128,7 @@ class TC_9338_PeapUPNAndLogonNameDiffer(RadiusPeapTestBase):
     "GLOBAL_CATALOG",          # TS-2407
     "GLOBAL_CATALOG_TLS",      # TS-2408
 ])
-class TC_9340_PeapAuthenticationUsingLdapGroup(RadiusPeapTestBase):
+class TC_9340_PEAPAuthenticationUsingLdapGroup(RadiusPeapTestBase):
     """
     TS-2405 / TS-2406 / TS-2407 / TS-2408
     TC-9340: DOT | Authenticating Using LDAP Group (DOT-4431, DOT-4835)
@@ -191,7 +193,7 @@ class TC_9340_PeapAuthenticationUsingLdapGroup(RadiusPeapTestBase):
     "GLOBAL_CATALOG",          # TS-2407
     "GLOBAL_CATALOG_TLS",      # TS-2408
 ])
-class TC_9342_PeapHostAuthenticationWired(RadiusPeapTestBase):
+class TC_9342_PEAPHostAuthenticationWired(RadiusPeapTestBase):
     """
     TS-2405 / TS-2406 / TS-2407 / TS-2408
     TC-9342: DOT | Verify Host authentication using PEAP (wired)
@@ -249,7 +251,7 @@ class TC_9342_PeapHostAuthenticationWired(RadiusPeapTestBase):
     "GLOBAL_CATALOG",          # TS-2407
     "GLOBAL_CATALOG_TLS",      # TS-2408
 ])
-class TC_9344_PeapHostAuthenticationWithAndWithoutDomainWired(RadiusPeapTestBase):
+class TC_9344_PEAPHostAuthenticationWithAndWithoutDomainWired(RadiusPeapTestBase):
     """
     TS-2405 / TS-2406 / TS-2407 / TS-2408
     TC-9344: DOT | Verify Endpoint authentication with and without Domain in the Username (PEAP)
@@ -304,7 +306,7 @@ class TC_9344_PeapHostAuthenticationWithAndWithoutDomainWired(RadiusPeapTestBase
     "GLOBAL_CATALOG",          # TS-2407
     "GLOBAL_CATALOG_TLS",      # TS-2408
 ])
-class TC_9346_PeapMultiDomainsAuthentication(RadiusPeapTestBase):
+class TC_9346_PEAPMultiDomainsAuthentication(RadiusPeapTestBase):
     """
     TS-2405 / TS-2406 / TS-2407 / TS-2408
     TC-9346: DOT | Verify authenticating a Endpoint to multiple Domains
@@ -350,6 +352,71 @@ class TC_9346_PeapMultiDomainsAuthentication(RadiusPeapTestBase):
                 self.verify_authentication_on_ca()
                 self.verify_pre_admission_rule(rule_priority=1)
                 self.verify_wired_properties()
+        except Exception as e:
+            log.error(f"Test {self.testCaseId} with LDAP port {self.test_params['ldap_port']} failed: {e}")
+            raise
+
+
+@parametrize("ldap_port", [
+    "STANDARD_LDAP_TLS",       # TS-2405
+    "STANDARD_LDAP",           # TS-2406
+    "GLOBAL_CATALOG",          # TS-2407
+    "GLOBAL_CATALOG_TLS",      # TS-2408
+])
+class TC_9348_PEAPUPNStartsSameAsAnotherUPN(RadiusPeapTestBase):
+    """
+    TC-9348: DOT | Error When UPN Starts The Same As Another UPN
+
+    When there are multiple UPNs (User Principal Name) starting with the same name,
+    the LDAP search can return multiple matches and produce an "Ambiguous" error.
+    This test case verifies the fix for that issue.
+
+    Steps:
+    -----
+    1. Under Options->Radius and Authentication Sources, select your Active Directory
+       and click "Set Null" (handled by common do_setup via set_null).
+    2. Configure a Pre-Admission rule: LDAP-Group = Domain*, apply.
+    3. Authenticate on the host with testuser1:
+       - Verify the host connects and authenticates successfully.
+       - Verify "Ambiguous" does NOT appear in radiusd.log.
+    4. Authenticate on the host with testuser111:
+       - Verify the host connects and authenticates successfully.
+       - Verify "Ambiguous" does NOT appear in radiusd.log.
+    """
+
+    configure_radius_settings_in_test = True
+    users = [PEAP_USER_TESTUSER1, PEAP_USER_TESTUSER111]
+
+    def do_test(self):
+        try:
+            # Step 2: Configure LDAP port and LDAP-Group = Domain* pre-admission rule
+            self.configure_radius_settings(
+                active_directory_port_for_ldap_queries=LdapPorts[self.test_params["ldap_port"]].value
+            )
+            self.dot1x.set_pre_admission_rules(RULES_ACCEPT_LDAP_GROUP_ELSE_DENY)
+            self.configure_lan_profile(lan_profile=LanProfile.peap())
+            self.wait_for_dot1x_ready()
+
+            # Steps 3 & 4: Authenticate with each user and verify no "Ambiguous" in radiusd.log
+            for username in self.users:
+                ambiguous_watcher = self.radiusd_log_collector.start_log_check(
+                    patterns=[r"(?i)ambiguous"],
+                    timeout=60,
+                )
+                self.setup_peap_credentials("", username)
+                self.toggle_nic()
+                self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+                self.verify_nic_ip_in_range()
+                self.verify_authentication_on_ca()
+                self.verify_pre_admission_rule(rule_priority=1)
+                self.verify_wired_properties()
+
+                ambiguous_found, matched = self.radiusd_log_collector.get_log_check_result(ambiguous_watcher)
+                assert not ambiguous_found, (
+                    f"'Ambiguous' was found in radiusd.log for user '{username}': {matched}. "
+                    "The UPN prefix-collision bug may not be fixed."
+                )
+                log.info(f"Verified: no 'Ambiguous' error in radiusd.log for user '{username}'")
         except Exception as e:
             log.error(f"Test {self.testCaseId} with LDAP port {self.test_params['ldap_port']} failed: {e}")
             raise

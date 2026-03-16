@@ -75,8 +75,8 @@ def get_objects_from_classes(collected_classes, test_config, log_dir_path=None):
                     instance = configurator.inject(cls, configurator.eyesight_config())
                     instance.test_log_dir = log_dir_path
                     instance.test_params = {}
-
-                    kwargs = dict(zip(arg_names, values))
+                    wrapped = [values] if isinstance(values, (str, int, float, bool)) else values
+                    kwargs = dict(zip(arg_names, wrapped))
                     for k, v in kwargs.items():
                         instance.test_params[k] = v
 

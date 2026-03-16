@@ -96,8 +96,40 @@ class CounterActBase(SSHClient):
         return out
 
     def exec_command(self, cmd: str, timeout: int = 15, log_output: bool = False, log_command: bool = False) -> str:
-        self.client = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
-        return self._execute(cmd, timeout, log_output=log_output, log_command=log_command)
+        for attempt in range(2):
+            try:
+                self.client = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
+                return self._execute(cmd, timeout, log_output=log_output, log_command=log_command)
+            except Exception as e:
+                if attempt == 0:
+                    log.warning(
+                        f"CA SSH error on attempt {attempt + 1} "
+                        f"(connection may have dropped), reconnecting: {e!r}"
+                    )
+                    CONNECTION_POOL.evict(self.get_conn_key())
+                else:
+                    raise
+
+    def get_version_ca(self) -> str:
+        """
+        Return the CounterACT appliance version string (e.g. '8.5.2' or '9.1.5').
+
+        Parses the output of 'fstool version', looking for a line like:
+            Version          : 9.1.5
+
+        Returns:
+            Version string such as '8.5.2', '9.1.5', etc.
+
+        Raises:
+            RuntimeError: If the version line cannot be found in the output.
+        """
+        output = self.exec_command("fstool version")
+        m = re.search(r'^Version\s*:\s*([\d.]+)', output, re.MULTILINE)
+        if not m:
+            raise RuntimeError(f"Could not parse version from 'fstool version' output:\n{output}")
+        version = m.group(1)
+        log.info(f"CounterACT version on {self.ipaddress}: {version}")
+        return version
 
     def scp_file(self, local_path: str, remote_path: str, direction: str = "upload", timeout: int = 15) -> None:
         """
@@ -221,7 +253,7 @@ class CounterActBase(SSHClient):
             log.info(f"removing {policy_name} if exists")
             self.remove_policy(policy_name)
         except RuntimeError as e:
-            log.debug(f"Policy {policy_name} removal failed or not exist, continue to add new policy: {e}")
+            log.warning(f"Policy {policy_name} removal failed or not exist, continue to add new policy: {e}")
         self.import_policy(remote_path)
         log.info(f"Policy {policy_name} added successfully")
 
@@ -325,13 +357,14 @@ class CounterActBase(SSHClient):
             log.info(f"removing {policy_name} if exists")
             self.remove_policy(policy_name)
         except RuntimeError as e:
-            log.debug(f"Policy {policy_name} removal failed or not exist, continue to add new policy: {e}")
+            log.warning(f"Policy {policy_name} removal failed or not exist, continue to add new policy: {e}")
         self.import_policy(remote_path)
         log.info(f"Policy {policy_name} with action {action_name} added successfully")
 
     def remove_policy(self, policy_name: str) -> None:
-        output = self.exec_command(f"fstool cliapi policy remove {policy_name}")
-        if "removed" not in output:
+        output = self.exec_command(f"fstool cliapi policy remove '{policy_name}'")
+        log.debug(f"remove_policy output: {output!r}")
+        if "removed" not in output.lower():
             raise RuntimeError(f"Policy removal failed: {output}")
         log.info(f"Policy {policy_name} removed successfully")
 
