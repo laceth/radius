@@ -49,6 +49,11 @@ class ConnectionPool:
                         raise last_exc
         return self._pools[key]
 
+    def evict(self, key) -> None:
+        """Remove a connection from the pool, forcing recreation on next get()."""
+        if self._pools.pop(key, None) is not None:
+            log.info(f"[POOL] Evicted connection for key: {key}")
+
     def close_all(self):
         log.info("Closing all connections")
         for conn in self._pools.values():

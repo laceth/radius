@@ -769,7 +769,7 @@ class RadiusTestBase(FSTestCommonBase):
 
         Args:
             eap_type: Expected EAP type string (e.g. "TTLS", "PEAP", "EAP-TLS").
-                      Default: "TTLS".
+                      Default: "EAP-TLS".
 
         Returns:
             str: The created policy name (pass to ``self.ca.check_policy_match()``).

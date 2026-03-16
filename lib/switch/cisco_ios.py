@@ -105,7 +105,7 @@ class CiscoIOS(SwitchBase, SSHClient):
                         f"(connection may have dropped), reconnecting: {e!r}"
                     )
                     # Evict the broken session from the pool so get() recreates it
-                    CONNECTION_POOL._pools.pop(self.get_conn_key(), None)
+                    CONNECTION_POOL.evict(self.get_conn_key())
                 else:
                     raise
 

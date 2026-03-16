@@ -97,7 +97,7 @@ class RadiusEapTtlsTestBase(RadiusCertificatesTestBase, RadiusPeapTestBase):
             Accepted values: "eap_mschapv2", "pap", "chap", "mschap", "mschapv2"
           - Certificate (EAP-TLS)           → RadiusCertificatesTestBase.verify_authentication_on_ca
                                                with eap_type="TTLS"
-            Accepted values: "cert"
+            Accepted values: "eap_cert"
 
         Args:
             switch_ip:    Expected dot1x_NAS_addr. Defaults to self.switch.ip.
@@ -111,7 +111,7 @@ class RadiusEapTtlsTestBase(RadiusCertificatesTestBase, RadiusPeapTestBase):
                             "mschap"       -- MS-CHAP v1 (non-EAP)
                             "mschapv2"     -- MS-CHAP v2 (non-EAP, no EAP framing)
             **kwargs:     Extra keyword arguments forwarded to the parent method.
-                          For "cert": login_type, certificate_name are supported.
+                          For "eap_cert": login_type, certificate_name are supported.
         """
         if inner_method in ("eap_mschapv2", "pap", "chap", "mschap", "mschapv2"):
             RadiusPeapTestBase.verify_authentication_on_ca(
@@ -134,5 +134,5 @@ class RadiusEapTtlsTestBase(RadiusCertificatesTestBase, RadiusPeapTestBase):
         else:
             raise ValueError(
                 f"Unknown EAP-TTLS inner_method: {inner_method!r}. "
-                f"Expected one of: 'eap_mschapv2', 'cert', 'pap', 'chap', 'mschap', 'mschapv2'."
+                f"Expected one of: 'eap_mschapv2', 'eap_cert', 'pap', 'chap', 'mschap', 'mschapv2'."
             )

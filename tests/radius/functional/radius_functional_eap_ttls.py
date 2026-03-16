@@ -1,7 +1,6 @@
-import sys
 from framework.decorator.prametrizor import parametrize
 from framework.log.logger import log
-from lib.passthrough.enums import AuthenticationStatus, WindowsCert
+from lib.passthrough.enums import AuthenticationStatus
 from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import LdapPorts, PreAdmissionAuth, RadiusAuthStatus
 from tests.radius.functional.base_classes.radius_eap_ttls_test_base import RadiusEapTtlsTestBase
@@ -11,27 +10,18 @@ from tests.radius.functional.base_classes.radius_eap_ttls_test_base import Radiu
 # Domain / user constants
 # ---------------------------------------------------------------------------
 DOMAIN = "txqalab"
-USER_DOTONEX = "dotonex"
 USER_RHUGHES = "rhughes"
 USER_INVALID = "joenotfound"
 USER_ADM_SUFFIX = "-adm"
-
-# Certificate defalt password
-CERT_PASSWORD = "aristo"
 
 # ---------------------------------------------------------------------------
 # Pre-admission rule building blocks
 # ---------------------------------------------------------------------------
 COND_EAP_TYPE_EAPTTLS = [{"criterion_name": "EAP-Type", "criterion_value": ["EAP-TTLS"]}]
 COND_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
-COND_CUSTOM_EKU = [{"criterion_name": "Certificate-Custom-Extended-Key-Usage", "criterion_value": ["1.3.6.1.5.5.7.3.60"]}]
 
 RULES_ACCEPT_EAPTTLS = [
     {"cond_rules": COND_EAP_TYPE_EAPTTLS, "auth": PreAdmissionAuth.ACCEPT},
-]
-RULES_ACCEPT_CUSTOM_EKU_ELSE_DENY = [
-    {"cond_rules": COND_CUSTOM_EKU, "auth": PreAdmissionAuth.ACCEPT},
-    {"cond_rules": COND_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
 ]
 
 

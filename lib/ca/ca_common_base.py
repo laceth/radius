@@ -106,7 +106,7 @@ class CounterActBase(SSHClient):
                         f"CA SSH error on attempt {attempt + 1} "
                         f"(connection may have dropped), reconnecting: {e!r}"
                     )
-                    CONNECTION_POOL._pools.pop(self.get_conn_key(), None)
+                    CONNECTION_POOL.evict(self.get_conn_key())
                 else:
                     raise
 

@@ -24,13 +24,11 @@ class WindowsPassthrough(PassthroughBase):
 
         log.info(f"Executing command on WindowsPassthrough: {command}")
 
-        last_exc: Optional[Exception] = None
         for attempt in range(2):
             try:
                 out = self.win_con.run_ps(command) if is_ps else self.win_con.run_cmd(command)
                 break
             except Exception as e:
-                last_exc = e
                 if attempt == 0:
                     log.warning(
                         f"WinRM transport error on attempt {attempt + 1} "
