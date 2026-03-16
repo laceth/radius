@@ -285,7 +285,17 @@ class Radius(RadiusBase):
             username: account used to access the source (default: "administrator")            
             auth_source_type: auth source type (default: "ad")
         """
-        auth_value = f"{auth_source_name}\\:{auth_source_type}\\:\\:testuser\\|{username}"
+        sep = r"\:"
+        auth_value_new = f"{auth_source_name}{sep}{auth_source_type}{sep}{sep}testuser|{username}"
+        auth_value_old = f"{auth_source_name}:{auth_source_type}::testuser|{username}"
+        try:
+            ca_version = tuple(int(x) for x in self.platform.get_version_ca().split("."))
+        except Exception as e:
+            log.warning(f"Could not determine CA version, defaulting to new format: {e}")
+            ca_version = (9, 0, 0)
+        # 8.x uses plain-colon format; 9.x+ uses backslash-colon format
+        auth_value = auth_value_old if ca_version < (9,) else auth_value_new
+        log.info(f"CA version {'.'.join(str(x) for x in ca_version)}: using auth_value format '{auth_value}'")
         auth_source_size_raw = self._get_property(DEFAULT_LOCAL_PROPERTY_FILE_PATH, AUTH_SOURCE_SIZE_KEY)
         auth_source_size = int(auth_source_size_raw) if auth_source_size_raw and auth_source_size_raw.strip() else 0
         for slot in range(1, AUTH_SOURCE_MAX_SLOTS + 1):
@@ -300,14 +310,22 @@ class Radius(RadiusBase):
                 self.apply_dot1x_changes()
                 return
 
-            current_name = current.split("\\:")[0]
+            # Split on zero-or-more backslashes + colon to handle both formats:
+            #   8.5.2 EM: 'name:type::testuser|user'   (plain colon)
+            #   9.1.5 EM: 'name\:type\:\:testuser|user' (backslash-colon)
+            current_name = re.split(r'\\*:', current)[0]
             if current_name == auth_source_name:
-                log.info(f"Current: {auth_key}={auth_value}")
-                if auth_source_size < slot:
+                if current == auth_value:
+                    log.info(f"Auth source '{auth_source_name}' already configured in slot {slot}, skipping")
+                else:
+                    log.info(f"Updating auth source slot {slot}: '{current}' -> '{auth_value}'")
+                    self._set_property(auth_key, auth_value)
+                    self.has_change = True
+                if auth_source_size != slot:
                     log.info(f"Updating auth source size from {auth_source_size} to {slot}")
                     self._set_property(AUTH_SOURCE_SIZE_KEY, str(slot))
                     self.has_change = True
-                    self.apply_dot1x_changes()
+                self.apply_dot1x_changes()
                 return
 
             log.info(f"Checking next slot because: {auth_key}={current}")

@@ -13,18 +13,32 @@ class WindowsPassthrough(PassthroughBase):
         super().__init__(ip, user_name, password, mac, nicname)
         self.win_con = winrm.Session(self.ip, auth=(self.username, self.password), transport='ntlm')
 
+    def _new_session(self) -> winrm.Session:
+        """Create and return a fresh WinRM session."""
+        return winrm.Session(self.ip, auth=(self.username, self.password), transport='ntlm')
+
     def execute_command(self, command, is_ps=True):
-        try:
-            log.info(f"Executing command on WindowsPassthrough: {command}")
+        # For PowerShell commands, suppress progress output to avoid CLIXML errors
+        if is_ps and "$ProgressPreference" not in command:
+            command = f"$ProgressPreference = 'SilentlyContinue'; {command}"
 
-            # For PowerShell commands, suppress progress output to avoid CLIXML errors
-            if is_ps:
-                # Prepend command with $ProgressPreference to suppress progress bars
-                command = f"$ProgressPreference = 'SilentlyContinue'; {command}"
+        log.info(f"Executing command on WindowsPassthrough: {command}")
 
-            out = self.win_con.run_ps(command) if is_ps else self.win_con.run_cmd(command)
-        except Exception as e:
-            raise RuntimeError(f"Failed to execute command '{command}': {str(e)}")
+        last_exc: Optional[Exception] = None
+        for attempt in range(2):
+            try:
+                out = self.win_con.run_ps(command) if is_ps else self.win_con.run_cmd(command)
+                break
+            except Exception as e:
+                last_exc = e
+                if attempt == 0:
+                    log.warning(
+                        f"WinRM transport error on attempt {attempt + 1} "
+                        f"(session may have dropped), reconnecting: {e!r}"
+                    )
+                    self.win_con = self._new_session()
+                else:
+                    raise RuntimeError(f"Failed to execute command '{command}': {e}") from e
 
         stdout = out.std_out.decode("utf-8", errors="replace").strip()
         stderr = out.std_err.decode("utf-8", errors="replace").strip()

@@ -94,8 +94,20 @@ class CiscoIOS(SwitchBase, SSHClient):
         return output
 
     def exec_command(self, cmd, timeout=30, log_output=False):
-        self.session = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
-        return self._execute(cmd, timeout, log_output)
+        for attempt in range(2):
+            try:
+                self.session = CONNECTION_POOL.get(self.get_conn_key(), self._create_connection)
+                return self._execute(cmd, timeout, log_output)
+            except Exception as e:
+                if attempt == 0:
+                    log.warning(
+                        f"Switch SSH error on attempt {attempt + 1} "
+                        f"(connection may have dropped), reconnecting: {e!r}"
+                    )
+                    # Evict the broken session from the pool so get() recreates it
+                    CONNECTION_POOL._pools.pop(self.get_conn_key(), None)
+                else:
+                    raise
 
     @staticmethod
     def normalize_interface(ifname: str) -> str:
