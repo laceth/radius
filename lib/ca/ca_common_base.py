@@ -197,15 +197,23 @@ class CounterActBase(SSHClient):
             expression.set("EXPR_TYPE", "AND")
             for field in fields:
                 sub_expression = ET.SubElement(expression, "EXPRESSION", {"EXPR_TYPE": field["EXPR_TYPE"]})
-                condition = ET.SubElement(sub_expression, "CONDITION", {**field["CONDITION"]})
-                filter_element = ET.SubElement(condition, "FILTER", {**field["CONDITION"]["FILTER"]})
-                ET.SubElement(filter_element, "VALUE", {**field["CONDITION"]["FILTER"]["VALUE"]})
+                cond_attrib = dict(field["CONDITION"])
+                filter_spec = dict(cond_attrib.pop("FILTER", {}) or {})
+                value_spec = dict(filter_spec.pop("VALUE", {}) or {})
+
+                condition = ET.SubElement(sub_expression, "CONDITION", cond_attrib)
+                filter_element = ET.SubElement(condition, "FILTER", filter_spec)
+                ET.SubElement(filter_element, "VALUE", value_spec)
         else:
             field = fields[0]
             expression.set("EXPR_TYPE", field["EXPR_TYPE"])
-            condition = ET.SubElement(expression, "CONDITION", {**field["CONDITION"]})
-            filter_element = ET.SubElement(condition, "FILTER", {**field["CONDITION"]["FILTER"]})
-            ET.SubElement(filter_element, "VALUE", {**field["CONDITION"]["FILTER"]["VALUE"]})
+            cond_attrib = dict(field["CONDITION"])
+            filter_spec = dict(cond_attrib.pop("FILTER", {}) or {})
+            value_spec = dict(filter_spec.pop("VALUE", {}) or {})
+
+            condition = ET.SubElement(expression, "CONDITION", cond_attrib)
+            filter_element = ET.SubElement(condition, "FILTER", filter_spec)
+            ET.SubElement(filter_element, "VALUE", value_spec)
 
         # Insert the EXPRESSION block into the RULE
         existing_expression = rule.find("./EXPRESSION")
@@ -373,6 +381,112 @@ class CounterActBase(SSHClient):
             time.sleep(retry_interval)
 
         return False
+
+    def get_policy_stats(self, policy_name: str, timeout: int = 120, retry_interval: int = 5) -> dict:
+        """Return policy stats aggregated across nodes (HA-safe).
+
+        Uses `fstool oneach fstool npstats` and parses both:
+        - base lines:   "<node>: PolicyName : MATCH : 1"
+        - subrule lines:"<node>: PolicyName -> subrule : MATCH : 7"
+
+        Returns a dict with totals plus a per-subrule breakdown and the raw text.
+        """
+        start_time = time.time()
+        cmd = f"fstool oneach fstool npstats | grep -F '{policy_name}' || true"
+
+        last = ""
+        while time.time() - start_time < timeout:
+            out = self.exec_command(cmd, timeout=30, log_command=True, log_output=True).strip()
+            if out:
+                last = out
+                break
+            time.sleep(retry_interval)
+
+        pat = re.compile(
+            r"^(?:(?P<node>\S+):\s*)?"
+            r"(?P<policy>.+?)(?:\s*->\s*(?P<subrule>[^:]+))?\s*:\s*"
+            r"(?P<kind>MATCH|UNMATCH)\s*:\s*(?P<count>\d+)\s*$"
+        )
+
+        stats = {
+            "match_total": 0,
+            "unmatch_total": 0,
+            "match_base": 0,
+            "unmatch_base": 0,
+            "saw_base_line": False,
+            "by_subrule": {},
+            "raw": last,
+        }
+
+        for line in (last.splitlines() if last else []):
+            m = pat.match(line.strip())
+            if not m:
+                continue
+
+            kind = m.group("kind")
+            cnt = int(m.group("count"))
+            sub = (m.group("subrule") or "").strip() or None
+
+            if kind == "MATCH":
+                stats["match_total"] += cnt
+            else:
+                stats["unmatch_total"] += cnt
+
+            if sub is None:
+                stats["saw_base_line"] = True
+                if kind == "MATCH":
+                    stats["match_base"] += cnt
+                else:
+                    stats["unmatch_base"] += cnt
+            else:
+                bucket = stats["by_subrule"].setdefault(sub, {"match": 0, "unmatch": 0})
+                if kind == "MATCH":
+                    bucket["match"] += cnt
+                else:
+                    bucket["unmatch"] += cnt
+
+        return stats
+
+    def verify_policy_match(
+        self,
+        policy_name: str,
+        expected_count: int = 1,
+        timeout: int = 280,
+        retry_interval: int = 5,
+    ) -> None:
+        """Assert that a policy matches expected_count endpoints.
+
+        Default timeout is 280s (long enough for policy import/eval + HA propagation).
+        """
+        ok = self.check_policy_match(
+            policy_name,
+            count=expected_count,
+            timeout=timeout,
+            retry_interval=retry_interval,
+        )
+        if not ok:
+            stats = self.get_policy_stats(policy_name, timeout=5, retry_interval=1)
+            raise AssertionError(
+                f"Policy '{policy_name}' should match {expected_count} endpoint(s) within {timeout}s. "
+                f"raw={stats.get('raw','')}"
+            )
+
+    def verify_policy_subrule_match(
+        self,
+        policy_name: str,
+        subrule: str,
+        expected_count: int = 1,
+        timeout: int = 120,
+        retry_interval: int = 5,
+    ) -> None:
+        """Assert MATCH count for a specific policy subrule."""
+        stats = self.get_policy_stats(policy_name, timeout=timeout, retry_interval=retry_interval)
+        actual = stats["by_subrule"].get(subrule, {}).get("match", 0)
+        if actual != expected_count:
+            raise AssertionError(
+                f"Policy '{policy_name}' subrule '{subrule}' MATCH should be {expected_count}, got {actual}. "
+                f"raw={stats.get('raw','')}"
+            )
     
     def get_host_ip_by_mac(self, mac_address: str, preferred_range: str = None, timeout: int = 60, interval: int = 5) -> str:
         """

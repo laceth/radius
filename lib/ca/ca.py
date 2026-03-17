@@ -86,8 +86,28 @@ class CouterActAppliance(CounterActBase):
             raise Exception("property_field and id are required")
 
         output = self.exec_command(PROPERTY_CHECK_COMMAND % (id, property_field))
-        parts = output.split(", ")
-        return parts[3] if len(parts) > 3 else None
+        field_value, _resolved_by = self._parse_hostinfo_property_line(output)
+        return field_value
+
+    def _parse_hostinfo_property_line(self, output: str) -> tuple[Optional[str], Optional[str]]:
+        """Parse a single `fstool hostinfo` grep line.
+
+        `fstool hostinfo` output is comma-separated but spacing is not consistent
+        across versions (some commas are followed by a space, others are not).
+        Splitting on ", " is therefore brittle.
+
+        Expected columns (simplified):
+          id, epoch, timestamp, field_name, field_value, (plugin@...), ...
+        """
+        line = next((l for l in (output or "").splitlines() if l.strip()), "")
+        if not line:
+            return None, None
+
+        parts = [p.strip() for p in line.split(",")]
+        field_value = parts[4] if len(parts) > 4 else None
+        match = re.search(r"\((\w+)@", line)
+        resolved_by_plugin = match.group(1) if match else None
+        return field_value, resolved_by_plugin
 
     def _property_check(self, id: str, property_field: str, expected_value: str, resolved_by: str = "", timeout: int = 60, case_insensitive: bool = False):
         """
@@ -120,8 +140,7 @@ class CouterActAppliance(CounterActBase):
         while time.time() - start_time < timeout:
             try:
                 output = self.exec_command(PROPERTY_CHECK_COMMAND % (id, property_field))
-                field_value = output.split(", ")[3] if len(output.split(", ")) > 4 else None
-                resolved_by_plugin = re.search(r'\((\w+)@', output).group(1) if re.search(r'\((\w+)@', output) else None
+                field_value, resolved_by_plugin = self._parse_hostinfo_property_line(output)
             except RuntimeError as e:
                 # grep returns exit code 1 when no match found - this is expected when property doesn't exist yet
                 log.debug(f"Property '{property_field}' not found yet: {e}")

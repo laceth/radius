@@ -273,6 +273,52 @@ class Radius(RadiusBase):
         except Exception as e:
             raise Exception(f"Failed to configure RADIUS plugin settings: {e}")
 
+    def add_auth_source(self, auth_source_name: str, username: str = "administrator", auth_source_type: str = "ad") -> None:
+        """
+        A functions combines "Add" and "Configure" buttons of CounterAct -> Options -> Radius -> Authentication Sources.
+
+        Args:
+            auth_source_name: auth source name (e.g. "txqalab-dc1")
+            username: account used to access the source (default: "administrator")            
+            auth_source_type: auth source type (default: "ad")
+        """
+        auth_value = f"{auth_source_name}\\:{auth_source_type}\\:\\:testuser\\|{username}"
+        auth_source_size_raw = self._get_property(DEFAULT_LOCAL_PROPERTY_FILE_PATH, AUTH_SOURCE_SIZE_KEY)
+        auth_source_size = int(auth_source_size_raw) if auth_source_size_raw and auth_source_size_raw.strip() else 0
+        for slot in range(1, AUTH_SOURCE_MAX_SLOTS + 1):
+            auth_key = AUTH_SOURCE_KEY.format(slot=slot)
+            current = self._get_property(DEFAULT_LOCAL_PROPERTY_FILE_PATH, auth_key)
+
+            if not current:
+                log.info(f"Adding auth source: {auth_key}={auth_value}")
+                self._set_property(auth_key, auth_value)
+                self._set_property(AUTH_SOURCE_SIZE_KEY, str(slot))
+                self.has_change = True
+                self.apply_dot1x_changes()
+                return
+
+            # Auth source values are typically stored with escaped delimiters ("\\:")
+            # but some environments store legacy values using plain ":".
+            if "\\:" in current:
+                current_name = current.split("\\:", 1)[0]
+            elif ":" in current:
+                current_name = current.split(":", 1)[0]
+            else:
+                current_name = current
+            if current_name == auth_source_name:
+                log.info(f"Current: {auth_key}={auth_value}")
+                if auth_source_size < slot:
+                    log.info(f"Updating auth source size from {auth_source_size} to {slot}")
+                    self._set_property(AUTH_SOURCE_SIZE_KEY, str(slot))
+                    self.has_change = True
+                    self.apply_dot1x_changes()
+                return
+
+            log.info(f"Checking next slot because: {auth_key}={current}")
+
+        raise Exception(
+            f"No free auth source slot found for '{auth_source_name}' (Please checked {AUTH_SOURCE_MAX_SLOTS} slots)"
+        )
     def join_domain(self, domain_name: str, ad_username: str, ad_password: str, timeout: int = 60) -> None:
         """
         Join a domain in User Directory using fstool dot1x join command.

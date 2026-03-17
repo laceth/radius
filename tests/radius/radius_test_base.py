@@ -415,6 +415,18 @@ class RadiusTestBase:
 
         return self.ca.get_host_ip_by_mac(self.passthrough.mac, preferred_range=preferred_range)
 
+    def _get_dot1x_host_id(self) -> str:
+        """Return the best identifier for dot1x_* properties.
+
+        In many CounterACT setups, dot1x_* properties are attached to the MAC-based
+        host record (not the current DHCP IP). Using the MAC avoids intermittent
+        failures where IP-based lookups return None.
+        """
+        mac = getattr(self.passthrough, "mac", None)
+        if mac:
+            return mac
+        return self._get_host_id()
+
     def _verify_common_properties(
             self,
             host_id: str,
@@ -471,12 +483,14 @@ class RadiusTestBase:
             auth_state: Expected auth state. Default: "Access-Accept"
         """
         if not self.host_id:
+            # Keep host_id for other checks; use MAC for dot1x_* properties.
             self.host_id = self._get_host_id()
+        dot1x_host_id = self._get_dot1x_host_id()
         # Debug: dump all dot1x properties (only on first verification)
-        self._dump_dot1x_properties(self.host_id)
+        self._dump_dot1x_properties(dot1x_host_id)
 
         expected_source = f"Pre-Admission rule {rule_priority}"
-        log.info(f"Verifying pre-admission rule for host: {self.host_id}")
+        log.info(f"Verifying pre-admission rule for host: {dot1x_host_id}")
 
         # First verify auth_state is correct, then check auth_source
         # If auth_state is Access-Reject, auth_source will be None
@@ -485,7 +499,7 @@ class RadiusTestBase:
             {"property_field": "dot1x_auth_source", "expected_value": expected_source}
         ]
 
-        self.ca.check_properties(self.host_id, properties_check_list)
+        self.ca.check_properties(dot1x_host_id, properties_check_list)
         log.debug(f"Pre-admission rule verified: {expected_source}")
 
     def _dump_dot1x_properties(self, host_id: str):
@@ -514,18 +528,20 @@ class RadiusTestBase:
             nas_port_id: Expected NAS Port ID (dot1x_NASPortIdStr). Defaults to self.switch.port1['interface']
         """
         if not self.host_id:
+            # Keep host_id for other checks; use MAC for dot1x_* properties.
             self.host_id = self._get_host_id()
+        dot1x_host_id = self._get_dot1x_host_id()
         # Debug: dump all dot1x properties (only on first verification)
-        self._dump_dot1x_properties(self.host_id)
+        self._dump_dot1x_properties(dot1x_host_id)
 
         nas_port_id = nas_port_id or self.switch.port1['interface']
-        log.info(f"Verifying wired properties for host: {self.host_id}")
+        log.info(f"Verifying wired properties for host: {dot1x_host_id}")
 
         properties_check_list = [
             {"property_field": "dot1x_NASPortIdStr", "expected_value": nas_port_id}
         ]
 
-        self.ca.check_properties(self.host_id, properties_check_list)
+        self.ca.check_properties(dot1x_host_id, properties_check_list)
         log.debug(f"Wired properties verified: NAS Port ID = {nas_port_id}")
 
     def verify_wireless_properties(self, nas_identifier: str = None, nas_port_id: str = None):
@@ -604,10 +620,11 @@ class RadiusTestBase:
         """
         if not self.host_id:
             self.host_id = self._get_host_id()
-        log.info(f"Verifying authentication for host: {self.host_id}")
+        dot1x_host_id = self._get_dot1x_host_id()
+        log.info(f"Verifying authentication for host: {dot1x_host_id}")
 
         self._verify_common_properties(
-            host_id=self.host_id,
+            host_id=dot1x_host_id,
             switch_ip=switch_ip,
             ca_ip=ca_ip
         )
@@ -657,11 +674,26 @@ class RadiusTestBase:
         if not self.host_id:
             self.host_id = self._get_host_id()
 
-        log.info(f"Verifying SAN for host: {self.host_id}")
-
+        dot1x_host_id = self._get_dot1x_host_id()
         properties_check_list = [
             {"property_field": "dot1x_fr_client_x509_cert_subj_alt_name", "expected_value": expected_san}
         ]
+
+        # Prefer the dot1x/MAC-based host record (more reliable for dot1x_* properties),
+        # but fall back to the IP-based record if the property is stored there.
+        log.info(f"Verifying SAN for host (dot1x id): {dot1x_host_id}")
+        try:
+            self.ca.check_properties(dot1x_host_id, properties_check_list)
+            log.info(f"SAN verified: {expected_san}")
+            return
+        except Exception as e:
+            if dot1x_host_id == self.host_id:
+                raise
+            log.warning(
+                f"SAN check failed on dot1x id '{dot1x_host_id}' ({e}); retrying on IP host id '{self.host_id}'"
+            )
+
+        log.info(f"Verifying SAN for host (ip id): {self.host_id}")
         self.ca.check_properties(self.host_id, properties_check_list)
         log.info(f"SAN verified: {expected_san}")
 
@@ -675,6 +707,26 @@ class RadiusTestBase:
             inner_not: Whether to apply NOT operator to the inner condition. Default is False.
             Returns: Policy name(str)
         """
+        # CounterACT policy import expects specific FILTER TYPE values (typically lowercase).
+        # Some tests historically use UI-like strings (e.g. "Any Value"/"AnyValue"/"Contains").
+        # Normalize to supported XML values to avoid import failures.
+        raw_match_type = str(match_type or "").strip()
+        normalized_key = re.sub(r"\s+", "", raw_match_type).lower()  # e.g. "Any Value" -> "anyvalue"
+        match_type_map = {
+            "equals": "equals",
+            "contains": "contains",
+            "startswith": "startswith",
+            "endswith": "endswith",
+            "matches": "matches",
+            "matchesexpression": "matchesexpression",
+            # Map UI-style any-value strings to a supported operator.
+            # In this codebase, callers still provide a concrete `value` to match,
+            # so `contains` preserves intent and is supported by policy import.
+            "anyvalue": "contains",
+        }
+
+        match_type = match_type_map.get(normalized_key, raw_match_type.lower() or "contains")
+
         fields = copy.deepcopy(DEFAULT_RADIUS_POLICY_MAC_FIELDS)
         fields[0]["CONDITION"]["FILTER"]["VALUE"]["VALUE2"] = self.passthrough.mac
         fields.append(
@@ -764,19 +816,14 @@ class RadiusTestBase:
         Verify that a policy matches expected_count endpoints.
         Timeout/retry/error formatting stays inside the framework.
         """
-        ok = self.em.check_policy_match(policy_name, count=expected_count, timeout=120)
-        assert ok, f"Policy '{policy_name}' should match {expected_count} endpoint(s)"
+        # Use EM helper with a longer default to accommodate policy import + HA propagation.
+        self.em.verify_policy_match(policy_name, expected_count=expected_count)
 
     def verify_policy_subrule_match(self, policy_name: str, subrule: str, expected_count: int = 1) -> None:
         """
         Verify MATCH count for a specific subrule (Policy -> subrule).
         """
-        stats = self.get_policy_stats(policy_name, timeout=120, retry_interval=5)
-        actual = stats["by_subrule"].get(subrule, {}).get("match", 0)
-        assert actual == expected_count, (
-            f"Policy '{policy_name}' subrule '{subrule}' MATCH should be {expected_count}, got {actual}. "
-            f"raw={stats['raw']}"
-        )
+        self.em.verify_policy_subrule_match(policy_name, subrule=subrule, expected_count=expected_count)
 
     def get_policy_stats(self, policy_name: str, timeout: int = 30, retry_interval: int = 5) -> dict:
         """

@@ -53,13 +53,15 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
             log.error(f"[T1316924] FAIL: {e}")
             raise
 
-class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
+class TC_9448_EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
     """T1316925
          Steps
     -----
-    1. Preconditions: Create/update endpoint and populate properties (including SAN) and Validate SAN is present on the endpoint
+    1. Preconditions: Create/update endpoint and populat
+    
+    e properties (including SAN) and Validate SAN is present on the endpoint
     2. Create Custom policy "Radius SAN" with condition:
-       802.1x Client Cert Subject Alternative Name CONTAINS "anyvalue" --> 12345
+       802.1x Client Cert Subject Alternative Name CONTAINS "Any Value" --> 12345
        Apply and verify it matches the host.
     3. Edit policy: change condition to CONTAINS "invalid"
        Apply and verify host no longer matches.
@@ -77,12 +79,13 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
     def do_test(self):
         try:
             # --- Step 1  Preconditions: endpoint authenticates via EAP-TLS ---
+            self.dot1x.set_pre_admission_rules(self.SET_ACCEPT_TLS_ELSE_DENY)
             self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
             self.cert_config.certificate_filename = WindowsCert.CERT_Client_SAN.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
-            self.dot1x.set_pre_admission_rules(self.SET_ACCEPT_TLS_ELSE_DENY)
 
             # Admission 1 : create/update endpoint and populate properties (including SAN)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -92,13 +95,16 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             # Validate SAN is present on the endpoint (good sanity check)
             self.verify_san(expected_san=self.EXPECTED_SAN)
 
-            # ---------- Step 2: Policy contains "anyvalue" ----------
+            self.wait_for_dot1x_ready()
+            # ---------- Step 2: Set policy match to Any Value with "12345" ----------
             policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
-                match_type="contains",
+                match_type="Any Value",
                 value="12345",
                 match_case=False,
             )
+
             # Admission #2: force policy evaluation after policy import/update
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -107,13 +113,16 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             self.verify_policy_match(policy_name, expected_count=1)
             self.verify_authentication_on_ca()
 
-            # ---------- Step 3: Update policy to contains "invalid" ----------
+            self.wait_for_dot1x_ready()
+            # ---------- Step 3: Update policy match to Contains invalid value ----------
             policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
-                match_type="contains",
+                match_type="Contains",
                 value="invalid",
                 match_case=False,
             )
+
             # Admission #3: force re-eval after update
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -122,14 +131,16 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             self.verify_policy_match(policy_name, expected_count=0)
             self.verify_authentication_on_ca()
 
-            # ---------- Step 4: Policy contains "san-testid" ----------
+            self.wait_for_dot1x_ready()
+            # ---------- Step 4: Update policy match to Contains value "san-testid" ----------
             policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
-                match_type="contains",
+                match_type="Contains",
                 value="san-testid",
                 match_case=False,
             )
 
-            # Admission #4: force re-eval afte update
+            # Admission #4: force re-eval after update
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
             self.wait_for_nic_ip_in_range()
@@ -141,6 +152,7 @@ class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             log.error(f"[T1316925] FAIL: {e}")
             raise
 
+
 class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
     """
     T1316931 same as T1316932 (Wireless)
@@ -151,7 +163,6 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
     3. On the Home tab open the host **Profile -> Authentication** header and verify Pre-Admission rule 1 is used and the RADIUS Authentication State is **RADIUS-Accepted** (EAP-TLS).
     4. On the host use MMC to move the CA cert from **Trusted Root Certification Authorities** to **Personal**, reconnect the NIC, and verify the Authentication header shows **RADIUS-Rejected** and the NIC no longer has an IP address.
     """
-
 
     SET_BASIC_WIRED_ACCEPT_TLS_ELSE_DENY = [
         {
@@ -182,6 +193,7 @@ class EAPTLSBasicAuthWiredTest(RadiusEapTlsTestBase):
 
             # Step 4: Move CA cert from Trusted Root to Personal and verify RADIUS-Rejected
             self.move_ca_cert_to_personal_store()
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED)
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
@@ -659,6 +671,7 @@ class EAPTLSPreAdmissionEKUMultipleCriterionsTest(RadiusEapTlsTestBase):
             self.cleanup_all_test_certificates()
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_EKU_G.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_nic_has_no_ip_in_range()
@@ -937,10 +950,6 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
     ]
 
     def do_test(self):
-<<<<<<< HEAD
-        try:
-            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
-=======
         lan_profile = LanProfile.eap_tls()
         expected_status = AuthenticationStatus.SUCCEEDED
         fail_status = AuthenticationStatus.FAILED
@@ -950,7 +959,6 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
 
         try:
             self.configure_lan_profile(lan_profile=lan_profile)
->>>>>>> 35bc36a (AA-865: udpate to JH PR comments)
 
             # Step 1: Rule 1 only
             self.dot1x.set_pre_admission_rules(self.SET_RULE_1_ACCEPT_ELSE_DENY)
@@ -970,6 +978,7 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
             # Step 3: cert G does NOT match rule 1 (should be rejected)
             self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_MSCA_G.value
             self.import_certificates(certificate_password=CERT_PASSWORD)
+            self.wait_for_dot1x_ready()
             self.toggle_nic()
             # self.assert_authentication_status(expected_status=AuthenticationStatus.FAILED) TODO: implement something instead of FAILED to verify the passthrough failure
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
