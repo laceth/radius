@@ -333,7 +333,6 @@ class Radius(RadiusBase):
         raise Exception(
             f"No free auth source slot found for '{auth_source_name}' (Please checked {AUTH_SOURCE_MAX_SLOTS} slots)"
         )
-
     def join_domain(self, domain_name: str, ad_username: str, ad_password: str, timeout: int = 60) -> None:
         """
         Join a domain in User Directory using fstool dot1x join command.

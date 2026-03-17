@@ -99,14 +99,15 @@ class RadiusCertificatesTestBase(RadiusTestBase):
         # Get host ID once using base class helper
         if not self.host_id:
             self.host_id = self._get_host_id()
-        log.info(f"Verifying {self.DEFAULT_EAP_TYPE} authentication for host: {self.host_id}")
+        dot1x_host_id = self._get_dot1x_host_id()
+        log.info(f"Verifying {self.DEFAULT_AUTH_PROFILE} authentication for host: {dot1x_host_id}")
 
         # Convert enum to string value if needed
         auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
 
         # Verify common fields using base class helper
         self._verify_common_properties(
-            host_id=self.host_id,
+            host_id=dot1x_host_id,
             switch_ip=switch_ip,
             ca_ip=ca_ip,
             auth_state=auth_status_value
@@ -126,8 +127,8 @@ class RadiusCertificatesTestBase(RadiusTestBase):
             {"property_field": "dot1x_host", "expected_value": cert_name},
         ]
 
-        self.ca.check_properties(self.host_id, cert_properties_check_list)
-        log.info(f"{self.DEFAULT_EAP_TYPE} authentication verification completed successfully")
+        self.ca.check_properties(dot1x_host_id, cert_properties_check_list)
+        log.info(f"{self.DEFAULT_AUTH_PROFILE} authentication verification completed successfully")
 
 
     # =========================================================================
