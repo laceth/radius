@@ -96,7 +96,8 @@ class RadiusCertificatesTestBase(RadiusTestBase):
         if not self.host_id:
             self.host_id = self._get_host_id()
         dot1x_host_id = self._get_dot1x_host_id()
-        log.info(f"Verifying {self.DEFAULT_AUTH_PROFILE} authentication for host: {dot1x_host_id}")
+        auth_profile_label = getattr(self, "DEFAULT_AUTH_PROFILE", self.DEFAULT_EAP_TYPE)
+        log.info(f"Verifying {auth_profile_label} authentication for host: {dot1x_host_id}")
 
         # Convert enum to string value if needed
         auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
@@ -124,7 +125,7 @@ class RadiusCertificatesTestBase(RadiusTestBase):
         ]
 
         self.ca.check_properties(dot1x_host_id, cert_properties_check_list)
-        log.info(f"{self.DEFAULT_AUTH_PROFILE} authentication verification completed successfully")
+        log.info(f"{auth_profile_label} authentication verification completed successfully")
 
 
     # =========================================================================
