@@ -15,6 +15,8 @@ class WindowsPassthrough(PassthroughBase):
     _REG_WINLOGON = r"HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
     # Marker file written after each TLS version change so we can skip redundant reboots
     _TLS_MARKER_PATH = r'C:\Windows\Temp\fstester_tls_version.txt'
+    # Default initial wait (seconds) before polling for WinRM after a reboot
+    _REBOOT_INITIAL_WAIT = 120
 
     def __init__(self, ip: str, user_name: str, password: str, mac: str, nicname: str = "pciPassthru0"):
         super().__init__(ip, user_name, password, mac, nicname)
@@ -44,12 +46,12 @@ class WindowsPassthrough(PassthroughBase):
 
     def _wait_if_reboot_pending(self):
         """If a reboot was triggered, block until Windows is back online.
-        The 30 s initial-wait is reduced by however much time has already
+        The initial wait (``_REBOOT_INITIAL_WAIT``) is reduced by however much time has already
         elapsed (e.g. while the framework configured CA / switch)."""
         if self._reboot_initiated_at is None:
             return
         elapsed = time.time() - self._reboot_initiated_at
-        remaining_initial = max(0, 30 - elapsed)
+        remaining_initial = max(0, self._REBOOT_INITIAL_WAIT - elapsed)
         self._reboot_initiated_at = None          # clear BEFORE waiting (avoids recursion)
         log.info(f"[reboot] {elapsed:.0f}s since reboot was triggered, "
                  f"initial_wait reduced to {remaining_initial:.0f}s")
@@ -951,7 +953,7 @@ class WindowsPassthrough(PassthroughBase):
 
         Args:
             timeout:      Maximum seconds to poll after *initial_wait* (default 300).
-            initial_wait: Seconds to sleep before polling starts (default 30),
+            initial_wait: Seconds to sleep before polling starts (default 120),
                           giving the machine time to actually start the shutdown.
 
         Raises:
