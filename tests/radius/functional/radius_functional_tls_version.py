@@ -31,7 +31,7 @@ Windows reboots happen exactly **twice** across the full run:
   │ TC_9512  │ 1.1     │ marker=1.1     → skip                │
   └──────────┴─────────┴──────────────────────────────────────┘
 
-After the full suite completes, ``suite_teardown`` in ``_TLSMixin`` automatically
+After the full suite completes, ``suite_teardown`` in ``_TLSSetup`` automatically
 calls ``restore_windows_tls_defaults()``, removing all TLS registry keys and
 rebooting the endpoint back to OS defaults.
 """

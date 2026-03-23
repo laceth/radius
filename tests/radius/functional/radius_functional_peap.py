@@ -160,7 +160,7 @@ class TC_9340_PEAPAuthenticationUsingLdapGroup(RadiusPeapTestBase):
     # rules[0]: all users, rules[1]: users[1] only, rules[2]: users[3] only
     rule_to_users = {
         0: users,        # LDAP-Group Domain*       — test all users: txqalab\xxx-adm
-        1: [users[1]],   # LDAP-Group Domain Admins — test NLevi only: txqalab\Rthangaraj-adm
+        1: [users[1]],   # LDAP-Group Domain Admins — test NLevi only: txqalab\NLevi-adm
         2: [users[3]],   # LDAP-Group Domain Users  — test THampton only: txqalab\THampton-adm
     }
 
