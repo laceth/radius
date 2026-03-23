@@ -9,16 +9,55 @@ from typing import Optional, Tuple, Union
 
 
 class WindowsPassthrough(PassthroughBase):
+
+    # Registry base path for Schannel protocol version controls and winlogon
+    _REG_SCHANNEL = r'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols'
+    _REG_WINLOGON = r"HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+    _TLS_MARKER_PATH = r'C:\Windows\Temp\fstester_tls_version.txt'
+    _REBOOT_INITIAL_WAIT = 120
+
     def __init__(self, ip: str, user_name: str, password: str, mac: str, nicname: str = "pciPassthru0"):
         super().__init__(ip, user_name, password, mac, nicname)
         self.win_con = winrm.Session(self.ip, auth=(self.username, self.password), transport='ntlm')
+        self._reboot_initiated_at: Optional[float] = None
+        self._auto_logon_configured: bool = False
+        self._reboot_for_tls: bool = False
+        self._reboot_for_auto_logon: bool = False
 
     def _new_session(self) -> winrm.Session:
         """Create and return a fresh WinRM session."""
         return winrm.Session(self.ip, auth=(self.username, self.password), transport='ntlm')
 
+    def trigger_reboot(self):
+        """Trigger a Windows reboot without waiting.  The next ``execute_command``
+        call will automatically wait for the machine to come back."""
+        try:
+            self.execute_command("Restart-Computer -Force")
+        except Exception as e:
+            log.debug(f"WinRM disconnected (expected during reboot): {e!r}")
+        self._reboot_initiated_at = time.time()
+        # Once a reboot is scheduled the pending-flags should be cleared so
+        # subsequent calls to need_reboot() don't spuriously return True.
+        self._reboot_for_tls = False
+        self._reboot_for_auto_logon = False
+        log.info("[reboot] Initiated — will wait lazily on next WinRM call")
+
+    def _wait_if_reboot_pending(self):
+        """If a reboot was triggered, block until Windows is back online.
+        The initial wait (``_REBOOT_INITIAL_WAIT``) is reduced by however much time has already
+        elapsed (e.g. while the framework configured CA / switch)."""
+        if self._reboot_initiated_at is None:
+            return
+        elapsed = time.time() - self._reboot_initiated_at
+        remaining_initial = max(0, self._REBOOT_INITIAL_WAIT - elapsed)
+        self._reboot_initiated_at = None          # clear BEFORE waiting (avoids recursion)
+        log.info(f"[reboot] {elapsed:.0f}s since reboot was triggered, "
+                 f"initial_wait reduced to {remaining_initial:.0f}s")
+        self.wait_for_windows_reboot(initial_wait=int(remaining_initial))
+
     def execute_command(self, command, is_ps=True):
         # For PowerShell commands, suppress progress output to avoid CLIXML errors
+        self._wait_if_reboot_pending()
         if is_ps and "$ProgressPreference" not in command:
             command = f"$ProgressPreference = 'SilentlyContinue'; {command}"
 
@@ -694,3 +733,265 @@ class WindowsPassthrough(PassthroughBase):
         log.info(f"[OK] PsExec is ready at: {psexec_path}")
         self.cleanup_file(zip_path)
 
+    # =========================================================================
+    # Windows Auto-Logon
+    # =========================================================================
+
+    def ensure_auto_logon(self, reboot: bool = False):
+        """
+        Configure Windows to automatically log in as the WinRM user after every
+        reboot or logout.  This is required for UI-automation scripts (PsExec -i)
+        to find an active desktop session.
+        """
+        # If we've already configured auto-logon earlier in this process,
+        # avoid re-checking/writing the registry (prevents duplicate reboots)
+        if getattr(self, '_auto_logon_configured', False):
+            log.info(f"[auto-logon] Already configured in this run for '{self.username}', skipping")
+            return
+
+        desired = {
+            'AutoAdminLogon': '1',
+            'DefaultUserName': self.username,
+            'DefaultPassword': self.password,
+        }
+        # Force PowerShell to return simple Key:Value lines (no table formatting)
+        get_cmd = (
+            f"$p = Get-ItemProperty -Path '{self._REG_WINLOGON}' -ErrorAction SilentlyContinue; "
+            "Write-Output \"AutoAdminLogon:$($p.AutoAdminLogon)\"; "
+            "Write-Output \"DefaultUserName:$($p.DefaultUserName)\"; "
+            "Write-Output \"DefaultPassword:$($p.DefaultPassword)\""
+        )
+
+        current = {}
+        try:
+            raw = self.execute_command(get_cmd)
+        except RuntimeError as e:
+            log.debug(f"Unable to read auto-logon keys: {e}")
+            raw = ''
+
+        # Parse Key:Value lines produced above
+        for line in raw.splitlines():
+            if ':' not in line:
+                continue
+            key, val = line.split(':', 1)
+            current[key.strip()] = val.strip()
+
+        to_change = []
+        for key, expected in desired.items():
+            actual = current.get(key)
+            if actual != expected:
+                to_change.append(key)
+
+        if not to_change:
+            log.info(f"[auto-logon] Keys already match for '{self.username}', skipping reboot")
+            # Mark as configured so subsequent setups in the same run don't rewrite
+            self._auto_logon_configured = True
+            # No reboot required because nothing changed
+            self._reboot_for_auto_logon = False
+            return
+
+        set_cmds = []
+        for key in to_change:
+            value = desired[key]
+            set_cmds.append(
+                f"Set-ItemProperty -Path '{self._REG_WINLOGON}' -Name '{key}' -Value '{value}'"
+            )
+
+        self.execute_command('; '.join(set_cmds))
+        # mark configured BEFORE reboot so later calls won't reapply while WinRM settles
+        self._auto_logon_configured = True
+        # Changes to Winlogon require a reboot to take full effect
+        self._reboot_for_auto_logon = True
+        log.info(f"[auto-logon] Configured auto-logon for user '{self.username}' because {', '.join(to_change)} differed")
+        if reboot and self._reboot_for_auto_logon:
+            log.info("[auto-logon] triggering reboot to apply changes...")
+            self.trigger_reboot()
+
+    def restore_auto_logon_defaults(self, reboot: bool = False):
+        """
+        Restore Winlogon auto-logon settings to defaults by removing the
+        keys set by `ensure_auto_logon`. Optionally triggers a reboot so
+        changes take effect.
+
+        Args:
+            reboot: If True, trigger a non-blocking reboot after removing
+                    the registry properties. Defaults to False.
+        """
+        log.info("=== Restoring Winlogon auto-logon defaults ===")
+        lines = [
+            # Remove keys we set earlier; SilentlyContinue avoids noisy errors
+            f"Remove-ItemProperty -Path '{self._REG_WINLOGON}' -Name 'AutoAdminLogon','DefaultUserName','DefaultPassword' -ErrorAction SilentlyContinue",
+        ]
+
+        try:
+            self.execute_command('; '.join(lines))
+            # Clear in-memory flag so future runs may reapply if needed
+            self._auto_logon_configured = False
+            log.info("[auto-logon] Winlogon properties removed (or already absent)")
+        except RuntimeError as e:
+            log.warning(f"Failed to remove Winlogon properties: {e}")
+        if reboot:
+            log.info("[Restore auto-logon] triggering reboot to apply changes...")
+            self.trigger_reboot()    
+
+    # =========================================================================
+    # Windows TLS Version Management
+    # =========================================================================
+
+    def get_windows_tls_version(self) -> str:
+        """
+        Return the TLS version last set by fstester (e.g. '1.0', '1.1'),
+        or 'default' if the marker file has never been written.
+        """
+        marker = self._TLS_MARKER_PATH
+        cmd = (
+            f"if (Test-Path '{marker}') "
+            f"{{ (Get-Content '{marker}').Trim() }} "
+            f"else {{ 'default' }}"
+        )
+        return self.execute_command(cmd).strip()
+
+    def set_windows_tls_only(self, version: str):
+        """
+        Restrict Windows Schannel so the endpoint negotiates *only* the
+        specified TLS version.  All other client-side TLS versions (1.0–1.2)
+        are explicitly disabled.  Writes a marker file and marks the
+        endpoint for reboot (non-blocking). This method does NOT itself
+        trigger the reboot — callers should call :py:meth:`trigger_reboot`
+        or use :py:meth:`ensure_windows_tls_version` with ``reboot=True``
+        to actually perform the reboot. The next ``execute_command`` call
+        will wait for the machine to come back if a reboot was triggered.
+
+        Args:
+            version: '1.0', '1.1', or '1.2'
+
+        Raises:
+            ValueError: For unsupported version strings.
+        """
+        if version not in {'1.0', '1.1', '1.2'}:
+            raise ValueError(f"Unsupported TLS version '{version}'. Supported: '1.0', '1.1', '1.2'")
+
+        log.info(f"=== Restricting Windows Schannel to TLS {version} only (will reboot) ===")
+        marker = self._TLS_MARKER_PATH
+        base = self._REG_SCHANNEL
+
+        lines: list[str] = []
+        for ver in ['1.0', '1.1', '1.2']:
+            key = f"{base}\\TLS {ver}\\Client"
+            enabled = 1 if ver == version else 0
+            disabled_default = 0 if ver == version else 1
+            lines += [
+                f"New-Item -Path '{key}' -Force | Out-Null",
+                f"Set-ItemProperty -Path '{key}' -Name 'Enabled' -Value {enabled} -Type DWord",
+                f"Set-ItemProperty -Path '{key}' -Name 'DisabledByDefault' -Value {disabled_default} -Type DWord",
+            ]
+
+        tls12_server = f"{base}\\TLS 1.2\\Server"
+        lines += [
+            f"New-Item -Path '{tls12_server}' -Force | Out-Null",
+            f"Set-ItemProperty -Path '{tls12_server}' -Name 'Enabled' -Value 1 -Type DWord",
+            f"Set-ItemProperty -Path '{tls12_server}' -Name 'DisabledByDefault' -Value 0 -Type DWord",
+        ]
+        lines.append(f"Set-Content -Path '{marker}' -Value '{version}'")
+
+        self.execute_command('; '.join(lines))
+        # TLS registry changes require a reboot to take effect
+        self._reboot_for_tls = True
+        log.info(f"Registry set for TLS {version} (reboot flagged but not triggered)")
+
+    def ensure_windows_tls_version(self, version: str, reboot: bool = False):
+        """
+        Idempotent wrapper: set Windows TLS to *version* only if it is not
+        already set to that version.  Avoids an unnecessary reboot when
+        consecutive test classes share the same TLS requirement.
+
+        Args:
+            version: '1.0', '1.1', or '1.2'
+        """
+        current = self.get_windows_tls_version()
+        if current == version:
+            log.info(f"[TLS] Windows already restricted to TLS {version} — skipping reboot")
+            # Nothing to change so ensure the reboot flag is cleared.
+            self._reboot_for_tls = False
+            return
+        log.info(f"[TLS] Current marker='{current}', changing to TLS {version}")
+        self.set_windows_tls_only(version)
+        if reboot and self._reboot_for_tls:
+            log.info("[TLS] Triggering reboot to apply TLS changes...")
+            self.trigger_reboot()
+
+    def restore_windows_tls_defaults(self):
+        """
+        Remove all TLS registry keys added by fstester, restoring Windows
+        Schannel to OS defaults (all TLS versions enabled implicitly).
+        Deletes the marker file then reboots.
+        """
+        log.info("=== Restoring Windows Schannel TLS defaults (removing TLS keys) ===")
+        marker = self._TLS_MARKER_PATH
+        base = self._REG_SCHANNEL
+
+        lines: list[str] = []
+        # Remove the entire TLS {ver} key (including any Client/Server subkeys)
+        # so no TLS 1.x folders remain. Use -Recurse -Force and SilentlyContinue
+        # to be best-effort and quiet when keys are absent.
+        for ver in ['1.0', '1.1', '1.2']:
+            tls_key = f"{base}\\TLS {ver}"
+            lines.append(f"Remove-Item -Path '{tls_key}' -Recurse -Force -ErrorAction SilentlyContinue")
+        # Remove marker file if present
+        lines.append(f"Remove-Item -Path '{marker}' -Force -ErrorAction SilentlyContinue")
+
+        self.execute_command('; '.join(lines))
+        log.info("TLS keys removed, rebooting...")
+        self.trigger_reboot()
+        self.wait_for_windows_reboot()
+
+    def wait_for_windows_reboot(self, timeout: int = 300, initial_wait: Optional[int] = None):
+        """
+        Wait for Windows to finish rebooting and become reachable via WinRM.
+
+        Args:
+            timeout:      Maximum seconds to poll after *initial_wait* (default 300).
+            initial_wait: Seconds to sleep before polling starts (default 120),
+                          giving the machine time to actually start the shutdown.
+
+        Raises:
+            RuntimeError: If the machine does not come back within the wait window.
+        """
+        # Use the class-configured default initial wait when not provided
+        if initial_wait is None:
+            initial_wait = self._REBOOT_INITIAL_WAIT
+        log.info(f"Waiting {initial_wait}s for Windows to be rebooted...")
+        time.sleep(initial_wait)
+
+        start = time.time()
+        log.info(f"Polling for WinRM availability (max {timeout}s)...")
+        while time.time() - start < timeout:
+            try:
+                # Create a fresh WinRM session and allow a short settle period
+                # before issuing the first probe. Some hosts accept TCP but
+                # close the first request briefly while services finish starting.
+                self.win_con = self._new_session()
+                time.sleep(3)
+                result = self.execute_command("Write-Output 'alive'").strip()
+                if 'alive' in result:
+                    log.info("[OK] Windows is back online after reboot — settling 15s...")
+                    time.sleep(15)
+                    # Clear any pending reboot flags now that the system is back.
+                    self._reboot_for_tls = False
+                    self._reboot_for_auto_logon = False
+                    return
+            except Exception as e:
+                log.debug(f"Windows not yet reachable: {e!r}")
+            time.sleep(10)
+
+        raise RuntimeError(
+            f"Windows did not come back online within {initial_wait + timeout}s after reboot"
+        )
+
+    def need_reboot(self) -> bool:
+        """Return True if any recent configuration requires a reboot to take effect.
+
+        This is a convenience used by test mixins to decide whether to trigger
+        a reboot after making changes (TLS or auto-logon).
+        """
+        return bool(getattr(self, '_reboot_for_tls', False) or getattr(self, '_reboot_for_auto_logon', False))
