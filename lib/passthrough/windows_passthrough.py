@@ -945,7 +945,7 @@ class WindowsPassthrough(PassthroughBase):
         self.trigger_reboot()
         self.wait_for_windows_reboot()
 
-    def wait_for_windows_reboot(self, timeout: int = 420, initial_wait: int = 30):
+    def wait_for_windows_reboot(self, timeout: int = 300, initial_wait: int = 120):
         """
         Wait for Windows to finish rebooting and become reachable via WinRM.
 
@@ -957,14 +957,18 @@ class WindowsPassthrough(PassthroughBase):
         Raises:
             RuntimeError: If the machine does not come back within the wait window.
         """
-        log.info(f"Waiting {initial_wait}s for Windows to begin rebooting...")
+        log.info(f"Waiting {initial_wait}s for Windows to be rebooted...")
         time.sleep(initial_wait)
 
         start = time.time()
         log.info(f"Polling for WinRM availability (max {timeout}s)...")
         while time.time() - start < timeout:
             try:
+                # Create a fresh WinRM session and allow a short settle period
+                # before issuing the first probe. Some hosts accept TCP but
+                # close the first request briefly while services finish starting.
                 self.win_con = self._new_session()
+                time.sleep(3)
                 result = self.execute_command("Write-Output 'alive'").strip()
                 if 'alive' in result:
                     log.info("[OK] Windows is back online after reboot — settling 15s...")
