@@ -808,7 +808,12 @@ class RadiusTestBase(FSTestCommonBase):
             }
         )
         policy_name = "policy_condition_dot1x_fr_client_x509_cert_subj_alt_name"
-        self.em.simple_policy_condition("dot1xSimplePolicyCondition.xml", policy_name, fields)
+        self.em.simple_policy_condition(
+            "dot1xSimplePolicyCondition.xml",
+            policy_name,
+            fields,
+            allow_unknown_ip=True,
+        )
         return policy_name
 
     def add_dot1x_policy_eap_type(self, eap_type: str = "EAP-TLS") -> str:

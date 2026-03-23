@@ -49,22 +49,22 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
-            self.verify_san(expected_san=EXPECTED_SA)
+            self.verify_san(expected_san=EXPECTED_SAN)
         except Exception as e:
             log.error(f"[T1316924] FAIL: {e}")
             raise
 
 class TC_9448_EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
-    """
-    T1316925
-    Steps
+    """T1316925
+         Steps
     -----
-    1. Create Custom policy "Radius SAN" with condition:
-       802.1x Client Cert Subject Alternative Name CONTAINS "san-testid"
+    1. Preconditions: Create/update endpoint and populate properties (including SAN) and Validate SAN is present on the endpoint
+    2. Create Custom policy "Radius SAN" with condition:
+       802.1x Client Cert Subject Alternative Name CONTAINS "Any Value" --> 12345
        Apply and verify it matches the host.
-    2. Edit policy: change condition to CONTAINS "invalid"
+    3. Edit policy: change condition to CONTAINS "invalid"
        Apply and verify host no longer matches.
-    3. Edit policy back to CONTAINS "san-testid"
+    4. Edit policy back to CONTAINS "san-testid"
        Apply and verify host matches again.
     """
 
@@ -86,63 +86,48 @@ class TC_9448_EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
             # Admission 1 : create/update endpoint and populate properties (including SAN)
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
             self.verify_authentication_on_ca()
 
             # Validate SAN is present on the endpoint (good sanity check)
             self.verify_san(expected_san=self.EXPECTED_SAN)
 
-            self.wait_for_dot1x_ready()
-            # ---------- Step 2: Set policy match to Any Value with "12345" ----------
-            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
-                match_type="Any Value",
-                value="12345",
-                match_case=False,
-            )
+            # ---------- Step 2: Set policy match to Any Value with "12345"----------
+            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(match_type="Any Value", value="12345", match_case=False,)
 
             # Admission #2: force policy evaluation after policy import/update
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
             self.verify_authentication_on_ca()
             self.verify_policy_match(policy_name, expected_count=1)
             self.verify_authentication_on_ca()
 
-            self.wait_for_dot1x_ready()
-            # ---------- Step 3: Update policy match to Contains invalid value ----------
-            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
-                match_type="Contains",
-                value="invalid",
-                match_case=False,
-            )
+            # ---------- Step 3: Update policy match to Contains invalid value "san-testids" ----------
+            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(match_type="Contains", value="san-testids", match_case=False,)
 
             # Admission #3: force re-eval after update
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
             self.verify_authentication_on_ca()
             self.verify_policy_match(policy_name, expected_count=0)
             self.verify_authentication_on_ca()
 
-            self.wait_for_dot1x_ready()
-            # ---------- Step 4: Update policy match to Contains value "san-testid" ----------
-            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(
-                match_type="Contains",
-                value="san-testid",
-                match_case=False,
-            )
+            # ---------- Step 4: Update Policy match to Contains value "san-testid" ----------
+            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(match_type="Contains", value="san-testid", match_case=False,)
 
-            # Admission #4: force re-eval after update
+            # Admission #4: force re-eval afte update
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
-            self.wait_for_nic_ip_in_range()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
             self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
             self.verify_authentication_on_ca()
             self.verify_policy_match(policy_name, expected_count=1)
