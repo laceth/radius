@@ -22,7 +22,7 @@ class WindowsPassthrough(PassthroughBase):
         self._reboot_initiated_at: Optional[float] = None
         self._auto_logon_configured: bool = False
         self._reboot_for_tls: bool = False
-        self._reboot_for_auto_loggon: bool = False
+        self._reboot_for_auto_logon: bool = False
 
     def _new_session(self) -> winrm.Session:
         """Create and return a fresh WinRM session."""
@@ -36,6 +36,10 @@ class WindowsPassthrough(PassthroughBase):
         except Exception as e:
             log.debug(f"WinRM disconnected (expected during reboot): {e!r}")
         self._reboot_initiated_at = time.time()
+        # Once a reboot is scheduled the pending-flags should be cleared so
+        # subsequent calls to need_reboot() don't spuriously return True.
+        self._reboot_for_tls = False
+        self._reboot_for_auto_logon = False
         log.info("[reboot] Initiated — will wait lazily on next WinRM call")
 
     def _wait_if_reboot_pending(self):
@@ -783,7 +787,7 @@ class WindowsPassthrough(PassthroughBase):
             # Mark as configured so subsequent setups in the same run don't rewrite
             self._auto_logon_configured = True
             # No reboot required because nothing changed
-            self._reboot_for_auto_loggon = False
+            self._reboot_for_auto_logon = False
             return
 
         set_cmds = []
@@ -797,9 +801,9 @@ class WindowsPassthrough(PassthroughBase):
         # mark configured BEFORE reboot so later calls won't reapply while WinRM settles
         self._auto_logon_configured = True
         # Changes to Winlogon require a reboot to take full effect
-        self._reboot_for_auto_loggon = True
+        self._reboot_for_auto_logon = True
         log.info(f"[auto-logon] Configured auto-logon for user '{self.username}' because {', '.join(to_change)} differed")
-        if reboot and self._reboot_for_auto_loggon:
+        if reboot and self._reboot_for_auto_logon:
             log.info("[auto-logon] triggering reboot to apply changes...")
             self.trigger_reboot()
 
@@ -810,8 +814,8 @@ class WindowsPassthrough(PassthroughBase):
         changes take effect.
 
         Args:
-            reboot: If True (default), trigger a non-blocking reboot after
-                    removing the registry properties.
+            reboot: If True, trigger a non-blocking reboot after removing
+                    the registry properties. Defaults to False.
         """
         log.info("=== Restoring Winlogon auto-logon defaults ===")
         lines = [
@@ -851,10 +855,12 @@ class WindowsPassthrough(PassthroughBase):
         """
         Restrict Windows Schannel so the endpoint negotiates *only* the
         specified TLS version.  All other client-side TLS versions (1.0–1.2)
-        are explicitly disabled.  Writes a marker file then triggers a
-        **non-blocking** reboot.  The next ``execute_command`` call will
-        automatically wait for the machine to come back, so CA / switch setup
-        that runs in between is not blocked.
+        are explicitly disabled.  Writes a marker file and marks the
+        endpoint for reboot (non-blocking). This method does NOT itself
+        trigger the reboot — callers should call :py:meth:`trigger_reboot`
+        or use :py:meth:`ensure_windows_tls_version` with ``reboot=True``
+        to actually perform the reboot. The next ``execute_command`` call
+        will wait for the machine to come back if a reboot was triggered.
 
         Args:
             version: '1.0', '1.1', or '1.2'
@@ -891,7 +897,7 @@ class WindowsPassthrough(PassthroughBase):
         self.execute_command('; '.join(lines))
         # TLS registry changes require a reboot to take effect
         self._reboot_for_tls = True
-        log.info(f"Registry set for TLS {version}")
+        log.info(f"Registry set for TLS {version} (reboot flagged but not triggered)")
 
     def ensure_windows_tls_version(self, version: str, reboot: bool = False):
         """
@@ -905,6 +911,8 @@ class WindowsPassthrough(PassthroughBase):
         current = self.get_windows_tls_version()
         if current == version:
             log.info(f"[TLS] Windows already restricted to TLS {version} — skipping reboot")
+            # Nothing to change so ensure the reboot flag is cleared.
+            self._reboot_for_tls = False
             return
         log.info(f"[TLS] Current marker='{current}', changing to TLS {version}")
         self.set_windows_tls_only(version)
@@ -961,6 +969,9 @@ class WindowsPassthrough(PassthroughBase):
                 if 'alive' in result:
                     log.info("[OK] Windows is back online after reboot — settling 15s...")
                     time.sleep(15)
+                    # Clear any pending reboot flags now that the system is back.
+                    self._reboot_for_tls = False
+                    self._reboot_for_auto_logon = False
                     return
             except Exception as e:
                 log.debug(f"Windows not yet reachable: {e!r}")
@@ -976,4 +987,4 @@ class WindowsPassthrough(PassthroughBase):
         This is a convenience used by test mixins to decide whether to trigger
         a reboot after making changes (TLS or auto-logon).
         """
-        return bool(getattr(self, '_reboot_for_tls', False) or getattr(self, '_reboot_for_auto_loggon', False))
+        return bool(getattr(self, '_reboot_for_tls', False) or getattr(self, '_reboot_for_auto_logon', False))

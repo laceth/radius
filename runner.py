@@ -35,7 +35,7 @@ def collect_test_classes(test_suite):
 
     for name, cls in inspect.getmembers(module, inspect.isclass):
         if name.startswith('_'):
-            continue  # skip private helper / mixin classes
+            continue  # skip private classes
         if cls.__module__ == module.__name__:
             if single_test_class_name and name != single_test_class_name:
                 continue

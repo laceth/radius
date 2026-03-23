@@ -35,10 +35,10 @@ class _TLSSetup(RadiusTestBase):
         ca_version = self.ca.get_version_ca()
         major = int(ca_version.split(".")[0])
         if major >= 9:
-            raise _VersionSkipped(
-                f"TLS {self.TLS_VERSION} tests require product version 8.x; "
-                f"detected {ca_version} — skipping."
+            log.info(
+                f"Skipping TLS {self.TLS_VERSION} tests: product version {ca_version} does not support legacy TLS enforcement (requires 8.x)."
             )
+            return
         super().do_setup()
         self.configure_radius_settings(minimum_tls_version=self.RADIUS_MIN_TLS)
         self.passthrough.ensure_windows_tls_version(self.TLS_VERSION)
