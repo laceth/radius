@@ -26,12 +26,10 @@ class CiscoIOS(SwitchBase, SSHClient):
             "password": self.password,
             "secret": self.password,
         }
-        self.session = ConnectHandler(**self.device)
-        try:
-            # Enter privileged exec mode if device opens in user exec ('>')
-            self.session.enable()
-        except Exception as exc:
-            log.warning(f"CiscoIOS enable not required on {self.ip}: {exc}")
+        # Connection is established lazily on first exec_command() call so that
+        # object construction (and test parametrization) never blocks or fails
+        # due to transient SSH banner errors on the switch.
+        self.session = None
         self.is_ipv4 = True
         ip_obj = ipaddress.ip_address(self.ip)
         if isinstance(ip_obj, ipaddress.IPv6Address):
