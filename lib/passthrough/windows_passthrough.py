@@ -13,9 +13,7 @@ class WindowsPassthrough(PassthroughBase):
     # Registry base path for Schannel protocol version controls and winlogon
     _REG_SCHANNEL = r'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols'
     _REG_WINLOGON = r"HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
-    # Marker file written after each TLS version change so we can skip redundant reboots
     _TLS_MARKER_PATH = r'C:\Windows\Temp\fstester_tls_version.txt'
-    # Default initial wait (seconds) before polling for WinRM after a reboot
     _REBOOT_INITIAL_WAIT = 120
 
     def __init__(self, ip: str, user_name: str, password: str, mac: str, nicname: str = "pciPassthru0"):
@@ -947,7 +945,7 @@ class WindowsPassthrough(PassthroughBase):
         self.trigger_reboot()
         self.wait_for_windows_reboot()
 
-    def wait_for_windows_reboot(self, timeout: int = 300, initial_wait: int = 120):
+    def wait_for_windows_reboot(self, timeout: int = 300, initial_wait: Optional[int] = None):
         """
         Wait for Windows to finish rebooting and become reachable via WinRM.
 
@@ -959,6 +957,9 @@ class WindowsPassthrough(PassthroughBase):
         Raises:
             RuntimeError: If the machine does not come back within the wait window.
         """
+        # Use the class-configured default initial wait when not provided
+        if initial_wait is None:
+            initial_wait = self._REBOOT_INITIAL_WAIT
         log.info(f"Waiting {initial_wait}s for Windows to be rebooted...")
         time.sleep(initial_wait)
 
