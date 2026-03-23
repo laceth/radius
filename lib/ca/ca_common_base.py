@@ -159,7 +159,7 @@ class CounterActBase(SSHClient):
         except Exception as e:
             raise RuntimeError(f"SCP operation failed: {e}")
 
-    def simple_policy_condition(self, policy_file_name, policy_name, fields):
+    def simple_policy_condition(self, policy_file_name, policy_name, fields, allow_unknown_ip: bool = False):
         """
         Build and import simple condition policies.
         fields input ie.
@@ -207,6 +207,8 @@ class CounterActBase(SSHClient):
             policy_file_name (str): Name of the policy file.
             policy_name (str): Name of the policy.
             fields (list): List of dictionaries with 'field_name', 'field_label', and 'field_value'.
+            allow_unknown_ip (bool): If True, set policy IP exception UNKNOWN_EVAL to MATCH to allow
+                evaluating MAC-only or unknown-IP endpoints during policy evaluation.
             em_policy_path (str): Path to save the modified policy file.
         """
         log.info(f"******** adding policy {policy_name} ********")
@@ -223,6 +225,12 @@ class CounterActBase(SSHClient):
         rule = root.find("./RULE")
         if rule is not None:
             rule.set("NAME", policy_name)
+
+        if allow_unknown_ip and rule is not None:
+            for exc in rule.findall("./EXCEPTION"):
+                if exc.get("NAME") == "ip":
+                    exc.set("UNKNOWN_EVAL", "MATCH")
+                    break
         # Add or update the EXPRESSION block
         expression = ET.Element("EXPRESSION")
         if len(fields) > 1:
