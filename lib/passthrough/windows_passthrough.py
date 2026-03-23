@@ -923,11 +923,13 @@ class WindowsPassthrough(PassthroughBase):
         base = self._REG_SCHANNEL
 
         lines: list[str] = []
+        # Remove the entire TLS {ver} key (including any Client/Server subkeys)
+        # so no TLS 1.x folders remain. Use -Recurse -Force and SilentlyContinue
+        # to be best-effort and quiet when keys are absent.
         for ver in ['1.0', '1.1', '1.2']:
-            client_key = f"{base}\\TLS {ver}\\Client"
-            lines.append(f"Remove-Item -Path '{client_key}' -Recurse -Force -ErrorAction SilentlyContinue")
-        tls12_server = f"{base}\\TLS 1.2\\Server"
-        lines.append(f"Remove-ItemProperty -Path '{tls12_server}' -Name 'Enabled','DisabledByDefault' -ErrorAction SilentlyContinue")
+            tls_key = f"{base}\\TLS {ver}"
+            lines.append(f"Remove-Item -Path '{tls_key}' -Recurse -Force -ErrorAction SilentlyContinue")
+        # Remove marker file if present
         lines.append(f"Remove-Item -Path '{marker}' -Force -ErrorAction SilentlyContinue")
 
         self.execute_command('; '.join(lines))
