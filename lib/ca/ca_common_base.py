@@ -74,9 +74,11 @@ class CounterActBase(SSHClient):
                 allow_agent=False,    # Don’t use SSH agent
                 timeout=10
             )
+            log.info(f"SSH connected to {self.username}@{self.ipaddress}")
             return self.client
         except Exception as e:
-            raise ConnectionError(f"Failed to connect to {self.username}: {e}")
+            # Include the target IP/hostname in the error to aid debugging
+            raise ConnectionError(f"Failed to connect to {self.username}@{self.ipaddress}: {e}")
 
     def _execute(self, cmd, timeout=30, log_output: bool = False, log_command: bool = False):
         if log_command:
@@ -157,7 +159,7 @@ class CounterActBase(SSHClient):
                 else:
                     raise ValueError("Invalid direction. Use 'upload' or 'download'.")
         except Exception as e:
-            raise RuntimeError(f"SCP operation failed: {e}")
+            raise RuntimeError(f"SCP operation failed on {self.ipaddress}: {e}")
 
     def simple_policy_condition(self, policy_file_name, policy_name, fields, allow_unknown_ip: bool = False):
         """
