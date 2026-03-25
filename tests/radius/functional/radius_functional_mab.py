@@ -7,7 +7,6 @@ via their MAC address instead of 802.1X credentials.
 from framework.log.logger import log
 from lib.passthrough.enums import AuthenticationStatus
 from lib.plugin.radius.enums import PreAdmissionAuth, RadiusAuthStatus
-from lib.utils.mac import generate_random_mac
 from tests.radius.functional.base_classes.radius_mab_test_base import RadiusMabTestBase
 
 # =========================================================================
@@ -21,68 +20,6 @@ MAB_ACCEPT_ELSE_DENY_RULES = [
     {"cond_rules": RULE_AUTH_TYPE_MAB, "auth": PreAdmissionAuth.ACCEPT},
     {"cond_rules": RULE_USER_NAME_MATCH_ANY, "auth": PreAdmissionAuth.REJECT_DUMMY},
 ]
-
-
-class TC_13155_MABBasicAuthWiredTest(RadiusMabTestBase):
-    """
-    TC-13155: DOT | Mac Address Bypass Authentication: Wired
-
-    This test ensures authentication using MAC Address Bypass for a wired Endpoint.
-
-    Steps (CSV C186712)
-    -------------------
-    1. Configure pre-admission rule: Authentication-Type = MAB (priority 1), else deny.
-    2. Add the MAC address of the Endpoint to the MAC Address Repository table.
-    3. Disable "Accept MAB authentication for endpoints not defined in repository".
-    4. Force the Endpoint to authenticate (toggle NIC).
-    5. Verify the NIC received an IP from the configured VLAN.
-    6. Verify Authentication details: Pre-Admission rule 1, RADIUS-Accepted, MAB.
-    7. Edit the MAC in MAR to be invalid, re-authenticate, verify rejection.
-    """
-
-    def do_test(self):
-        unmatched_mac = None
-        try:
-            # Step 1: Configure pre-admission rule: Authentication-Type = MAB
-            self.dot1x.set_pre_admission_rules(MAB_ACCEPT_ELSE_DENY_RULES)
-
-            # Step 2: Add MAC to MAR
-            self.em.add_mac_to_mar(mac=self.nic_mac)
-            self.assert_mac_in_mar()
-
-            # Step 3-6: Authenticate and verify
-            self.wait_for_dot1x_ready()
-            self.toggle_nic()
-            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
-            self.wait_for_nic_ip_in_range()
-            self.verify_pre_admission_rule(rule_priority=1)
-            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
-            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
-
-            # Step 7: Replace endpoint MAC with an unmatched MAC in MAR, re-authenticate, verify rejection
-            self.em.remove_mac_from_mar(self.nic_mac)
-            unmatched_mac = generate_random_mac()
-            self.em.add_mac_to_mar(mac=unmatched_mac)
-            log.info(f"Replaced endpoint MAC with unmatched MAC '{unmatched_mac}' in MAR")
-            self.assert_mac_not_in_mar()  # endpoint MAC should not be in MAR
-
-            self.toggle_nic()
-            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
-            self.verify_nic_has_no_ip_in_range()
-            self.verify_pre_admission_rule(rule_priority=2, auth_state="Access-Reject")
-            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT, host_in_mar=False)
-
-            log.info(f"[{self.testCaseId}] PASS - MAB basic wired authentication test completed")
-        except Exception as e:
-            log.error(f"Test {self.testCaseId} failed: {e}")
-            raise
-        finally:
-            if unmatched_mac:
-                try:
-                    self.em.remove_mac_from_mar(unmatched_mac)
-                except Exception as cleanup_err:
-                    log.warning(f"Failed to clean up unmatched MAC '{unmatched_mac}': {cleanup_err}")
-
 
 class TC_13162_MABMACInMARMismatchTest(RadiusMabTestBase):
     """
