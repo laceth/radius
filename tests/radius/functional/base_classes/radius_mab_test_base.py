@@ -147,6 +147,17 @@ class RadiusMabTestBase(RadiusTestBase):
 
         log.info("MAB-specific authentication verification completed")
 
+    def verify_radius_imposed_auth(self, expected_reply_message: str):
+        """Verify the dot1x_ass_restrictions property contains the expected Reply-Message."""
+        host_id = self.host_id or self._get_host_id()
+        self.ca.check_properties(host_id, [
+            {
+                "property_field": "dot1x_ass_restrictions",
+                "expected_value": f"Reply-Message={expected_reply_message}",
+            }
+        ])
+        log.info(f"Verified RADIUS Imposed Authorization: Reply-Message={expected_reply_message}")
+
     def assert_mac_in_mar(self, mac: str = None):
         """
         Assert that MAC address exists in MAR.
