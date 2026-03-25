@@ -53,7 +53,7 @@ class MABBasicAuthWiredTest(RadiusMabTestBase):
             # Step 3-6: Authenticate and verify
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.wait_for_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
@@ -67,7 +67,7 @@ class MABBasicAuthWiredTest(RadiusMabTestBase):
             self.assert_mac_not_in_mar()  # endpoint MAC should not be in MAR
 
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.verify_nic_has_no_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=2, auth_state="Access-Reject")
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT, host_in_mar=False)
@@ -187,7 +187,7 @@ class MABSimplePreAdmissionConditionsTest(RadiusMabTestBase):
             # Step 3-4: Authenticate and verify pre-admission rule
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.wait_for_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
@@ -239,7 +239,7 @@ class MABAuthUppercaseMACTest(RadiusMabTestBase):
             # Step 3-5: Authenticate and verify
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.wait_for_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
@@ -290,7 +290,7 @@ class MABLargeMARTableTest(RadiusMabTestBase):
             # Step 4-5: Authenticate and verify
             self.wait_for_dot1x_ready()
             self.toggle_nic()
-            self.assert_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.wait_for_nic_ip_in_range()
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
