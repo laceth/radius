@@ -337,26 +337,6 @@ class RadiusTestBase(FSTestCommonBase):
         """
         assert self.dot1x.dot1x_plugin_running(), message
 
-    def assert_dot1x_processes_running(self):
-        """
-        Assert all required dot1x sub-processes are running.
-
-        Uses the public ``Radius.get_process_uptimes()`` API to retrieve
-        parsed uptimes for every required sub-process.
-
-        Raises:
-            AssertionError: If any process is not running.
-
-        Returns:
-            dict: process name → uptime in seconds (for reuse by callers).
-        """
-        uptimes = self.dot1x.get_process_uptimes()
-        log.info("dot1x process uptimes:")
-        for proc, uptime in uptimes.items():
-            assert uptime >= 0, f"Process '{proc}' is not running"
-            log.info(f"  {proc}: running for {uptime}s")
-        return uptimes
-
     def verify_dot1x_stable(self, min_uptime: int = 180, timeout: int = 300, interval: int = 10) -> None:
         """
         Poll until all 4 dot1x processes have been running for at least *min_uptime*
@@ -490,7 +470,6 @@ class RadiusTestBase(FSTestCommonBase):
         ip = self.passthrough.wait_for_nic_ip_in_range(self.nicname, ip_range, timeout=timeout)
         self._last_known_ip = ip
         return ip
-
 
     def assert_authentication_and_ip_in_range(
             self,
