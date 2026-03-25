@@ -445,7 +445,8 @@ class Radius(RadiusBase):
             raise Exception(f"Failed to test join domain '{domain_name}': {e}")
 
     def set_null(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
-        """Set config.auth_source_null.value to specified auth_source (checks current value first)."""
+        """Set config.auth_source_null.value to specified auth_source (checks current value first).
+        Restarts dot1x if the value changed."""
         try:
             current_value = self._get_property(file_path, AUTH_SOURCE_NULL_KEY)
             if current_value == auth_source:
@@ -454,11 +455,14 @@ class Radius(RadiusBase):
 
             log.info(f"Setting auth_source {auth_source} to Null (current: '{current_value}')")
             self._set_property(AUTH_SOURCE_NULL_KEY, auth_source, file_path)
+            self.has_change = True
         except Exception as e:
             raise Exception(f"Failed to set auth source null to '{auth_source}': {e}")
+        self.apply_dot1x_changes()
 
     def set_default(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
-        """Set config.auth_source_default.value to specified auth_source (checks current value first)."""
+        """Set config.auth_source_default.value to specified auth_source (checks current value first).
+        Restarts dot1x if the value changed."""
         try:
             current_value = self.get_default_auth_source(file_path)
             if current_value == auth_source:
@@ -467,8 +471,10 @@ class Radius(RadiusBase):
 
             log.info(f"Setting auth_source {auth_source} to Default (current: '{current_value}')")
             self._set_property(AUTH_SOURCE_DEFAULT_KEY, auth_source, file_path)
+            self.has_change = True
         except Exception as e:
             raise Exception(f"Failed to set auth source default to '{auth_source}': {e}")
+        self.apply_dot1x_changes()
 
     def get_default_auth_source(self, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> str:
         """Get current value of config.auth_source_default.value."""

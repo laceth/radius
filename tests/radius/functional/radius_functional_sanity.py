@@ -64,7 +64,8 @@ class TC_13099_Dot1xSourceConfigKerberosTest(RadiusTestBase):
 
     def do_test(self):
         try:
-            # Step 1: Clear Default and NULL so the source is joined without either assigned
+            # Step 1: Clear Default and NULL so the source is joined without either assigned.
+            # Each call writes to local.properties and restarts dot1x if the value changed.
             self.dot1x.set_null("")
             self.dot1x.set_default("")
 
