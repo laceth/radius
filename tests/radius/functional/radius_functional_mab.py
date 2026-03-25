@@ -23,9 +23,9 @@ MAB_ACCEPT_ELSE_DENY_RULES = [
 ]
 
 
-class MABBasicAuthWiredTest(RadiusMabTestBase):
+class TC_13155_MABBasicAuthWiredTest(RadiusMabTestBase):
     """
-    T1316995 - DOT Mac Address Bypass Authentication: Wired
+    TC-13155: DOT | Mac Address Bypass Authentication: Wired
 
     This test ensures authentication using MAC Address Bypass for a wired Endpoint.
 
@@ -72,9 +72,9 @@ class MABBasicAuthWiredTest(RadiusMabTestBase):
             self.verify_pre_admission_rule(rule_priority=2, auth_state="Access-Reject")
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT, host_in_mar=False)
 
-            log.info("[T1316995] PASS - MAB basic wired authentication test completed")
+            log.info(f"[{self.testCaseId}] PASS - MAB basic wired authentication test completed")
         except Exception as e:
-            log.error(f"[T1316995] FAIL: {e}")
+            log.error(f"Test {self.testCaseId} failed: {e}")
             raise
         finally:
             if unmatched_mac:
@@ -84,9 +84,9 @@ class MABBasicAuthWiredTest(RadiusMabTestBase):
                     log.warning(f"Failed to clean up unmatched MAC '{unmatched_mac}': {cleanup_err}")
 
 
-class MABMACInMARMismatchTest(RadiusMabTestBase):
+class TC_13162_MABMACInMARMismatchTest(RadiusMabTestBase):
     """
-    T1316942 - DOT Pre-Admission rule - MAC Found in MAR mismatch
+    TC-13162: DOT | Pre-Admission rule - MAC Found in MAR mismatch
 
     This test verifies that pre-admission rules using "MAC Found in MAR" condition
     correctly match/deny hosts based on MAR presence.
@@ -145,15 +145,15 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
 
-            log.info("[T1316942] PASS - MAC Found in MAR pre-admission rule test completed")
+            log.info(f"[{self.testCaseId}] PASS - MAC Found in MAR pre-admission rule test completed")
         except Exception as e:
-            log.error(f"[T1316942] FAIL: {e}")
+            log.error(f"Test {self.testCaseId} failed: {e}")
             raise
 
 
-class MABSimplePreAdmissionConditionsTest(RadiusMabTestBase):
+class TC_13166_MABSimplePreAdmissionConditionsTest(RadiusMabTestBase):
     """
-    T1316914 - DOT Verify simple pre-admission conditions w/ MAB
+    TC-13166: DOT | Verify simple pre-admission conditions w/ MAB
 
     Steps (CSV C62036)
     ------------------
@@ -196,15 +196,15 @@ class MABSimplePreAdmissionConditionsTest(RadiusMabTestBase):
             # Step 5: Verify Reply-Message in RADIUS Imposed Authorization property
             self.verify_radius_imposed_auth(self.REPLY_MESSAGE)
 
-            log.info("[T1316914] PASS - Simple pre-admission conditions with MAB test completed")
+            log.info(f"[{self.testCaseId}] PASS - Simple pre-admission conditions with MAB test completed")
         except Exception as e:
-            log.error(f"[T1316914] FAIL: {e}")
+            log.error(f"Test {self.testCaseId} failed: {e}")
             raise
 
 
-class MABAuthUppercaseMACTest(RadiusMabTestBase):
+class TC_13160_MABAuthUppercaseMACTest(RadiusMabTestBase):
     """
-    T1316966 - DOT Verify MAB Auth using uppercase Username and Mac address
+    TC-13160: DOT | Verify MAB Auth using uppercase Username and Mac address.
 
     Verifies that MAB authentication works when the switch sends the MAC address
     in uppercase format. The RADIUS server should normalise the username to lowercase
@@ -245,18 +245,18 @@ class MABAuthUppercaseMACTest(RadiusMabTestBase):
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
 
-            log.info("[T1316966] PASS - MAB uppercase MAC authentication test completed")
+            log.info(f"[{self.testCaseId}] PASS - MAB uppercase MAC authentication test completed")
         except Exception as e:
-            log.error(f"[T1316966] FAIL: {e}")
+            log.error(f"Test {self.testCaseId} failed: {e}")
             raise
         finally:
             # Restore default MAB username format (no mab request format attribute 1)
             self.switch.set_mab_username_format(uppercase=False)
 
 
-class MABLargeMARTableTest(RadiusMabTestBase):
+class TC_13157_MABLargeMARTableTest(RadiusMabTestBase):
     """
-    T1317005 - DOT MAB Authentication with Large Amount of Entries in MAR Table
+    TC-13157: DOT | MAB Authentication with Large Amount of Entries in MAR Table
 
     This test ensures that MAR authentication works while the MAR table has a
     large number of entries in it.
@@ -296,9 +296,9 @@ class MABLargeMARTableTest(RadiusMabTestBase):
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
 
-            log.info("[T1317005] PASS - MAB with large MAR table test completed")
+            log.info(f"[{self.testCaseId}] PASS - MAB with large MAR table test completed")
         except Exception as e:
-            log.error(f"[T1317005] FAIL: {e}")
+            log.error(f"Test {self.testCaseId} failed: {e}")
             raise
         finally:
             # Step 6: Bulk-remove imported MAR entries

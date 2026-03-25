@@ -8,9 +8,9 @@ from framework.log.logger import log
 from tests.radius.radius_test_base import RadiusTestBase
 
 
-class Dot1xHealthCheckTest(RadiusTestBase):
+class TC_13097_Dot1xHealthCheckTest(RadiusTestBase):
     """
-    T1316961 - DOT Perform a Health Check
+    TC-13097: DOT | Perform a Health Check
 
     Search for any issues that might not have been seen while executing test cases.
     Verify all appliances report OK and RADIUS services are stable.
@@ -38,15 +38,15 @@ class Dot1xHealthCheckTest(RadiusTestBase):
             # Step 2: Verify dot1x and all subordinate services are running and stable
             self.wait_for_dot1x_ready()
             self.assert_dot1x_stable()
-            log.info("[T1316961] PASS - Health check completed successfully")
+            log.info(f"[{self.testCaseId}] PASS - Health check completed successfully")
         except Exception as e:
-            log.error(f"[T1316961] FAIL: {e}")
+            log.error(f"Test {self.testCaseId} failed: {e}")
             raise
 
 
-class Dot1xSourceConfigKerberosTest(RadiusTestBase):
+class TC_13099_Dot1xSourceConfigKerberosTest(RadiusTestBase):
     """
-    T1316974 - DOT Verify Source Configuration with Kerberos enabled
+    TC-13099: DOT | Verify Source Configuration with Kerberos enabled
 
     Verify that configuring RADIUS with Kerberos authentication results in all
     dot1x services running correctly.
@@ -72,7 +72,7 @@ class Dot1xSourceConfigKerberosTest(RadiusTestBase):
             self.wait_for_dot1x_ready()
             self.assert_dot1x_stable()
 
-            log.info("[T1316974] PASS - Source configuration with Kerberos test completed")
+            log.info(f"[{self.testCaseId}] PASS - Source configuration with Kerberos test completed")
         except Exception as e:
-            log.error(f"[T1316974] FAIL: {e}")
+            log.error(f"Test {self.testCaseId} failed: {e}")
             raise
