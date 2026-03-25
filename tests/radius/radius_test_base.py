@@ -357,10 +357,10 @@ class RadiusTestBase(FSTestCommonBase):
             log.info(f"  {proc}: running for {uptime}s")
         return uptimes
 
-    def assert_dot1x_stable(self, min_uptime: int = 180):
+    def verify_dot1x_stable(self, min_uptime: int = 180, timeout: int = 300, interval: int = 10) -> None:
         """
-        Assert the 802.1x plugin **and all** subordinate processes are running
-        and have been up for at least *min_uptime* seconds.
+        Poll until all 4 dot1x processes have been running for at least *min_uptime*
+        seconds, or raise if *timeout* is exceeded.
 
         Checked processes (matching CSV C148464 T1316961 requirements):
             - 802.1x plugin
@@ -371,41 +371,56 @@ class RadiusTestBase(FSTestCommonBase):
         The 3-minute default (180 s) guards against restart loops that recover
         quickly but indicate instability.
 
-        Design note:
-            Ideally this check would be performed *without* restarting dot1x
-            between tests so that all process uptimes accumulate over the full
-            test run (> 2 hours).  The current test-by-test design restarts
-            dot1x for each test case, so uptimes are always short.  For now the
-            threshold is kept at 3 minutes; a future refactor should run the
-            health check as a standalone step *after* a full test cycle without
-            intermediate restarts.
+        Use this after any dot1x restart (e.g. set_null / set_default /
+        configure_radius_settings) so the test waits for processes to stabilise
+        rather than failing immediately.
+
+        Design note: ideally the health-check test would run after a full test
+        cycle with no intermediate dot1x restarts, so uptimes would exceed 2 h.
+        The current per-test restart design prevents that; 3 min (180 s) is the
+        practical minimum threshold.
 
         Args:
-            min_uptime: Minimum uptime in seconds required for every process
-                        (default: 180 — 3 minutes).
+            min_uptime: Required uptime in seconds for every process (default: 180 = 3 min).
+            timeout:    Maximum total wait in seconds (default: 300).
+            interval:   Seconds between polls (default: 10).
 
         Raises:
-            AssertionError: If any process is not running or its uptime is
-                            below *min_uptime*.
+            AssertionError: If processes are still below threshold after *timeout*.
         """
-        uptimes = self.dot1x.get_process_uptimes()
-        log.info("dot1x process uptimes:")
-        failures = []
-        for proc, uptime in uptimes.items():
-            if uptime < 0:
-                log.error(f"  {proc}: NOT RUNNING")
-                failures.append(f"'{proc}' is not running")
-            elif uptime < min_uptime:
-                log.warning(f"  {proc}: running for {uptime}s (below {min_uptime}s threshold)")
-                failures.append(
-                    f"'{proc}' uptime is only {uptime}s — process may be unstable/restarting "
-                    f"(need >= {min_uptime}s)"
-                )
-            else:
-                log.info(f"  {proc}: running for {uptime}s ✓")
+        deadline = time.time() + timeout
+        while True:
+            uptimes = self.dot1x.get_process_uptimes()
+            failures = []
+            for proc, uptime in uptimes.items():
+                if uptime < 0:
+                    log.error(f"  {proc}: NOT RUNNING")
+                    failures.append(f"'{proc}' is not running")
+                elif uptime < min_uptime:
+                    log.warning(f"  {proc}: running for {uptime}s (below {min_uptime}s threshold)")
+                    failures.append(
+                        f"'{proc}' uptime is only {uptime}s — process may be unstable/restarting "
+                        f"(need >= {min_uptime}s)"
+                    )
+                else:
+                    log.info(f"  {proc}: running for {uptime}s ✓")
+
+            if not failures:
+                return  # all processes stable
+
+            remaining = deadline - time.time()
+            if remaining <= 0:
+                break
+
+            log.info(
+                f"Waiting for dot1x processes to stabilise "
+                f"(need >= {min_uptime}s uptime, up to {int(remaining)}s left)…"
+            )
+            time.sleep(min(interval, int(remaining)))
+
         assert not failures, "dot1x stability check failed:\n  " + "\n  ".join(failures)
 
-    def assert_authentication_status(
+    def assert_nic_authentication_status(
             self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
     ):
         """
@@ -417,11 +432,6 @@ class RadiusTestBase(FSTestCommonBase):
         """
         self.passthrough.wait_for_nic_authentication(self.nicname, expected_status=expected_status, timeout=timeout)
 
-    # Alias for backward compatibility
-    def assert_nic_authentication_status(
-            self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
-    ):
-        return self.assert_authentication_status(expected_status=expected_status, timeout=timeout)
 
     def run_tech_support_health_check(self, hours: int = 24, timeout: int = 300) -> str:
         """
@@ -481,9 +491,6 @@ class RadiusTestBase(FSTestCommonBase):
         self._last_known_ip = ip
         return ip
 
-    # Alias for backward compatibility
-    def wait_for_nic_ip_in_range(self, timeout: int = 90):
-        return self.verify_nic_ip_in_range(timeout=timeout)
 
     def assert_authentication_and_ip_in_range(
             self,

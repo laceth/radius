@@ -35,9 +35,16 @@ class TC_13097_Dot1xHealthCheckTest(RadiusTestBase):
             # Step 1: Run tech-support health check on EM across all appliances
             self.run_tech_support_health_check(hours=24)
 
-            # Step 2: Verify dot1x and all subordinate services are running and stable
-            self.wait_for_dot1x_ready()
-            self.assert_dot1x_stable()
+            # Step 2: Poll until all 4 dot1x processes (802.1x plugin, radiusd,
+            # winbindd, redis-server) have been running for >= 180 s (3 min).
+            # Waits up to 300 s before failing.
+            #
+            # Design note: ideally this test would run after a full test cycle
+            # with no intermediate dot1x restarts, so process uptimes would
+            # exceed 2 hours. The current per-test restart design prevents that,
+            # so 3 minutes is the practical minimum threshold.
+            self.verify_dot1x_stable(timeout=300)
+
             log.info(f"[{self.testCaseId}] PASS - Health check completed successfully")
         except Exception as e:
             log.error(f"Test {self.testCaseId} failed: {e}")
@@ -65,13 +72,21 @@ class TC_13099_Dot1xSourceConfigKerberosTest(RadiusTestBase):
     def do_test(self):
         try:
             # Step 1: Clear Default and NULL so the source is joined without either assigned.
-            # Each call writes to local.properties and restarts dot1x if the value changed.
+            # set_null() and set_default() each write to local.properties and restart dot1x.
+            # wait_for_dot1x_ready() between the two calls ensures restart #1 completes
+            # before restart #2 is triggered.
             self.dot1x.set_null("")
+            self.wait_for_dot1x_ready()
             self.dot1x.set_default("")
 
-            # Step 2-3: Wait for dot1x to be fully ready and verify all services are running
-            self.wait_for_dot1x_ready()
-            self.assert_dot1x_stable()
+            # Step 2-3: Poll until all 4 dot1x processes have been running for
+            # >= 180 s (3 min). Waits up to 300 s before failing.
+            #
+            # Design note: ideally this test would run after a full test cycle
+            # with no intermediate dot1x restarts, so process uptimes would
+            # exceed 2 hours. The current per-test restart design prevents that,
+            # so 3 minutes is the practical minimum threshold.
+            self.verify_dot1x_stable(timeout=300)
 
             log.info(f"[{self.testCaseId}] PASS - Source configuration with Kerberos test completed")
         except Exception as e:
