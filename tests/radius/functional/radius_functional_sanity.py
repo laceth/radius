@@ -17,16 +17,25 @@ class Dot1xHealthCheckTest(RadiusTestBase):
 
     Steps (CSV C148464)
     -------------------
-    1. Verify 802.1x plugin is running on the EM/appliance.
-    2. Verify all subordinate processes are running:
+    1. From the EM run the health check command:
+       fstool tech-support --health-check --oneach-all -t 24h --exclude local_patches
+       Verify all appliances report OK with no issues found.
+    2. From the EM CLI verify the status of all RADIUS services:
+       - fstool dot1x status
+       - fstool oneach fstool dot1x status
+       Confirm the following are running and not restarting:
+       - 802.1x plugin
        - radiusd
        - winbindd
        - redis-server
-    3. Verify none of the services are restarting (uptime > threshold).
     """
 
     def do_test(self):
         try:
+            # Step 1: Run tech-support health check on EM across all appliances
+            self.run_tech_support_health_check(hours=24)
+
+            # Step 2: Verify dot1x and all subordinate services are running and stable
             self.wait_for_dot1x_ready()
             self.assert_dot1x_stable()
             log.info("[T1316961] PASS - Health check completed successfully")
@@ -67,4 +76,3 @@ class Dot1xSourceConfigKerberosTest(RadiusTestBase):
         except Exception as e:
             log.error(f"[T1316974] FAIL: {e}")
             raise
-

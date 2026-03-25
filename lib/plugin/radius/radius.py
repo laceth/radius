@@ -14,6 +14,9 @@ DOT1X_STATUS_COMMAND = "fstool dot1x status"
 DOT1X_RESTART_TIMEOUT = 300
 DOT1X_CHECK_INTERVAL = 10
 DOT1X_MIN_RADIUSD_UPTIME_SECONDS = 45
+# The main 802.1x plugin process name as it appears in 'fstool dot1x status' output.
+# Example line: "802.1x plugin (pid 10659) is running for 21-04:27:54."
+DOT1X_PLUGIN_PROCESS_NAME = "802.1x plugin"
 DOT1X_REQUIRED_PROCESSES = ("radiusd", "winbindd", "redis-server")
 
 DEFAULT_LOCAL_PROPERTY_FILE_PATH = "/usr/local/forescout/plugin/dot1x/local.properties"
@@ -77,19 +80,22 @@ class Radius(RadiusBase):
 
     def get_process_uptimes(self) -> dict[str, int]:
         """
-        Return the uptime in seconds for each required dot1x sub-process.
+        Return the uptime in seconds for the 802.1x plugin and each required
+        dot1x sub-process.
 
         Fetches ``fstool dot1x status`` once and parses the output.
         Processes that are not running are reported with an uptime of ``-1``.
 
         Returns:
             dict mapping process name to uptime in seconds (or -1 if down).
-            Example: ``{"radiusd": 120, "winbindd": 118, "redis-server": 125}``
+            Example: ``{"802.1x plugin": 7654, "radiusd": 120, "winbindd": 118, "redis-server": 125}``
         """
         status_output = self.exec_cmd(DOT1X_STATUS_COMMAND)
         log.debug(f"dot1x status output:\n{status_output}")
         uptimes: dict[str, int] = {}
-        for proc in DOT1X_REQUIRED_PROCESSES:
+        # Include the main plugin process first, then the subordinate processes.
+        all_processes = (DOT1X_PLUGIN_PROCESS_NAME,) + DOT1X_REQUIRED_PROCESSES
+        for proc in all_processes:
             uptimes[proc] = self._get_process_uptime_seconds(status_output, proc)
         return uptimes
 

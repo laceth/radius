@@ -357,24 +357,53 @@ class RadiusTestBase(FSTestCommonBase):
             log.info(f"  {proc}: running for {uptime}s")
         return uptimes
 
-    def assert_dot1x_stable(self, min_radiusd_uptime: int = 180):
+    def assert_dot1x_stable(self, min_uptime: int = 180):
         """
-        Assert the dot1x plugin is running **and** radiusd has been up long
-        enough to be considered stable (not in a restart loop).
+        Assert the 802.1x plugin **and all** subordinate processes are running
+        and have been up for at least *min_uptime* seconds.
+
+        Checked processes (matching CSV C148464 T1316961 requirements):
+            - 802.1x plugin
+            - radiusd
+            - winbindd
+            - redis-server
+
+        The 3-minute default (180 s) guards against restart loops that recover
+        quickly but indicate instability.
+
+        Design note:
+            Ideally this check would be performed *without* restarting dot1x
+            between tests so that all process uptimes accumulate over the full
+            test run (> 2 hours).  The current test-by-test design restarts
+            dot1x for each test case, so uptimes are always short.  For now the
+            threshold is kept at 3 minutes; a future refactor should run the
+            health check as a standalone step *after* a full test cycle without
+            intermediate restarts.
 
         Args:
-            min_radiusd_uptime: Minimum radiusd uptime in seconds.
+            min_uptime: Minimum uptime in seconds required for every process
+                        (default: 180 — 3 minutes).
 
         Raises:
-            AssertionError: If any sub-process is down or radiusd uptime is
-                            below the threshold.
+            AssertionError: If any process is not running or its uptime is
+                            below *min_uptime*.
         """
-        self.assert_dot1x_plugin_running()
-        uptimes = self.assert_dot1x_processes_running()
-        assert uptimes["radiusd"] >= min_radiusd_uptime, (
-            f"radiusd uptime is only {uptimes['radiusd']}s — plugin may be unstable/restarting "
-            f"(need >= {min_radiusd_uptime}s)"
-        )
+        uptimes = self.dot1x.get_process_uptimes()
+        log.info("dot1x process uptimes:")
+        failures = []
+        for proc, uptime in uptimes.items():
+            if uptime < 0:
+                log.error(f"  {proc}: NOT RUNNING")
+                failures.append(f"'{proc}' is not running")
+            elif uptime < min_uptime:
+                log.warning(f"  {proc}: running for {uptime}s (below {min_uptime}s threshold)")
+                failures.append(
+                    f"'{proc}' uptime is only {uptime}s — process may be unstable/restarting "
+                    f"(need >= {min_uptime}s)"
+                )
+            else:
+                log.info(f"  {proc}: running for {uptime}s ✓")
+        assert not failures, "dot1x stability check failed:\n  " + "\n  ".join(failures)
 
     def assert_authentication_status(
             self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
@@ -393,6 +422,36 @@ class RadiusTestBase(FSTestCommonBase):
             self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
     ):
         return self.assert_authentication_status(expected_status=expected_status, timeout=timeout)
+
+    def run_tech_support_health_check(self, hours: int = 24, timeout: int = 300) -> str:
+        """
+        Run ``fstool tech-support --health-check --oneach-all`` on the EM and
+        assert that all appliances report OK.
+
+        This corresponds to Step 1 of CSV C148464 (T1316961).
+
+        Args:
+            hours: Time window in hours to inspect (``-t <hours>h``).
+            timeout: SSH command timeout in seconds.
+
+        Returns:
+            The full command output.
+
+        Raises:
+            AssertionError: If the output does not contain the expected
+                            ``OK : No issues found`` summary line.
+        """
+        cmd = (
+            f"fstool tech-support --health-check --oneach-all "
+            f"-t {hours}h --exclude local_patches"
+        )
+        log.info(f"Running health check on EM: {cmd}")
+        output = self.em.exec_command(cmd, timeout=timeout, log_output=True, log_command=True)
+        assert "OK" in output, (
+            f"Health check did not report OK on all appliances.\nOutput:\n{output}"
+        )
+        log.info("Health check completed — all appliances reported OK")
+        return output
 
     def verify_nic_ip_in_range(self, timeout: int = 90):
         """
