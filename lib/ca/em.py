@@ -64,8 +64,6 @@ class EnterpriseManager(CounterActBase):
             Errors : Detected 2 incidents on 1 devices
             OK : No issues found on 1 devices
 
-        This corresponds to Step 1 of CSV C148464 (T1316961).
-
         Args:
             hours: Time window in hours to inspect (``-t <hours>h``).
             timeout: SSH command timeout in seconds.

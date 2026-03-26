@@ -15,6 +15,7 @@ from tests.radius.functional.base_classes.radius_mab_test_base import RadiusMabT
 RULE_MAC_FOUND_IN_MAR_TRUE = [{"criterion_name": "MAC Found in MAR", "criterion_value": ["True"]}]
 RULE_AUTH_TYPE_MAB = [{"criterion_name": "Authentication-Type", "criterion_value": ["MAB"]}]
 RULE_USER_NAME_MATCH_ANY = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
+UNMATCHED_MAC = "00:00:00:00:00:01"
 
 MAB_ACCEPT_ELSE_DENY_RULES = [
     {"cond_rules": RULE_AUTH_TYPE_MAB, "auth": PreAdmissionAuth.ACCEPT},
@@ -67,9 +68,13 @@ class TC_9416_MABBasicAuthWiredTest(RadiusMabTestBase):
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
 
-            # Step 5: Make endpoint MAC invalid in MAR (remove it), re-authenticate, verify rejection
+            # Step 5: Replace the real MAC in MAR with an unmatched one so the endpoint
+            # fails the MAR lookup (non-empty table, wrong entry), then re-authenticate
+            # and verify rejection.
             self.em.remove_mac_from_mar(self.nic_mac)
             self.assert_mac_not_in_mar()
+            self.em.add_mac_to_mar(mac=UNMATCHED_MAC)
+            self.assert_mac_in_mar(UNMATCHED_MAC)
 
             self.toggle_nic()
             self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
