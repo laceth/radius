@@ -22,9 +22,9 @@ MAB_ACCEPT_ELSE_DENY_RULES = [
 ]
 
 
-class TC_9320_MABBasicAuthWiredTest(RadiusMabTestBase):
+class TC_9416_MABBasicAuthWiredTest(RadiusMabTestBase):
     """
-    TC-9320: DOT | Mac Address Bypass Authentication: Wired
+    TC-9416: DOT | Mac Address Bypass Authentication: Wired
 
     This test ensures authentication using MAC Address Bypass for a wired Endpoint.
 
@@ -82,9 +82,9 @@ class TC_9320_MABBasicAuthWiredTest(RadiusMabTestBase):
             raise
 
 
-class TC_9327_MABMACInMARMismatchTest(RadiusMabTestBase):
+class TC_9424_MABMACInMARMismatchTest(RadiusMabTestBase):
     """
-    TC-9327: DOT | Pre-Admission rule - MAC Found in MAR mismatch
+    TC-9424: DOT | Pre-Admission rule - MAC Found in MAR mismatch
 
     This test verifies that pre-admission rules using "MAC Found in MAR" condition
     correctly match/deny hosts based on MAR presence.
@@ -149,9 +149,9 @@ class TC_9327_MABMACInMARMismatchTest(RadiusMabTestBase):
             raise
 
 
-class TC_9331_MABSimplePreAdmissionConditionsTest(RadiusMabTestBase):
+class TC_9435_MABSimplePreAdmissionConditionsTest(RadiusMabTestBase):
     """
-    TC-9331: DOT | Verify simple pre-admission conditions w/ MAB
+    TC-9435: DOT | Verify simple pre-admission conditions w/ MAB
 
     Steps
     ------------------------------
@@ -200,9 +200,9 @@ class TC_9331_MABSimplePreAdmissionConditionsTest(RadiusMabTestBase):
             raise
 
 
-class TC_9325_MABAuthUppercaseMACTest(RadiusMabTestBase):
+class TC_9421_MABAuthUppercaseMACTest(RadiusMabTestBase):
     """
-    TC-9325: DOT | Verify MAB Auth using uppercase Username and Mac address.
+    TC-9421: DOT | Verify MAB Auth using uppercase Username and Mac address.
 
     Verifies that MAB authentication works when the switch sends the MAC address
     in uppercase format. The RADIUS server should normalise the username to lowercase
@@ -251,9 +251,9 @@ class TC_9325_MABAuthUppercaseMACTest(RadiusMabTestBase):
             self.switch.set_mab_username_format(uppercase=False)
 
 
-class TC_9322_MABLargeMARTableTest(RadiusMabTestBase):
+class TC_9415_MABLargeMARTableTest(RadiusMabTestBase):
     """
-    TC-9322: DOT | MAB Authentication with Large Amount of Entries in MAR Table
+    TC-9415: DOT | MAB Authentication with Large Amount of Entries in MAR Table
 
     This test ensures that MAR authentication works while the MAR table has a
     large number of entries in it.

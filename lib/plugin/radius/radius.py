@@ -1,6 +1,11 @@
 import time
 
 from framework.log.logger import log
+from lib.plugin.radius.dot1x_status_parser import (
+    DOT1X_REQUIRED_PROCESSES,
+    parse_process_uptime_seconds,
+    parse_all_process_uptimes,
+)
 from lib.plugin.radius.pre_admission_rule import edit_pre_admission_rule, set_pre_admission_rules_remote
 from lib.plugin.radius.radius_base import RadiusBase
 from lib.plugin.radius.radius_plugin_settings import radius_setting_option_mapping, implicit_field_mapping
@@ -11,15 +16,14 @@ import re
 
 DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_STATUS_COMMAND = "fstool dot1x status"
+DOT1X_ONEACH_STATUS_COMMAND = "fstool oneach fstool dot1x status"
 DOT1X_RESTART_TIMEOUT = 300
 DOT1X_CHECK_INTERVAL = 10
 DOT1X_MIN_RADIUSD_UPTIME_SECONDS = 45
-# The main 802.1x plugin process name as it appears in 'fstool dot1x status' output.
-# Example line: "802.1x plugin (pid 10659) is running for 21-04:27:54."
-DOT1X_PLUGIN_PROCESS_NAME = "802.1x plugin"
-DOT1X_REQUIRED_PROCESSES = ("radiusd", "winbindd", "redis-server")
 
 DEFAULT_LOCAL_PROPERTY_FILE_PATH = "/usr/local/forescout/plugin/dot1x/local.properties"
+
+
 AUTH_SOURCE_NULL_KEY = "config.auth_source_null.value"
 AUTH_SOURCE_DEFAULT_KEY = "config.auth_source_default.value"
 AUTH_SOURCE_KEY = "config.auth_source{slot}.value"
@@ -35,49 +39,6 @@ class Radius(RadiusBase):
     def exec_cmd(self, command: str, timeout: int = 15, log_output: bool = False, log_command: bool = False) -> str:
         return self.platform.exec_command(command, timeout, log_output=log_output, log_command=log_command)
 
-    def _get_process_uptime_seconds(self, status_output: str, process_name: str) -> int:
-        """
-        Extract a sub-process uptime in seconds from 'fstool dot1x status' output.
-
-        Looks for a line like:
-            radiusd (pid 28055) is running for 00:54.
-            winbindd (pid 27705) of txqalab is running for 01:01.
-
-        Supported time formats: 'MM:SS', 'HH:MM:SS', 'DAYS-HH:MM:SS'.
-
-        Args:
-            status_output: Full output of 'fstool dot1x status'.
-            process_name: Process to look for (e.g. 'radiusd', 'winbindd', 'redis-server').
-
-        Returns:
-            Uptime in seconds, or -1 if the process line is not found or not parseable.
-        """
-        for line in status_output.splitlines():
-            if process_name in line.lower() and 'is running for' in line:
-                m = re.search(r'is running for\s+(.+)', line)
-                if not m:
-                    continue
-
-                time_str = m.group(1).strip().rstrip('.')
-
-                # DAYS-HH:MM:SS
-                p = re.match(r'^(\d+)-(\d{2}):(\d{2}):(\d{2})$', time_str)
-                if p:
-                    return int(p.group(1)) * 86400 + int(p.group(2)) * 3600 + int(p.group(3)) * 60 + int(p.group(4))
-
-                # HH:MM:SS
-                p = re.match(r'^(\d{2,}):(\d{2}):(\d{2})$', time_str)
-                if p:
-                    return int(p.group(1)) * 3600 + int(p.group(2)) * 60 + int(p.group(3))
-
-                # MM:SS
-                p = re.match(r'^(\d{2,}):(\d{2})$', time_str)
-                if p:
-                    return int(p.group(1)) * 60 + int(p.group(2))
-
-                return -1
-        return -1
-
     def get_process_uptimes(self) -> dict[str, int]:
         """
         Return the uptime in seconds for the 802.1x plugin and each required
@@ -92,12 +53,7 @@ class Radius(RadiusBase):
         """
         status_output = self.exec_cmd(DOT1X_STATUS_COMMAND)
         log.debug(f"dot1x status output:\n{status_output}")
-        uptimes: dict[str, int] = {}
-        # Include the main plugin process first, then the subordinate processes.
-        all_processes = (DOT1X_PLUGIN_PROCESS_NAME,) + DOT1X_REQUIRED_PROCESSES
-        for proc in all_processes:
-            uptimes[proc] = self._get_process_uptime_seconds(status_output, proc)
-        return uptimes
+        return parse_all_process_uptimes(status_output)
 
     def dot1x_plugin_running(self) -> bool:
         """
@@ -121,7 +77,7 @@ class Radius(RadiusBase):
             uptimes = {}
             not_running = []
             for proc in DOT1X_REQUIRED_PROCESSES:
-                uptime = self._get_process_uptime_seconds(status_output, proc)
+                uptime = parse_process_uptime_seconds(status_output, proc)
                 if uptime < 0:
                     not_running.append(proc)
                 else:

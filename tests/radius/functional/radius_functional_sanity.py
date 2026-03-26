@@ -8,9 +8,9 @@ from framework.log.logger import log
 from tests.radius.radius_test_base import RadiusTestBase
 
 
-class TC_9262_Dot1xHealthCheckTest(RadiusTestBase):
+class TC_9263_Dot1xHealthCheckTest(RadiusTestBase):
     """
-    TC-9262: DOT | Perform a Health Check
+    TC-9263: DOT | Perform a Health Check
 
     Search for any issues that might not have been seen while executing test cases.
     Verify all appliances report OK and RADIUS services are stable.

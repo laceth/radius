@@ -340,7 +340,11 @@ class RadiusTestBase(FSTestCommonBase):
     def verify_dot1x_stable(self, min_uptime: int = 180, timeout: int = 300, interval: int = 10) -> None:
         """
         Poll until all 4 dot1x processes have been running for at least *min_uptime*
-        seconds, or raise if *timeout* is exceeded.
+        seconds on **every appliance** (EM + all CAs), or raise if *timeout* is exceeded.
+
+        Runs both commands from the EM as required by the test cases:
+            - ``fstool dot1x status``               — verifies the EM itself
+            - ``fstool oneach fstool dot1x status`` — verifies every CA
 
         Checked processes (matching CSV C148464 T1316961 requirements):
             - 802.1x plugin
@@ -351,49 +355,44 @@ class RadiusTestBase(FSTestCommonBase):
         The 3-minute default (180 s) guards against restart loops that recover
         quickly but indicate instability.
 
-        Use this after any dot1x restart (e.g. set_null / set_default /
-        configure_radius_settings) so the test waits for processes to stabilise
-        rather than failing immediately.
-
-        Design note: ideally the health-check test would run after a full test
-        cycle with no intermediate dot1x restarts, so uptimes would exceed 2 h.
-        The current per-test restart design prevents that; 3 min (180 s) is the
-        practical minimum threshold.
-
         Args:
             min_uptime: Required uptime in seconds for every process (default: 180 = 3 min).
             timeout:    Maximum total wait in seconds (default: 300).
             interval:   Seconds between polls (default: 10).
 
         Raises:
-            AssertionError: If processes are still below threshold after *timeout*.
+            AssertionError: If any process on any appliance is still below threshold
+                            after *timeout* seconds.
         """
         deadline = time.time() + timeout
         while True:
-            uptimes = self.dot1x.get_process_uptimes()
+            # Query EM's own status + all CAs via oneach in one call
+            all_device_statuses = self.em.get_dot1x_status_all()
             failures = []
-            for proc, uptime in uptimes.items():
-                if uptime < 0:
-                    log.error(f"  {proc}: NOT RUNNING")
-                    failures.append(f"'{proc}' is not running")
-                elif uptime < min_uptime:
-                    log.warning(f"  {proc}: running for {uptime}s (below {min_uptime}s threshold)")
-                    failures.append(
-                        f"'{proc}' uptime is only {uptime}s — process may be unstable/restarting "
-                        f"(need >= {min_uptime}s)"
-                    )
-                else:
-                    log.info(f"  {proc}: running for {uptime}s ✓")
+
+            for device, uptimes in all_device_statuses.items():
+                for proc, uptime in uptimes.items():
+                    if uptime < 0:
+                        log.error(f"  [{device}] {proc}: NOT RUNNING")
+                        failures.append(f"[{device}] '{proc}' is not running")
+                    elif uptime < min_uptime:
+                        log.warning(f"  [{device}] {proc}: running for {uptime}s (below {min_uptime}s threshold)")
+                        failures.append(
+                            f"[{device}] '{proc}' uptime is only {uptime}s — process may be unstable/restarting "
+                            f"(need >= {min_uptime}s)"
+                        )
+                    else:
+                        log.info(f"  [{device}] {proc}: running for {uptime}s ✓")
 
             if not failures:
-                return  # all processes stable
+                return  # all processes stable on all appliances
 
             remaining = deadline - time.time()
             if remaining <= 0:
                 break
 
             log.info(
-                f"Waiting for dot1x processes to stabilise "
+                f"Waiting for dot1x processes to stabilise on all appliances "
                 f"(need >= {min_uptime}s uptime, up to {int(remaining)}s left)…"
             )
             time.sleep(min(interval, int(remaining)))
