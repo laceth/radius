@@ -412,37 +412,6 @@ class RadiusTestBase(FSTestCommonBase):
         """
         self.passthrough.wait_for_nic_authentication(self.nicname, expected_status=expected_status, timeout=timeout)
 
-
-    def run_tech_support_health_check(self, hours: int = 24, timeout: int = 300) -> str:
-        """
-        Run ``fstool tech-support --health-check --oneach-all`` on the EM and
-        assert that all appliances report OK.
-
-        This corresponds to Step 1 of CSV C148464 (T1316961).
-
-        Args:
-            hours: Time window in hours to inspect (``-t <hours>h``).
-            timeout: SSH command timeout in seconds.
-
-        Returns:
-            The full command output.
-
-        Raises:
-            AssertionError: If the output does not contain the expected
-                            ``OK : No issues found`` summary line.
-        """
-        cmd = (
-            f"fstool tech-support --health-check --oneach-all "
-            f"-t {hours}h --exclude local_patches"
-        )
-        log.info(f"Running health check on EM: {cmd}")
-        output = self.em.exec_command(cmd, timeout=timeout, log_output=True, log_command=True)
-        assert "OK" in output, (
-            f"Health check did not report OK on all appliances.\nOutput:\n{output}"
-        )
-        log.info("Health check completed — all appliances reported OK")
-        return output
-
     def verify_nic_ip_in_range(self, timeout: int = 90):
         """
         Wait for NIC to get an IP address in the target VLAN range.
@@ -637,6 +606,17 @@ class RadiusTestBase(FSTestCommonBase):
 
         self.ca.check_properties(self.host_id, properties_check_list)
         log.debug(f"Pre-admission rule verified: {expected_source}")
+
+    def verify_radius_imposed_auth(self, expected_reply_message: str):
+        """Verify the dot1x_ass_restrictions property contains the expected Reply-Message."""
+        host_id = self.host_id or self._get_host_id()
+        self.ca.check_properties(host_id, [
+            {
+                "property_field": "dot1x_ass_restrictions",
+                "expected_value": f"Reply-Message={expected_reply_message}",
+            }
+        ])
+        log.info(f"Verified RADIUS Imposed Authorization: Reply-Message={expected_reply_message}")
 
     def _dump_dot1x_properties(self, host_id: str):
         """Debug: dump all dot1x properties for a host (once per authentication event)."""

@@ -8,15 +8,15 @@ from framework.log.logger import log
 from tests.radius.radius_test_base import RadiusTestBase
 
 
-class TC_13097_Dot1xHealthCheckTest(RadiusTestBase):
+class TC_9262_Dot1xHealthCheckTest(RadiusTestBase):
     """
-    TC-13097: DOT | Perform a Health Check
+    TC-9262: DOT | Perform a Health Check
 
     Search for any issues that might not have been seen while executing test cases.
     Verify all appliances report OK and RADIUS services are stable.
 
-    Steps (CSV C148464)
-    -------------------
+    Steps
+    --------------------------------
     1. From the EM run the health check command:
        fstool tech-support --health-check --oneach-all -t 24h --exclude local_patches
        Verify all appliances report OK with no issues found.
@@ -33,7 +33,7 @@ class TC_13097_Dot1xHealthCheckTest(RadiusTestBase):
     def do_test(self):
         try:
             # Step 1: Run tech-support health check on EM across all appliances
-            self.run_tech_support_health_check(hours=24)
+            self.em.run_tech_support_health_check(hours=24)
 
             # Step 2: Poll until all 4 dot1x processes (802.1x plugin, radiusd,
             # winbindd, redis-server) have been running for >= 180 s (3 min).
@@ -51,15 +51,15 @@ class TC_13097_Dot1xHealthCheckTest(RadiusTestBase):
             raise
 
 
-class TC_13099_Dot1xSourceConfigKerberosTest(RadiusTestBase):
+class TC_9264_Dot1xSourceConfigKerberosTest(RadiusTestBase):
     """
-    TC-13099: DOT | Verify Source Configuration with Kerberos enabled
+    TC-9264: DOT | Verify Source Configuration with Kerberos enabled
 
     Verify that configuring RADIUS with Kerberos authentication results in all
     dot1x services running correctly.
 
-    Steps (CSV C153086)
-    -------------------
+    Steps
+    --------------------------------
     1. Add a source and join it to the domain without setting Default or NULL.
     2. Configure RADIUS settings with Kerberos authentication enabled.
     3. Run 'fstool dot1x status' and verify all services are running:
