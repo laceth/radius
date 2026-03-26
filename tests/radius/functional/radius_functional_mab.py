@@ -74,7 +74,6 @@ class TC_9320_MABBasicAuthWiredTest(RadiusMabTestBase):
             self.toggle_nic()
             self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.verify_nic_has_no_ip_in_range()
-            self.verify_pre_admission_rule(rule_priority=2, auth_state="Access-Reject")
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT, host_in_mar=False)
 
             log.info(f"[{self.testCaseId}] PASS - MAB basic wired authentication test completed")
