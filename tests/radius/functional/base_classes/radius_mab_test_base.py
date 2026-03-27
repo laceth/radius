@@ -4,6 +4,8 @@ Base class for MAB (MAC Authentication Bypass) functional tests.
 MAB is used for endpoints that don't have 802.1X supplicants (e.g., printers, IP phones).
 The switch authenticates the endpoint based on its MAC address via RADIUS.
 """
+import os
+import tempfile
 from datetime import datetime
 from typing import Union
 
@@ -11,6 +13,9 @@ from framework.log.logger import log
 from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import RadiusAuthStatus
 from lib.plugin.radius.models.mab_config import MABConfig
+from lib.plugin.radius.models.mar_entry import MAREntry, MAR_CSV_HEADER
+from lib.utils.csv import write_csv
+from lib.utils.mac import normalize_mac, generate_unique_random_macs
 from tests.radius.radius_test_base import RadiusTestBase
 
 
@@ -65,6 +70,7 @@ class RadiusMabTestBase(RadiusTestBase):
 
         # Get NIC MAC for MAR operations
         self.nic_mac = self.passthrough.get_nic_mac_address(self.nicname)
+        self.host_id = normalize_mac(self.nic_mac)
         log.info(f"Test NIC MAC address: {self.nic_mac}")
 
     def do_teardown(self):
@@ -111,15 +117,9 @@ class RadiusMabTestBase(RadiusTestBase):
         # Convert enum to string value if needed
         auth_status_value = auth_status.value if isinstance(auth_status, RadiusAuthStatus) else auth_status
 
-        # For Access-Reject: use MAC as host ID (no valid IP in VLAN range)
-        # For Access-Accept: use IP from _get_host_id()
-        if auth_status_value == RadiusAuthStatus.ACCESS_REJECT.value:
-            normalized_mac = self.nic_mac.replace("-", "").replace(":", "").lower() if self.nic_mac else ""
-            host_id = normalized_mac
-            log.info(f"Using MAC '{host_id}' as host ID for Access-Reject verification")
-        else:
-            host_id = self._get_host_id()
-
+        # Always identify the host by MAC — immune to IP-address drift between
+        # the NIC's DHCP lease and the IP CounterAct has on record.
+        host_id = normalize_mac(self.nic_mac) if self.nic_mac else self._get_host_id()
         log.info(f"Verifying MAB/MAR authentication for host: {host_id}")
 
         # Set defaults from test configuration
@@ -128,7 +128,7 @@ class RadiusMabTestBase(RadiusTestBase):
 
 
         # Normalize MAC to lowercase without separators for dot1x_user check
-        normalized_mac = self.nic_mac.replace("-", "").replace(":", "").lower() if self.nic_mac else ""
+        normalized_mac = normalize_mac(self.nic_mac) if self.nic_mac else ""
 
         # Build MAB properties check list
         # Note: dot1x_auth_state is NOT checked for MAB, use dot1x_mab_auth_status instead
@@ -146,6 +146,7 @@ class RadiusMabTestBase(RadiusTestBase):
         self.ca.check_properties(host_id, mab_properties_check_list)
 
         log.info("MAB-specific authentication verification completed")
+
 
     def assert_mac_in_mar(self, mac: str = None):
         """
@@ -168,6 +169,61 @@ class RadiusMabTestBase(RadiusTestBase):
         mac = mac or self.nic_mac
         assert not self.em.mac_exists_in_mar(mac), f"MAC {mac} should NOT exist in MAR"
         log.info(f"Verified MAC {mac} does not exist in MAR")
+
+    def ensure_mac_not_in_mar(self, mac: str = None):
+        """
+        Remove MAC from MAR if it exists. No-op if absent.
+
+        Args:
+            mac: MAC address to clean up. Defaults to self.nic_mac
+        """
+        mac = mac or self.nic_mac
+        if self.em.mac_exists_in_mar(mac):
+            self.em.remove_mac_from_mar(mac)
+            log.info(f"Cleaned up MAC {mac} from MAR")
+        else:
+            log.info(f"MAC {mac} not in MAR, nothing to clean up")
+
+    def bulk_import_mar_entries(self, count: int, comment: str = "bulk_test") -> str:
+        """
+        Generate random MAR entries, write to a temp CSV, and bulk-import to the EM.
+
+        Args:
+            count: Number of random MAR entries to generate and import.
+            comment: Comment to set on each generated entry.
+
+        Returns:
+            Path to the generated CSV file (caller is responsible for cleanup
+            via ``bulk_cleanup_mar``).
+        """
+        entries = [MAREntry.accept(mac, comment=comment) for mac in generate_unique_random_macs(count)]
+        fd, csv_path = tempfile.mkstemp(prefix="mar_bulk_import_", suffix=".csv")
+        os.close(fd)
+        write_csv(entries, csv_path, MAR_CSV_HEADER)
+        log.info(f"Generated {len(entries)} MAR entries to {csv_path}")
+
+        imported = self.em.bulk_import_mar_csv(csv_path)
+        log.info(f"Bulk MAR import complete: {imported} entries submitted")
+        return csv_path
+
+    def bulk_cleanup_mar(self, csv_path: str) -> None:
+        """
+        Remove all MAR entries from a previously imported CSV and delete the file.
+
+        Args:
+            csv_path: Path to the CSV file used for bulk import.
+        """
+        if not csv_path or not os.path.isfile(csv_path):
+            return
+        try:
+            removed = self.em.bulk_remove_mar_csv(csv_path)
+            log.info(f"Bulk MAR cleanup complete: {removed} entries removed")
+        except Exception as e:
+            log.warning(f"Bulk MAR cleanup failed: {e}")
+        finally:
+            os.remove(csv_path)
+            log.info(f"Deleted temp CSV: {csv_path}")
+
 
 
 

@@ -3,6 +3,7 @@ import ipaddress
 import os
 import re
 import tempfile
+from dataclasses import replace as dataclass_replace
 import time
 from datetime import datetime
 from typing import Union, cast
@@ -164,9 +165,9 @@ class RadiusTestBase(FSTestCommonBase):
 
     def do_teardown(self):
         log.info("radius common teardown")
-        if self.dot1x_plugin_log_collector is not None:
+        if self.dot1x_plugin_log_collector:
             self.dot1x_plugin_log_collector.stop()
-        if self.radiusd_log_collector is not None:
+        if self.radiusd_log_collector:
             self.radiusd_log_collector.stop()
 
     # =========================================================================
@@ -194,8 +195,7 @@ class RadiusTestBase(FSTestCommonBase):
                          e.g., active_directory_port_for_ldap_queries="standard ldap over tls"
         """
         if overrides:
-            from dataclasses import replace
-            settings = replace(self.DEFAULT_RADIUS_SETTINGS, **overrides)
+            settings = dataclass_replace(self.DEFAULT_RADIUS_SETTINGS, **overrides)
         else:
             settings = self.DEFAULT_RADIUS_SETTINGS
         self.dot1x.configure_radius_plugin(settings.to_dict())
@@ -336,6 +336,68 @@ class RadiusTestBase(FSTestCommonBase):
             AssertionError: If the plugin is not running
         """
         assert self.dot1x.dot1x_plugin_running(), message
+
+    def verify_dot1x_stable(self, min_uptime: int = 180, timeout: int = 300, interval: int = 10) -> None:
+        """
+        Poll until all 4 dot1x processes have been running for at least *min_uptime*
+        seconds on **every appliance** (EM + all CAs), or raise if *timeout* is exceeded.
+
+        Runs both commands from the EM as required by the test cases:
+            - ``fstool dot1x status``               — verifies the EM itself
+            - ``fstool oneach fstool dot1x status`` — verifies every CA
+
+        Checked processes (matching CSV C148464 T1316961 requirements):
+            - 802.1x plugin
+            - radiusd
+            - winbindd
+            - redis-server
+
+        The 3-minute default (180 s) guards against restart loops that recover
+        quickly but indicate instability.
+
+        Args:
+            min_uptime: Required uptime in seconds for every process (default: 180 = 3 min).
+            timeout:    Maximum total wait in seconds (default: 300).
+            interval:   Seconds between polls (default: 10).
+
+        Raises:
+            AssertionError: If any process on any appliance is still below threshold
+                            after *timeout* seconds.
+        """
+        deadline = time.time() + timeout
+        while True:
+            # Query EM's own status + all CAs via oneach in one call
+            all_device_statuses = self.em.get_dot1x_status_all()
+            failures = []
+
+            for device, uptimes in all_device_statuses.items():
+                for proc, uptime in uptimes.items():
+                    if uptime < 0:
+                        log.error(f"  [{device}] {proc}: NOT RUNNING")
+                        failures.append(f"[{device}] '{proc}' is not running")
+                    elif uptime < min_uptime:
+                        log.warning(f"  [{device}] {proc}: running for {uptime}s (below {min_uptime}s threshold)")
+                        failures.append(
+                            f"[{device}] '{proc}' uptime is only {uptime}s — process may be unstable/restarting "
+                            f"(need >= {min_uptime}s)"
+                        )
+                    else:
+                        log.info(f"  [{device}] {proc}: running for {uptime}s ✓")
+
+            if not failures:
+                return  # all processes stable on all appliances
+
+            remaining = deadline - time.time()
+            if remaining <= 0:
+                break
+
+            log.info(
+                f"Waiting for dot1x processes to stabilise on all appliances "
+                f"(need >= {min_uptime}s uptime, up to {int(remaining)}s left)…"
+            )
+            time.sleep(min(interval, int(remaining)))
+
+        assert not failures, "dot1x stability check failed:\n  " + "\n  ".join(failures)
 
     def assert_nic_authentication_status(
             self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
@@ -543,6 +605,17 @@ class RadiusTestBase(FSTestCommonBase):
 
         self.ca.check_properties(self.host_id, properties_check_list)
         log.debug(f"Pre-admission rule verified: {expected_source}")
+
+    def verify_radius_imposed_auth(self, expected_reply_message: str):
+        """Verify the dot1x_ass_restrictions property contains the expected Reply-Message."""
+        host_id = self.host_id or self._get_host_id()
+        self.ca.check_properties(host_id, [
+            {
+                "property_field": "dot1x_ass_restrictions",
+                "expected_value": f"Reply-Message={expected_reply_message}",
+            }
+        ])
+        log.info(f"Verified RADIUS Imposed Authorization: Reply-Message={expected_reply_message}")
 
     def _dump_dot1x_properties(self, host_id: str):
         """Debug: dump all dot1x properties for a host (once per authentication event)."""

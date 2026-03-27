@@ -107,6 +107,42 @@ class CiscoIOS(SwitchBase, SSHClient):
                 else:
                     raise
 
+    def set_mab_username_format(self, uppercase: bool = True) -> bool:
+        """
+        Configure the MAB username (Attribute 1) format sent to the RADIUS server.
+
+        By default Cisco IOS sends the MAC address as lowercase with hyphens.
+        This method switches it to uppercase colon-separated format, or restores
+        the default — matching the switch precondition required by T1316966.
+
+        Uppercase::
+
+            mab request format attribute 1 groupsize 12 separator : uppercase
+
+        Restore default::
+
+            no mab request format attribute 1
+
+        Args:
+            uppercase: If True, set uppercase format; if False, restore the default.
+
+        Returns:
+            bool: True if the command succeeded.
+        """
+        if uppercase:
+            cmd = "mab request format attribute 1 groupsize 12 separator : uppercase"
+            label = "uppercase"
+        else:
+            cmd = "no mab request format attribute 1"
+            label = "default"
+        try:
+            self.exec_command([cmd], log_output=True)
+            log.info(f"MAB username format set to {label} on Cisco switch {self.ip}")
+            return True
+        except Exception as e:
+            log.error(f"Failed to set MAB username format to {label} on Cisco switch {self.ip}: {e}")
+            return False
+
     @staticmethod
     def normalize_interface(ifname: str) -> str:
         """Normalize Cisco IOS interface shorthand to canonical names."""

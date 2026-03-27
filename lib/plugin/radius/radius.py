@@ -1,6 +1,11 @@
 import time
 
 from framework.log.logger import log
+from lib.plugin.radius.dot1x_status_parser import (
+    DOT1X_REQUIRED_PROCESSES,
+    parse_process_uptime_seconds,
+    parse_all_process_uptimes,
+)
 from lib.plugin.radius.pre_admission_rule import edit_pre_admission_rule, set_pre_admission_rules_remote
 from lib.plugin.radius.radius_base import RadiusBase
 from lib.plugin.radius.radius_plugin_settings import radius_setting_option_mapping, implicit_field_mapping
@@ -11,12 +16,14 @@ import re
 
 DOT1X_RESTART_COMMAND = "fstool dot1x restart"
 DOT1X_STATUS_COMMAND = "fstool dot1x status"
+DOT1X_ONEACH_STATUS_COMMAND = "fstool oneach fstool dot1x status"
 DOT1X_RESTART_TIMEOUT = 300
 DOT1X_CHECK_INTERVAL = 10
 DOT1X_MIN_RADIUSD_UPTIME_SECONDS = 45
-DOT1X_REQUIRED_PROCESSES = ("radiusd", "winbindd", "redis-server")
 
 DEFAULT_LOCAL_PROPERTY_FILE_PATH = "/usr/local/forescout/plugin/dot1x/local.properties"
+
+
 AUTH_SOURCE_NULL_KEY = "config.auth_source_null.value"
 AUTH_SOURCE_DEFAULT_KEY = "config.auth_source_default.value"
 AUTH_SOURCE_KEY = "config.auth_source{slot}.value"
@@ -32,48 +39,21 @@ class Radius(RadiusBase):
     def exec_cmd(self, command: str, timeout: int = 15, log_output: bool = False, log_command: bool = False) -> str:
         return self.platform.exec_command(command, timeout, log_output=log_output, log_command=log_command)
 
-    def _get_process_uptime_seconds(self, status_output: str, process_name: str) -> int:
+    def get_process_uptimes(self) -> dict[str, int]:
         """
-        Extract a sub-process uptime in seconds from 'fstool dot1x status' output.
+        Return the uptime in seconds for the 802.1x plugin and each required
+        dot1x sub-process.
 
-        Looks for a line like:
-            radiusd (pid 28055) is running for 00:54.
-            winbindd (pid 27705) of txqalab is running for 01:01.
-
-        Supported time formats: 'MM:SS', 'HH:MM:SS', 'DAYS-HH:MM:SS'.
-
-        Args:
-            status_output: Full output of 'fstool dot1x status'.
-            process_name: Process to look for (e.g. 'radiusd', 'winbindd', 'redis-server').
+        Fetches ``fstool dot1x status`` once and parses the output.
+        Processes that are not running are reported with an uptime of ``-1``.
 
         Returns:
-            Uptime in seconds, or -1 if the process line is not found or not parseable.
+            dict mapping process name to uptime in seconds (or -1 if down).
+            Example: ``{"802.1x plugin": 7654, "radiusd": 120, "winbindd": 118, "redis-server": 125}``
         """
-        for line in status_output.splitlines():
-            if process_name in line.lower() and 'is running for' in line:
-                m = re.search(r'is running for\s+(.+)', line)
-                if not m:
-                    continue
-
-                time_str = m.group(1).strip().rstrip('.')
-
-                # DAYS-HH:MM:SS
-                p = re.match(r'^(\d+)-(\d{2}):(\d{2}):(\d{2})$', time_str)
-                if p:
-                    return int(p.group(1)) * 86400 + int(p.group(2)) * 3600 + int(p.group(3)) * 60 + int(p.group(4))
-
-                # HH:MM:SS
-                p = re.match(r'^(\d{2,}):(\d{2}):(\d{2})$', time_str)
-                if p:
-                    return int(p.group(1)) * 3600 + int(p.group(2)) * 60 + int(p.group(3))
-
-                # MM:SS
-                p = re.match(r'^(\d{2,}):(\d{2})$', time_str)
-                if p:
-                    return int(p.group(1)) * 60 + int(p.group(2))
-
-                return -1
-        return -1
+        status_output = self.exec_cmd(DOT1X_STATUS_COMMAND)
+        log.debug(f"dot1x status output:\n{status_output}")
+        return parse_all_process_uptimes(status_output)
 
     def dot1x_plugin_running(self) -> bool:
         """
@@ -97,7 +77,7 @@ class Radius(RadiusBase):
             uptimes = {}
             not_running = []
             for proc in DOT1X_REQUIRED_PROCESSES:
-                uptime = self._get_process_uptime_seconds(status_output, proc)
+                uptime = parse_process_uptime_seconds(status_output, proc)
                 if uptime < 0:
                     not_running.append(proc)
                 else:
@@ -421,7 +401,8 @@ class Radius(RadiusBase):
             raise Exception(f"Failed to test join domain '{domain_name}': {e}")
 
     def set_null(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
-        """Set config.auth_source_null.value to specified auth_source (checks current value first)."""
+        """Set config.auth_source_null.value to specified auth_source (checks current value first).
+        Restarts dot1x if the value changed."""
         try:
             current_value = self._get_property(file_path, AUTH_SOURCE_NULL_KEY)
             if current_value == auth_source:
@@ -430,11 +411,14 @@ class Radius(RadiusBase):
 
             log.info(f"Setting auth_source {auth_source} to Null (current: '{current_value}')")
             self._set_property(AUTH_SOURCE_NULL_KEY, auth_source, file_path)
+            self.has_change = True
         except Exception as e:
             raise Exception(f"Failed to set auth source null to '{auth_source}': {e}")
+        self.apply_dot1x_changes()
 
     def set_default(self, auth_source: str, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> None:
-        """Set config.auth_source_default.value to specified auth_source (checks current value first)."""
+        """Set config.auth_source_default.value to specified auth_source (checks current value first).
+        Restarts dot1x if the value changed."""
         try:
             current_value = self.get_default_auth_source(file_path)
             if current_value == auth_source:
@@ -443,8 +427,10 @@ class Radius(RadiusBase):
 
             log.info(f"Setting auth_source {auth_source} to Default (current: '{current_value}')")
             self._set_property(AUTH_SOURCE_DEFAULT_KEY, auth_source, file_path)
+            self.has_change = True
         except Exception as e:
             raise Exception(f"Failed to set auth source default to '{auth_source}': {e}")
+        self.apply_dot1x_changes()
 
     def get_default_auth_source(self, file_path: str = DEFAULT_LOCAL_PROPERTY_FILE_PATH) -> str:
         """Get current value of config.auth_source_default.value."""
