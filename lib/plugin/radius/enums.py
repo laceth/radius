@@ -85,8 +85,18 @@ class MSCAEntry(Enum):
     OID_21_31_ENDORSEMENT_CERT_MEDIUM_ASSURANCE = ("1.3.6.1.4.1.311.21.31 : Endorsement Certificate Medium Assurance")
     OID_21_32_USER_CREDENTIALS_LOW_ASSURANCE = ("1.3.6.1.4.1.311.21.32 : User Credentials Low Assurance")
 
+class RadiusFragmentSize(str, Enum):
+    SIZE_500 = "500"     # T1316993 TC-9297
+    SIZE_1024 = "1024"   # T1316989 TC-9294
+    SIZE_1230 = "1230"   # T1316992 TC-9296
+    SIZE_1400 = "1400"   # T1316991 TC-9295
+    SIZE_1500 = "1500"   # T1316990 TC-9293 – known failure on wired/switch path
+
+
 class PreAdmissionCriterionAttribute(str, Enum):
     USER_NAME = "User-Name"
+    AUTHENTICATION_TYPE = "Authentication-Type"
+    EAP_TYPE = "EAP-Type"
 
 
 class PreAdmissionAuth:
