@@ -73,6 +73,10 @@ class RadiusCertificatesTestBase(RadiusTestBase):
     # Authentication Verification
     # =========================================================================
 
+    def _get_host_id(self) -> str:
+        """Use the passthrough MAC for certificate-auth host identification."""
+        return self.passthrough.mac
+
     def verify_authentication_on_ca(
             self,
             switch_ip: str = None,

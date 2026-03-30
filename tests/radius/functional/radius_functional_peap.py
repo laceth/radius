@@ -2,7 +2,7 @@ from framework.decorator.prametrizor import parametrize
 from framework.log.logger import log
 from lib.passthrough.enums import AuthenticationStatus
 from lib.passthrough.lan_profile_builder import LanProfile
-from lib.plugin.radius.enums import LdapPorts, PreAdmissionAuth, RadiusAuthStatus
+from lib.plugin.radius.enums import LdapPorts, PreAdmissionAuth, RadiusAuthStatus, RadiusFragmentSize
 from tests.radius.functional.base_classes.radius_peap_test_base import RadiusPeapTestBase
 
 
@@ -159,9 +159,9 @@ class TC_9340_PEAPAuthenticationUsingLdapGroup(RadiusPeapTestBase):
     ]
     # rules[0]: all users, rules[1]: users[1] only, rules[2]: users[3] only
     rule_to_users = {
-        0: users,        # LDAP-Group Domain*       — test all users: txqalab\xxx-adm
-        1: [users[1]],   # LDAP-Group Domain Admins — test NLevi only: txqalab\NLevi-adm
-        2: [users[3]],   # LDAP-Group Domain Users  — test THampton only: txqalab\THampton-adm
+        0: users,        # LDAP-Group Domain*      — test all users
+        1: [users[1]],   # LDAP-Group Domain Admins — test NLevi only
+        2: [users[3]],   # LDAP-Group Domain Users — test THampton only
     }
 
     def do_test(self):
@@ -419,4 +419,66 @@ class TC_9348_PEAPUPNStartsSameAsAnotherUPN(RadiusPeapTestBase):
                 log.info(f"Verified: no 'Ambiguous' error in radiusd.log for user '{username}'")
         except Exception as e:
             log.error(f"Test {self.testCaseId} with LDAP port {self.test_params['ldap_port']} failed: {e}")
+            raise
+        
+# ====================================================================================
+# TC-9294 — PEAP: Setting the Fragment size (Framed-MTU = Fragment size - 30)
+# ====================================================================================
+@parametrize(
+    "fragment_size",
+    [
+        (RadiusFragmentSize.SIZE_1024.name,),   # T1316989 TC-9294
+        (RadiusFragmentSize.SIZE_1400.name,),   # T1316991 TC-9295
+        (RadiusFragmentSize.SIZE_1230.name,),   # T1316992 TC-9296
+        (RadiusFragmentSize.SIZE_500.name,),    # T1316993 TC-9297
+    ],
+)
+class TC_9294_RadiusFragmentSizeDefaultWiredPeap(RadiusPeapTestBase):
+    """
+    TC-9294/TC-9295/TC-9296/TC-9297
+    DOT | Verify setting the Fragment size (Framed-MTU = Fragment size - 30) from Radiusd.log
+
+    Steps (TestRail):
+    -----
+    1. Options -> Radius -> Radius Settings: Set Fragment size to <fragment_size>, Apply.
+    2. Options -> Radius -> Pre-Admission Authorization:
+       - Add rule: EAP-Type = PEAP
+         - (Optional) Add rule: EAP-Type = EAP-TLS
+     3. Authenticate using PEAP and verify authenticated (rule 1).
+     4. Verify radiusd.log contains the expected Framed-MTU value.
+    """
+
+    RULE_EAP_TYPE_PEAP = [{"criterion_name": "EAP-Type", "criterion_value": ["PEAP"]}]
+    RULE_EAP_TYPE_EAP_TLS = [{"criterion_name": "EAP-Type", "criterion_value": ["EAP-TLS"]}]
+    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
+    PEAP_DOMAIN = "txqalab"
+    PEAP_USER = "dotonex"
+
+    def do_test(self):
+        try:
+            fragment_size = RadiusFragmentSize[self.test_params["fragment_size"]].value
+            # Step 1: Configure fragment size in RADIUS plugin
+            self.configure_radius_settings(fragment_size=fragment_size,)
+
+            # Step 2: Configure Pre-Admission rules (PEAP + EAP-TLS, else deny)
+            set_rules = [
+                {"cond_rules": self.RULE_EAP_TYPE_PEAP, "auth": PreAdmissionAuth.ACCEPT},         # priority 1
+                {"cond_rules": self.RULE_EAP_TYPE_EAP_TLS, "auth": PreAdmissionAuth.ACCEPT},      # priority 2
+                {"cond_rules": self.RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+            ]
+            self.dot1x.set_pre_admission_rules(set_rules)
+
+            # Step 3: PEAP (rule priority 1)
+            self.configure_lan_profile(lan_profile=LanProfile.peap())
+            self.setup_peap_credentials(self.PEAP_DOMAIN, self.PEAP_USER)
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1)
+            self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.verify_authentication_on_ca()
+            self.verify_radius_get_log(fragment_size=fragment_size, fallback_to_appliance=True)
+
+        except Exception as e:
+            log.error(f"{self.testCaseId}  FAIL: {e}")
             raise

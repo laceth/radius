@@ -3,7 +3,6 @@ import ipaddress
 import os
 import re
 import tempfile
-from dataclasses import replace as dataclass_replace
 import time
 from datetime import datetime
 from typing import Union, cast
@@ -85,6 +84,7 @@ class RadiusTestBase(FSTestCommonBase):
         self.rf = RadiusFactory(default_secret=self.DEFAULT_RADIUS_SECRET)
         self.test_start_time = None
         self.host_id_auth_time = set()
+        self.hostinfo_snapshot_keys = set()
         self.host_id = None
         self._last_known_ip = None
         self.dot1x_plugin_log_collector = None
@@ -165,9 +165,9 @@ class RadiusTestBase(FSTestCommonBase):
 
     def do_teardown(self):
         log.info("radius common teardown")
-        if self.dot1x_plugin_log_collector:
+        if self.dot1x_plugin_log_collector is not None:
             self.dot1x_plugin_log_collector.stop()
-        if self.radiusd_log_collector:
+        if self.radiusd_log_collector is not None:
             self.radiusd_log_collector.stop()
 
     # =========================================================================
@@ -195,7 +195,8 @@ class RadiusTestBase(FSTestCommonBase):
                          e.g., active_directory_port_for_ldap_queries="standard ldap over tls"
         """
         if overrides:
-            settings = dataclass_replace(self.DEFAULT_RADIUS_SETTINGS, **overrides)
+            from dataclasses import replace
+            settings = replace(self.DEFAULT_RADIUS_SETTINGS, **overrides)
         else:
             settings = self.DEFAULT_RADIUS_SETTINGS
         self.dot1x.configure_radius_plugin(settings.to_dict())
@@ -321,6 +322,68 @@ class RadiusTestBase(FSTestCommonBase):
         """
         self.dot1x.wait_until_running(timeout=timeout, interval=interval)
 
+    def verify_dot1x_stable(self, min_uptime: int = 180, timeout: int = 300, interval: int = 10) -> None:
+        """
+        Poll until all 4 dot1x processes have been running for at least *min_uptime*
+        seconds on **every appliance** (EM + all CAs), or raise if *timeout* is exceeded.
+
+        Runs both commands from the EM:
+            - ``fstool dot1x status``               — verifies the EM itself
+            - ``fstool oneach fstool dot1x status`` — verifies every CA
+
+        Checked processes:
+            - 802.1x plugin
+            - radiusd
+            - winbindd
+            - redis-server
+
+        Args:
+            min_uptime: Required uptime in seconds for every process (default: 180 = 3 min).
+            timeout: Maximum total wait in seconds (default: 300).
+            interval: Seconds between polls (default: 10).
+
+        Raises:
+            AssertionError: If any process on any appliance is still below threshold
+                after *timeout* seconds.
+        """
+        deadline = time.time() + timeout
+        failures = []
+
+        while True:
+            failures = []
+            all_device_statuses = self.em.get_dot1x_status_all()
+
+            for device, uptimes in all_device_statuses.items():
+                for proc, uptime in uptimes.items():
+                    if uptime < 0:
+                        log.error(f"  [{device}] {proc}: NOT RUNNING")
+                        failures.append(f"[{device}] '{proc}' is not running")
+                    elif uptime < min_uptime:
+                        log.warning(
+                            f"  [{device}] {proc}: running for {uptime}s (below {min_uptime}s threshold)"
+                        )
+                        failures.append(
+                            f"[{device}] '{proc}' uptime is only {uptime}s — process may be unstable/restarting "
+                            f"(need >= {min_uptime}s)"
+                        )
+                    else:
+                        log.info(f"  [{device}] {proc}: running for {uptime}s ✓")
+
+            if not failures:
+                return
+
+            remaining = deadline - time.time()
+            if remaining <= 0:
+                break
+
+            log.info(
+                "Waiting for dot1x processes to stabilise on all appliances "
+                f"(need >= {min_uptime}s uptime, up to {int(remaining)}s left)…"
+            )
+            time.sleep(min(interval, int(remaining)))
+
+        assert not failures, "dot1x stability check failed:\n  " + "\n  ".join(failures)
+
     # =========================================================================
     # Assertions
     # =========================================================================
@@ -336,68 +399,6 @@ class RadiusTestBase(FSTestCommonBase):
             AssertionError: If the plugin is not running
         """
         assert self.dot1x.dot1x_plugin_running(), message
-
-    def verify_dot1x_stable(self, min_uptime: int = 180, timeout: int = 300, interval: int = 10) -> None:
-        """
-        Poll until all 4 dot1x processes have been running for at least *min_uptime*
-        seconds on **every appliance** (EM + all CAs), or raise if *timeout* is exceeded.
-
-        Runs both commands from the EM as required by the test cases:
-            - ``fstool dot1x status``               — verifies the EM itself
-            - ``fstool oneach fstool dot1x status`` — verifies every CA
-
-        Checked processes (matching CSV C148464 T1316961 requirements):
-            - 802.1x plugin
-            - radiusd
-            - winbindd
-            - redis-server
-
-        The 3-minute default (180 s) guards against restart loops that recover
-        quickly but indicate instability.
-
-        Args:
-            min_uptime: Required uptime in seconds for every process (default: 180 = 3 min).
-            timeout:    Maximum total wait in seconds (default: 300).
-            interval:   Seconds between polls (default: 10).
-
-        Raises:
-            AssertionError: If any process on any appliance is still below threshold
-                            after *timeout* seconds.
-        """
-        deadline = time.time() + timeout
-        while True:
-            # Query EM's own status + all CAs via oneach in one call
-            all_device_statuses = self.em.get_dot1x_status_all()
-            failures = []
-
-            for device, uptimes in all_device_statuses.items():
-                for proc, uptime in uptimes.items():
-                    if uptime < 0:
-                        log.error(f"  [{device}] {proc}: NOT RUNNING")
-                        failures.append(f"[{device}] '{proc}' is not running")
-                    elif uptime < min_uptime:
-                        log.warning(f"  [{device}] {proc}: running for {uptime}s (below {min_uptime}s threshold)")
-                        failures.append(
-                            f"[{device}] '{proc}' uptime is only {uptime}s — process may be unstable/restarting "
-                            f"(need >= {min_uptime}s)"
-                        )
-                    else:
-                        log.info(f"  [{device}] {proc}: running for {uptime}s ✓")
-
-            if not failures:
-                return  # all processes stable on all appliances
-
-            remaining = deadline - time.time()
-            if remaining <= 0:
-                break
-
-            log.info(
-                f"Waiting for dot1x processes to stabilise on all appliances "
-                f"(need >= {min_uptime}s uptime, up to {int(remaining)}s left)…"
-            )
-            time.sleep(min(interval, int(remaining)))
-
-        assert not failures, "dot1x stability check failed:\n  " + "\n  ".join(failures)
 
     def assert_nic_authentication_status(
             self, expected_status: Union[AuthenticationStatus, str] = AuthenticationStatus.SUCCEEDED, timeout: int = 90
@@ -563,6 +564,8 @@ class RadiusTestBase(FSTestCommonBase):
             {"property_field": "dot1x_auth_state", "expected_value": auth_state},
         ]
 
+        self._dump_hostinfo_debug_views(host_id)
+
         # Debug: dump all dot1x properties
         self._dump_dot1x_properties(host_id)
 
@@ -590,6 +593,7 @@ class RadiusTestBase(FSTestCommonBase):
         """
         if not self.host_id:
             self.host_id = self._get_host_id()
+        self._dump_hostinfo_debug_views(self.host_id)
         # Debug: dump all dot1x properties (only on first verification)
         self._dump_dot1x_properties(self.host_id)
 
@@ -609,13 +613,18 @@ class RadiusTestBase(FSTestCommonBase):
     def verify_radius_imposed_auth(self, expected_reply_message: str):
         """Verify the dot1x_ass_restrictions property contains the expected Reply-Message."""
         host_id = self.host_id or self._get_host_id()
-        self.ca.check_properties(host_id, [
-            {
-                "property_field": "dot1x_ass_restrictions",
-                "expected_value": f"Reply-Message={expected_reply_message}",
-            }
-        ])
-        log.info(f"Verified RADIUS Imposed Authorization: Reply-Message={expected_reply_message}")
+        self.ca.check_properties(
+            host_id,
+            [
+                {
+                    "property_field": "dot1x_ass_restrictions",
+                    "expected_value": f"Reply-Message={expected_reply_message}",
+                }
+            ],
+        )
+        log.info(
+            f"Verified RADIUS Imposed Authorization: Reply-Message={expected_reply_message}"
+        )
 
     def _dump_dot1x_properties(self, host_id: str):
         """Debug: dump all dot1x properties for a host (once per authentication event)."""
@@ -634,6 +643,50 @@ class RadiusTestBase(FSTestCommonBase):
             self.host_id_auth_time.add(auth_key)
         except Exception as e:
             log.warning(f"Failed to dump dot1x properties: {e}")
+
+    def _dump_hostinfo_debug_views(self, host_id: str):
+        """Debug: dump focused hostinfo views for resolved host, passthrough MAC, and NIC IP."""
+        candidates = []
+        for candidate in [host_id, self.passthrough.mac, self._last_known_ip]:
+            if candidate and candidate not in candidates:
+                candidates.append(candidate)
+
+        try:
+            current_ip = self.passthrough.get_nic_ip(self.nicname)
+            if current_ip and current_ip not in candidates:
+                candidates.append(current_ip)
+        except Exception:
+            current_ip = None
+
+        try:
+            auth_time = self.ca.get_property_value(host_id, "dot1x_auth_time")
+        except Exception:
+            auth_time = None
+
+        snapshot_key = (host_id, auth_time, tuple(candidates))
+        if snapshot_key in self.hostinfo_snapshot_keys:
+            return
+
+        for candidate in candidates:
+            try:
+                command = (
+                    f"fstool hostinfo {candidate} | "
+                    "egrep 'assigned-to|, mac,|, macs,|, ip,|, ips,|dot1x_|"
+                    "sw_ipport|sw_port_vlan|connectivity_type'"
+                )
+                output = self.ca.exec_command(
+                    command
+                )
+                log.info(f"Focused hostinfo view for {candidate}:")
+                if output.strip():
+                    for line in output.strip().split('\n'):
+                        log.info(f"  {line}")
+                else:
+                    log.info("  <no matching hostinfo lines>")
+            except Exception as e:
+                log.warning(f"Failed to dump hostinfo for {candidate}: {e}")
+
+        self.hostinfo_snapshot_keys.add(snapshot_key)
 
     def verify_wired_properties(self, nas_port_id: str = None):
         """
@@ -741,6 +794,111 @@ class RadiusTestBase(FSTestCommonBase):
             ca_ip=ca_ip
         )
         log.info("Common authentication verification completed successfully")
+
+    def verify_radius_get_log(
+            self,
+            fragment_size: Union[int, str],
+            radius_attribute: str = "Framed-MTU",
+            subtract_value: int = 30,
+            timeout: int = 30,
+            fallback_to_appliance: bool = False,
+    ) -> str:
+        """
+        Verify radiusd.log contains the expected reply attribute derived from fragment size.
+
+        For fragment-size tests, the expected RADIUS reply value is:
+            fragment_size - subtract_value
+
+        Args:
+            fragment_size: Configured fragment size.
+            radius_attribute: RADIUS attribute to verify in radiusd.log.
+            subtract_value: Value subtracted from fragment_size. Default: 30.
+            timeout: Additional seconds to wait for the streamed log line if it is
+                not already present in the local radiusd log file.
+            fallback_to_appliance: If True, query the appliance log directly when
+                the streamed local file does not produce a match in time.
+
+        Returns:
+            The matched log line.
+
+        Raises:
+            AssertionError: If the expected radiusd.log line is not found.
+            RuntimeError: If the radiusd log collector is not initialized.
+        """
+        if self.radiusd_log_collector is None:
+            raise RuntimeError("radiusd log collector is not initialized")
+
+        expected_value = int(fragment_size) - subtract_value
+        pattern = rf"{re.escape(radius_attribute)}\s*\+=\s*{expected_value}\b"
+        expected_text = f"{radius_attribute} += {expected_value}"
+        local_log_path = self.radiusd_log_collector.local_log_file_path
+        not_before = self.test_start_time
+
+        watcher = self.radiusd_log_collector.start_log_check(patterns=[pattern], timeout=timeout)
+
+        matched_line = self._find_matching_log_line(local_log_path, pattern, not_before=not_before)
+        if matched_line:
+            log.info(
+                f"Verified radiusd.log contains {expected_text}: {matched_line}"
+            )
+            return matched_line
+
+        found, matched = self.radiusd_log_collector.get_log_check_result(watcher)
+        if found:
+            matched_line = matched[0] if matched else ""
+            log.info(
+                f"Verified radiusd.log contains {expected_text}: {matched_line}"
+            )
+            return matched_line
+
+        if fallback_to_appliance:
+            matched_line = self._find_matching_remote_log_line(expected_text)
+            if matched_line:
+                log.info(
+                    f"Verified appliance radiusd.log contains {expected_text}: {matched_line}"
+                )
+                return matched_line
+
+        raise AssertionError(
+            f"radiusd.log did not contain '{expected_text}' within {timeout}s "
+            f"for fragment_size={fragment_size}. Checked log: {local_log_path}"
+        )
+
+    def _find_matching_log_line(self, log_path: str, pattern: str, not_before: datetime = None) -> str:
+        """Return the latest matching line from a local streamed log file."""
+        if not log_path or not os.path.exists(log_path):
+            return ""
+
+        regex = re.compile(pattern)
+        matched_line = ""
+        with open(log_path, encoding="utf-8", errors="ignore") as log_file:
+            for line in log_file:
+                if not_before and not self._log_line_is_recent_enough(line, not_before):
+                    continue
+                if regex.search(line):
+                    matched_line = line.strip()
+        return matched_line
+
+    def _log_line_is_recent_enough(self, line: str, not_before: datetime) -> bool:
+        """Check whether a streamed radiusd line is at or after the specified time."""
+        match = re.search(r":([A-Z][a-z]{2} [A-Z][a-z]{2} \d{1,2} \d{2}:\d{2}:\d{2} \d{4})", line)
+        if not match:
+            return False
+
+        try:
+            log_time = datetime.strptime(match.group(1), "%a %b %d %H:%M:%S %Y")
+        except ValueError:
+            return False
+
+        return log_time >= not_before
+
+    def _find_matching_remote_log_line(self, expected_text: str) -> str:
+        """Return the latest matching line from the appliance radiusd log using fixed-string search."""
+        escaped_text = expected_text.replace("'", r"'\''")
+        output = self.ca.exec_command(
+            f"grep -F '{escaped_text}' {RADIUSD_LOG_PATH} | tail -n 1"
+        )
+        return output.strip()
 
     # =========================================================================
     # Endpoint Cleanup
