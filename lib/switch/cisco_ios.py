@@ -26,12 +26,10 @@ class CiscoIOS(SwitchBase, SSHClient):
             "password": self.password,
             "secret": self.password,
         }
-        self.session = ConnectHandler(**self.device)
-        try:
-            # Enter privileged exec mode if device opens in user exec ('>')
-            self.session.enable()
-        except Exception as exc:
-            log.warning(f"CiscoIOS enable not required on {self.ip}: {exc}")
+        # Connection is established lazily on first exec_command() call so that
+        # object construction (and test parametrization) never blocks or fails
+        # due to transient SSH banner errors on the switch.
+        self.session = None
         self.is_ipv4 = True
         ip_obj = ipaddress.ip_address(self.ip)
         if isinstance(ip_obj, ipaddress.IPv6Address):
@@ -108,6 +106,42 @@ class CiscoIOS(SwitchBase, SSHClient):
                     CONNECTION_POOL.evict(self.get_conn_key())
                 else:
                     raise
+
+    def set_mab_username_format(self, uppercase: bool = True) -> bool:
+        """
+        Configure the MAB username (Attribute 1) format sent to the RADIUS server.
+
+        By default Cisco IOS sends the MAC address as lowercase with hyphens.
+        This method switches it to uppercase colon-separated format, or restores
+        the default — matching the switch precondition required by T1316966.
+
+        Uppercase::
+
+            mab request format attribute 1 groupsize 12 separator : uppercase
+
+        Restore default::
+
+            no mab request format attribute 1
+
+        Args:
+            uppercase: If True, set uppercase format; if False, restore the default.
+
+        Returns:
+            bool: True if the command succeeded.
+        """
+        if uppercase:
+            cmd = "mab request format attribute 1 groupsize 12 separator : uppercase"
+            label = "uppercase"
+        else:
+            cmd = "no mab request format attribute 1"
+            label = "default"
+        try:
+            self.exec_command([cmd], log_output=True)
+            log.info(f"MAB username format set to {label} on Cisco switch {self.ip}")
+            return True
+        except Exception as e:
+            log.error(f"Failed to set MAB username format to {label} on Cisco switch {self.ip}: {e}")
+            return False
 
     @staticmethod
     def normalize_interface(ifname: str) -> str:

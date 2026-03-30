@@ -9,10 +9,87 @@ from lib.passthrough.enums import AuthenticationStatus
 from lib.plugin.radius.enums import PreAdmissionAuth, RadiusAuthStatus
 from tests.radius.functional.base_classes.radius_mab_test_base import RadiusMabTestBase
 
+# =========================================================================
+# Shared pre-admission rule definitions used across MAB tests
+# =========================================================================
+RULE_MAC_FOUND_IN_MAR_TRUE = [{"criterion_name": "MAC Found in MAR", "criterion_value": ["True"]}]
+RULE_AUTH_TYPE_MAB = [{"criterion_name": "Authentication-Type", "criterion_value": ["MAB"]}]
+RULE_USER_NAME_MATCH_ANY = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
+UNMATCHED_MAC = "00:00:00:00:00:01"
 
-class MABMACInMARMismatchTest(RadiusMabTestBase):
+MAB_ACCEPT_ELSE_DENY_RULES = [
+    {"cond_rules": RULE_AUTH_TYPE_MAB, "auth": PreAdmissionAuth.ACCEPT},
+    {"cond_rules": RULE_USER_NAME_MATCH_ANY, "auth": PreAdmissionAuth.REJECT_DUMMY},
+]
+
+
+class TC_9416_MABBasicAuthWiredTest(RadiusMabTestBase):
     """
-    T1316942 - DOT Pre-Admission rule - MAC Found in MAR mismatch
+    TC-9416: DOT | Mac Address Bypass Authentication: Wired
+
+    This test ensures authentication using MAC Address Bypass for a wired Endpoint.
+
+    Steps
+    --------------------------------
+    1. Endpoint preparation — Wired AutoConfig running, IEEE 802.1X authentication
+       unchecked. (Handled by base-class do_setup / configure_mab_profile.)
+    2. Configure pre-admission rule: Authentication-Type = MAB → Accept; else Deny.
+    3. Add the MAC address of the Endpoint to the MAC Address Repository (MAR).
+       Pre-condition: "Accept MAB authentication for endpoints not defined in
+       repository" must be DISABLED in Options -> Radius -> MAC Address Repository.
+       (This is not a RADIUS plugin setting; it must be verified manually or as
+       part of the testbed baseline before the test runs.)
+    4. Force the Endpoint to authenticate (toggle NIC).
+       Verify the NIC received an IP from the configured VLAN.
+       Verify Authentication details: Pre-Admission rule 1, RADIUS-Accepted, MAB.
+    5. Edit the MAC address of the Endpoint in MAR to be invalid (remove it),
+       re-authenticate, verify the NIC has no IP and authentication is rejected.
+    """
+
+    def do_test(self):
+        try:
+            # Step 2: Configure pre-admission rule: Authentication-Type = MAB → Accept, else Deny
+            self.dot1x.set_pre_admission_rules(MAB_ACCEPT_ELSE_DENY_RULES)
+
+            # Step 3: Add MAC to MAR.
+            # Pre-condition: "Accept MAB authentication for endpoints not defined in
+            # repository" must be DISABLED in the testbed (Options -> Radius ->
+            # MAC Address Repository). This is not a RADIUS plugin setting and cannot
+            # be set programmatically via configure_radius_settings().
+            self.em.add_mac_to_mar(mac=self.nic_mac)
+            self.assert_mac_in_mar()
+
+            # Step 4: Authenticate and verify success
+            self.wait_for_dot1x_ready()
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.verify_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1)
+            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
+            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
+
+            # Step 5: Replace the real MAC in MAR with an unmatched one so the endpoint
+            # fails the MAR lookup (non-empty table, wrong entry), then re-authenticate
+            # and verify rejection.
+            self.em.remove_mac_from_mar(self.nic_mac)
+            self.assert_mac_not_in_mar()
+            self.em.add_mac_to_mar(mac=UNMATCHED_MAC)
+            self.assert_mac_in_mar(UNMATCHED_MAC)
+
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.verify_nic_has_no_ip_in_range()
+            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT, host_in_mar=False)
+
+            log.info(f"[{self.testCaseId}] PASS - MAB basic wired authentication test completed")
+        except Exception as e:
+            log.error(f"Test {self.testCaseId} failed: {e}")
+            raise
+
+
+class TC_9424_MABMACInMARMismatchTest(RadiusMabTestBase):
+    """
+    TC-9424: DOT | Pre-Admission rule - MAC Found in MAR mismatch
 
     This test verifies that pre-admission rules using "MAC Found in MAR" condition
     correctly match/deny hosts based on MAR presence.
@@ -25,10 +102,6 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
     4. Edit rule to Allow Access (remove Deny Access checkbox).
     5. Attempt to authenticate - should SUCCEED, auth source = Pre-Admission rule 1.
     """
-
-    # Rule Settings
-    RULE_MAC_FOUND_IN_MAR_TRUE = [{"criterion_name": "MAC Found in MAR", "criterion_value": ["True"]}]
-    RULE_USER_NAME_MATCH_ANY = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
 
     # "Deny Access" checked: MAC Found in MAR -> REJECT, fallback -> REJECT
     SET_MAC_IN_MAR_DENY_ACCESS = [
@@ -43,15 +116,11 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
     ]
 
     def do_test(self):
-        case_id = "T1316942"
-
         try:
             # Step 1: Set rule "MAC Found in MAR" with Deny Access
-            # This writes to local.properties and restarts dot1x
             self.dot1x.set_pre_admission_rules(self.SET_MAC_IN_MAR_DENY_ACCESS)
 
             # Step 2: Add MAC to MAR AFTER dot1x restart so mar.pl daemon is active
-            # and properly processes the devinfo callback
             self.em.add_mac_to_mar(mac=self.nic_mac)
             self.assert_mac_in_mar()
 
@@ -60,6 +129,7 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
             self.toggle_nic()
             self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
             self.verify_nic_has_no_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1, auth_state="Access-Reject")
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_REJECT)
 
             # Step 4: Change rule to Allow Access (restarts dot1x again)
@@ -78,10 +148,159 @@ class MABMACInMARMismatchTest(RadiusMabTestBase):
             self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
 
-            log.info(f"[{case_id}] PASS - MAC Found in MAR pre-admission rule test completed")
-
+            log.info(f"[{self.testCaseId}] PASS - MAC Found in MAR pre-admission rule test completed")
         except Exception as e:
-            log.error(f"[{case_id}] FAIL: {e}")
+            log.error(f"Test {self.testCaseId} failed: {e}")
             raise
 
 
+class TC_9435_MABSimplePreAdmissionConditionsTest(RadiusMabTestBase):
+    """
+    TC-9435: DOT | Verify simple pre-admission conditions w/ MAB
+
+    Steps
+    ------------------------------
+    1. Configure pre-admission rule: Authentication-Type = MAB (priority 1), with
+       Reply-Message attribute "Authorization by MAR entry"; else deny.
+    2. Add endpoint MAC to MAR.
+    3. Authenticate endpoint via MAB protocol.
+    4. Verify endpoint successfully authenticated and matched pre-admission rule.
+    5. Verify 802.1x RADIUS Imposed Authorization contains the expected Reply-Message.
+    """
+
+    REPLY_MESSAGE = "Authorization by MAR entry"
+
+    SET_RULES = [
+        {
+            "cond_rules": RULE_AUTH_TYPE_MAB,
+            "auth": f"vlan:\tIsCOA:false\tReply-Message={REPLY_MESSAGE}",
+        },
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    def do_test(self):
+        try:
+            # Step 1: Configure pre-admission rule with Reply-Message attribute
+            self.dot1x.set_pre_admission_rules(self.SET_RULES)
+
+            # Step 2: Add MAC to MAR
+            self.em.add_mac_to_mar(mac=self.nic_mac)
+            self.assert_mac_in_mar()
+
+            # Step 3-4: Authenticate and verify pre-admission rule
+            self.wait_for_dot1x_ready()
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.verify_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1)
+            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
+            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
+
+            # Step 5: Verify Reply-Message in RADIUS Imposed Authorization property
+            self.verify_radius_imposed_auth(self.REPLY_MESSAGE)
+
+            log.info(f"[{self.testCaseId}] PASS - Simple pre-admission conditions with MAB test completed")
+        except Exception as e:
+            log.error(f"Test {self.testCaseId} failed: {e}")
+            raise
+
+
+class TC_9421_MABAuthUppercaseMACTest(RadiusMabTestBase):
+    """
+    TC-9421: DOT | Verify MAB Auth using uppercase Username and Mac address.
+
+    Verifies that MAB authentication works when the switch sends the MAC address
+    in uppercase format. The RADIUS server should normalise the username to lowercase
+    before performing MAR lookup.
+
+    Steps
+    --------------------------------
+    1. Add MAC address to MAR.
+    2. Disable "Accept MAB authentication for endpoints not defined in repository"
+       (testbed pre-condition, not configurable via RADIUS plugin settings).
+    3. Configure pre-admission rule: Authentication-Type = MAB.
+    4. Toggle NIC to trigger MAB authentication.
+    5. Verify:
+       - 802.1x Authorization Source: Pre-Admission rule 1
+       - 802.1x RADIUS Authentication State: RADIUS-Accepted
+       - 802.1x Authentication type: MAB
+       - 802.1x NAS IP Address: <switch IP>
+    """
+
+    def do_test(self):
+        try:
+            # Precondition: configure the switch to send MAB username in uppercase format
+            self.switch.set_mab_username_format(uppercase=True)
+
+            # Step 1: Configure pre-admission rule
+            self.dot1x.set_pre_admission_rules(MAB_ACCEPT_ELSE_DENY_RULES)
+
+            # Step 2: Add MAC to MAR (the switch may send it in uppercase format)
+            self.em.add_mac_to_mar(mac=self.nic_mac)
+            self.assert_mac_in_mar()
+
+            # Steps 3-5: Authenticate and verify
+            self.wait_for_dot1x_ready()
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.verify_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1)
+            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
+            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
+
+            log.info(f"[{self.testCaseId}] PASS - MAB uppercase MAC authentication test completed")
+        except Exception as e:
+            log.error(f"Test {self.testCaseId} failed: {e}")
+            raise
+        finally:
+            self.switch.set_mab_username_format(uppercase=False)
+
+
+class TC_9415_MABLargeMARTableTest(RadiusMabTestBase):
+    """
+    TC-9415: DOT | MAB Authentication with Large Amount of Entries in MAR Table
+
+    This test ensures that MAR authentication works while the MAR table has a
+    large number of entries in it.
+
+    Steps
+    --------------------------------
+    1. Bulk-import ~10000 random MAR entries to the EM.
+    2. Add the real endpoint MAC to MAR.
+    3. Configure pre-admission rule: Authentication-Type = MAB (accept), else deny.
+    4. Force the Endpoint to authenticate.
+    5. Verify endpoint is on the correct VLAN and authentication details are correct.
+    6. Bulk-remove imported MAR entries.
+    """
+
+    MAR_BULK_COUNT = 10000
+
+    def do_test(self):
+        csv_path = None
+        try:
+            # Step 1: Bulk-import random MAR entries
+            csv_path = self.bulk_import_mar_entries(self.MAR_BULK_COUNT, comment="large_mar_test")
+
+            # Step 2: Configure pre-admission rule
+            self.dot1x.set_pre_admission_rules(MAB_ACCEPT_ELSE_DENY_RULES)
+
+            # Step 3: Add real endpoint MAC to MAR
+            self.em.add_mac_to_mar(mac=self.nic_mac)
+            self.assert_mac_in_mar()
+
+            # Steps 4-5: Authenticate and verify
+            self.wait_for_dot1x_ready()
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.MAB)
+            self.verify_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=1)
+            self.verify_authentication_on_ca(auth_status=RadiusAuthStatus.ACCESS_ACCEPT)
+            self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
+
+            log.info(f"[{self.testCaseId}] PASS - MAB with large MAR table test completed")
+        except Exception as e:
+            log.error(f"Test {self.testCaseId} failed: {e}")
+            raise
+        finally:
+            # Step 6: Bulk-remove imported MAR entries
+            self.bulk_cleanup_mar(csv_path)

@@ -1,13 +1,18 @@
 import ipaddress as _ipaddress
+import os
 import re
+import shutil
+import tempfile
 import time
-import paramiko
+import xml.etree.ElementTree as ET
 from typing import List, Optional, Dict
+
+import paramiko
+
+from framework.connection.connection_pool import CONNECTION_POOL
 from framework.connection.ssh_client import SSHClient
 from framework.log.logger import log
-from framework.connection.connection_pool import CONNECTION_POOL
-import xml.etree.ElementTree as ET
-import os
+from lib.utils.mac import normalize_mac
 
 # MAR (MAC Address Repository) storage
 # MAR entries are managed via `fstool devinfo` on the Enterprise Manager (EM).
@@ -34,10 +39,12 @@ MAR_DEVINFO_ENABLE_CATEGORY = "fstool set_property devinfo.enabled.categories sw
 # generic MAR helpers.
 from lib.plugin.radius.enums import (  # noqa: E402
     MAR_FIELD_MAC,
-    MAR_FIELD_TARGET_ACCESS,
     MAR_FIELD_COMMENT,
     MAR_AUTH_ACCEPT,
-    MAR_AUTH_REJECT,
+)
+from lib.plugin.radius.mar_bulk_ops import (  # noqa: E402
+    bulk_import_mar_csv as _bulk_import_mar_csv,
+    bulk_remove_mar_csv as _bulk_remove_mar_csv,
 )
 
 
@@ -74,9 +81,11 @@ class CounterActBase(SSHClient):
                 allow_agent=False,    # Don’t use SSH agent
                 timeout=10
             )
+            log.info(f"SSH connected to {self.username}@{self.ipaddress}")
             return self.client
         except Exception as e:
-            raise ConnectionError(f"Failed to connect to {self.username}: {e}")
+            # Include the target IP/hostname in the error to aid debugging
+            raise ConnectionError(f"Failed to connect to {self.username}@{self.ipaddress}: {e}")
 
     def _execute(self, cmd, timeout=30, log_output: bool = False, log_command: bool = False):
         if log_command:
@@ -157,7 +166,7 @@ class CounterActBase(SSHClient):
                 else:
                     raise ValueError("Invalid direction. Use 'upload' or 'download'.")
         except Exception as e:
-            raise RuntimeError(f"SCP operation failed: {e}")
+            raise RuntimeError(f"SCP operation failed on {self.ipaddress}: {e}")
 
     def simple_policy_condition(self, policy_file_name, policy_name, fields):
         """
@@ -210,11 +219,11 @@ class CounterActBase(SSHClient):
             em_policy_path (str): Path to save the modified policy file.
         """
         log.info(f"******** adding policy {policy_name} ********")
-        modified_policy_path = f"/tmp/{policy_file_name}"
+        modified_policy_path = os.path.join(tempfile.gettempdir(), policy_file_name)
         current_dir = os.path.dirname(__file__)
         relative_path = os.path.join(current_dir, '../../resources/policy/simple_condition_base_policy.xml')
 
-        os.system(f"cp {relative_path} {modified_policy_path}")
+        shutil.copy2(relative_path, modified_policy_path)
 
         # Parse the XML file
         tree = ET.parse(modified_policy_path)
@@ -289,11 +298,11 @@ class CounterActBase(SSHClient):
                 f.write(xml_string)
 
         log.info(f"******** adding policy {policy_name} with action {action_name} ********")
-        modified_policy_path = f"/tmp/{policy_file_name}"
+        modified_policy_path = os.path.join(tempfile.gettempdir(), policy_file_name)
         current_dir = os.path.dirname(__file__)
         relative_path = os.path.join(current_dir, '../../resources/policy/simple_condition_base_policy.xml')
 
-        os.system(f"cp {relative_path} {modified_policy_path}")
+        shutil.copy2(relative_path, modified_policy_path)
 
         # Parse the XML file
         tree = ET.parse(modified_policy_path)
@@ -372,6 +381,7 @@ class CounterActBase(SSHClient):
         output = self.exec_command(f"fstool cliapi policy import {policy_file_path}")
         if "Import policy completed" not in output:
             raise RuntimeError(f"Policy import failed: {output}")
+
 
     def check_policy_match(self, policy_name: str, count: int = 1, timeout: int = 30, retry_interval: int = 5) -> bool:
         """
@@ -542,6 +552,7 @@ class CounterActBase(SSHClient):
             log.error(f"Failed to remove endpoint {endpoint_ip}: {e}")
             return False
 
+
     def check_properties(self, id: str, properties_check_list: List[dict]) -> None:
         """
         Check multiple properties of a host.
@@ -578,6 +589,7 @@ class CounterActBase(SSHClient):
         mac: str,
         authorization: str = None,
         comment: str = None,
+        approved_by: Optional[str] = None,
     ) -> None:
         """
         Add a MAC address to the MAC Address Repository (MAR).
@@ -597,11 +609,16 @@ class CounterActBase(SSHClient):
             authorization: Authorization value. Defaults to MAR_AUTH_ACCEPT
                           which is the internal format the dot1x plugin uses for "accept".
             comment: Optional MAR comment (e.g., "automation test entry").
+            approved_by: Optional ``dot1x_approved_by`` value.  When *None*
+                        (the default) the field is **not** sent, so any
+                        existing value on the MAR entry is preserved.  Pass
+                        ``"by_import"`` explicitly to mirror the bulk-import
+                        behaviour, or any other value the workflow requires.
 
         Raises:
             Exception: If the MAC address is invalid or the operation fails
         """
-        mac_id = self._normalize_mac(mac)
+        mac_id = normalize_mac(mac)
         if len(mac_id) != 12:
             raise ValueError(f"Invalid MAC address: {mac}")
 
@@ -618,6 +635,8 @@ class CounterActBase(SSHClient):
             # Use shell double quotes to protect tab character in authorization value
             base_cmd = MAR_DEVINFO_UPDATE_BASE.format(mac_id=mac_id)
             cmd = f'{base_cmd} "dot1x_target_access={authorization}"'
+            if approved_by is not None:
+                cmd += f' "dot1x_approved_by={approved_by}"'
             if comment:
                 cmd += f' "{MAR_FIELD_COMMENT}={comment}"'
             output = self.exec_command(cmd, timeout=30)
@@ -647,7 +666,7 @@ class CounterActBase(SSHClient):
         Raises:
             Exception: If the operation fails
         """
-        mac_id = self._normalize_mac(mac)
+        mac_id = normalize_mac(mac)
         log.info(f"Removing MAC '{mac}' from MAR via fstool devinfo on EM")
 
         try:
@@ -657,6 +676,46 @@ class CounterActBase(SSHClient):
 
         except Exception as e:
             raise Exception(f"Failed to remove MAC '{mac}' from MAR: {e}")
+
+    def bulk_import_mar_csv(self, csv_path: str, timeout: int = 300) -> int:
+        """
+        Bulk-import MAR entries from a CSV — mirrors the GUI "Import CSV in MAR".
+
+        Uses a single Perl process connected to the CounterACT engine via
+        ``cutil_update_devinfo``, achieving ~1000 entries/second.  Each entry
+        gets ``dot1x_approved_by=by_import`` (same as the GUI).
+
+        The CSV must follow the Forescout MAR export format::
+
+            dot1x_mac,dot1x_auth_method,dot1x_target_access,...
+            000000021d85,bypass,vlan:222	IsCOA:false,...
+
+        Must be called on the **EM** object.
+
+        Args:
+            csv_path: Local path to the CSV file.
+            timeout: SSH command timeout in seconds (default 300).
+
+        Returns:
+            Number of entries successfully imported.
+        """
+        return _bulk_import_mar_csv(self, csv_path, timeout)
+
+    def bulk_remove_mar_csv(self, csv_path: str, timeout: int = 500) -> int:
+        """
+        Bulk-remove MAR entries whose MACs appear in a CSV file.
+
+        Uses a single Perl process connected to the engine via
+        ``cutil_rm_devinfo``, achieving ~100 entries/second.
+
+        Args:
+            csv_path: Local path to the CSV file (first column = MAC).
+            timeout: SSH command timeout in seconds (default 500).
+
+        Returns:
+            Number of entries successfully removed.
+        """
+        return _bulk_remove_mar_csv(self, csv_path, timeout)
 
     def get_mar_entry(self, mac: str) -> Dict[str, str]:
         """
@@ -672,7 +731,7 @@ class CounterActBase(SSHClient):
         Returns:
             Dictionary with MAR fields and values, or empty dict if not found
         """
-        mac_id = self._normalize_mac(mac)
+        mac_id = normalize_mac(mac)
         log.info(f"Getting MAR entry for MAC '{mac}' via fstool devinfo dump")
 
         try:
@@ -720,37 +779,13 @@ class CounterActBase(SSHClient):
         log.info(f"MAC '{mac}' exists in MAR: {exists}")
         return exists
 
-    def update_mar_authorization(self, mac: str, authorization: str) -> None:
-        """
-        Update the authorization value for a MAC address in MAR.
-
-        Args:
-            mac: MAC address to update (any format, normalized internally for fstool)
-            authorization: New authorization value (e.g., "accept", "reject=dummy")
-
-        Raises:
-            Exception: If the operation fails
-        """
-        log.info(f"Updating MAR authorization for MAC '{mac}' to '{authorization}'")
-        self.add_mac_to_mar(mac=mac, authorization=authorization)
-
     def _ensure_mar_category_enabled(self) -> None:
         """
         Ensure the 'mar' category is enabled for fstool devinfo commands.
         This is a one-time setup that persists across restarts.
         """
         try:
-            cmd = MAR_DEVINFO_ENABLE_CATEGORY
-            self.exec_command(cmd, timeout=30)
+            self.exec_command(MAR_DEVINFO_ENABLE_CATEGORY, timeout=30)
         except Exception as e:
             log.debug(f"Could not enable MAR category (may already be enabled): {e}")
-
-    def _normalize_mac(self, mac: str) -> str:
-        """
-        Normalize a MAC address to bare lowercase hex (e.g. ``98f2b301a055``).
-
-        ``fstool devinfo`` uses this format as the record key, so every MAR
-        helper must convert before talking to the CLI.
-        """
-        return re.sub(r'[-:.]', '', mac).replace('0x', '').lower()
 
