@@ -1,0 +1,1437 @@
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:9503:1773877459.520709:Wed Mar 18 18:44:19 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_create_default_policy:5391)
+dot1x:9503:1773877459.521105:Wed Mar 18 18:44:19 2026: main::line_policy_conf:5369:[Timers]::5: <housekeep>Writing unlang rule and setting auth in redis - {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XStringCriterion,field=User-Name,filType=any,input=yalla,value=.*}],restrict=reject=dummy}
+dot1x:9503:1773877459.521390:Wed Mar 18 18:44:19 2026: main::line_policy_conf:5369:[Timers]::5: <housekeep>Writing unlang rule and setting auth in redis - {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XComboStringCriterion,field=EAP-Type,selected=PEAP,value=PEAP}],restrict=vlan:	IsCOA:false}
+dot1x:9503:1773877459.526498:Wed Mar 18 18:44:19 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy.tmp.9503.1773877459 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:9503:1773877459.528730:Wed Mar 18 18:44:19 2026: main::dot1x_configure_fr_create_default_policy:5406:[Timers]::5: <housekeep>Placing the default policy in default server (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_accept):	rule_1, rule_2
+dot1x:9503:1773877459.529156:Wed Mar 18 18:44:19 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877461.002918:Wed Mar 18 18:44:21 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:19",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877462.004479:Wed Mar 18 18:44:22 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877463.739694:Wed Mar 18 18:44:23 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:22",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877464.741441:Wed Mar 18 18:44:24 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877466.228845:Wed Mar 18 18:44:26 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:24",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877466.229462:Wed Mar 18 18:44:26 2026: main::plugin_stats_cb:1592:[other]::5: called with: 
+dot1x:9503:1773877466.229603:Wed Mar 18 18:44:26 2026: main::dot1x_stats_add:6938:[other]::5: dot1x_stats_add key = running_time, label = running_ time_(minutes_since_start) value = 6
+dot1x:9503:1773877466.229873:Wed Mar 18 18:44:26 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 7{label=running_ time_(minutes_since_start),periods={},value=7}
+dot1x:9503:1773877466.230112:Wed Mar 18 18:44:26 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 7{label=number_of_accepted_authentications,periods={day={duration=1440,last_count=0},hour={duration=60,last_count=0}},value=1}
+dot1x:9503:1773877466.230280:Wed Mar 18 18:44:26 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 7{count=1,label=average_duration_of_ntlm_auth,periods={},value=0}
+dot1x:9503:1773877466.230544:Wed Mar 18 18:44:26 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 7{label=number_of_rejected_authentications,periods={day={duration=1440,last_count=0},hour={duration=60,last_count=0}},value=0}
+dot1x:9503:1773877466.230813:Wed Mar 18 18:44:26 2026: Sent 10 stats
+dot1x:9503:1773877467.232526:Wed Mar 18 18:44:27 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877468.647750:Wed Mar 18 18:44:28 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:27",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877469.649645:Wed Mar 18 18:44:29 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xacf1c10) timeout in 1773877468, Now=1773877469
+dot1x:9503:1773877469.649898:Wed Mar 18 18:44:29 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xad6b360): Reschedule gatekeeper
+dot1x:9503:1773877469.650125:Wed Mar 18 18:44:29 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xad93998) timeout in 1773877469, Now=1773877469
+dot1x:9503:1773877469.650320:Wed Mar 18 18:44:29 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xad5fb20): Reschedule housekeep
+dot1x:9503:1773877469.650514:Wed Mar 18 18:44:29 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[1 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:9503:1773877469.650661:Wed Mar 18 18:44:29 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877471.095965:Wed Mar 18 18:44:31 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:29",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877472.098023:Wed Mar 18 18:44:32 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877473.540880:Wed Mar 18 18:44:33 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:32",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877474.542851:Wed Mar 18 18:44:34 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877476.200721:Wed Mar 18 18:44:36 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:34",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877477.203160:Wed Mar 18 18:44:37 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877478.631723:Wed Mar 18 18:44:38 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:37",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877478.662333:Wed Mar 18 18:44:38 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new sw devupdate: , , HASH(0xa971f78)
+dot1x:9503:1773877478.663039:Wed Mar 18 18:44:38 2026: main::disconnect_cb:5941:[other]::5: main::nas_update: Update 10.16.128.21
+dot1x:9503:1773877479.633111:Wed Mar 18 18:44:39 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xad6b360) timeout in 1773877479, Now=1773877479
+dot1x:9503:1773877479.633687:Wed Mar 18 18:44:39 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xae14138): Reschedule gatekeeper
+dot1x:9503:1773877479.634023:Wed Mar 18 18:44:39 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xad5fb20) timeout in 1773877479, Now=1773877479
+dot1x:9503:1773877479.634684:Wed Mar 18 18:44:39 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xad5f960): Reschedule housekeep
+dot1x:9503:1773877479.635168:Wed Mar 18 18:44:39 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[2 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:9503:1773877479.635593:Wed Mar 18 18:44:39 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877481.127078:Wed Mar 18 18:44:41 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:39",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877482.129260:Wed Mar 18 18:44:42 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877483.545151:Wed Mar 18 18:44:43 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:42",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877484.547747:Wed Mar 18 18:44:44 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877486.050476:Wed Mar 18 18:44:46 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:44",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877487.054321:Wed Mar 18 18:44:47 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877488.545965:Wed Mar 18 18:44:48 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:47",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877488.675012:Wed Mar 18 18:44:48 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new sw devupdate: , , HASH(0xa972278)
+dot1x:9503:1773877488.675784:Wed Mar 18 18:44:48 2026: main::disconnect_cb:5941:[other]::5: main::nas_update: Update 10.16.128.33
+dot1x:9503:1773877488.679509:Wed Mar 18 18:44:48 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new wireless devupdate: , , 
+dot1x:9503:1773877488.681430:Wed Mar 18 18:44:48 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new wireless devupdate: , , 
+dot1x:9503:1773877489.547471:Wed Mar 18 18:44:49 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xae14138) timeout in 1773877489, Now=1773877489
+dot1x:9503:1773877489.548009:Wed Mar 18 18:44:49 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xae1b708): Reschedule gatekeeper
+dot1x:9503:1773877489.548386:Wed Mar 18 18:44:49 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xad5f960) timeout in 1773877489, Now=1773877489
+dot1x:9503:1773877489.548730:Wed Mar 18 18:44:49 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xad24210): Reschedule housekeep
+dot1x:9503:1773877489.549039:Wed Mar 18 18:44:49 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[3 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:9503:1773877489.549307:Wed Mar 18 18:44:49 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877491.011455:Wed Mar 18 18:44:51 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:49",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877492.012938:Wed Mar 18 18:44:52 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877493.467992:Wed Mar 18 18:44:53 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:52",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877494.471057:Wed Mar 18 18:44:54 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <failcheck>Timer failcheck/failcheck=HASH(0xadfdc40) timeout in 1773877493, Now=1773877494
+dot1x:9503:1773877494.471453:Wed Mar 18 18:44:54 2026: main::dot1x_set_timer:2866:[Timers]::5: <failcheck>Set Timer failcheck/failcheck=HASH(0xadc3b98): Reschedule failcheck
+dot1x:9503:1773877494.471689:Wed Mar 18 18:44:54 2026: main::dot1x_handle_timer:2680:[Timers]::1: <failcheck>[1 / 3] remaining attempts to recheck AD sources failed.
+dot1x:9503:1773877494.471999:Wed Mar 18 18:44:54 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <initially_unavailable>Timer initially_unavailable/initially_unavailable=HASH(0xade3928) timeout in 1773877493, Now=1773877494
+dot1x:9503:1773877494.472219:Wed Mar 18 18:44:54 2026: main::dot1x_set_timer:2866:[Timers]::5: <initially_unavailable>Set Timer initially_unavailable/initially_unavailable=HASH(0xae19a60): Reschedule init unavailable check
+dot1x:9503:1773877494.472347:Wed Mar 18 18:44:54 2026: main::dot1x_handle_timer:2731:[Timers]::1: <initially_unavailable>[1 / 2] remaining attempts to recheck AD sources that failed init.
+dot1x:9503:1773877494.472485:Wed Mar 18 18:44:54 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877495.949979:Wed Mar 18 18:44:55 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:54",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877496.952833:Wed Mar 18 18:44:56 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877498.384149:Wed Mar 18 18:44:58 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:56",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877498.680174:Wed Mar 18 18:44:58 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new wireless devupdate: , , HASH(0xa857940)
+dot1x:9503:1773877498.680569:Wed Mar 18 18:44:58 2026: main::disconnect_cb:5941:[other]::5: main::nas_update: Update 10.6.129.53
+dot1x:9503:1773877499.388362:Wed Mar 18 18:44:59 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xae1b708) timeout in 1773877499, Now=1773877499
+dot1x:9503:1773877499.389287:Wed Mar 18 18:44:59 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xadc1c00): Reschedule gatekeeper
+dot1x:9503:1773877499.390012:Wed Mar 18 18:44:59 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xad24210) timeout in 1773877499, Now=1773877499
+dot1x:9503:1773877499.390544:Wed Mar 18 18:44:59 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xacf5e78): Reschedule housekeep
+dot1x:9503:1773877499.390994:Wed Mar 18 18:44:59 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[4 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:9503:1773877499.391319:Wed Mar 18 18:44:59 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877500.938955:Wed Mar 18 18:45:00 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:44:59",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877500.939746:Wed Mar 18 18:45:00 2026: main::plugin_private_message_cb:1588:[other]::5: called with: 
+{msg=[],name=dot1x_status,nodeid=5290463614721804985,plugin=gen}
+dot1x:9503:1773877500.939934:Wed Mar 18 18:45:00 2026: main::cb_1x_private_message:1503:[other]::5: Handling private message {msg=[],name=dot1x_status,nodeid=5290463614721804985,plugin=gen}
+dot1x:9503:1773877500.969955:Wed Mar 18 18:45:00 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026    06:27:55 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026    06:27:55 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 9514 Wed Mar 18 18:37:23 2026       07:37 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 9535 Wed Mar 18 18:37:24 2026       07:36 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 9683 Wed Mar 18 18:37:26 2026       07:34 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+10053 Wed Mar 18 18:37:34 2026       07:26 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+10056 Wed Mar 18 18:37:34 2026       07:26 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+11880 Wed Mar 18 18:38:30 2026       06:30 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+11882 Wed Mar 18 18:38:30 2026       06:30 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:9503:1773877500.970236:Wed Mar 18 18:45:00 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:9503:1773877501.940224:Wed Mar 18 18:45:01 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877503.495367:Wed Mar 18 18:45:03 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:01",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877504.499575:Wed Mar 18 18:45:04 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877505.987475:Wed Mar 18 18:45:05 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:04",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877506.989832:Wed Mar 18 18:45:06 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877508.434500:Wed Mar 18 18:45:08 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:06",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877509.436448:Wed Mar 18 18:45:09 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xadc1c00) timeout in 1773877509, Now=1773877509
+dot1x:9503:1773877509.436958:Wed Mar 18 18:45:09 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xad431c0): Reschedule gatekeeper
+dot1x:9503:1773877509.437463:Wed Mar 18 18:45:09 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xacf5e78) timeout in 1773877509, Now=1773877509
+dot1x:9503:1773877509.437839:Wed Mar 18 18:45:09 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xadc4a90): Reschedule housekeep
+dot1x:9503:1773877509.438303:Wed Mar 18 18:45:09 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[5 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:9503:1773877509.438621:Wed Mar 18 18:45:09 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877510.913333:Wed Mar 18 18:45:10 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:09",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877511.915097:Wed Mar 18 18:45:11 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877513.393676:Wed Mar 18 18:45:13 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:11",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877514.396982:Wed Mar 18 18:45:14 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877515.903700:Wed Mar 18 18:45:15 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:14",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877516.906089:Wed Mar 18 18:45:16 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877518.408505:Wed Mar 18 18:45:18 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:16",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:44:19 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877518.701050:Wed Mar 18 18:45:18 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new wireless devupdate: , , 
+dot1x:9503:1773877518.703716:Wed Mar 18 18:45:18 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new wireless devupdate: , , 
+dot1x:9503:1773877519.409983:Wed Mar 18 18:45:19 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xad431c0) timeout in 1773877519, Now=1773877519
+dot1x:9503:1773877519.410545:Wed Mar 18 18:45:19 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xacf5d88): Reschedule gatekeeper
+dot1x:9503:1773877520.328722:Wed Mar 18 18:45:20 2026: [gatekeeper/Timers] Run linux command 'fstool fw status| grep -i 1812'. 
+Output: '  150 46655 ACCEPT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:1812'(gatekeeper:2617)
+dot1x:9503:1773877520.329161:Wed Mar 18 18:45:20 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xadc4a90) timeout in 1773877519, Now=1773877520
+dot1x:9503:1773877520.329357:Wed Mar 18 18:45:20 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xad9c8d8): Reschedule housekeep
+dot1x:9503:1773877520.329485:Wed Mar 18 18:45:20 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[6 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:9503:1773877520.331048:Wed Mar 18 18:45:20 2026: main::dot1x_ad_rpc_ping:7909:[Timers]::1: <housekeep>Checking RPC connectivity via netlogon ping to domain txqalab
+dot1x:9503:1773877520.342272:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command '/usr/local/forescout/plugin/dot1x/fs_radius/usr/bin/wbinfo -P'. Returned 0.(dot1x_ad_rpc_ping:7912)
+dot1x:9503:1773877520.342602:Wed Mar 18 18:45:20 2026: main::dot1x_housekeep_old_configs:7497:[Timers]::1: <housekeep>found that txqalab-dc1 believed working, keeping.
+dot1x:9503:1773877520.342760:Wed Mar 18 18:45:20 2026: main::dot1x_housekeep_old_configs:7503:[Timers]::1: <housekeep>task keeping .
+dot1x:9503:1773877520.347729:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'find /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba -not -regex ".*\(txqalab\|working.any\).*" -name "smb.conf.*" -delete'. 
+Output: ''(dot1x_clean_old_smb_conf:363)
+dot1x:9503:1773877520.354506:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'find /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb -not -iregex ".*\(txqalab\).*" -name "ldap__*" -delete'. 
+Output: ''(dot1x_clean_old_fr_ldap_module:342)
+dot1x:9503:1773877520.361296:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'find /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb -not -iregex ".*\(txqalab\).*" -name "ldap_enc__*" -delete'. 
+Output: ''(dot1x_clean_old_fr_ldap_module:345)
+dot1x:9503:1773877520.366142:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'find /dev/shm/forescout -not -iregex ".*\(txqalab\).*" -name "ldap__*" -delete'. 
+Output: ''(dot1x_clean_old_fr_ldap_module:348)
+dot1x:9503:1773877520.377044:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'chmod -R a-w /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb'. Returned 0.(dot1x_configure_fr_directory_permissions:3878)
+dot1x:9503:1773877520.383593:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'chmod -R u+rw /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb'. Returned 0.(dot1x_configure_fr_directory_permissions:3880)
+dot1x:9503:1773877520.384035:Wed Mar 18 18:45:20 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:9503:1773877520.390603:Wed Mar 18 18:45:20 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:9503:1773877520.391222:Wed Mar 18 18:45:20 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:9503:1773877520.391516:Wed Mar 18 18:45:20 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:9503:1773877520.394640:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/fs_default_accept /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_accept'. Returned 0.(dot1x_configure_fr_sites:4132)
+dot1x:9503:1773877520.398042:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/fs_default_authorize /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_authorize'. Returned 0.(dot1x_configure_fr_sites:4133)
+dot1x:9503:1773877520.401155:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/fs_default_reject /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_reject'. Returned 0.(dot1x_configure_fr_sites:4134)
+dot1x:9503:1773877520.405208:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/default_fs_template /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs'. Returned 0.(dot1x_configure_fr_site_default:4155)
+dot1x:9503:1773877520.406124:Wed Mar 18 18:45:20 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_site_default:4156)
+dot1x:9503:1773877520.415244:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs.tmp.9503.1773877520 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:9503:1773877520.417966:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default'. Returned 0.(dot1x_configure_fr_site_default:4157)
+dot1x:9503:1773877520.420837:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/inner-tunnel_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs'. Returned 0.(dot1x_configure_fr_site_inner_tunnel:4288)
+dot1x:9503:1773877520.421323:Wed Mar 18 18:45:20 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_site_inner_tunnel:4289)
+dot1x:9503:1773877520.427206:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs.tmp.9503.1773877520 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:9503:1773877520.430529:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/inner-tunnel'. Returned 0.(dot1x_configure_fr_site_inner_tunnel:4290)
+dot1x:9503:1773877520.435087:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/control-socket_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/control-socket_fs'. Returned 0.(dot1x_configure_fr_site_control_socket:4314)
+dot1x:9503:1773877520.438001:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/control-socket_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/control-socket'. Returned 0.(dot1x_configure_fr_site_control_socket:4315)
+dot1x:9503:1773877520.442001:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/radiusd.conf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/radiusd.conf'. Returned 0.(dot1x_configure_fr_radiusd:4011)
+dot1x:9503:1773877520.445314:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/clients.conf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/clients.conf'. Returned 0.(dot1x_configure_fr_clients:4015)
+dot1x:9503:1773877520.449089:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/proxy.conf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/proxy.conf'. Returned 0.(dot1x_configure_fr_proxy:4339)
+dot1x:9503:1773877520.482546:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'psql -c "select id from devinfo where category='ad' and (id='txqalab-dc1' or (field_name='ad_name' and field_value='txqalab-dc1'))" | grep "(0 rows)"'. Returned 256.(dot1x_ad_name_exists:321)
+dot1x:9503:1773877520.482779:Wed Mar 18 18:45:20 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:9503:1773877520.489750:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/dictionaries/* /usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/'. Returned 256.(dot1x_configure_fr_dictionaries:3870)
+dot1x:9503:1773877520.494363:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/detail_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/detail_fs'. Returned 0.(dot1x_configure_fr_module_detail:3884)
+dot1x:9503:1773877520.497592:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/detail_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/detail'. Returned 0.(dot1x_configure_fr_module_detail:3885)
+dot1x:9503:1773877520.523858:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/eap_fs_template /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/eap_enc'. Returned 0.(dot1x_configure_fr_module_eap:4840)
+dot1x:9503:1773877520.524683:Wed Mar 18 18:45:20 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_module_eap:4842)
+dot1x:9503:1773877520.532525:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/eap_enc.tmp.9503.1773877520 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/eap_enc'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:9503:1773877520.535756:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/fs_properties /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_properties'. Returned 0.(dot1x_configure_fr_module_fs_properties:3889)
+dot1x:9503:1773877520.538583:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_properties /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/fs_properties'. Returned 0.(dot1x_configure_fr_module_fs_properties:3890)
+dot1x:9503:1773877520.546383:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/fs_restrictions /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_restrictions'. Returned 0.(dot1x_configure_fr_module_fs_restrictions:3894)
+dot1x:9503:1773877520.550883:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_restrictions /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/fs_restrictions'. Returned 0.(dot1x_configure_fr_module_fs_restrictions:3895)
+dot1x:9503:1773877520.554729:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/mschap_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/mschap_fs'. Returned 0.(dot1x_configure_fr_module_mschap:3901)
+dot1x:9503:1773877520.557280:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'chmod go-rw,u+rw /tmp/mschap.tmp'. Returned 0.(dot1x_edit_mschap_module:3914)
+dot1x:9503:1773877520.565288:Wed Mar 18 18:45:20 2026: main::dot1x_edit_mschap_module:3930:[Timers]::5: <housekeep>Domain Map = 
+dot1x:9503:1773877520.565473:Wed Mar 18 18:45:20 2026: main::dot1x_edit_mschap_module:3943:[Timers]::5: <housekeep>NTLM_AUTH LINE = 	 ntlm_auth = "/usr/bin/fstool ntlm_auth --mac=%{%{Calling-Station-Id}:-None} --username=%{%{reply:AD-Samaccountname}:-%{mschap:User-Name}} --full-username=%{%{User-Name}:-None} --realm=%{%{Realm}:-None} --challenge=%{%{mschap:Challenge}:-00} --hostdomain=%{%{redis:hget %{Calling-Station-Id} Domain}:-None} --nt-response=%{%{mschap:NT-Response}:-00}"
+dot1x:9503:1773877520.572934:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'mv /tmp/mschap.tmp /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/mschap_fs'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:9503:1773877520.576188:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/mschap_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/mschap'. Returned 0.(dot1x_configure_fr_module_mschap:3903)
+dot1x:9503:1773877520.579635:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/realm_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/realm_fs'. Returned 0.(dot1x_configure_fr_module_realm:3990)
+dot1x:9503:1773877520.582731:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/realm_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/realm'. Returned 0.(dot1x_configure_fr_module_realm:3991)
+dot1x:9503:1773877520.586700:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/redis_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/redis_fs'. Returned 0.(dot1x_configure_fr_module_redis:3995)
+dot1x:9503:1773877520.589306:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/redis_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/redis'. Returned 0.(dot1x_configure_fr_module_redis:3996)
+dot1x:9503:1773877520.592488:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/policy.d/ntlm_auth /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/ntlm_auth'. Returned 0.(dot1x_configure_fr_module_ntlm_auth:4000)
+dot1x:9503:1773877520.595507:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/attr_filter_post-proxy /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-config/attr_filter/post-proxy'. Returned 0.(dot1x_configure_fr_module_attr_filter:4007)
+dot1x:9503:1773877520.598481:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/policy.d/fs_policy /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy'. Returned 0.(dot1x_configure_fr_fs_policy:3864)
+dot1x:9503:1773877520.599148:Wed Mar 18 18:45:20 2026: main::dot1x_get_default_policy_properties:7224:[Timers]::5: <housekeep>rule 1: {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XComboStringCriterion,field=EAP-Type,selected=PEAP,value=PEAP}],restrict=vlan:	IsCOA:false}
+dot1x:9503:1773877520.599517:Wed Mar 18 18:45:20 2026: main::dot1x_get_default_policy_properties:7224:[Timers]::5: <housekeep>rule 2: {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XStringCriterion,field=User-Name,filType=any,input=yalla,value=.*}],restrict=reject=dummy}
+dot1x:9503:1773877520.599937:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'PEAP',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'PEAP',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:9503:1773877520.600400:Wed Mar 18 18:45:20 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_create_default_policy:5391)
+dot1x:9503:1773877520.600868:Wed Mar 18 18:45:20 2026: main::line_policy_conf:5369:[Timers]::5: <housekeep>Writing unlang rule and setting auth in redis - {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XStringCriterion,field=User-Name,filType=any,input=yalla,value=.*}],restrict=reject=dummy}
+dot1x:9503:1773877520.601222:Wed Mar 18 18:45:20 2026: main::line_policy_conf:5369:[Timers]::5: <housekeep>Writing unlang rule and setting auth in redis - {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XComboStringCriterion,field=EAP-Type,selected=PEAP,value=PEAP}],restrict=vlan:	IsCOA:false}
+dot1x:9503:1773877520.608003:Wed Mar 18 18:45:20 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy.tmp.9503.1773877520 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:9503:1773877520.610883:Wed Mar 18 18:45:20 2026: main::dot1x_configure_fr_create_default_policy:5406:[Timers]::5: <housekeep>Placing the default policy in default server (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_accept):	rule_1, rule_2
+dot1x:9503:1773877520.611326:Wed Mar 18 18:45:20 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877522.059467:Wed Mar 18 18:45:22 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:20",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:45:20 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877523.061646:Wed Mar 18 18:45:23 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877524.521837:Wed Mar 18 18:45:24 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:23",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:45:20 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877525.525004:Wed Mar 18 18:45:25 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877526.998089:Wed Mar 18 18:45:26 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:25",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:45:20 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877526.998762:Wed Mar 18 18:45:26 2026: main::plugin_stats_cb:1592:[other]::5: called with: 
+dot1x:9503:1773877526.998909:Wed Mar 18 18:45:26 2026: main::dot1x_stats_add:6938:[other]::5: dot1x_stats_add key = running_time, label = running_ time_(minutes_since_start) value = 7
+dot1x:9503:1773877526.999279:Wed Mar 18 18:45:26 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 8{label=running_ time_(minutes_since_start),periods={},value=8}
+dot1x:9503:1773877526.999560:Wed Mar 18 18:45:26 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 8{label=number_of_accepted_authentications,periods={day={duration=1440,last_count=0},hour={duration=60,last_count=0}},value=1}
+dot1x:9503:1773877526.999831:Wed Mar 18 18:45:26 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 8{count=1,label=average_duration_of_ntlm_auth,periods={},value=0}
+dot1x:9503:1773877527.000172:Wed Mar 18 18:45:27 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 8{label=number_of_rejected_authentications,periods={day={duration=1440,last_count=0},hour={duration=60,last_count=0}},value=0}
+dot1x:9503:1773877527.000472:Wed Mar 18 18:45:27 2026: Sent 12 stats
+dot1x:9503:1773877528.001372:Wed Mar 18 18:45:28 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877529.480404:Wed Mar 18 18:45:29 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:27",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:45:20 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877530.482780:Wed Mar 18 18:45:30 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xacf5d88) timeout in 1773877529, Now=1773877530
+dot1x:9503:1773877530.483435:Wed Mar 18 18:45:30 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xad50d90): Reschedule gatekeeper
+dot1x:9503:1773877530.483916:Wed Mar 18 18:45:30 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xad9c8d8) timeout in 1773877530, Now=1773877530
+dot1x:9503:1773877530.484388:Wed Mar 18 18:45:30 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xad5d478): Reschedule housekeep
+dot1x:9503:1773877530.484742:Wed Mar 18 18:45:30 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[1 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:9503:1773877530.485105:Wed Mar 18 18:45:30 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877532.050655:Wed Mar 18 18:45:32 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:30",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:45:20 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877533.053411:Wed Mar 18 18:45:33 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877534.586463:Wed Mar 18 18:45:34 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:33",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:45:20 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877535.596649:Wed Mar 18 18:45:35 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877537.143725:Wed Mar 18 18:45:37 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:35",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:45:20 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877538.145425:Wed Mar 18 18:45:38 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:9503:1773877539.651227:Wed Mar 18 18:45:39 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 18:45:38",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 1,
+   "eku_ALL_NOOP" : 4,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 1,
+         "noop" : 3,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 1,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 18:45:20 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:9503:1773877539.654641:Wed Mar 18 18:45:39 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new sw devupdate: , , HASH(0xa975790)
+dot1x:9503:1773877539.654904:Wed Mar 18 18:45:39 2026: main::disconnect_cb:5941:[other]::5: main::nas_update: Update 10.16.128.21

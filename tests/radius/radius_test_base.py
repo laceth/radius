@@ -322,68 +322,6 @@ class RadiusTestBase(FSTestCommonBase):
         """
         self.dot1x.wait_until_running(timeout=timeout, interval=interval)
 
-    def verify_dot1x_stable(self, min_uptime: int = 180, timeout: int = 300, interval: int = 10) -> None:
-        """
-        Poll until all 4 dot1x processes have been running for at least *min_uptime*
-        seconds on **every appliance** (EM + all CAs), or raise if *timeout* is exceeded.
-
-        Runs both commands from the EM:
-            - ``fstool dot1x status``               — verifies the EM itself
-            - ``fstool oneach fstool dot1x status`` — verifies every CA
-
-        Checked processes:
-            - 802.1x plugin
-            - radiusd
-            - winbindd
-            - redis-server
-
-        Args:
-            min_uptime: Required uptime in seconds for every process (default: 180 = 3 min).
-            timeout: Maximum total wait in seconds (default: 300).
-            interval: Seconds between polls (default: 10).
-
-        Raises:
-            AssertionError: If any process on any appliance is still below threshold
-                after *timeout* seconds.
-        """
-        deadline = time.time() + timeout
-        failures = []
-
-        while True:
-            failures = []
-            all_device_statuses = self.em.get_dot1x_status_all()
-
-            for device, uptimes in all_device_statuses.items():
-                for proc, uptime in uptimes.items():
-                    if uptime < 0:
-                        log.error(f"  [{device}] {proc}: NOT RUNNING")
-                        failures.append(f"[{device}] '{proc}' is not running")
-                    elif uptime < min_uptime:
-                        log.warning(
-                            f"  [{device}] {proc}: running for {uptime}s (below {min_uptime}s threshold)"
-                        )
-                        failures.append(
-                            f"[{device}] '{proc}' uptime is only {uptime}s — process may be unstable/restarting "
-                            f"(need >= {min_uptime}s)"
-                        )
-                    else:
-                        log.info(f"  [{device}] {proc}: running for {uptime}s ✓")
-
-            if not failures:
-                return
-
-            remaining = deadline - time.time()
-            if remaining <= 0:
-                break
-
-            log.info(
-                "Waiting for dot1x processes to stabilise on all appliances "
-                f"(need >= {min_uptime}s uptime, up to {int(remaining)}s left)…"
-            )
-            time.sleep(min(interval, int(remaining)))
-
-        assert not failures, "dot1x stability check failed:\n  " + "\n  ".join(failures)
-
     # =========================================================================
     # Assertions
     # =========================================================================
@@ -609,22 +547,6 @@ class RadiusTestBase(FSTestCommonBase):
 
         self.ca.check_properties(self.host_id, properties_check_list)
         log.debug(f"Pre-admission rule verified: {expected_source}")
-
-    def verify_radius_imposed_auth(self, expected_reply_message: str):
-        """Verify the dot1x_ass_restrictions property contains the expected Reply-Message."""
-        host_id = self.host_id or self._get_host_id()
-        self.ca.check_properties(
-            host_id,
-            [
-                {
-                    "property_field": "dot1x_ass_restrictions",
-                    "expected_value": f"Reply-Message={expected_reply_message}",
-                }
-            ],
-        )
-        log.info(
-            f"Verified RADIUS Imposed Authorization: Reply-Message={expected_reply_message}"
-        )
 
     def _dump_dot1x_properties(self, host_id: str):
         """Debug: dump all dot1x properties for a host (once per authentication event)."""
@@ -987,7 +909,12 @@ class RadiusTestBase(FSTestCommonBase):
             }
         )
         policy_name = "policy_condition_dot1x_fr_client_x509_cert_subj_alt_name"
-        self.em.simple_policy_condition("dot1xSimplePolicyCondition.xml", policy_name, fields)
+        self.em.simple_policy_condition(
+            "dot1xSimplePolicyCondition.xml",
+            policy_name,
+            fields,
+            allow_unknown_ip=True,
+        )
         return policy_name
 
     def add_dot1x_policy_eap_type(self, eap_type: str = "EAP-TLS") -> str:

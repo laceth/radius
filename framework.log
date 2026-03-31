@@ -1,0 +1,1386 @@
+2026-03-12 18:51:53 | myframework | DEBUG | Collector script already on endpoint: C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 18:51:53 | myframework | INFO | Uploading collector script → C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 18:51:53 | myframework | INFO | Running collector on endpoint: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'RUN123' -OutRoot 'C:\TestPulse\runs' -LanProfileName 'TestProfile' -IncludeCerts
+2026-03-12 18:51:53 | myframework | INFO | Collector ZIP created: C:\TestPulse\runs\RUN123\endpoint_windows_RUN123.zip
+2026-03-12 18:51:53 | myframework | WARNING | Remote cleanup failed (non-fatal): access denied
+2026-03-12 18:56:41 | myframework | DEBUG | Collector script already on endpoint: C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 18:56:41 | myframework | INFO | Uploading collector script → C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 18:56:41 | myframework | INFO | Running collector on endpoint: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'RUN123' -OutRoot 'C:\TestPulse\runs' -LanProfileName 'TestProfile' -IncludeCerts
+2026-03-12 18:56:41 | myframework | INFO | Collector ZIP created: C:\TestPulse\runs\RUN123\endpoint_windows_RUN123.zip
+2026-03-12 18:56:41 | myframework | WARNING | Remote cleanup failed (non-fatal): access denied
+2026-03-12 18:59:13 | myframework | INFO | === Collecting endpoint artifacts for RunId=smoke_1773359953 ===
+2026-03-12 18:59:13 | myframework | INFO | Executing command on WindowsPassthrough: Test-Path 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1'
+2026-03-12 18:59:14 | myframework | INFO | Uploading collector script → C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 18:59:14 | myframework | INFO | Executing command on WindowsPassthrough: New-Item -Path 'C:\TestPulse\scripts' -ItemType Directory -Force | Out-Null
+2026-03-12 18:59:15 | myframework | INFO | Created directory: C:\TestPulse\scripts
+2026-03-12 18:59:15 | myframework | INFO | Copying /home/triley/fstester001-mab/scripts/collect_endpoint_artifacts.ps1 to C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 18:59:15 | myframework | INFO | File size: 6445 bytes
+2026-03-12 18:59:15 | myframework | INFO | Executing command on WindowsPassthrough: New-Item -Path 'C:\TestPulse\scripts' -ItemType Directory -Force | Out-Null
+2026-03-12 18:59:16 | myframework | INFO | Created directory: C:\TestPulse\scripts
+2026-03-12 18:59:16 | myframework | INFO | Using pypsrp native file transfer
+2026-03-12 18:59:16 | myframework | INFO | Successfully copied /home/triley/fstester001-mab/scripts/collect_endpoint_artifacts.ps1 to C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 18:59:16 | myframework | INFO | Running collector on endpoint: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'smoke_1773359953' -OutRoot 'C:\TestPulse\runs'
+2026-03-12 18:59:16 | myframework | INFO | Executing command on WindowsPassthrough: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'smoke_1773359953' -OutRoot 'C:\TestPulse\runs'
+2026-03-12 18:59:19 | myframework | DEBUG | Filtered PowerShell progress output from stderr
+2026-03-12 18:59:19 | myframework | INFO | Executing command on WindowsPassthrough: Test-Path 'C:\TestPulse\runs\smoke_1773359953\endpoint_windows_smoke_1773359953.zip'
+2026-03-12 18:59:19 | myframework | INFO | Collector ZIP created: C:\TestPulse\runs\smoke_1773359953\endpoint_windows_smoke_1773359953.zip
+2026-03-12 18:59:19 | myframework | INFO | Downloading C:\TestPulse\runs\smoke_1773359953\endpoint_windows_smoke_1773359953.zip → /tmp/pytest-of-triley/pytest-0/test_collect_basic0/endpoint_windows_smoke_1773359953.zip
+2026-03-12 18:59:20 | myframework | INFO | [OK] Downloaded 139737 bytes
+2026-03-12 18:59:20 | myframework | INFO | [OK] Endpoint artifacts saved to: /tmp/pytest-of-triley/pytest-0/test_collect_basic0/endpoint_windows_smoke_1773359953.zip
+2026-03-12 18:59:20 | myframework | INFO | Executing command on WindowsPassthrough: if (Test-Path 'C:\TestPulse\runs\smoke_1773359953') { Remove-Item -Path 'C:\TestPulse\runs\smoke_1773359953' -Recurse -Force }
+2026-03-12 18:59:21 | myframework | INFO | Cleaned up remote directory: C:\TestPulse\runs\smoke_1773359953
+2026-03-12 19:00:05 | myframework | INFO | === Collecting endpoint artifacts for RunId=certs_1773360005 ===
+2026-03-12 19:00:05 | myframework | INFO | Executing command on WindowsPassthrough: Test-Path 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1'
+2026-03-12 19:00:05 | myframework | DEBUG | Collector script already on endpoint: C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 19:00:05 | myframework | INFO | Running collector on endpoint: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'certs_1773360005' -OutRoot 'C:\TestPulse\runs' -IncludeCerts
+2026-03-12 19:00:05 | myframework | INFO | Executing command on WindowsPassthrough: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'certs_1773360005' -OutRoot 'C:\TestPulse\runs' -IncludeCerts
+2026-03-12 19:00:07 | myframework | DEBUG | Filtered PowerShell progress output from stderr
+2026-03-12 19:00:07 | myframework | INFO | Executing command on WindowsPassthrough: Test-Path 'C:\TestPulse\runs\certs_1773360005\endpoint_windows_certs_1773360005.zip'
+2026-03-12 19:00:08 | myframework | INFO | Collector ZIP created: C:\TestPulse\runs\certs_1773360005\endpoint_windows_certs_1773360005.zip
+2026-03-12 19:00:08 | myframework | INFO | Downloading C:\TestPulse\runs\certs_1773360005\endpoint_windows_certs_1773360005.zip → /tmp/pytest-of-triley/pytest-1/test_collect_with_certs0/endpoint_windows_certs_1773360005.zip
+2026-03-12 19:00:09 | myframework | INFO | [OK] Downloaded 143389 bytes
+2026-03-12 19:00:09 | myframework | INFO | [OK] Endpoint artifacts saved to: /tmp/pytest-of-triley/pytest-1/test_collect_with_certs0/endpoint_windows_certs_1773360005.zip
+2026-03-12 19:00:09 | myframework | INFO | Executing command on WindowsPassthrough: if (Test-Path 'C:\TestPulse\runs\certs_1773360005') { Remove-Item -Path 'C:\TestPulse\runs\certs_1773360005' -Recurse -Force }
+2026-03-12 19:00:09 | myframework | INFO | Cleaned up remote directory: C:\TestPulse\runs\certs_1773360005
+2026-03-12 19:09:50 | myframework | DEBUG | Collector script already on endpoint: C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 19:09:50 | myframework | INFO | Uploading collector script → C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 19:09:50 | myframework | INFO | Running collector on endpoint: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'RUN123' -OutRoot 'C:\TestPulse\runs' -LanProfileName 'TestProfile' -IncludeCerts
+2026-03-12 19:09:50 | myframework | INFO | Collector ZIP created: C:\TestPulse\runs\RUN123\endpoint_windows_RUN123.zip
+2026-03-12 19:09:50 | myframework | WARNING | Remote cleanup failed (non-fatal): access denied
+2026-03-12 19:09:51 | myframework | INFO | === Collecting endpoint artifacts for RunId=smoke_1773360591 ===
+2026-03-12 19:09:51 | myframework | INFO | Executing command on WindowsPassthrough: Test-Path 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1'
+2026-03-12 19:09:52 | myframework | DEBUG | Collector script already on endpoint: C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 19:09:52 | myframework | INFO | Running collector on endpoint: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'smoke_1773360591' -OutRoot 'C:\TestPulse\runs'
+2026-03-12 19:09:52 | myframework | INFO | Executing command on WindowsPassthrough: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'smoke_1773360591' -OutRoot 'C:\TestPulse\runs'
+2026-03-12 19:09:53 | myframework | DEBUG | Filtered PowerShell progress output from stderr
+2026-03-12 19:09:53 | myframework | INFO | Executing command on WindowsPassthrough: Test-Path 'C:\TestPulse\runs\smoke_1773360591\endpoint_windows_smoke_1773360591.zip'
+2026-03-12 19:09:54 | myframework | INFO | Collector ZIP created: C:\TestPulse\runs\smoke_1773360591\endpoint_windows_smoke_1773360591.zip
+2026-03-12 19:09:54 | myframework | INFO | Downloading C:\TestPulse\runs\smoke_1773360591\endpoint_windows_smoke_1773360591.zip → /tmp/pytest-of-triley/pytest-2/test_collect_basic0/endpoint_windows_smoke_1773360591.zip
+2026-03-12 19:09:55 | myframework | INFO | [OK] Downloaded 140123 bytes
+2026-03-12 19:09:55 | myframework | INFO | [OK] Endpoint artifacts saved to: /tmp/pytest-of-triley/pytest-2/test_collect_basic0/endpoint_windows_smoke_1773360591.zip
+2026-03-12 19:09:55 | myframework | INFO | Executing command on WindowsPassthrough: if (Test-Path 'C:\TestPulse\runs\smoke_1773360591') { Remove-Item -Path 'C:\TestPulse\runs\smoke_1773360591' -Recurse -Force }
+2026-03-12 19:09:55 | myframework | INFO | Cleaned up remote directory: C:\TestPulse\runs\smoke_1773360591
+2026-03-12 19:09:56 | myframework | INFO | === Collecting endpoint artifacts for RunId=certs_1773360596 ===
+2026-03-12 19:09:56 | myframework | INFO | Executing command on WindowsPassthrough: Test-Path 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1'
+2026-03-12 19:09:57 | myframework | DEBUG | Collector script already on endpoint: C:\TestPulse\scripts\collect_endpoint_artifacts.ps1
+2026-03-12 19:09:57 | myframework | INFO | Running collector on endpoint: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'certs_1773360596' -OutRoot 'C:\TestPulse\runs' -IncludeCerts
+2026-03-12 19:09:57 | myframework | INFO | Executing command on WindowsPassthrough: & 'C:\TestPulse\scripts\collect_endpoint_artifacts.ps1' -RunId 'certs_1773360596' -OutRoot 'C:\TestPulse\runs' -IncludeCerts
+2026-03-12 19:09:59 | myframework | DEBUG | Filtered PowerShell progress output from stderr
+2026-03-12 19:09:59 | myframework | INFO | Executing command on WindowsPassthrough: Test-Path 'C:\TestPulse\runs\certs_1773360596\endpoint_windows_certs_1773360596.zip'
+2026-03-12 19:09:59 | myframework | INFO | Collector ZIP created: C:\TestPulse\runs\certs_1773360596\endpoint_windows_certs_1773360596.zip
+2026-03-12 19:09:59 | myframework | INFO | Downloading C:\TestPulse\runs\certs_1773360596\endpoint_windows_certs_1773360596.zip → /tmp/pytest-of-triley/pytest-2/test_collect_with_certs0/endpoint_windows_certs_1773360596.zip
+2026-03-12 19:10:00 | myframework | INFO | [OK] Downloaded 142174 bytes
+2026-03-12 19:10:00 | myframework | INFO | [OK] Endpoint artifacts saved to: /tmp/pytest-of-triley/pytest-2/test_collect_with_certs0/endpoint_windows_certs_1773360596.zip
+2026-03-12 19:10:00 | myframework | INFO | Executing command on WindowsPassthrough: if (Test-Path 'C:\TestPulse\runs\certs_1773360596') { Remove-Item -Path 'C:\TestPulse\runs\certs_1773360596' -Recurse -Force }
+2026-03-12 19:10:01 | myframework | INFO | Cleaned up remote directory: C:\TestPulse\runs\certs_1773360596
+2026-03-18 14:38:01 | myframework | INFO | 
+Running class: TC_9448_EAPTLSPolicySANDetectionTest
+2026-03-18 14:38:02 | myframework | INFO | === Starting EAP-TLS Test Setup ===
+2026-03-18 14:38:02 | myframework | INFO | Radius Common Setup
+2026-03-18 14:38:02 | myframework | INFO | Radius Server IP: 10.16.177.66
+2026-03-18 14:38:02 | myframework | INFO | Switch IP: 10.16.128.21
+2026-03-18 14:38:02 | myframework | INFO | Passthrough Management IP: 10.16.133.134
+2026-03-18 14:38:02 | myframework | INFO | Passthrough MAC: 98f2b301a055
+2026-03-18 14:38:02 | myframework | INFO | Test start time: 2026-03-18 14:38:02.566650
+2026-03-18 14:38:02 | myframework | DEBUG | [POOL] Creating connection for key: 10.16.177.66
+2026-03-18 14:38:02 | myframework | INFO | Executing command on CounterAct: psql -t -A -F '|' -c "SELECT id, field_name, field_value FROM devinfo WHERE category='ad' AND field_name='ad_domain' AND field_value LIKE '%forescout.local%'"
+2026-03-18 14:38:02 | myframework | INFO | Command output:
+2026-03-18 14:38:02 | myframework | INFO |   txqalab2-dc1|ad_domain|txqalab2.txqalab.forescout.local
+2026-03-18 14:38:02 | myframework | INFO |   txqalab-dc1|ad_domain|txqalab.forescout.local
+2026-03-18 14:38:02 | myframework | INFO | AD domain and ad name mapping retrieved: {'txqalab2.txqalab.forescout.local': ['txqalab2-dc1'], 'txqalab.forescout.local': ['txqalab-dc1']}
+2026-03-18 14:38:02 | myframework | WARNING | No ad_name defined for ad_domain 'txqalab3.txqalab.forescout.local' in User Directory.
+2026-03-18 14:38:02 | myframework | INFO | Configuring RADIUS Authentication Source with domain 'txqalab-dc1'
+2026-03-18 14:38:02 | myframework | INFO | Testing domain 'txqalab-dc1' joined status with testjoin command
+2026-03-18 14:38:02 | myframework | INFO | Executing command on CounterAct: fstool dot1x testjoin txqalab-dc1
+2026-03-18 14:38:06 | myframework | INFO | Test join command output: Join OK [txqalab-dc1]
+2026-03-18 14:38:06 | myframework | DEBUG | Domain 'txqalab-dc1' is already joined
+2026-03-18 14:38:06 | myframework | INFO | Domain 'txqalab-dc1' is already joined, skipping join operation
+2026-03-18 14:38:06 | myframework | INFO | Dot1x has no changes, skipping restart
+2026-03-18 14:38:07 | myframework | DEBUG | Current property: config.auth_source_null.value=txqalab-dc1
+2026-03-18 14:38:07 | myframework | INFO | Auth source null already set to 'txqalab-dc1', skipping
+2026-03-18 14:38:07 | myframework | INFO | Configuring RADIUS plugin settings on 10.16.177.66
+2026-03-18 14:38:08 | myframework | INFO | config.localradiusdebug.value already set to 'true', skipping
+2026-03-18 14:38:08 | myframework | INFO | config.localradiusport.value already set to '1812', skipping
+2026-03-18 14:38:08 | myframework | INFO | config.localacctport.value already set to '1813', skipping
+2026-03-18 14:38:08 | myframework | INFO | config.ldap_ad_port.value already set to '636', skipping
+2026-03-18 14:38:08 | myframework | INFO | Executing command on CounterAct: fstool dot1x set_property config.min_tls_version.value 1.2
+2026-03-18 14:38:09 | myframework | INFO | Executing command on CounterAct: fstool dot1x set_property config.fragment_size.value 1024
+2026-03-18 14:38:10 | myframework | INFO | config.enableradsec.value already set to 'false', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.onlyradsec.value already set to 'false', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.radsecport.value already set to '2083', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.ocsp.value already set to 'false', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.ocsp_shell.value already set to 'false', skipping
+2026-03-18 14:38:10 | myframework | INFO | Skipping empty value for: ocsp certificate name
+2026-03-18 14:38:10 | myframework | INFO | config.ocsp_override.value already set to 'false', skipping
+2026-03-18 14:38:10 | myframework | INFO | Skipping empty value for: ocsp responder url
+2026-03-18 14:38:10 | myframework | INFO | config.ocsp_nonce.value already set to 'true', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.ocsp_soft.value already set to 'false', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.crl.value already set to 'false', skipping
+2026-03-18 14:38:10 | myframework | INFO | Skipping empty value for: additional cdps (optional)
+2026-03-18 14:38:10 | myframework | INFO | config.crl_download_freq_number.value already set to '12', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.cache.value already set to 'false', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-18 14:38:10 | myframework | INFO | config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-18 14:38:10 | myframework | INFO | Restarting dot1x plugin to apply pending changes...
+2026-03-18 14:38:10 | myframework | INFO | Restarting 802.1X plugin on 10.16.177.66
+2026-03-18 14:38:10 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x restart
+2026-03-18 14:38:17 | myframework | INFO | Received 'Done starting RADIUS.' confirmation
+2026-03-18 14:38:17 | myframework | INFO | Sleeping 5 seconds for sub-processes to stabilise
+2026-03-18 14:38:22 | myframework | INFO | Starting endpoint cleanup for MAC: 98f2b301a055
+2026-03-18 14:38:22 | myframework | DEBUG | Executing command on CounterAct: fstool hostinfo 98f2b301a055 | grep mac,
+2026-03-18 14:38:22 | myframework | INFO | Raw hostinfo output for MAC 98f2b301a055: 224.0.164.40, 1773862466,Wed Mar 18 14:34:26 CDT 2026, mac, 98f2b301a055, (sw@5290463614721804985 []), 0, 1773860343
+224.0.164.40, 1773860343,Wed Mar 18 13:59:03 CDT 2026, assigned_by_type, mac, (dot1x@5290463614721804985 []), 0, 1773860343
+224.0.164.40, 1773861234,Wed Mar 18 14:13:54 CDT 2026, nc_ep_esg_by_mac, ???, (gen@5290463614721804985 []), no_plugin:ierr
+224.0.164.40, 1773860373,Wed Mar 18 13:59:33 CDT 2026, sw_duplicate_mac, ???, (sw@5290463614721804985 [sw]), sw_unknown_property_value:e
+2026-03-18 14:38:22 | myframework | INFO | Found 4 IP(s) for MAC 98f2b301a055: ['224.0.164.40', '224.0.164.40', '224.0.164.40', '224.0.164.40']
+2026-03-18 14:38:22 | myframework | INFO | Found IP 224.0.164.40 for MAC 98f2b301a055
+2026-03-18 14:38:22 | myframework | INFO | Endpoint IP: 224.0.164.40
+2026-03-18 14:38:22 | myframework | DEBUG | [POOL] Creating connection for key: 10.16.177.65
+2026-03-18 14:38:23 | myframework | DEBUG | Executing command on CounterAct: fstool hostinfo 224.0.164.40 | grep 'host_id'
+2026-03-18 14:38:23 | myframework | INFO | host_id not found, using IP 224.0.164.40 as identifier
+2026-03-18 14:38:23 | myframework | INFO | Deleting endpoint with ID: 224.0.164.40
+2026-03-18 14:38:23 | myframework | DEBUG | Executing command on CounterAct: fstool oneach fstool cliapi host remove 224.0.164.40
+2026-03-18 14:38:25 | myframework | INFO | Endpoint 224.0.164.40 removed successfully
+2026-03-18 14:38:25 | myframework | INFO | Target IP range 10.16.148.128/26 derived from VLAN 1570
+2026-03-18 14:38:27 | myframework | INFO | Starting RADIUS configuration on port FastEthernet0/1 for Cisco ios switch 10.16.128.21
+2026-03-18 14:38:27 | myframework | INFO | Starting RADIUS Configuration steps 1/6: dot1x system-auth-control
+2026-03-18 14:38:27 | myframework | DEBUG | [POOL] Creating connection for key: 10.16.128.21
+2026-03-18 14:38:29 | myframework | INFO | Executing command on CiscoIOS: show running-config | inc dot1x
+2026-03-18 14:38:30 | myframework | INFO | dot1x system-auth-control already enabled on Cisco switch 10.16.128.21
+2026-03-18 14:38:30 | myframework | INFO | Starting RADIUS Configuration steps 2/6: RADIUS server
+2026-03-18 14:38:30 | myframework | INFO | Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-66
+2026-03-18 14:38:32 | myframework | INFO | Command output:
+2026-03-18 14:38:32 | myframework | INFO |   radius server server-automation-ipv4-177-66
+2026-03-18 14:38:32 | myframework | INFO |    address ipv4 10.16.177.66 auth-port 1812 acct-port 1813
+2026-03-18 14:38:32 | myframework | INFO |    key aristo
+2026-03-18 14:38:32 | myframework | INFO | Executing command on CiscoIOS: show running-config | section ^radius server
+2026-03-18 14:38:33 | myframework | DEBUG | Extracted RADIUS secret: aristo
+2026-03-18 14:38:33 | myframework | INFO | RADIUS server server-automation-ipv4-177-66 already exists on 10.16.128.21
+2026-03-18 14:38:33 | myframework | INFO | Starting RADIUS Configuration steps 3/6: RADIUS group
+2026-03-18 14:38:33 | myframework | INFO | Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-18 14:38:35 | myframework | INFO | Command output:
+2026-03-18 14:38:35 | myframework | INFO |   aaa group server radius group-automation
+2026-03-18 14:38:35 | myframework | INFO |    server name server-automation-ipv4-177-66
+2026-03-18 14:38:35 | myframework | INFO |    deadtime 3
+2026-03-18 14:38:35 | myframework | INFO | RADIUS group group-automation already exists on 10.16.128.21
+2026-03-18 14:38:35 | myframework | INFO | Starting RADIUS Configuration steps 4/6: AAA authentication
+2026-03-18 14:38:35 | myframework | INFO | Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-18 14:38:36 | myframework | INFO | Command output:
+2026-03-18 14:38:36 | myframework | INFO |   aaa authentication dot1x default group group-automation
+2026-03-18 14:38:36 | myframework | INFO |   aaa authorization network default group group-automation 
+2026-03-18 14:38:36 | myframework | INFO |   aaa accounting dot1x default start-stop group group-automation
+2026-03-18 14:38:36 | myframework | INFO | AAA already exists with group group-automation on 10.16.128.21
+2026-03-18 14:38:36 | myframework | INFO | Starting RADIUS Configuration steps 5/6: RADIUS CoA (dynamic-author) client
+2026-03-18 14:38:36 | myframework | INFO | Executing command on CiscoIOS: show running-config | section aaa server radius dynamic-author
+2026-03-18 14:38:38 | myframework | INFO | Command output:
+2026-03-18 14:38:38 | myframework | INFO |   aaa server radius dynamic-author
+2026-03-18 14:38:38 | myframework | INFO |    client FD6F:9D5E:221E:1823::73 server-key aristo
+2026-03-18 14:38:38 | myframework | INFO |    client 10.100.49.69 server-key aristo
+2026-03-18 14:38:38 | myframework | INFO |    client 10.16.177.66 server-key aristo
+2026-03-18 14:38:38 | myframework | DEBUG | Extracted CoA secret for 10.16.177.66: aristo
+2026-03-18 14:38:38 | myframework | INFO | RADIUS dynamic-author client 10.16.177.66 already configured with same secret on 10.16.128.21
+2026-03-18 14:38:38 | myframework | INFO | Starting RADIUS Configuration steps 6/6: dot1x on port FastEthernet0/1
+2026-03-18 14:38:38 | myframework | INFO | Executing command on CiscoIOS: show run | section ^interface FastEthernet0/1$
+2026-03-18 14:38:39 | myframework | INFO | Command output:
+2026-03-18 14:38:39 | myframework | INFO |   interface FastEthernet0/1
+2026-03-18 14:38:39 | myframework | INFO |    switchport access vlan 1570
+2026-03-18 14:38:39 | myframework | INFO |    switchport mode access
+2026-03-18 14:38:39 | myframework | INFO |    authentication port-control auto
+2026-03-18 14:38:39 | myframework | INFO |    authentication periodic
+2026-03-18 14:38:39 | myframework | INFO |    snmp trap mac-notification change added
+2026-03-18 14:38:39 | myframework | INFO |    snmp trap mac-notification change removed
+2026-03-18 14:38:39 | myframework | INFO |    dot1x pae authenticator
+2026-03-18 14:38:39 | myframework | INFO |    spanning-tree portfast
+2026-03-18 14:38:39 | myframework | INFO | Port FastEthernet0/1 already configured on Cisco switch 10.16.128.21
+2026-03-18 14:38:39 | myframework | INFO | Successfully setup all RADIUS configuration on Cisco switch 10.16.128.21
+2026-03-18 14:38:39 | myframework | INFO | Cleaning up all test certificates from Windows stores...
+2026-03-18 14:38:39 | myframework | INFO | Executing command on WindowsPassthrough: 
+$deleted = @()
+foreach ($store in @("My", "Root")) {
+    $certs = Get-ChildItem -Path Cert:\LocalMachine\$store | Where-Object { $_.Subject -like "*testdecodeA*" -or $_.Subject -like "*clientcert*" -or $_.Subject -like "*Dot1x-CLT-A*" -or $_.Subject -like "*Dot1x-CLT-B*" -or $_.Subject -like "*Dot1x-CLT-C*" -or $_.Subject -like "*Dot1x-CLT-D*" -or $_.Subject -like "*Dot1x-CLT-E*" -or $_.Subject -like "*Dot1x-CLT-F*" -or $_.Subject -like "*Dot1x-CLT-G*" -or $_.Subject -like "*Dot1xMSCA-CLT-A*" -or $_.Subject -like "*Dot1xMSCA-CLT-B*" -or $_.Subject -like "*Dot1xMSCA-CLT-C*" -or $_.Subject -like "*Dot1xMSCA-CLT-D*" -or $_.Subject -like "*Dot1xMSCA-CLT-E*" -or $_.Subject -like "*Dot1xMSCA-CLT-F*" -or $_.Subject -like "*Dot1xMSCA-CLT-G*" -or $_.Subject -like "*Dot1x-CLT-Expired*" -or $_.Subject -like "*Dot1x-CLT-Time*" -or $_.Subject -like "*Dot1x-CLT-Revoked*" -or $_.Subject -like "*Dot1x-CLT-Good*" -or $_.Subject -like "*Dot1x-CA*" -or $_.Subject -like "*Dot1xMSCA-CA*" }
+    foreach ($cert in $certs) {
+        Remove-Item -Path $cert.PSPath -Force
+        $deleted += "Deleted: $($cert.Subject) from $store"
+    }
+}
+if ($deleted.Count -gt 0) { $deleted -join "`n" } else { "No test certificates found" }
+
+2026-03-18 14:38:40 | myframework | DEBUG | No test certificates found to clean up
+2026-03-18 14:38:40 | myframework | INFO | Test certificates cleanup completed
+2026-03-18 14:38:40 | myframework | INFO | NIC: pciPassthru0
+2026-03-18 14:38:40 | myframework | INFO | 
+===========================================================================Running test: TC_9448_EAPTLSPolicySANDetectionTest===========================================================================
+
+2026-03-18 14:38:40 | myframework | INFO | Setting pre-admission rules: 2 rule(s)
+2026-03-18 14:38:40 | myframework | INFO | Using multi-rule format with auth values
+2026-03-18 14:38:40 | myframework | INFO | Building pre-admission rules: 2 rule(s)
+2026-03-18 14:38:40 | myframework | INFO | Rule 1: condition=[{"field":"EAP-Type","value":"TLS","critClass":"forescout.plugin.dot1x.default_policy.D1XComboStringCriterion","selected":"TLS"}]
+2026-03-18 14:38:40 | myframework | INFO | Rule 1: auth=vlan:	IsCOA:false
+2026-03-18 14:38:40 | myframework | INFO | Rule 2: condition=[{"filType":"any","input":"yalla","field":"User-Name","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"}]
+2026-03-18 14:38:40 | myframework | INFO | Rule 2: auth=reject=dummy
+2026-03-18 14:38:40 | myframework | INFO | Check 21 key-value pairs properties in /usr/local/forescout/plugin/dot1x/local.properties on 10.16.177.66
+2026-03-18 14:38:42 | myframework | INFO | Successfully wrote pre-admission rules to /usr/local/forescout/plugin/dot1x/local.properties
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_cond8.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_cond4.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_auth4.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_cond1.value=[{"field":"EAP-Type","value":"TLS","critClass":"forescout.plugin.dot1x.default_policy.D1XComboStringCriterion","selected":"TLS"}]
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_auth10.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_cond9.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_auth3.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol.size.value=2
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_cond3.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_auth9.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_cond5.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_auth2.value=reject=dummy
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_cond6.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_cond10.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_auth8.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_auth7.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_auth6.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_cond2.value=[{"filType":"any","input":"yalla","field":"User-Name","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"}]
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_auth1.value=vlan:	IsCOA:false
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_cond7.value=
+2026-03-18 14:38:42 | myframework | INFO |   Verified: config.defpol_auth5.value=
+2026-03-18 14:38:42 | myframework | INFO | Pre-admission rules have changes, set self.has_change = True
+2026-03-18 14:38:42 | myframework | INFO | Restarting dot1x plugin to apply pending changes...
+2026-03-18 14:38:42 | myframework | INFO | Restarting 802.1X plugin on 10.16.177.66
+2026-03-18 14:38:42 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x restart
+2026-03-18 14:38:53 | myframework | INFO | Received 'Done starting RADIUS.' confirmation
+2026-03-18 14:38:53 | myframework | INFO | Sleeping 5 seconds for sub-processes to stabilise
+2026-03-18 14:38:58 | myframework | INFO | Configuring LAN profile (builder) on 10.16.133.134
+2026-03-18 14:38:58 | myframework | INFO | Copying /tmp/tmp3hfjr738.xml to C:\Profiles\lan_profile.xml
+2026-03-18 14:38:58 | myframework | INFO | File size: 2162 bytes
+2026-03-18 14:38:58 | myframework | INFO | Executing command on WindowsPassthrough: New-Item -Path 'C:\Profiles' -ItemType Directory -Force | Out-Null
+2026-03-18 14:38:59 | myframework | INFO | Created directory: C:\Profiles
+2026-03-18 14:38:59 | myframework | INFO | Using pypsrp native file transfer
+2026-03-18 14:38:59 | myframework | INFO | Successfully copied /tmp/tmp3hfjr738.xml to C:\Profiles\lan_profile.xml
+2026-03-18 14:38:59 | myframework | INFO | Deleting LAN profile from interface: pciPassthru0
+2026-03-18 14:38:59 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan delete profile interface="pciPassthru0"
+2026-03-18 14:39:00 | myframework | INFO | [OK] LAN profile deleted from pciPassthru0
+2026-03-18 14:39:00 | myframework | INFO | Adding LAN profile to interface: pciPassthru0
+2026-03-18 14:39:00 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan add profile filename="C:\Profiles\lan_profile.xml" interface="pciPassthru0"
+2026-03-18 14:39:00 | myframework | INFO | [OK] LAN profile added to pciPassthru0
+2026-03-18 14:39:00 | myframework | INFO | Importing certificate: Dot1x-CLT-G.pfx
+2026-03-18 14:39:00 | myframework | INFO | Reading PFX file locally: /home/triley/fstester001-mab/resources/radius/certificates/Dot1x-CA/WindowsFiles/Dot1x-CLT-G.pfx
+2026-03-18 14:39:01 | myframework | INFO | [OK] Personal cert thumbprint: 7E6649D1FEBE4813EB4464DBC23CB472352AB0DC
+2026-03-18 14:39:01 | myframework | INFO |      Subject: <Name(C=US,ST=Texas,L=Ranger,O=Forescout,OU=Lab,CN=Dot1x-CLT-G,1.2.840.113549.1.9.1=clientg@internl.local)>
+2026-03-18 14:39:01 | myframework | INFO | [OK] Trusted cert thumbprint: FBB88C61B92B928E24A3BF72219574E3EF12CBE1
+2026-03-18 14:39:01 | myframework | INFO |      Subject: <Name(C=US,ST=Texas,L=Dallas,O=Forescout,OU=Lab,CN=Dot1x-CA,1.2.840.113549.1.9.1=admin@internal.local)>
+2026-03-18 14:39:01 | myframework | INFO | Executing command on WindowsPassthrough: New-Item -Path 'C:\Certificates' -ItemType Directory -Force | Out-Null
+2026-03-18 14:39:01 | myframework | INFO | Created directory: C:\Certificates
+2026-03-18 14:39:01 | myframework | INFO | Copying /home/triley/fstester001-mab/resources/radius/certificates/Dot1x-CA/WindowsFiles/Dot1x-CLT-G.pfx to C:\Certificates\Dot1x-CLT-G.pfx
+2026-03-18 14:39:01 | myframework | INFO | File size: 6040 bytes
+2026-03-18 14:39:01 | myframework | INFO | Executing command on WindowsPassthrough: New-Item -Path 'C:\Certificates' -ItemType Directory -Force | Out-Null
+2026-03-18 14:39:02 | myframework | INFO | Created directory: C:\Certificates
+2026-03-18 14:39:02 | myframework | INFO | Using pypsrp native file transfer
+2026-03-18 14:39:03 | myframework | INFO | Successfully copied /home/triley/fstester001-mab/resources/radius/certificates/Dot1x-CA/WindowsFiles/Dot1x-CLT-G.pfx to C:\Certificates\Dot1x-CLT-G.pfx
+2026-03-18 14:39:03 | myframework | INFO | [OK] PFX copied to C:\Certificates\Dot1x-CLT-G.pfx
+2026-03-18 14:39:03 | myframework | INFO | Deleting old certificates...
+2026-03-18 14:39:03 | myframework | INFO | Executing command on WindowsPassthrough: 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\My |
+    Where-Object { $_.Thumbprint -eq "7E6649D1FEBE4813EB4464DBC23CB472352AB0DC" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from My"
+} else {
+    "Certificate not found in My"
+}
+2026-03-18 14:39:03 | myframework | INFO | [OK] Certificate not found in My
+2026-03-18 14:39:03 | myframework | INFO | Executing command on WindowsPassthrough: 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\My |
+    Where-Object { $_.Thumbprint -eq "FBB88C61B92B928E24A3BF72219574E3EF12CBE1" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from My"
+} else {
+    "Certificate not found in My"
+}
+2026-03-18 14:39:04 | myframework | INFO | [OK] Certificate not found in My
+2026-03-18 14:39:04 | myframework | INFO | Executing command on WindowsPassthrough: 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\Root |
+    Where-Object { $_.Thumbprint -eq "FBB88C61B92B928E24A3BF72219574E3EF12CBE1" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from Root"
+} else {
+    "Certificate not found in Root"
+}
+2026-03-18 14:39:05 | myframework | INFO | [OK] Certificate not found in Root
+2026-03-18 14:39:05 | myframework | INFO | Importing PFX to Personal store...
+2026-03-18 14:39:05 | myframework | INFO | Executing command on WindowsPassthrough: 
+$securePassword = ConvertTo-SecureString -String "aristo" -Force -AsPlainText
+Import-PfxCertificate `
+    -FilePath "C:\Certificates\Dot1x-CLT-G.pfx" `
+    -CertStoreLocation Cert:\LocalMachine\My `
+    -Password $securePassword `
+    -Exportable | Out-Null
+"PFX imported successfully"
+2026-03-18 14:39:05 | myframework | INFO | [OK] PFX imported successfully
+2026-03-18 14:39:05 | myframework | INFO | Copying trusted cert to C:\Certificates\trusted_ca.cer
+2026-03-18 14:39:05 | myframework | INFO | Copying /tmp/tmpgn6dm7aj.cer to C:\Certificates\trusted_ca.cer
+2026-03-18 14:39:05 | myframework | INFO | File size: 1546 bytes
+2026-03-18 14:39:05 | myframework | INFO | Executing command on WindowsPassthrough: New-Item -Path 'C:\Certificates' -ItemType Directory -Force | Out-Null
+2026-03-18 14:39:06 | myframework | INFO | Created directory: C:\Certificates
+2026-03-18 14:39:06 | myframework | INFO | Using pypsrp native file transfer
+2026-03-18 14:39:07 | myframework | INFO | Successfully copied /tmp/tmpgn6dm7aj.cer to C:\Certificates\trusted_ca.cer
+2026-03-18 14:39:07 | myframework | INFO | Importing trusted cert to Root store...
+2026-03-18 14:39:07 | myframework | INFO | Executing command on WindowsPassthrough: 
+Import-Certificate `
+    -FilePath "C:\Certificates\trusted_ca.cer" `
+    -CertStoreLocation Cert:\LocalMachine\Root | Out-Null
+"Certificate imported to Root"
+2026-03-18 14:39:07 | myframework | INFO | [OK] Certificate imported to Root
+2026-03-18 14:39:07 | myframework | INFO | Executing command on WindowsPassthrough: Test-Path -Path 'C:\Certificates\trusted_ca.cer'
+2026-03-18 14:39:08 | myframework | INFO | Executing command on WindowsPassthrough: Remove-Item -Path 'C:\Certificates\trusted_ca.cer' -Force
+2026-03-18 14:39:08 | myframework | INFO | Removed file: C:\Certificates\trusted_ca.cer
+2026-03-18 14:39:08 | myframework | INFO | Certificate import completed
+2026-03-18 14:39:08 | myframework | INFO | Waiting for 802.1X plugin to become ready on 10.16.177.66 (timeout=300s)
+2026-03-18 14:39:08 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:39:12 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=19347
+802.1x plugin (pid 19347) is running for 00:16.
+Subordinate processes:
+radiusd exited - check radiusd.log for more information.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 20021) of txqalab is running for 00:06.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:22:07.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,19347 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,19355 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,19424 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,20210 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl restart -xxx -l stdout -d...
+      `-sh,20456 -c...
+          `-radclient,20458 -x -c 1 localhost:1812 status testing123
+Run linux command 'pstree -aAp 19347'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:39:12 | myframework | INFO | dot1x status: winbindd=6s, redis-server=8527s, radiusd=DOWN — waiting for: radiusd
+2026-03-18 14:39:12 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:39:23 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:39:27 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=19347
+802.1x plugin (pid 19347) is running for 00:31.
+Subordinate processes:
+radiusd (pid 20531) is running for 00:12.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 20021) of txqalab is running for 00:21.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:22:21.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,19347 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,19355 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,19424 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,20785 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl restart -xxx -l stdout -d...
+      `-perl,20795 -X -I lib/perl/inc lib/fstool/commands/lsaddr.pl -m
+Run linux command 'pstree -aAp 19347'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:39:27 | myframework | INFO | dot1x status: radiusd=12s, winbindd=21s, redis-server=8541s — radiusd not yet stable (need 45s)
+2026-03-18 14:39:27 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:39:37 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:39:41 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=19347
+802.1x plugin (pid 19347) is running for 00:45.
+Subordinate processes:
+radiusd (pid 21002) is running for 00:09.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 20021) of txqalab is running for 00:35.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:22:36.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,19347 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,19355 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  `-perl,19424 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+Run linux command 'pstree -aAp 19347'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:39:41 | myframework | INFO | dot1x status: radiusd=9s, winbindd=35s, redis-server=8556s — radiusd not yet stable (need 45s)
+2026-03-18 14:39:41 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:39:52 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:39:56 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=19347
+802.1x plugin (pid 19347) is running for 00:59.
+Subordinate processes:
+radiusd (pid 21002) is running for 00:23.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 20021) of txqalab is running for 00:49.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:22:51.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,19347 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,19355 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,19424 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,22001 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl status 0
+Run linux command 'pstree -aAp 19347'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:39:56 | myframework | INFO | dot1x status: radiusd=23s, winbindd=49s, redis-server=8571s — radiusd not yet stable (need 45s)
+2026-03-18 14:39:56 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:40:06 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:40:10 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=19347
+802.1x plugin (pid 19347) is running for 01:14.
+Subordinate processes:
+radiusd (pid 23958) is running for 00:07.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 20021) of txqalab is running for 01:04.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:23:05.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,19347 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,19355 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,19424 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-sh,24706 -c fstool winbind stop;fstool radiusd stop; 2>&1
+      `-perl,24821 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl stop
+Run linux command 'pstree -aAp 19347'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:40:10 | myframework | INFO | dot1x status: radiusd=7s, winbindd=64s, redis-server=8585s — radiusd not yet stable (need 45s)
+2026-03-18 14:40:10 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:40:20 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:40:25 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=25061
+802.1x plugin (pid 25061) is running for 00:09.
+Subordinate processes:
+radiusd exited - check radiusd.log for more information.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd of txqalab is dead
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:23:20.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,25061 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,25072 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,25106 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-sudo,25394 fstool dot1x restart_winbind txqalab...
+      `-perl,25395 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl restart_winbind txqalab...
+          `-perl,25626 -X -I lib/perl/inc lib/fstool/commands/winbind.pl status 0 txqalab
+Run linux command 'pstree -aAp 25061'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:40:25 | myframework | INFO | dot1x status: redis-server=8600s, radiusd=DOWN, winbindd=DOWN — waiting for: radiusd, winbindd
+2026-03-18 14:40:25 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:40:35 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:40:40 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=25061
+802.1x plugin (pid 25061) is running for 00:23.
+Subordinate processes:
+radiusd (pid 26070) is running for 00:04.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 25723) of txqalab is running for 00:13.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:23:34.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,25061 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,25072 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,25106 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,26269 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl status 0
+      `-perl,26301 -X -I lib/perl/inc lib/fstool/commands/lsaddr.pl -m
+Run linux command 'pstree -aAp 25061'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:40:40 | myframework | INFO | dot1x status: radiusd=4s, winbindd=13s, redis-server=8614s — radiusd not yet stable (need 45s)
+2026-03-18 14:40:40 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:40:50 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:40:54 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=26592
+802.1x plugin (pid 26592) is running for 00:02.
+Subordinate processes:
+radiusd exited - check radiusd.log for more information.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd of txqalab is dead
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:23:48.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,26592 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,26664 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,26747 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-sh,26878 -c fstool service status | head -1
+      |-head,26883 -1
+      `-perl,26882 -X -I lib/perl/inc lib/fstool/commands/service.pl status
+Run linux command 'pstree -aAp 26592'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:40:54 | myframework | INFO | dot1x status: redis-server=8628s, radiusd=DOWN, winbindd=DOWN — waiting for: radiusd, winbindd
+2026-03-18 14:40:54 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:41:04 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:41:08 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=26592
+802.1x plugin (pid 26592) is running for 00:16.
+Subordinate processes:
+radiusd exited - check radiusd.log for more information.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 27348) of txqalab is running for 00:05.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:24:03.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,26592 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,26664 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,26747 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,27601 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl restart -xxx -l stdout -d...
+Run linux command 'pstree -aAp 26592'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:41:08 | myframework | INFO | dot1x status: winbindd=5s, redis-server=8643s, radiusd=DOWN — waiting for: radiusd
+2026-03-18 14:41:08 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:41:18 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:41:22 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=26592
+802.1x plugin (pid 26592) is running for 00:30.
+Subordinate processes:
+radiusd (pid 27776) is running for 00:10.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 27348) of txqalab is running for 00:19.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:24:17.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,26592 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,26664 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,26747 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-sh,28044 -c fstool winbind stop;fstool radiusd stop; 2>&1
+      `-perl,28045 -X -I lib/perl/inc lib/fstool/commands/winbind.pl stop
+          `-sudo,28113 fstool inittab del wb_txqalab_1x
+              `-perl,28122 -X -I lib/perl/inc lib/fstool/commands/inittab.pl del wb_txqalab_1x
+Run linux command 'pstree -aAp 26592'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:41:22 | myframework | INFO | dot1x status: radiusd=10s, winbindd=19s, redis-server=8657s — radiusd not yet stable (need 45s)
+2026-03-18 14:41:22 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:41:33 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:41:37 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=28316
+802.1x plugin (pid 28316) is running for 00:08.
+Subordinate processes:
+radiusd exited - check radiusd.log for more information.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd of txqalab is dead
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:24:31.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,28316 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,28327 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,28347 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-sudo,28632 fstool dot1x restart_winbind txqalab...
+      `-perl,28634 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl restart_winbind txqalab...
+          `-perl,28836 -X -I lib/perl/inc lib/fstool/commands/winbind.pl status 1 txqalab
+Run linux command 'pstree -aAp 28316'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:41:37 | myframework | INFO | dot1x status: redis-server=8671s, radiusd=DOWN, winbindd=DOWN — waiting for: radiusd, winbindd
+2026-03-18 14:41:37 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:41:47 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:41:51 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=28316
+802.1x plugin (pid 28316) is running for 00:23.
+Subordinate processes:
+grep: 29214: No such file or directory
+radiusd (pid 29216 29214) is running for .
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 28938) of txqalab is running for 00:12.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:24:46.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,28316 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,28327 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,28347 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,29350 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl status 0
+Run linux command 'pstree -aAp 28316'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:41:51 | myframework | INFO | dot1x status: winbindd=12s, redis-server=8686s, radiusd=DOWN — waiting for: radiusd
+2026-03-18 14:41:51 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:42:01 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:42:06 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=28316
+802.1x plugin (pid 28316) is running for 00:37.
+Subordinate processes:
+grep: 29888: No such file or directory
+radiusd (pid 29892 29888) is running for .
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 28938) of txqalab is running for 00:26.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:25:00.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,28316 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,28327 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,28347 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,29627 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl restart -xxx -l stdout -d...
+      `-sh,29793 -c...
+          `-radclient,29795 -x -c 1 localhost:1812 status testing123
+Run linux command 'pstree -aAp 28316'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:42:06 | myframework | INFO | dot1x status: winbindd=26s, redis-server=8700s, radiusd=DOWN — waiting for: radiusd
+2026-03-18 14:42:06 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:42:16 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:42:20 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=28316
+802.1x plugin (pid 28316) is running for 00:52.
+Subordinate processes:
+radiusd (pid 29892) is running for 00:15.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 28938) of txqalab is running for 00:41.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:25:15.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,28316 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,28327 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,28347 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,30412 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl version
+Run linux command 'pstree -aAp 28316'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:42:20 | myframework | INFO | dot1x status: radiusd=15s, winbindd=41s, redis-server=8715s — radiusd not yet stable (need 45s)
+2026-03-18 14:42:20 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:42:30 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:42:34 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=28316
+802.1x plugin (pid 28316) is running for 01:06.
+Subordinate processes:
+radiusd exited - check radiusd.log for more information.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 28938) of txqalab is running for 00:55.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:25:29.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,28316 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,28327 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,28347 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,30535 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl restart -xxx -l stdout -d...
+      `-sh,30764 -c...
+          `-radclient,30766 -x -c 1 localhost:1812 status testing123
+Run linux command 'pstree -aAp 28316'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:42:34 | myframework | INFO | dot1x status: winbindd=55s, redis-server=8729s, radiusd=DOWN — waiting for: radiusd
+2026-03-18 14:42:34 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:42:45 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:42:49 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=28316
+802.1x plugin (pid 28316) is running for 01:21.
+Subordinate processes:
+radiusd (pid 30873) is running for 00:14.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 28938) of txqalab is running for 01:10.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:25:44.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,28316 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,28327 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  `-perl,28347 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+Run linux command 'pstree -aAp 28316'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:42:49 | myframework | INFO | dot1x status: radiusd=14s, winbindd=70s, redis-server=8744s — radiusd not yet stable (need 45s)
+2026-03-18 14:42:49 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:42:59 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:43:04 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=28316
+802.1x plugin (pid 28316) is running for 01:36.
+Subordinate processes:
+radiusd (pid 30873) is running for 00:28.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 28938) of txqalab is running for 01:24.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:25:58.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,28316 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,28327 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  `-perl,28347 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+Run linux command 'pstree -aAp 28316'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:43:04 | myframework | INFO | dot1x status: radiusd=28s, winbindd=84s, redis-server=8758s — radiusd not yet stable (need 45s)
+2026-03-18 14:43:04 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:43:14 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:43:18 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=28316
+802.1x plugin (pid 28316) is running for 01:50.
+Subordinate processes:
+radiusd (pid 30873) is running for 00:43.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 32026) of txqalab is running for 00:04.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:26:13.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,28316 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,28327 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  `-perl,28347 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+Run linux command 'pstree -aAp 28316'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:43:18 | myframework | INFO | dot1x status: radiusd=43s, winbindd=4s, redis-server=8773s — radiusd not yet stable (need 45s)
+2026-03-18 14:43:18 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 14:43:28 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 14:43:33 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=28316
+802.1x plugin (pid 28316) is running for 02:04.
+Subordinate processes:
+radiusd (pid 30873) is running for 00:57.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 32026) of txqalab is running for 00:18.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 02:26:27.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,28316 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,28327 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  `-perl,28347 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+Run linux command 'pstree -aAp 28316'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 14:43:33 | myframework | INFO | dot1x status: radiusd=57s, winbindd=18s, redis-server=8787s — plugin is ready
+2026-03-18 14:43:33 | myframework | INFO | 802.1X plugin is ready
+2026-03-18 14:43:33 | myframework | INFO | Toggling NIC to trigger re-authentication (updated test_start_time: 2026-03-18 14:43:33.021468) on 10.16.133.134
+2026-03-18 14:43:33 | myframework | INFO | Toggling NIC: pciPassthru0
+2026-03-18 14:43:33 | myframework | INFO | Disabling NIC: pciPassthru0
+2026-03-18 14:43:33 | myframework | INFO | Executing command on WindowsPassthrough: Disable-NetAdapter -Name 'pciPassthru0' -Confirm:$false
+2026-03-18 14:43:35 | myframework | INFO | Waiting for NIC 'pciPassthru0' to reach 'Disabled' status (max 30s)...
+2026-03-18 14:43:35 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetAdapter -Name "pciPassthru0" -ErrorAction SilentlyContinue).Status
+2026-03-18 14:43:37 | myframework | INFO | [OK] NIC 'pciPassthru0' status: 'Disabled'
+2026-03-18 14:43:37 | myframework | INFO | [OK] NIC pciPassthru0 is disabled
+2026-03-18 14:43:37 | myframework | INFO | Enabling NIC: pciPassthru0
+2026-03-18 14:43:37 | myframework | INFO | Executing command on WindowsPassthrough: Enable-NetAdapter -Name 'pciPassthru0' -Confirm:$false
+2026-03-18 14:43:39 | myframework | INFO | Waiting for NIC 'pciPassthru0' MediaConnectionState 'Connected' (max 30s)...
+2026-03-18 14:43:39 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetAdapter -Name "pciPassthru0").MediaConnectionState
+2026-03-18 14:43:41 | myframework | DEBUG | NIC pciPassthru0 MediaConnectionState: Unknown, waiting for: Connected
+2026-03-18 14:43:43 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetAdapter -Name "pciPassthru0").MediaConnectionState
+2026-03-18 14:43:45 | myframework | INFO | [OK] NIC 'pciPassthru0' MediaConnectionState: 'Connected'
+2026-03-18 14:43:45 | myframework | INFO | [OK] NIC pciPassthru0 is connected
+2026-03-18 14:43:45 | myframework | INFO | [OK] NIC pciPassthru0 toggled successfully
+2026-03-18 14:43:45 | myframework | INFO | Waiting for NIC 'pciPassthru0' 802.1X authentication (max 90s)...
+2026-03-18 14:43:45 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-18 14:43:45 | myframework | DEBUG | NIC pciPassthru0 auth status not ready, waiting for: Authentication succeeded
+2026-03-18 14:43:50 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-18 14:43:51 | myframework | INFO | [OK] NIC 'pciPassthru0' authentication status: 'Authentication succeeded'
+2026-03-18 14:43:51 | myframework | INFO | Waiting for NIC 'pciPassthru0' to get IP in range '10.16.148.128/26' (max 90s)...
+2026-03-18 14:43:51 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:43:52 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:43:52 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:43:57 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:43:58 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:43:58 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:44:03 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:44:04 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:44:04 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:44:09 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:44:10 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:44:10 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:44:16 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:44:17 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:44:17 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:44:22 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:44:23 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:44:23 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:44:28 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:44:30 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:44:30 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:44:35 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:44:36 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:44:36 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:44:41 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:44:42 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:44:42 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:44:47 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:44:49 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:44:49 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:44:54 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:44:55 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:44:55 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:45:00 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:45:01 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:45:01 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:45:06 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:45:07 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:45:07 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:45:12 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:45:14 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:45:14 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:45:19 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:45:20 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:45:20 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 14:45:25 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 14:45:27 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 14:45:27 | myframework | ERROR | [T1316925] FAIL: NIC 'pciPassthru0' did not get IP in range '10.16.148.128/26' within 90s. Current IP: 169.254.149.224
+2026-03-18 14:45:27 | myframework | ERROR | 
+========================================================================Test Failed: TC_9448_EAPTLSPolicySANDetectionTest Failed========================================================================
+
+2026-03-18 14:45:27 | myframework | ERROR | Error: NIC 'pciPassthru0' did not get IP in range '10.16.148.128/26' within 90s. Current IP: 169.254.149.224
+2026-03-18 14:45:27 | myframework | INFO | === EAP-TLS Test Teardown ===
+2026-03-18 14:45:27 | myframework | INFO | Removing certificates...
+2026-03-18 14:45:27 | myframework | INFO | Executing command on WindowsPassthrough: 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\My |
+    Where-Object { $_.Thumbprint -eq "7E6649D1FEBE4813EB4464DBC23CB472352AB0DC" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from My"
+} else {
+    "Certificate not found in My"
+}
+2026-03-18 14:45:27 | myframework | INFO | [OK] Deleted certificate from My
+2026-03-18 14:45:27 | myframework | INFO | Executing command on WindowsPassthrough: 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\Root |
+    Where-Object { $_.Thumbprint -eq "FBB88C61B92B928E24A3BF72219574E3EF12CBE1" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from Root"
+} else {
+    "Certificate not found in Root"
+}
+2026-03-18 14:45:28 | myframework | INFO | [OK] Deleted certificate from Root
+2026-03-18 14:45:28 | myframework | INFO | Certificates removed
+2026-03-18 14:45:28 | myframework | INFO | radius common teardown
+2026-03-18 14:45:28 | myframework | INFO | Closing all connections
+2026-03-18 15:34:52 | myframework | INFO | 
+Running class: TC_9448_EAPTLSPolicySANDetectionTest
+2026-03-18 15:34:53 | myframework | INFO | === Starting EAP-TLS Test Setup ===
+2026-03-18 15:34:53 | myframework | INFO | Radius Common Setup
+2026-03-18 15:34:53 | myframework | INFO | Radius Server IP: 10.16.177.66
+2026-03-18 15:34:53 | myframework | INFO | Switch IP: 10.16.128.21
+2026-03-18 15:34:53 | myframework | INFO | Passthrough Management IP: 10.16.133.134
+2026-03-18 15:34:53 | myframework | INFO | Passthrough MAC: 98f2b301a055
+2026-03-18 15:34:53 | myframework | INFO | Test start time: 2026-03-18 15:34:53.868494
+2026-03-18 15:34:53 | myframework | DEBUG | [POOL] Creating connection for key: 10.16.177.66
+2026-03-18 15:34:54 | myframework | INFO | Executing command on CounterAct: psql -t -A -F '|' -c "SELECT id, field_name, field_value FROM devinfo WHERE category='ad' AND field_name='ad_domain' AND field_value LIKE '%forescout.local%'"
+2026-03-18 15:34:54 | myframework | INFO | Command output:
+2026-03-18 15:34:54 | myframework | INFO |   txqalab2-dc1|ad_domain|txqalab2.txqalab.forescout.local
+2026-03-18 15:34:54 | myframework | INFO |   txqalab-dc1|ad_domain|txqalab.forescout.local
+2026-03-18 15:34:54 | myframework | INFO | AD domain and ad name mapping retrieved: {'txqalab2.txqalab.forescout.local': ['txqalab2-dc1'], 'txqalab.forescout.local': ['txqalab-dc1']}
+2026-03-18 15:34:54 | myframework | WARNING | No ad_name defined for ad_domain 'txqalab3.txqalab.forescout.local' in User Directory.
+2026-03-18 15:34:54 | myframework | INFO | Configuring RADIUS Authentication Source with domain 'txqalab-dc1'
+2026-03-18 15:34:54 | myframework | INFO | Testing domain 'txqalab-dc1' joined status with testjoin command
+2026-03-18 15:34:54 | myframework | INFO | Executing command on CounterAct: fstool dot1x testjoin txqalab-dc1
+2026-03-18 15:34:57 | myframework | INFO | Test join command output: Join OK [txqalab-dc1]
+2026-03-18 15:34:57 | myframework | DEBUG | Domain 'txqalab-dc1' is already joined
+2026-03-18 15:34:57 | myframework | INFO | Domain 'txqalab-dc1' is already joined, skipping join operation
+2026-03-18 15:34:57 | myframework | INFO | Dot1x has no changes, skipping restart
+2026-03-18 15:34:58 | myframework | DEBUG | Current property: config.auth_source_null.value=txqalab-dc1
+2026-03-18 15:34:58 | myframework | INFO | Auth source null already set to 'txqalab-dc1', skipping
+2026-03-18 15:34:58 | myframework | INFO | Configuring RADIUS plugin settings on 10.16.177.66
+2026-03-18 15:34:58 | myframework | INFO | config.localradiusdebug.value already set to 'true', skipping
+2026-03-18 15:34:58 | myframework | INFO | config.localradiusport.value already set to '1812', skipping
+2026-03-18 15:34:58 | myframework | INFO | config.localacctport.value already set to '1813', skipping
+2026-03-18 15:34:58 | myframework | INFO | config.ldap_ad_port.value already set to '636', skipping
+2026-03-18 15:34:58 | myframework | INFO | Executing command on CounterAct: fstool dot1x set_property config.min_tls_version.value 1.2
+2026-03-18 15:35:00 | myframework | INFO | Executing command on CounterAct: fstool dot1x set_property config.fragment_size.value 1024
+2026-03-18 15:35:01 | myframework | INFO | config.enableradsec.value already set to 'false', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.onlyradsec.value already set to 'false', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.radsecport.value already set to '2083', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.ocsp.value already set to 'false', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.ocsp_shell.value already set to 'false', skipping
+2026-03-18 15:35:01 | myframework | INFO | Skipping empty value for: ocsp certificate name
+2026-03-18 15:35:01 | myframework | INFO | config.ocsp_override.value already set to 'false', skipping
+2026-03-18 15:35:01 | myframework | INFO | Skipping empty value for: ocsp responder url
+2026-03-18 15:35:01 | myframework | INFO | config.ocsp_nonce.value already set to 'true', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.ocsp_soft.value already set to 'false', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.crl.value already set to 'false', skipping
+2026-03-18 15:35:01 | myframework | INFO | Skipping empty value for: additional cdps (optional)
+2026-03-18 15:35:01 | myframework | INFO | config.crl_download_freq_number.value already set to '12', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.cache.value already set to 'false', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-18 15:35:01 | myframework | INFO | config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-18 15:35:01 | myframework | INFO | Restarting dot1x plugin to apply pending changes...
+2026-03-18 15:35:01 | myframework | INFO | Restarting 802.1X plugin on 10.16.177.66
+2026-03-18 15:35:01 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x restart
+2026-03-18 15:35:07 | myframework | INFO | Received 'Done starting RADIUS.' confirmation
+2026-03-18 15:35:07 | myframework | INFO | Sleeping 5 seconds for sub-processes to stabilise
+2026-03-18 15:35:12 | myframework | INFO | Starting endpoint cleanup for MAC: 98f2b301a055
+2026-03-18 15:35:12 | myframework | DEBUG | Executing command on CounterAct: fstool hostinfo 98f2b301a055 | grep mac,
+2026-03-18 15:35:12 | myframework | INFO | Raw hostinfo output for MAC 98f2b301a055: 224.0.164.79, 1773865947,Wed Mar 18 15:32:27 CDT 2026, mac, 98f2b301a055, (sw@5290463614721804985 []), 0, 1773865764
+224.0.164.79, 1773865764,Wed Mar 18 15:29:24 CDT 2026, assigned_by_type, mac, (sw@5290463614721804985 []), 0, 1773865764
+224.0.164.79, 1773865927,Wed Mar 18 15:32:07 CDT 2026, nc_ep_esg_by_mac, ???, (gen@5290463614721804985 []), no_plugin:ierr
+224.0.164.79, 1773865927,Wed Mar 18 15:32:07 CDT 2026, sw_duplicate_mac, ???, (sw@5290463614721804985 [sw]), sw_unknown_property_value:err
+2026-03-18 15:35:12 | myframework | INFO | Found 4 IP(s) for MAC 98f2b301a055: ['224.0.164.79', '224.0.164.79', '224.0.164.79', '224.0.164.79']
+2026-03-18 15:35:12 | myframework | INFO | Found IP 224.0.164.79 for MAC 98f2b301a055
+2026-03-18 15:35:12 | myframework | INFO | Endpoint IP: 224.0.164.79
+2026-03-18 15:35:12 | myframework | DEBUG | [POOL] Creating connection for key: 10.16.177.65
+2026-03-18 15:35:13 | myframework | DEBUG | Executing command on CounterAct: fstool hostinfo 224.0.164.79 | grep 'host_id'
+2026-03-18 15:35:13 | myframework | INFO | host_id not found, using IP 224.0.164.79 as identifier
+2026-03-18 15:35:13 | myframework | INFO | Deleting endpoint with ID: 224.0.164.79
+2026-03-18 15:35:13 | myframework | DEBUG | Executing command on CounterAct: fstool oneach fstool cliapi host remove 224.0.164.79
+2026-03-18 15:35:16 | myframework | INFO | Endpoint 224.0.164.79 removed successfully
+2026-03-18 15:35:16 | myframework | INFO | Target IP range 10.16.148.128/26 derived from VLAN 1570
+2026-03-18 15:35:17 | myframework | INFO | Starting RADIUS configuration on port FastEthernet0/1 for Cisco ios switch 10.16.128.21
+2026-03-18 15:35:17 | myframework | INFO | Starting RADIUS Configuration steps 1/6: dot1x system-auth-control
+2026-03-18 15:35:17 | myframework | DEBUG | [POOL] Creating connection for key: 10.16.128.21
+2026-03-18 15:35:19 | myframework | INFO | Executing command on CiscoIOS: show running-config | inc dot1x
+2026-03-18 15:35:21 | myframework | INFO | dot1x system-auth-control already enabled on Cisco switch 10.16.128.21
+2026-03-18 15:35:21 | myframework | INFO | Starting RADIUS Configuration steps 2/6: RADIUS server
+2026-03-18 15:35:21 | myframework | INFO | Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-66
+2026-03-18 15:35:22 | myframework | INFO | Command output:
+2026-03-18 15:35:22 | myframework | INFO |   radius server server-automation-ipv4-177-66
+2026-03-18 15:35:22 | myframework | INFO |    address ipv4 10.16.177.66 auth-port 1812 acct-port 1813
+2026-03-18 15:35:22 | myframework | INFO |    key aristo
+2026-03-18 15:35:22 | myframework | INFO | Executing command on CiscoIOS: show running-config | section ^radius server
+2026-03-18 15:35:24 | myframework | DEBUG | Extracted RADIUS secret: aristo
+2026-03-18 15:35:24 | myframework | INFO | RADIUS server server-automation-ipv4-177-66 already exists on 10.16.128.21
+2026-03-18 15:35:24 | myframework | INFO | Starting RADIUS Configuration steps 3/6: RADIUS group
+2026-03-18 15:35:24 | myframework | INFO | Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-18 15:35:25 | myframework | INFO | Command output:
+2026-03-18 15:35:25 | myframework | INFO |   aaa group server radius group-automation
+2026-03-18 15:35:25 | myframework | INFO |    server name server-automation-ipv4-177-66
+2026-03-18 15:35:25 | myframework | INFO |    deadtime 3
+2026-03-18 15:35:25 | myframework | INFO | RADIUS group group-automation already exists on 10.16.128.21
+2026-03-18 15:35:25 | myframework | INFO | Starting RADIUS Configuration steps 4/6: AAA authentication
+2026-03-18 15:35:25 | myframework | INFO | Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-18 15:35:27 | myframework | INFO | Command output:
+2026-03-18 15:35:27 | myframework | INFO |   aaa authentication dot1x default group group-automation
+2026-03-18 15:35:27 | myframework | INFO |   aaa authorization network default group group-automation 
+2026-03-18 15:35:27 | myframework | INFO |   aaa accounting dot1x default start-stop group group-automation
+2026-03-18 15:35:27 | myframework | INFO | AAA already exists with group group-automation on 10.16.128.21
+2026-03-18 15:35:27 | myframework | INFO | Starting RADIUS Configuration steps 5/6: RADIUS CoA (dynamic-author) client
+2026-03-18 15:35:27 | myframework | INFO | Executing command on CiscoIOS: show running-config | section aaa server radius dynamic-author
+2026-03-18 15:35:57 | myframework | ERROR | Failed to setup RADIUS dynamic-author client 10.16.177.66 on Cisco switch 10.16.128.21: 
+Pattern not detected: '\\^@' in output.
+
+Things you might try to fix this:
+1. Explicitly set your pattern using the expect_string argument.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+2026-03-18 15:35:57 | myframework | ERROR | Failed to configure RADIUS dynamic-author (CoA)
+2026-03-18 15:35:57 | myframework | INFO | Cleaning up all test certificates from Windows stores...
+2026-03-18 15:35:57 | myframework | INFO | Executing command on WindowsPassthrough: 
+$deleted = @()
+foreach ($store in @("My", "Root")) {
+    $certs = Get-ChildItem -Path Cert:\LocalMachine\$store | Where-Object { $_.Subject -like "*testdecodeA*" -or $_.Subject -like "*clientcert*" -or $_.Subject -like "*Dot1x-CLT-A*" -or $_.Subject -like "*Dot1x-CLT-B*" -or $_.Subject -like "*Dot1x-CLT-C*" -or $_.Subject -like "*Dot1x-CLT-D*" -or $_.Subject -like "*Dot1x-CLT-E*" -or $_.Subject -like "*Dot1x-CLT-F*" -or $_.Subject -like "*Dot1x-CLT-G*" -or $_.Subject -like "*Dot1xMSCA-CLT-A*" -or $_.Subject -like "*Dot1xMSCA-CLT-B*" -or $_.Subject -like "*Dot1xMSCA-CLT-C*" -or $_.Subject -like "*Dot1xMSCA-CLT-D*" -or $_.Subject -like "*Dot1xMSCA-CLT-E*" -or $_.Subject -like "*Dot1xMSCA-CLT-F*" -or $_.Subject -like "*Dot1xMSCA-CLT-G*" -or $_.Subject -like "*Dot1x-CLT-Expired*" -or $_.Subject -like "*Dot1x-CLT-Time*" -or $_.Subject -like "*Dot1x-CLT-Revoked*" -or $_.Subject -like "*Dot1x-CLT-Good*" -or $_.Subject -like "*Dot1x-CA*" -or $_.Subject -like "*Dot1xMSCA-CA*" }
+    foreach ($cert in $certs) {
+        Remove-Item -Path $cert.PSPath -Force
+        $deleted += "Deleted: $($cert.Subject) from $store"
+    }
+}
+if ($deleted.Count -gt 0) { $deleted -join "`n" } else { "No test certificates found" }
+
+2026-03-18 15:35:58 | myframework | DEBUG | No test certificates found to clean up
+2026-03-18 15:35:58 | myframework | INFO | Test certificates cleanup completed
+2026-03-18 15:35:58 | myframework | INFO | NIC: pciPassthru0
+2026-03-18 15:35:58 | myframework | INFO | 
+===========================================================================Running test: TC_9448_EAPTLSPolicySANDetectionTest===========================================================================
+
+2026-03-18 15:35:58 | myframework | INFO | Setting pre-admission rules: 2 rule(s)
+2026-03-18 15:35:58 | myframework | INFO | Using multi-rule format with auth values
+2026-03-18 15:35:58 | myframework | INFO | Building pre-admission rules: 2 rule(s)
+2026-03-18 15:35:58 | myframework | INFO | Rule 1: condition=[{"field":"EAP-Type","value":"TLS","critClass":"forescout.plugin.dot1x.default_policy.D1XComboStringCriterion","selected":"TLS"}]
+2026-03-18 15:35:58 | myframework | INFO | Rule 1: auth=vlan:	IsCOA:false
+2026-03-18 15:35:58 | myframework | INFO | Rule 2: condition=[{"filType":"any","input":"yalla","field":"User-Name","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"}]
+2026-03-18 15:35:58 | myframework | INFO | Rule 2: auth=reject=dummy
+2026-03-18 15:35:58 | myframework | INFO | Check 21 key-value pairs properties in /usr/local/forescout/plugin/dot1x/local.properties on 10.16.177.66
+2026-03-18 15:36:00 | myframework | INFO | Successfully wrote pre-admission rules to /usr/local/forescout/plugin/dot1x/local.properties
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_cond8.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_cond4.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_auth4.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_cond1.value=[{"field":"EAP-Type","value":"TLS","critClass":"forescout.plugin.dot1x.default_policy.D1XComboStringCriterion","selected":"TLS"}]
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_auth10.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_cond9.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_auth3.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol.size.value=2
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_cond3.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_auth9.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_cond5.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_auth2.value=reject=dummy
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_cond6.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_cond10.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_auth8.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_auth7.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_auth6.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_cond2.value=[{"filType":"any","input":"yalla","field":"User-Name","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"}]
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_auth1.value=vlan:	IsCOA:false
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_cond7.value=
+2026-03-18 15:36:00 | myframework | INFO |   Verified: config.defpol_auth5.value=
+2026-03-18 15:36:00 | myframework | INFO | Pre-admission rules have changes, set self.has_change = True
+2026-03-18 15:36:00 | myframework | INFO | Restarting dot1x plugin to apply pending changes...
+2026-03-18 15:36:00 | myframework | INFO | Restarting 802.1X plugin on 10.16.177.66
+2026-03-18 15:36:00 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x restart
+2026-03-18 15:36:07 | myframework | INFO | Received 'Done starting RADIUS.' confirmation
+2026-03-18 15:36:07 | myframework | INFO | Sleeping 5 seconds for sub-processes to stabilise
+2026-03-18 15:36:12 | myframework | INFO | Configuring LAN profile (builder) on 10.16.133.134
+2026-03-18 15:36:12 | myframework | INFO | Copying /tmp/tmp5gznu9y6.xml to C:\Profiles\lan_profile.xml
+2026-03-18 15:36:12 | myframework | INFO | File size: 2162 bytes
+2026-03-18 15:36:12 | myframework | INFO | Executing command on WindowsPassthrough: New-Item -Path 'C:\Profiles' -ItemType Directory -Force | Out-Null
+2026-03-18 15:36:13 | myframework | INFO | Created directory: C:\Profiles
+2026-03-18 15:36:13 | myframework | INFO | Using pypsrp native file transfer
+2026-03-18 15:36:14 | myframework | INFO | Successfully copied /tmp/tmp5gznu9y6.xml to C:\Profiles\lan_profile.xml
+2026-03-18 15:36:14 | myframework | INFO | Deleting LAN profile from interface: pciPassthru0
+2026-03-18 15:36:14 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan delete profile interface="pciPassthru0"
+2026-03-18 15:36:15 | myframework | INFO | [OK] LAN profile deleted from pciPassthru0
+2026-03-18 15:36:15 | myframework | INFO | Adding LAN profile to interface: pciPassthru0
+2026-03-18 15:36:15 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan add profile filename="C:\Profiles\lan_profile.xml" interface="pciPassthru0"
+2026-03-18 15:36:15 | myframework | INFO | [OK] LAN profile added to pciPassthru0
+2026-03-18 15:36:15 | myframework | INFO | Importing certificate: Dot1x-CLT-G.pfx
+2026-03-18 15:36:15 | myframework | INFO | Reading PFX file locally: /home/triley/fstester001-mab/resources/radius/certificates/Dot1x-CA/WindowsFiles/Dot1x-CLT-G.pfx
+2026-03-18 15:36:16 | myframework | INFO | [OK] Personal cert thumbprint: 7E6649D1FEBE4813EB4464DBC23CB472352AB0DC
+2026-03-18 15:36:16 | myframework | INFO |      Subject: <Name(C=US,ST=Texas,L=Ranger,O=Forescout,OU=Lab,CN=Dot1x-CLT-G,1.2.840.113549.1.9.1=clientg@internl.local)>
+2026-03-18 15:36:16 | myframework | INFO | [OK] Trusted cert thumbprint: FBB88C61B92B928E24A3BF72219574E3EF12CBE1
+2026-03-18 15:36:16 | myframework | INFO |      Subject: <Name(C=US,ST=Texas,L=Dallas,O=Forescout,OU=Lab,CN=Dot1x-CA,1.2.840.113549.1.9.1=admin@internal.local)>
+2026-03-18 15:36:16 | myframework | INFO | Executing command on WindowsPassthrough: New-Item -Path 'C:\Certificates' -ItemType Directory -Force | Out-Null
+2026-03-18 15:36:17 | myframework | INFO | Created directory: C:\Certificates
+2026-03-18 15:36:17 | myframework | INFO | Copying /home/triley/fstester001-mab/resources/radius/certificates/Dot1x-CA/WindowsFiles/Dot1x-CLT-G.pfx to C:\Certificates\Dot1x-CLT-G.pfx
+2026-03-18 15:36:17 | myframework | INFO | File size: 6040 bytes
+2026-03-18 15:36:17 | myframework | INFO | Executing command on WindowsPassthrough: New-Item -Path 'C:\Certificates' -ItemType Directory -Force | Out-Null
+2026-03-18 15:36:17 | myframework | INFO | Created directory: C:\Certificates
+2026-03-18 15:36:17 | myframework | INFO | Using pypsrp native file transfer
+2026-03-18 15:36:18 | myframework | INFO | Successfully copied /home/triley/fstester001-mab/resources/radius/certificates/Dot1x-CA/WindowsFiles/Dot1x-CLT-G.pfx to C:\Certificates\Dot1x-CLT-G.pfx
+2026-03-18 15:36:18 | myframework | INFO | [OK] PFX copied to C:\Certificates\Dot1x-CLT-G.pfx
+2026-03-18 15:36:18 | myframework | INFO | Deleting old certificates...
+2026-03-18 15:36:18 | myframework | INFO | Executing command on WindowsPassthrough: 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\My |
+    Where-Object { $_.Thumbprint -eq "7E6649D1FEBE4813EB4464DBC23CB472352AB0DC" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from My"
+} else {
+    "Certificate not found in My"
+}
+2026-03-18 15:36:19 | myframework | INFO | [OK] Certificate not found in My
+2026-03-18 15:36:19 | myframework | INFO | Executing command on WindowsPassthrough: 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\My |
+    Where-Object { $_.Thumbprint -eq "FBB88C61B92B928E24A3BF72219574E3EF12CBE1" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from My"
+} else {
+    "Certificate not found in My"
+}
+2026-03-18 15:36:20 | myframework | INFO | [OK] Certificate not found in My
+2026-03-18 15:36:20 | myframework | INFO | Executing command on WindowsPassthrough: 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\Root |
+    Where-Object { $_.Thumbprint -eq "FBB88C61B92B928E24A3BF72219574E3EF12CBE1" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from Root"
+} else {
+    "Certificate not found in Root"
+}
+2026-03-18 15:36:21 | myframework | INFO | [OK] Certificate not found in Root
+2026-03-18 15:36:21 | myframework | INFO | Importing PFX to Personal store...
+2026-03-18 15:36:21 | myframework | INFO | Executing command on WindowsPassthrough: 
+$securePassword = ConvertTo-SecureString -String "aristo" -Force -AsPlainText
+Import-PfxCertificate `
+    -FilePath "C:\Certificates\Dot1x-CLT-G.pfx" `
+    -CertStoreLocation Cert:\LocalMachine\My `
+    -Password $securePassword `
+    -Exportable | Out-Null
+"PFX imported successfully"
+2026-03-18 15:36:22 | myframework | INFO | [OK] PFX imported successfully
+2026-03-18 15:36:22 | myframework | INFO | Copying trusted cert to C:\Certificates\trusted_ca.cer
+2026-03-18 15:36:22 | myframework | INFO | Copying /tmp/tmpklh_st0h.cer to C:\Certificates\trusted_ca.cer
+2026-03-18 15:36:22 | myframework | INFO | File size: 1546 bytes
+2026-03-18 15:36:22 | myframework | INFO | Executing command on WindowsPassthrough: New-Item -Path 'C:\Certificates' -ItemType Directory -Force | Out-Null
+2026-03-18 15:36:22 | myframework | INFO | Created directory: C:\Certificates
+2026-03-18 15:36:22 | myframework | INFO | Using pypsrp native file transfer
+2026-03-18 15:36:23 | myframework | INFO | Successfully copied /tmp/tmpklh_st0h.cer to C:\Certificates\trusted_ca.cer
+2026-03-18 15:36:23 | myframework | INFO | Importing trusted cert to Root store...
+2026-03-18 15:36:23 | myframework | INFO | Executing command on WindowsPassthrough: 
+Import-Certificate `
+    -FilePath "C:\Certificates\trusted_ca.cer" `
+    -CertStoreLocation Cert:\LocalMachine\Root | Out-Null
+"Certificate imported to Root"
+2026-03-18 15:36:24 | myframework | INFO | [OK] Certificate imported to Root
+2026-03-18 15:36:24 | myframework | INFO | Executing command on WindowsPassthrough: Test-Path -Path 'C:\Certificates\trusted_ca.cer'
+2026-03-18 15:36:24 | myframework | INFO | Executing command on WindowsPassthrough: Remove-Item -Path 'C:\Certificates\trusted_ca.cer' -Force
+2026-03-18 15:36:25 | myframework | INFO | Removed file: C:\Certificates\trusted_ca.cer
+2026-03-18 15:36:25 | myframework | INFO | Certificate import completed
+2026-03-18 15:36:25 | myframework | INFO | Waiting for 802.1X plugin to become ready on 10.16.177.66 (timeout=300s)
+2026-03-18 15:36:25 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 15:36:29 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=24569
+802.1x plugin (pid 24569) is running for 00:18.
+Subordinate processes:
+radiusd exited - check radiusd.log for more information.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 25145) of txqalab is running for 00:08.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 03:19:23.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,24569 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,24577 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,24631 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,25257 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl restart -xxx -l stdout -d...
+      `-sh,25485 -c...
+          `-radclient,25487 -x -c 1 localhost:1812 status testing123
+Run linux command 'pstree -aAp 24569'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 15:36:29 | myframework | INFO | dot1x status: winbindd=8s, redis-server=11963s, radiusd=DOWN — waiting for: radiusd
+2026-03-18 15:36:29 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:36:39 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 15:36:43 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=24569
+802.1x plugin (pid 24569) is running for 00:32.
+Subordinate processes:
+radiusd (pid 25591) is running for 00:09.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 25145) of txqalab is running for 00:22.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 03:19:37.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,24569 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,24577 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  `-perl,24631 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+Run linux command 'pstree -aAp 24569'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 15:36:43 | myframework | INFO | dot1x status: radiusd=9s, winbindd=22s, redis-server=11977s — radiusd not yet stable (need 45s)
+2026-03-18 15:36:43 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:36:53 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 15:36:57 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=24569
+802.1x plugin (pid 24569) is running for 00:47.
+Subordinate processes:
+radiusd exited - check radiusd.log for more information.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 25145) of txqalab is running for 00:37.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 03:19:52.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,24569 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,24577 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,24631 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,25964 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl restart -xxx -l stdout -d...
+      `-sh,26114 -c...
+          `-radclient,26116 -x -c 1 localhost:1812 status testing123
+Run linux command 'pstree -aAp 24569'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 15:36:57 | myframework | INFO | dot1x status: winbindd=37s, redis-server=11992s, radiusd=DOWN — waiting for: radiusd
+2026-03-18 15:36:57 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:37:07 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 15:37:11 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=24569
+802.1x plugin (pid 24569) is running for 01:01.
+Subordinate processes:
+radiusd (pid 26186) is running for 00:14.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 25145) of txqalab is running for 00:51.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 03:20:06.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,24569 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,24577 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,24631 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,26716 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl version
+Run linux command 'pstree -aAp 24569'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 15:37:11 | myframework | INFO | dot1x status: radiusd=14s, winbindd=51s, redis-server=12006s — radiusd not yet stable (need 45s)
+2026-03-18 15:37:11 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:37:21 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 15:37:26 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=24569
+802.1x plugin (pid 24569) is running for 01:15.
+Subordinate processes:
+radiusd exited - check radiusd.log for more information.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 25145) of txqalab is running for 01:05.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 03:20:20.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,24569 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,24577 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  |-perl,24631 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+  `-perl,26844 -X -I lib/perl/inc lib/fstool/commands/radiusd.pl restart -xxx -l stdout -d...
+      `-sh,27031 -c...
+          `-radclient,27033 -x -c 1 localhost:1812 status testing123
+Run linux command 'pstree -aAp 24569'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 15:37:26 | myframework | INFO | dot1x status: winbindd=65s, redis-server=12020s, radiusd=DOWN — waiting for: radiusd
+2026-03-18 15:37:26 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:37:36 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 15:37:40 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=24569
+802.1x plugin (pid 24569) is running for 01:30.
+Subordinate processes:
+radiusd (pid 27111) is running for 00:12.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 25145) of txqalab is running for 01:20.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 03:20:35.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,24569 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,24577 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  `-perl,24631 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+Run linux command 'pstree -aAp 24569'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 15:37:40 | myframework | INFO | dot1x status: radiusd=12s, winbindd=80s, redis-server=12035s — radiusd not yet stable (need 45s)
+2026-03-18 15:37:40 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:37:50 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 15:37:54 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=24569
+802.1x plugin (pid 24569) is running for 01:44.
+Subordinate processes:
+radiusd (pid 27111) is running for 00:26.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 25145) of txqalab is running for 01:34.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 03:20:49.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,24569 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,24577 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  `-perl,24631 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+Run linux command 'pstree -aAp 24569'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 15:37:54 | myframework | INFO | dot1x status: radiusd=26s, winbindd=94s, redis-server=12049s — radiusd not yet stable (need 45s)
+2026-03-18 15:37:54 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:38:05 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 15:38:09 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=24569
+802.1x plugin (pid 24569) is running for 01:58.
+Subordinate processes:
+radiusd (pid 27111) is running for 00:40.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 27778) of txqalab is running for 00:05.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 03:21:03.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,24569 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,24577 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  `-perl,24631 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+Run linux command 'pstree -aAp 24569'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 15:38:09 | myframework | INFO | dot1x status: radiusd=40s, winbindd=5s, redis-server=12063s — radiusd not yet stable (need 45s)
+2026-03-18 15:38:09 | myframework | INFO | Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:38:19 | myframework | DEBUG | Executing command on CounterAct: fstool dot1x status
+2026-03-18 15:38:23 | myframework | DEBUG | dot1x status output:
+main::plugin_status_cb:1589:[other]::5: called with: 
+main::get_process_stat:447:[other]::1: dot1x plugin daemon is running as _fsserv+ PID=24569
+802.1x plugin (pid 24569) is running for 02:13.
+Subordinate processes:
+radiusd (pid 27111) is running for 00:54.
+Run linux command 'fstool radiusd status'. Returned 0.(cb_1x_show_status:1521)
+winbindd (pid 27778) of txqalab is running for 00:19.
+Run linux command 'fstool winbind status'. Returned 0.(cb_1x_show_status:1522)
+redis-server (pid 3494) is running for 03:21:17.
+Run linux command 'fstool redis_server status'. Returned 0.(cb_1x_show_status:1523)
+perl,24569 -X -I lib/perl/inc lib/fstool/commands/dot1x.pl daemon
+  |-perl,24577 -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+  `-perl,24631 -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+Run linux command 'pstree -aAp 24569'. Returned 0.(cb_1x_show_status:1524)
+See plugin's log file for more details (under 'fstool dot1x status:')
+2026-03-18 15:38:23 | myframework | INFO | dot1x status: radiusd=54s, winbindd=19s, redis-server=12077s — plugin is ready
+2026-03-18 15:38:23 | myframework | INFO | 802.1X plugin is ready
+2026-03-18 15:38:23 | myframework | INFO | Toggling NIC to trigger re-authentication (updated test_start_time: 2026-03-18 15:38:23.219842) on 10.16.133.134
+2026-03-18 15:38:23 | myframework | INFO | Toggling NIC: pciPassthru0
+2026-03-18 15:38:23 | myframework | INFO | Disabling NIC: pciPassthru0
+2026-03-18 15:38:23 | myframework | INFO | Executing command on WindowsPassthrough: Disable-NetAdapter -Name 'pciPassthru0' -Confirm:$false
+2026-03-18 15:38:25 | myframework | INFO | Waiting for NIC 'pciPassthru0' to reach 'Disabled' status (max 30s)...
+2026-03-18 15:38:25 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetAdapter -Name "pciPassthru0" -ErrorAction SilentlyContinue).Status
+2026-03-18 15:38:27 | myframework | INFO | [OK] NIC 'pciPassthru0' status: 'Disabled'
+2026-03-18 15:38:27 | myframework | INFO | [OK] NIC pciPassthru0 is disabled
+2026-03-18 15:38:27 | myframework | INFO | Enabling NIC: pciPassthru0
+2026-03-18 15:38:27 | myframework | INFO | Executing command on WindowsPassthrough: Enable-NetAdapter -Name 'pciPassthru0' -Confirm:$false
+2026-03-18 15:38:29 | myframework | INFO | Waiting for NIC 'pciPassthru0' MediaConnectionState 'Connected' (max 30s)...
+2026-03-18 15:38:29 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetAdapter -Name "pciPassthru0").MediaConnectionState
+2026-03-18 15:38:30 | myframework | DEBUG | NIC pciPassthru0 MediaConnectionState: Unknown, waiting for: Connected
+2026-03-18 15:38:33 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetAdapter -Name "pciPassthru0").MediaConnectionState
+2026-03-18 15:38:34 | myframework | INFO | [OK] NIC 'pciPassthru0' MediaConnectionState: 'Connected'
+2026-03-18 15:38:34 | myframework | INFO | [OK] NIC pciPassthru0 is connected
+2026-03-18 15:38:34 | myframework | INFO | [OK] NIC pciPassthru0 toggled successfully
+2026-03-18 15:38:34 | myframework | INFO | Waiting for NIC 'pciPassthru0' 802.1X authentication (max 90s)...
+2026-03-18 15:38:34 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-18 15:38:35 | myframework | DEBUG | NIC pciPassthru0 auth status not ready, waiting for: Authentication succeeded
+2026-03-18 15:38:40 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-18 15:38:40 | myframework | DEBUG | NIC pciPassthru0 auth status not ready, waiting for: Authentication succeeded
+2026-03-18 15:38:45 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-18 15:38:45 | myframework | DEBUG | NIC pciPassthru0 auth status not ready, waiting for: Authentication succeeded
+2026-03-18 15:38:50 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-18 15:38:51 | myframework | DEBUG | NIC pciPassthru0 auth status not ready, waiting for: Authentication succeeded
+2026-03-18 15:38:56 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-18 15:38:56 | myframework | DEBUG | NIC pciPassthru0 auth status not ready, waiting for: Authentication succeeded
+2026-03-18 15:39:01 | myframework | INFO | Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-18 15:39:02 | myframework | INFO | [OK] NIC 'pciPassthru0' authentication status: 'Authentication succeeded'
+2026-03-18 15:39:02 | myframework | INFO | Waiting for NIC 'pciPassthru0' to get IP in range '10.16.148.128/26' (max 90s)...
+2026-03-18 15:39:02 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:39:03 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:39:03 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:39:09 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:39:10 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:39:10 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:39:15 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:39:16 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:39:16 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:39:21 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:39:23 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:39:23 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:39:28 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:39:29 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:39:29 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:39:34 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:39:35 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:39:35 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:39:41 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:39:42 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:39:42 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:39:47 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:39:48 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:39:48 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:39:53 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:39:54 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:39:54 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:39:59 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:40:00 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:40:00 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:40:05 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:40:06 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:40:06 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:40:12 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:40:13 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:40:13 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:40:18 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:40:19 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:40:19 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:40:24 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:40:26 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:40:26 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:40:31 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:40:32 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:40:32 | myframework | DEBUG | NIC 'pciPassthru0' has IP '169.254.149.224' but not in target range '10.16.148.128/26'
+2026-03-18 15:40:37 | myframework | INFO | Executing command on WindowsPassthrough: (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-18 15:40:38 | myframework | DEBUG | NIC 'pciPassthru0' IP address: 169.254.149.224
+2026-03-18 15:40:38 | myframework | ERROR | [T1316925] FAIL: NIC 'pciPassthru0' did not get IP in range '10.16.148.128/26' within 90s. Current IP: 169.254.149.224
+2026-03-18 15:40:38 | myframework | ERROR | 
+========================================================================Test Failed: TC_9448_EAPTLSPolicySANDetectionTest Failed========================================================================
+
+2026-03-18 15:40:38 | myframework | ERROR | Error: NIC 'pciPassthru0' did not get IP in range '10.16.148.128/26' within 90s. Current IP: 169.254.149.224
+2026-03-18 15:40:38 | myframework | INFO | === EAP-TLS Test Teardown ===
+2026-03-18 15:40:38 | myframework | INFO | Removing certificates...
+2026-03-18 15:40:38 | myframework | INFO | Executing command on WindowsPassthrough: 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\My |
+    Where-Object { $_.Thumbprint -eq "7E6649D1FEBE4813EB4464DBC23CB472352AB0DC" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from My"
+} else {
+    "Certificate not found in My"
+}
+2026-03-18 15:40:39 | myframework | INFO | [OK] Deleted certificate from My
+2026-03-18 15:40:39 | myframework | INFO | Executing command on WindowsPassthrough: 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\Root |
+    Where-Object { $_.Thumbprint -eq "FBB88C61B92B928E24A3BF72219574E3EF12CBE1" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from Root"
+} else {
+    "Certificate not found in Root"
+}
+2026-03-18 15:40:40 | myframework | INFO | [OK] Deleted certificate from Root
+2026-03-18 15:40:40 | myframework | INFO | Certificates removed
+2026-03-18 15:40:40 | myframework | INFO | radius common teardown
+2026-03-18 15:40:40 | myframework | INFO | Closing all connections
+2026-03-19 13:57:24 | myframework | DEBUG | [POOL] Creating connection for key: 10.16.128.18
+2026-03-19 13:57:25 | myframework | INFO | Executing command on CiscoIOS: show run interface GigabitEthernet1/0/1
+2026-03-19 13:57:26 | myframework | INFO | Executing command on CiscoIOS: show mac address-table dynamic interface GigabitEthernet1/0/1
+2026-03-19 13:57:26 | myframework | INFO | Executing command on CiscoIOS: show mac address-table address 98f2.b301.9774
+2026-03-19 13:57:27 | myframework | INFO | Executing command on CiscoIOS: show interfaces status | include Gi1/0/1
+2026-03-19 13:58:28 | myframework | DEBUG | [POOL] Creating connection for key: 10.16.128.18
+2026-03-19 13:58:29 | myframework | INFO | Executing command on CiscoIOS: show authentication sessions interface GigabitEthernet1/0/1 details
+2026-03-19 13:58:29 | myframework | INFO | Executing command on CiscoIOS: show dot1x interface GigabitEthernet1/0/1 details
+2026-03-19 13:58:30 | myframework | INFO | Executing command on CiscoIOS: show mac address-table interface GigabitEthernet1/0/1

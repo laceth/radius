@@ -1,0 +1,13 @@
+radiusd:18208:1773861780.803207:Wed Mar 18 14:23:00 2026: Wed Mar 18 14:23:00 2026 : Debug: (14) eap: Reply already contained an EAP-Message, not inserting EAP-Failure
+radiusd:18208:1773861780.803240:Wed Mar 18 14:23:00 2026: Wed Mar 18 14:23:00 2026 : Debug: (14)     modsingle[post-auth]: returned from eap (rlm_eap)
+radiusd:18208:1773861780.803287:Wed Mar 18 14:23:00 2026: Wed Mar 18 14:23:00 2026 : Debug: (14)     [eap] = noop
+radiusd:18208:1773861780.803339:Wed Mar 18 14:23:00 2026: Wed Mar 18 14:23:00 2026 : Debug: (14)   } # Post-Auth-Type REJECT = updated
+radiusd:18208:1773861780.803420:Wed Mar 18 14:23:00 2026: Wed Mar 18 14:23:00 2026 : Debug: (14) Sent Access-Reject Id 250 from 10.16.177.66:1812 to 10.16.128.18:58444 length 44
+radiusd:18208:1773861780.803474:Wed Mar 18 14:23:00 2026: Wed Mar 18 14:23:00 2026 : Debug: (14)   EAP-Message = 0x04020004
+radiusd:18208:1773861780.803552:Wed Mar 18 14:23:00 2026: Wed Mar 18 14:23:00 2026 : Debug: (14)   Message-Authenticator = 0x00000000000000000000000000000000
+radiusd:18208:1773861780.803620:Wed Mar 18 14:23:00 2026: Wed Mar 18 14:23:00 2026 : Debug: (14) Finished request
+radiusd:18208:1773861780.803656:Wed Mar 18 14:23:00 2026: Wed Mar 18 14:23:00 2026 : Debug: Thread 5 waiting to be assigned a request
+radiusd:18208:1773861781.115062:Wed Mar 18 14:23:01 2026: Wed Mar 18 14:23:01 2026 : Debug: Waking up in 4.6 seconds.
+radiusd:18208:1773861785.776994:Wed Mar 18 14:23:05 2026: Wed Mar 18 14:23:05 2026 : Debug: (13) Cleaning up request packet ID 249 with timestamp +158 due to cleanup_delay was reached
+radiusd:18208:1773861785.786716:Wed Mar 18 14:23:05 2026: Wed Mar 18 14:23:05 2026 : Debug: (14) Cleaning up request packet ID 250 with timestamp +158 due to cleanup_delay was reached
+radiusd:18208:1773861785.787215:Wed Mar 18 14:23:05 2026: Wed Mar 18 14:23:05 2026 : Info: Ready to process requests

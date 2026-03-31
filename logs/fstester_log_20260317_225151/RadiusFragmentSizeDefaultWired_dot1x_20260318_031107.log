@@ -1,0 +1,401 @@
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:12846:1773821468.258900:Wed Mar 18 03:11:08 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xb8d22a0) timeout in 1773821468, Now=1773821468
+dot1x:12846:1773821468.259648:Wed Mar 18 03:11:08 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xb999368): Reschedule housekeep
+dot1x:12846:1773821468.260143:Wed Mar 18 03:11:08 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[6 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:12846:1773821468.263083:Wed Mar 18 03:11:08 2026: main::dot1x_ad_rpc_ping:7909:[Timers]::1: <housekeep>Checking RPC connectivity via netlogon ping to domain txqalab
+dot1x:12846:1773821468.280458:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command '/usr/local/forescout/plugin/dot1x/fs_radius/usr/bin/wbinfo -P'. Returned 0.(dot1x_ad_rpc_ping:7912)
+dot1x:12846:1773821468.280852:Wed Mar 18 03:11:08 2026: main::dot1x_housekeep_old_configs:7497:[Timers]::1: <housekeep>found that txqalab-dc1 believed working, keeping.
+dot1x:12846:1773821468.280997:Wed Mar 18 03:11:08 2026: main::dot1x_housekeep_old_configs:7503:[Timers]::1: <housekeep>task keeping .
+dot1x:12846:1773821468.287027:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'find /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba -not -regex ".*\(txqalab\|working.any\).*" -name "smb.conf.*" -delete'. 
+Output: ''(dot1x_clean_old_smb_conf:363)
+dot1x:12846:1773821468.293567:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'find /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb -not -iregex ".*\(txqalab\).*" -name "ldap__*" -delete'. 
+Output: ''(dot1x_clean_old_fr_ldap_module:342)
+dot1x:12846:1773821468.300404:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'find /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb -not -iregex ".*\(txqalab\).*" -name "ldap_enc__*" -delete'. 
+Output: ''(dot1x_clean_old_fr_ldap_module:345)
+dot1x:12846:1773821468.305758:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'find /dev/shm/forescout -not -iregex ".*\(txqalab\).*" -name "ldap__*" -delete'. 
+Output: ''(dot1x_clean_old_fr_ldap_module:348)
+dot1x:12846:1773821468.311328:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'chmod -R a-w /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb'. Returned 0.(dot1x_configure_fr_directory_permissions:3878)
+dot1x:12846:1773821468.316454:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'chmod -R u+rw /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb'. Returned 0.(dot1x_configure_fr_directory_permissions:3880)
+dot1x:12846:1773821468.316826:Wed Mar 18 03:11:08 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:12846:1773821468.322540:Wed Mar 18 03:11:08 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:12846:1773821468.323017:Wed Mar 18 03:11:08 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:12846:1773821468.323248:Wed Mar 18 03:11:08 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:12846:1773821468.326984:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/fs_default_accept /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_accept'. Returned 0.(dot1x_configure_fr_sites:4132)
+dot1x:12846:1773821468.329975:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/fs_default_authorize /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_authorize'. Returned 0.(dot1x_configure_fr_sites:4133)
+dot1x:12846:1773821468.333148:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/fs_default_reject /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_reject'. Returned 0.(dot1x_configure_fr_sites:4134)
+dot1x:12846:1773821468.336517:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/default_fs_template /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs'. Returned 0.(dot1x_configure_fr_site_default:4155)
+dot1x:12846:1773821468.337624:Wed Mar 18 03:11:08 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_site_default:4156)
+dot1x:12846:1773821468.345315:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs.tmp.12846.1773821468 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:12846:1773821468.348186:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default'. Returned 0.(dot1x_configure_fr_site_default:4157)
+dot1x:12846:1773821468.351235:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/inner-tunnel_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs'. Returned 0.(dot1x_configure_fr_site_inner_tunnel:4288)
+dot1x:12846:1773821468.351715:Wed Mar 18 03:11:08 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_site_inner_tunnel:4289)
+dot1x:12846:1773821468.357448:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs.tmp.12846.1773821468 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:12846:1773821468.360200:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/inner-tunnel'. Returned 0.(dot1x_configure_fr_site_inner_tunnel:4290)
+dot1x:12846:1773821468.363231:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/control-socket_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/control-socket_fs'. Returned 0.(dot1x_configure_fr_site_control_socket:4314)
+dot1x:12846:1773821468.365696:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/control-socket_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/control-socket'. Returned 0.(dot1x_configure_fr_site_control_socket:4315)
+dot1x:12846:1773821468.374922:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/radiusd.conf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/radiusd.conf'. Returned 0.(dot1x_configure_fr_radiusd:4011)
+dot1x:12846:1773821468.379425:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/clients.conf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/clients.conf'. Returned 0.(dot1x_configure_fr_clients:4015)
+dot1x:12846:1773821468.384394:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/proxy.conf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/proxy.conf'. Returned 0.(dot1x_configure_fr_proxy:4339)
+dot1x:12846:1773821468.417042:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'psql -c "select id from devinfo where category='ad' and (id='txqalab-dc1' or (field_name='ad_name' and field_value='txqalab-dc1'))" | grep "(0 rows)"'. Returned 256.(dot1x_ad_name_exists:321)
+dot1x:12846:1773821468.417369:Wed Mar 18 03:11:08 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:12846:1773821468.423671:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/dictionaries/* /usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/'. Returned 256.(dot1x_configure_fr_dictionaries:3870)
+dot1x:12846:1773821468.427325:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/detail_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/detail_fs'. Returned 0.(dot1x_configure_fr_module_detail:3884)
+dot1x:12846:1773821468.430242:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/detail_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/detail'. Returned 0.(dot1x_configure_fr_module_detail:3885)
+dot1x:12846:1773821468.458821:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/eap_fs_template /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/eap_enc'. Returned 0.(dot1x_configure_fr_module_eap:4840)
+dot1x:12846:1773821468.460247:Wed Mar 18 03:11:08 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_module_eap:4842)
+dot1x:12846:1773821468.473130:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/eap_enc.tmp.12846.1773821468 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/eap_enc'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:12846:1773821468.478050:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/fs_properties /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_properties'. Returned 0.(dot1x_configure_fr_module_fs_properties:3889)
+dot1x:12846:1773821468.481042:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_properties /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/fs_properties'. Returned 0.(dot1x_configure_fr_module_fs_properties:3890)
+dot1x:12846:1773821468.484338:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/fs_restrictions /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_restrictions'. Returned 0.(dot1x_configure_fr_module_fs_restrictions:3894)
+dot1x:12846:1773821468.486915:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_restrictions /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/fs_restrictions'. Returned 0.(dot1x_configure_fr_module_fs_restrictions:3895)
+dot1x:12846:1773821468.489913:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/mschap_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/mschap_fs'. Returned 0.(dot1x_configure_fr_module_mschap:3901)
+dot1x:12846:1773821468.492282:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'chmod go-rw,u+rw /tmp/mschap.tmp'. Returned 0.(dot1x_edit_mschap_module:3914)
+dot1x:12846:1773821468.502346:Wed Mar 18 03:11:08 2026: main::dot1x_edit_mschap_module:3930:[Timers]::5: <housekeep>Domain Map = 
+dot1x:12846:1773821468.502732:Wed Mar 18 03:11:08 2026: main::dot1x_edit_mschap_module:3943:[Timers]::5: <housekeep>NTLM_AUTH LINE = 	 ntlm_auth = "/usr/bin/fstool ntlm_auth --mac=%{%{Calling-Station-Id}:-None} --username=%{%{reply:AD-Samaccountname}:-%{mschap:User-Name}} --full-username=%{%{User-Name}:-None} --realm=%{%{Realm}:-None} --challenge=%{%{mschap:Challenge}:-00} --hostdomain=%{%{redis:hget %{Calling-Station-Id} Domain}:-None} --nt-response=%{%{mschap:NT-Response}:-00}"
+dot1x:12846:1773821468.510309:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'mv /tmp/mschap.tmp /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/mschap_fs'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:12846:1773821468.512729:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/mschap_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/mschap'. Returned 0.(dot1x_configure_fr_module_mschap:3903)
+dot1x:12846:1773821468.515920:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/realm_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/realm_fs'. Returned 0.(dot1x_configure_fr_module_realm:3990)
+dot1x:12846:1773821468.518644:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/realm_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/realm'. Returned 0.(dot1x_configure_fr_module_realm:3991)
+dot1x:12846:1773821468.521550:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/redis_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/redis_fs'. Returned 0.(dot1x_configure_fr_module_redis:3995)
+dot1x:12846:1773821468.524101:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/redis_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/redis'. Returned 0.(dot1x_configure_fr_module_redis:3996)
+dot1x:12846:1773821468.527102:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/policy.d/ntlm_auth /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/ntlm_auth'. Returned 0.(dot1x_configure_fr_module_ntlm_auth:4000)
+dot1x:12846:1773821468.530178:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/attr_filter_post-proxy /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-config/attr_filter/post-proxy'. Returned 0.(dot1x_configure_fr_module_attr_filter:4007)
+dot1x:12846:1773821468.534126:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/policy.d/fs_policy /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy'. Returned 0.(dot1x_configure_fr_fs_policy:3864)
+dot1x:12846:1773821468.534786:Wed Mar 18 03:11:08 2026: main::dot1x_get_default_policy_properties:7224:[Timers]::5: <housekeep>rule 1: {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XComboStringCriterion,field=EAP-Type,selected=PEAP,value=PEAP}],restrict=vlan:	IsCOA:false}
+dot1x:12846:1773821468.535065:Wed Mar 18 03:11:08 2026: main::dot1x_get_default_policy_properties:7224:[Timers]::5: <housekeep>rule 2: {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XComboStringCriterion,field=EAP-Type,selected=EAP-TLS,value=EAP-TLS}],restrict=vlan:	IsCOA:false}
+dot1x:12846:1773821468.535320:Wed Mar 18 03:11:08 2026: main::dot1x_get_default_policy_properties:7224:[Timers]::5: <housekeep>rule 3: {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XStringCriterion,field=User-Name,filType=any,input=yalla,value=.*}],restrict=reject=dummy}
+dot1x:12846:1773821468.535790:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'EAP-TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'EAP-TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'PEAP',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'PEAP',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      },
+          'rule_3' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:12846:1773821468.536130:Wed Mar 18 03:11:08 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_create_default_policy:5391)
+dot1x:12846:1773821468.536571:Wed Mar 18 03:11:08 2026: main::line_policy_conf:5369:[Timers]::5: <housekeep>Writing unlang rule and setting auth in redis - {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XComboStringCriterion,field=EAP-Type,selected=EAP-TLS,value=EAP-TLS}],restrict=vlan:	IsCOA:false}
+dot1x:12846:1773821468.536852:Wed Mar 18 03:11:08 2026: main::line_policy_conf:5369:[Timers]::5: <housekeep>Writing unlang rule and setting auth in redis - {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XComboStringCriterion,field=EAP-Type,selected=PEAP,value=PEAP}],restrict=vlan:	IsCOA:false}
+dot1x:12846:1773821468.537176:Wed Mar 18 03:11:08 2026: main::line_policy_conf:5369:[Timers]::5: <housekeep>Writing unlang rule and setting auth in redis - {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XStringCriterion,field=User-Name,filType=any,input=yalla,value=.*}],restrict=reject=dummy}
+dot1x:12846:1773821468.542850:Wed Mar 18 03:11:08 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy.tmp.12846.1773821468 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:12846:1773821468.545802:Wed Mar 18 03:11:08 2026: main::dot1x_configure_fr_create_default_policy:5406:[Timers]::5: <housekeep>Placing the default policy in default server (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_accept):	rule_1, rule_2, rule_3
+dot1x:12846:1773821468.546258:Wed Mar 18 03:11:08 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xb806bc0) timeout in 1773821468, Now=1773821468
+dot1x:12846:1773821468.546432:Wed Mar 18 03:11:08 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xb847d28): Reschedule gatekeeper
+dot1x:12846:1773821469.400562:Wed Mar 18 03:11:09 2026: [gatekeeper/Timers] Run linux command 'fstool fw status| grep -i 1812'. 
+Output: '  448  166K ACCEPT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:1812'(gatekeeper:2617)
+dot1x:12846:1773821469.401113:Wed Mar 18 03:11:09 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:12846:1773821470.833065:Wed Mar 18 03:11:10 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 03:11:09",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 0,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      },
+      "rule_3" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 03:11:08 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]",
+      "rule_3" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:12846:1773821471.835590:Wed Mar 18 03:11:11 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:12846:1773821473.257928:Wed Mar 18 03:11:13 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 03:11:11",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 0,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      },
+      "rule_3" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 03:11:08 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]",
+      "rule_3" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:12846:1773821474.228987:Wed Mar 18 03:11:14 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new sw devupdate: , , HASH(0xb5d2ac0)
+dot1x:12846:1773821474.229357:Wed Mar 18 03:11:14 2026: main::disconnect_cb:5941:[other]::5: main::nas_update: Update 10.16.128.18
+dot1x:12846:1773821474.231771:Wed Mar 18 03:11:14 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new sw devupdate: , , HASH(0xb5cc9c0)
+dot1x:12846:1773821474.232072:Wed Mar 18 03:11:14 2026: main::disconnect_cb:5941:[other]::5: main::nas_update: Update 10.16.128.21
+dot1x:12846:1773821474.259297:Wed Mar 18 03:11:14 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:12846:1773821475.727067:Wed Mar 18 03:11:15 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 03:11:14",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 0,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      },
+      "rule_3" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 03:11:08 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]",
+      "rule_3" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:12846:1773821476.729378:Wed Mar 18 03:11:16 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:12846:1773821478.122032:Wed Mar 18 03:11:18 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-18 03:11:16",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 0,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      },
+      "rule_3" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Wed Mar 18 03:11:08 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]",
+      "rule_3" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:12846:1773821478.201396:Wed Mar 18 03:11:18 2026: main::plugin_stats_cb:1592:[other]::5: called with: 
+dot1x:12846:1773821478.202334:Wed Mar 18 03:11:18 2026: main::dot1x_stats_add:6938:[other]::5: dot1x_stats_add key = running_time, label = running_ time_(minutes_since_start) value = 253
+dot1x:12846:1773821478.203089:Wed Mar 18 03:11:18 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 254{label=running_ time_(minutes_since_start),periods={},value=254}
+dot1x:12846:1773821478.204090:Wed Mar 18 03:11:18 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 254{label=number_of_accepted_authentications,periods={day={duration=1440,last_count=0},hour={avg_val=0,duration=60,last_count=0}},value=0}
+dot1x:12846:1773821478.204590:Wed Mar 18 03:11:18 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 254{count=0,label=average_duration_of_ntlm_auth,periods={},value=0}
+dot1x:12846:1773821478.205206:Wed Mar 18 03:11:18 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 254{label=number_of_rejected_authentications,periods={day={duration=1440,last_count=0},hour={avg_val=0,duration=60,last_count=0}},value=0}
+dot1x:12846:1773821478.205850:Wed Mar 18 03:11:18 2026: Sent 10 stats
+dot1x:12846:1773821478.518228:Wed Mar 18 03:11:18 2026: In plugin_usocket
+dot1x:12846:1773821478.518754:Wed Mar 18 03:11:18 2026: Got message stop_stop
+dot1x:12846:1773821478.527546:Wed Mar 18 03:11:18 2026: main::plugin_stop_daemon_cb:1584:[other]::5: called with: 
+dot1x:12846:1773821478.527762:Wed Mar 18 03:11:18 2026: main::cb_1x_stop_daemon:1260:[other]::1: stopping
+dot1x:12846:1773821478.527853:Wed Mar 18 03:11:18 2026: Stopping bundled Free-Radius...
+dot1x:12846:1773821482.584840:Wed Mar 18 03:11:22 2026: Run linux command 'fstool winbind stop;fstool radiusd stop;'. 
+Output: 'Stopping winbindd.txqalab...
+winbindd of txqalab is dead
+Stopping radiusd...
+Stop radiusd'(cb_1x_stop_daemon:1268)
+dot1x:12846:1773821482.584979:Wed Mar 18 03:11:22 2026: flushing Redis DB...
+dot1x:12846:1773821482.595152:Wed Mar 18 03:11:22 2026: Handling stop message stop_stop
+dot1x:12846:1773821482.596786:Wed Mar 18 03:11:22 2026: Plugin stopped
+dot1x:24922:1773821484.381944:Wed Mar 18 03:11:24 CDT -0500 2026: Started: version: 4.8.6-48060050 1770406166 (id: dot1x-0.520559197466241)
+dot1x:24922:1773821484.515715:Wed Mar 18 03:11:24 2026: main::plugin_ready_cb:1578:[other]::5: called with: 
+dot1x:24922:1773821484.516972:Wed Mar 18 03:11:24 2026: main::cb_1x_ready:1136:[other]::0: ===== Started; Policy-Enabled=1 =====
+dot1x:24922:1773821484.521731:Wed Mar 18 03:11:24 2026: mar module has started. listening...(open_child_process:5825)
+dot1x:24922:1773821485.559106:Wed Mar 18 03:11:25 2026: Run linux command 'fstool redis_server status'. 
+Output: 'redis-server (pid 3437) is running for 7-16:08:44.'(dot1x_start_mar_redis:7072)
+dot1x:24922:1773821485.560161:Wed Mar 18 03:11:25 2026: main::dot1x_start_mar_redis:7078:[other]::1: created redis Redis=HASH(0xaade4d0).
+dot1x:24922:1773821485.562044:Wed Mar 18 03:11:25 2026: main::dot1x_load_mar_inactivity_hosts:7084:[other]::1: About to load MAR hosts with inactivity timers
+dot1x:24922:1773821485.567171:Wed Mar 18 03:11:25 2026: disconnect module has started. listening...(open_child_process:5825)
+dot1x:24922:1773821487.404672:Wed Mar 18 03:11:27 2026: Run linux command 'fstool 1x_log_reader restart'. 
+Output: 'Stopping 1x_log_reader daemon...
+Starting 1x_log_reader daemon...'(cb_1x_ready:1152)
+dot1x:24922:1773821489.871934:Wed Mar 18 03:11:29 2026: Run linux command 'cd /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb; rm -f certs; ln -s /usr/local/forescout/etc/dot1x/certs certs'. Returned 0.(cc_exec_certs_relink:7272)
+dot1x:24922:1773821489.908656:Wed Mar 18 03:11:29 2026: Run linux command 'psql -c "select id from devinfo where category='ad' and (id='txqalab-dc1' or (field_name='ad_name' and field_value='txqalab-dc1'))" | grep "(0 rows)"'. Returned 256.(dot1x_ad_name_exists:321)
+dot1x:24922:1773821489.908966:Wed Mar 18 03:11:29 2026: main::dot1x_reload_proxies:8446:[other]::1: Updated 0 out of 0 given proxy servers:
+dot1x:24922:1773821489.909145:Wed Mar 18 03:11:29 2026: main::dot1x_configure:892:[other]::0: Loading complete (for 0 proxies)
+dot1x:24922:1773821489.957434:Wed Mar 18 03:11:29 2026: Run linux command 'psql -c "select id from devinfo where category='ad' and (id='txqalab-dc1' or (field_name='ad_name' and field_value='txqalab-dc1'))" | grep "(0 rows)"'. Returned 256.(dot1x_ad_name_exists:321)
+dot1x:24922:1773821489.996650:Wed Mar 18 03:11:29 2026: Run linux command 'psql -c "select id from devinfo where category='ad' and (id='txqalab-dc1' or (field_name='ad_name' and field_value='txqalab-dc1'))" | grep "(0 rows)"'. Returned 256.(dot1x_ad_name_exists:321)
+dot1x:24922:1773821489.998014:Wed Mar 18 03:11:29 2026: fetched ad by key=txqalab-dc1: item= data={ad=[{ad_accessed_by=0,ad_accessed_by_all=true,ad_alias_all=false,ad_alias_list=,ad_auth_test_password=*****,ad_auth_test_user=fsadmin,ad_client_crt=false,ad_comment=,ad_console_login=true,ad_crl=false,ad_dir_test_user=fsadmin,ad_domain=txqalab.forescout.local,ad_dyn_dc=false,ad_dyn_refresh=3600,ad_dynamic_primary_group=true,ad_include_parent_groups=false,ad_ip=10.100.127.1,ad_name=txqalab-dc1,ad_ocsp=false,ad_ocsp_soft=false,ad_password=*****,ad_port=389,ad_query_attrs=,ad_query_p_size=1000,ad_revocation=false,ad_support_auth=true,ad_support_cross=false,ad_support_directory=true,ad_use_recursive_search=false,ad_use_ssl=false,ad_user=administrator,ad_vendor=ad,ad_verify_srvcrt=false,key=txqalab-dc1}]} header={context=request}(dot1x_set_single_adconf:8121)
+dot1x:24922:1773821490.006403:Wed Mar 18 03:11:30 2026: main::dot1x_dynamic_select_ad_ip:6733:[conf]::5: looking for fastest DC for txqalab.forescout.local from AD plugin replicas
+dot1x:24922:1773821490.033239:Wed Mar 18 03:11:30 2026: Run linux command 'nslookup -timeout=12 10.100.127.1'. 
+Output: '1.127.100.10.in-addr.arpa	name = txqalab-dc1.txqalab.forescout.local.
+
+Authoritative answers can be found from:
+'(dot1x_dns_lookup:6878)
+dot1x:24922:1773821490.033849:Wed Mar 18 03:11:30 2026: main::dot1x_dns_lookup:6890:[conf]::5: lookup 10.100.127.1 => txqalab-dc1.txqalab.forescout.local.
+dot1x:24922:1773821490.036403:Wed Mar 18 03:11:30 2026: main::dot1x_dynamic_select_ad_ip:6773:[conf]::5: txqalab-dc1.txqalab.forescout.local candidate
+dot1x:24922:1773821490.036706:Wed Mar 18 03:11:30 2026: main::dot1x_dynamic_select_ad_ip:6777:[conf]::5: 10.100.127.1 is reachable fast enough (in 0.003 sec. or less ); skip looking for better candidates
+dot1x:24922:1773821490.036930:Wed Mar 18 03:11:30 2026: main::dot1x_dynamic_select_ad_ip:6802:[conf]::1: sort done, select txqalab-dc1.txqalab.forescout.local(10.100.127.1)
+dot1x:24922:1773821490.037920:Wed Mar 18 03:11:30 2026: main::update_domain_in_domains_map_file:8013:[other]::1: editing domain map with aliases  affilated with domain TXQALAB
+dot1x:24922:1773821490.038263:Wed Mar 18 03:11:30 2026: main::read_file_non_matching_expression:7993:[other]::1: read content excluding ^txqalab-dc1: from /usr/local/forescout/etc/dot1x/domains_map.conf:
+ 
+dot1x:24922:1773821490.038715:Wed Mar 18 03:11:30 2026: main::write_content_file:8000:[other]::1: write txqalab-dc1:NULL=TXQALAB
+txqalab-dc1:TXQALAB.FORESCOUT.LOCAL=TXQALAB
+txqalab-dc1:TXQALAB=TXQALAB
+ to /usr/local/forescout/etc/dot1x/domains_map.conf
+dot1x:24922:1773821490.046164:Wed Mar 18 03:11:30 2026: Run linux command 'mv /usr/local/forescout/etc/dot1x/domains_map.conf.tmp /usr/local/forescout/etc/dot1x/domains_map.conf'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:24922:1773821490.046409:Wed Mar 18 03:11:30 2026: main::dot1x_setall_adconf:8392:[other]::1: default domain: , ad domains: txqalab-dc1
+dot1x:24922:1773821490.046707:Wed Mar 18 03:11:30 2026: main::dot1x_setall_adconf:8393:[other]::1: Updated 1 out of 1 given user directories:
+{txqalab-dc1={ad_addr=10.100.127.1,ad_basedn=dc=TXQALAB,dc=FORESCOUT,dc=LOCAL,ad_bind_dn=administrator@txqalab.forescout.local,ad_dc_hostname=txqalab-dc1,ad_dc_ssl=0,ad_dns_realm=TXQALAB.FORESCOUT.LOCAL,ad_domain=TXQALAB,ad_name=txqalab-dc1,ad_nbtdomain=TXQALAB,ad_port=389,ad_secret=******,ad_ud_user=administrator,ad_vendor=ad,alias_list=[]}}
+dot1x:24922:1773821490.046935:Wed Mar 18 03:11:30 2026: main::dot1x_fetch_ad_ca:7841:[conf]::1: fetchin certificates of ADs CAs and dumped them to /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/certs/ad_ca.pem.
+dot1x:24922:1773821490.047117:Wed Mar 18 03:11:30 2026: main::dot1x_fetch_ad_ca:7843:[conf]::1: ad certificate:
+dot1x:24922:1773821490.047300:Wed Mar 18 03:11:30 2026: Adding <TXQALAB.FORESCOUT.LOCAL> to krb5.conf file, DC: <10.100.127.1>(dot1x_generate_krb5_conf_file:7597)
+dot1x:24922:1773821490.047669:Wed Mar 18 03:11:30 2026: main::dot1x_generate_krb5_conf_file:7614:[other]::5: Generating krb5.conf, hash dump: $VAR1 = {
+          'libdefaults' => [
+                             'default_tgs_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC',
+                             'default_tkt_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC',
+                             'preferred_enctypes = aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 RC4-HMAC',
+                             'dns_lookup_realm = false',
+                             'dns_lookup_kdc = false',
+                             'rdns = false'
+                           ],
+          'realms' => [
+                        'TXQALAB.FORESCOUT.LOCAL = {
+  kdc = 10.100.127.1
+  admin_server = 10.100.127.1
+ }'
+                      ],
+          'domain_realm' => [
+                              'txqalab.forescout.local = TXQALAB.FORESCOUT.LOCAL',
+                              '.txqalab.forescout.local = TXQALAB.FORESCOUT.LOCAL'
+                            ]
+        };
+dot1x:24922:1773821490.048107:Wed Mar 18 03:11:30 2026: Wrote krb5 conf file: /usr/local/forescout/plugin/dot1x/fs_radius/etc/krb5.conf.fr.all(dot1x_generate_krb5_conf_file:7629)
+dot1x:24922:1773821490.054016:Wed Mar 18 03:11:30 2026: Run linux command 'rm -f /usr/local/forescout/plugin/dot1x/fs_radius/var/run/radiusd/krb5_ccache.*'. Returned 0.(dot1x_reload_ads:7524)
+dot1x:24922:1773821490.064937:Wed Mar 18 03:11:30 2026: Run linux command 'rm -rf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/ldap; mkdir -p /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/ldap'. Returned 0.(dot1x_reload_ads:7527)
+dot1x:24922:1773821490.065258:Wed Mar 18 03:11:30 2026: main::dot1x_generate_smb_conf_file:7649:[other]::5: Input args: TXQALAB.FORESCOUT.LOCALtxqalabTXQALAB10.100.127.1
+dot1x:24922:1773821490.083706:Wed Mar 18 03:11:30 2026: main::dot1x_generate_smb_conf_file:7710:[other]::5: diff -u /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab /tmp/smb.conf.tmp
+dot1x:24922:1773821490.084148:Wed Mar 18 03:11:30 2026: main::dot1x_generate_smb_conf_file:7723:[other]::1: No need to replace /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab
+dot1x:24922:1773821490.092105:Wed Mar 18 03:11:30 2026: cmd=echo stub | sudo fstool dot1x_net ads testjoin -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab(fs_radius_test_ads_join:199)
+dot1x:24922:1773821490.236353:Wed Mar 18 03:11:30 2026: Run linux command <contains secrets>(fs_radius_test_ads_join:202)
+dot1x:24922:1773821490.236751:Wed Mar 18 03:11:30 2026: test_ads_join returned: Join is OK(dot1x_start_winbind:7470)
+dot1x:24922:1773821490.236995:Wed Mar 18 03:11:30 2026: Started winbind for [txqalab-dc1], smb domain: [txqalab], args: [/usr/local/forescout/plugin/dot1x/fs_radius -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab], restart: [](dot1x_start_winbind:7479)

@@ -3,15 +3,26 @@ from lib.passthrough.enums import AuthenticationStatus, WindowsCert
 from lib.passthrough.lan_profile_builder import LanProfile
 from lib.plugin.radius.enums import Dot1xAttribute, PreAdmissionAuth, MscaOid, EKUEntry, MSCAEntry, RadiusAuthStatus
 from tests.radius.functional.base_classes.radius_eap_tls_test_base import RadiusEapTlsTestBase
+from lib.plugin.radius.enums import PreAdmissionAuth, RadiusFragmentSize
+from framework.decorator.prametrizor import parametrize
 
-
+# ---------------------------------------------------------------------------
+#Global constants
+# ---------------------------------------------------------------------------
 DOT1X_CLIENT_CERT_VALID = getattr(WindowsCert, "DOT1X_CLT_RADIUS_SET1", WindowsCert.CERT_DOT1X_VALID)
 DOT1X_CLIENT_CERT_REVOKED = getattr(WindowsCert, "DOT1X_CLT_RADIUS_SET2", WindowsCert.CERT_DOT1X_REVOKED)
 
+# ---------------------------------------------------------------------------
+# Domain / user constants
+# ---------------------------------------------------------------------------
 CERT_PASSWORD = "aristo"
 
+# ---------------------------------------------------------------------------
+# Pre-admission rule building blocks
+# ---------------------------------------------------------------------------
 RULE_EAP_TYPE_TLS = [{"criterion_name": "EAP-Type", "criterion_value": ["TLS"]}]
 RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
+EXPECTED_SAN = "URI:E2EQADeviceId://qae2e-san-testid-12345"
 
 
 class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
@@ -50,22 +61,24 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
             self.verify_pre_admission_rule(rule_priority=1)
             self.verify_wired_properties(nas_port_id=self.switch.port1['interface'])
             self.verify_authentication_on_ca()
-            self.verify_san(expected_san="URI:E2EQADeviceId://qae2e-san-testid-12345")
+            self.verify_san(expected_san=EXPECTED_SAN)
         except Exception as e:
             log.error(f"[T1316924] FAIL: {e}")
             raise
 
-# class EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
-#     """
-#     T1316925
-#     Steps
-#     -----
-#     1. From the Policy tab, add a **Custom** policy named "Radius SAN" with condition **802.1x Client Cert Subject Alternative Name – Contains = san-testid**, apply configuration, and verify the policy appears under **Views** on the Home tab with no errors.
-#     2. From the Home tab, select policy **"Radius SAN"** in the Views pane, view the policy results, select the host, and verify the SAN value from the certificate is shown in the results (including Reported at / Reported by when hovering the condition).
-#     3. Edit policy **"Radius SAN"**, change the condition to **Contains = <invalid value>**, apply configuration, and verify the host no longer matches the policy.
-#     4. Edit policy **"Radius SAN"** again, change the condition to **Contains = san-testid (or another valid SAN fragment)**, apply configuration, and verify the host matches the policy again and the SAN value appears in the results.
-#       TODO REQUIRES POLICY API BY HAO
-#     """
+class TC_9448_EAPTLSPolicySANDetectionTest(RadiusEapTlsTestBase):
+    """T1316925
+         Steps
+    -----
+    1. Preconditions: Create/update endpoint and populate properties (including SAN) and Validate SAN is present on the endpoint
+    2. Create Custom policy "Radius SAN" with condition:
+       802.1x Client Cert Subject Alternative Name CONTAINS "Any Value" --> 12345
+       Apply and verify it matches the host.
+    3. Edit policy: change condition to CONTAINS "invalid"
+       Apply and verify host no longer matches.
+    4. Edit policy back to CONTAINS "san-testid"
+       Apply and verify host matches again.
+    """
 
 #     # Rule Settings
 #     RULE_USER_NAME_ANY = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
@@ -86,14 +99,67 @@ class EAPTLSPreAdmissionSANTest(RadiusEapTlsTestBase):
 #         {"cond_rules": RULE_USER_NAME_ANY, "auth": PreAdmissionAuth.REJECT_DUMMY},
 #     ]
 
-#     def do_test(self):
-#         auth_nic_profile = AuthNicProfile.EAP_TLS
-#         expected_status = AuthenticationStatus.SUCCEEDED
-#         fail_status = AuthenticationStatus.FAILED
-#         certificate_password = CERT_PASSWORD
-#         ca_endpoint_reject = "Access-Reject"
-#         expected_sanid = "URI:E2EQADeviceId://qae2e-san-testid-12345"
-#         case_id = "T1316925"
+    SET_ACCEPT_TLS_ELSE_DENY = [
+        {"cond_rules": RULE_EAP_TYPE_TLS, "auth": PreAdmissionAuth.ACCEPT},
+        {"cond_rules": RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+    ]
+
+    EXPECTED_SAN = "URI:E2EQADeviceId://qae2e-san-testid-12345"
+
+    def do_test(self):
+        try:
+            # Admission 1 : create/update endpoint and populate properties (including SAN)
+            self.wait_for_dot1x_ready()
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
+            self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.verify_authentication_on_ca()
+
+            # Validate SAN is present on the endpoint (good sanity check)
+            self.verify_san(expected_san=self.EXPECTED_SAN)
+
+            # ---------- Step 2: Set policy match to Any Value with "12345"----------
+            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(match_type="Any Value", value="12345", match_case=False,)
+
+            # Admission #2: force policy evaluation after policy import/update
+            self.wait_for_dot1x_ready()
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
+            self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.verify_authentication_on_ca()
+            self.verify_policy_match(policy_name, expected_count=1)
+            self.verify_authentication_on_ca()
+
+            # ---------- Step 3: Update policy match to Contains invalid value "san-testids" ----------
+            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(match_type="Contains", value="san-testids", match_case=False,)
+
+            # Admission #3: force re-eval after update
+            self.wait_for_dot1x_ready()
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
+            self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.verify_authentication_on_ca()
+            self.verify_policy_match(policy_name, expected_count=0)
+            self.verify_authentication_on_ca()
+
+            # ---------- Step 4: Update Policy match to Contains value "san-testid" ----------
+            policy_name = self.add_dot1x_policy_radius_fr_client_x509_cert_subj_alt_name(match_type="Contains", value="san-testid", match_case=False,)
+
+            # Admission #4: force re-eval afte update
+            self.wait_for_dot1x_ready()
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
+            self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.verify_authentication_on_ca()
+            self.verify_policy_match(policy_name, expected_count=1)
+            self.verify_authentication_on_ca()
+        except Exception as e:
+            log.error(f"[T1316925] FAIL: {e}")
+            raise
 
 #         try:
 #             self.configure_lan_profile(auth_nic_profile=auth_nic_profile)
@@ -956,4 +1022,68 @@ class EAPTLSPreAdmissionMSCAMultipleCriterionsTest(RadiusEapTlsTestBase):
 
         except Exception as e:
             log.error(f"[T1316959] FAIL: {e}")
+            raise
+
+# ====================================================================================
+# TC-9294 — EAP-TTLS: Setting the Fragment size (Framed-MTU = Fragment size - 30)  
+# ====================================================================================
+@parametrize(
+    "fragment_size",
+    [
+        (RadiusFragmentSize.SIZE_1024.name,),   # T1316989 TC-9294
+        (RadiusFragmentSize.SIZE_1400.name,),   # T1316991 TC-9295
+        (RadiusFragmentSize.SIZE_1230.name,),   # T1316992 TC-9296
+        (RadiusFragmentSize.SIZE_500.name,),    # T1316993 TC-9297
+    ],
+)
+class TC_9294_RadiusFragmentSizeDefaultWiredEapTls(RadiusEapTlsTestBase):
+    """
+    TC-9294/TC-9295/TC-9296/TC-9297
+    DOT | Verify setting the Fragment size (Framed-MTU = Fragment size - 30)
+    
+    Steps (TestRail):
+    -----
+    1. Options -> Radius -> Radius Settings: Set Fragment size to <fragment_size>, Apply.
+    2. Options -> Radius -> Pre-Admission Authorization:
+       - Add rule: EAP-Type = PEAP
+       - Add rule: EAP-Type = EAP-TLS
+    3. Authenticate using PEAP-EAP-TLS and verify authenticated (rule 1).
+    4. Authenticate using EAP-TLS and verify authenticated (rule 2).
+    5. Authenticate using PEAP and verify authenticated (rule 1).
+    """
+  
+    RULE_EAP_TYPE_PEAP = [{"criterion_name": "EAP-Type", "criterion_value": ["PEAP"]}]
+    RULE_EAP_TYPE_EAP_TLS = [{"criterion_name": "EAP-Type", "criterion_value": ["EAP-TLS"]}]
+    RULE_USER_NAME_MATCH_ANY_DENY_ACCESS = [{"criterion_name": "User-Name", "criterion_value": ["anyvalue"]}]
+    
+    
+    def do_test(self):
+        try:
+            fragment_size = RadiusFragmentSize[self.test_params["fragment_size"]].value
+            # Step 1: Configure fragment size in RADIUS plugin
+            self.configure_radius_settings(fragment_size=fragment_size,)
+
+            # Step 2: Configure Pre-Admission rules (PEAP + EAP-TLS, else deny)
+            set_rules = [
+                {"cond_rules": self.RULE_EAP_TYPE_PEAP, "auth": PreAdmissionAuth.ACCEPT},         # priority 1
+                {"cond_rules": self.RULE_EAP_TYPE_EAP_TLS, "auth": PreAdmissionAuth.ACCEPT},      # priority 2
+                {"cond_rules": self.RULE_USER_NAME_MATCH_ANY_DENY_ACCESS, "auth": PreAdmissionAuth.REJECT_DUMMY},
+            ]
+            self.dot1x.set_pre_admission_rules(set_rules)
+            self.certificate_password = CERT_PASSWORD
+            self.cert_config.certificate_filename = WindowsCert.CERT_DOT1X_VALID.value
+            self.import_certificates(certificate_password=self.certificate_password)
+            # Step 4: EAP-TLS (rule priority 2)
+            self.configure_lan_profile(lan_profile=LanProfile.eap_tls())
+            self.wait_for_dot1x_ready()
+            self.toggle_nic()
+            self.assert_nic_authentication_status(expected_status=AuthenticationStatus.SUCCEEDED)
+            self.verify_nic_ip_in_range()
+            self.verify_pre_admission_rule(rule_priority=2)
+            self.verify_wired_properties(nas_port_id=self.switch.port1["interface"])
+            self.verify_authentication_on_ca()
+            self.verify_radius_get_log(fragment_size=fragment_size, fallback_to_appliance=True)
+
+        except Exception as e:
+            log.error(f"{self.testCaseId}  FAIL: {e}")
             raise

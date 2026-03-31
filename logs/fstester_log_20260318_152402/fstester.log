@@ -1,0 +1,26 @@
+2026-03-18 15:24:02,729 - myframework - INFO - 
+==========================================================================================Running Suite Setup===========================================================================================
+
+2026-03-18 15:24:02,729 - myframework - INFO - set up radius test suite
+2026-03-18 15:24:02,729 - myframework - INFO - RadiusFragmentSizeDefaultWired with {'fragment_size': '1024'}
+2026-03-18 15:24:02,729 - myframework - INFO - === Starting PEAP-EAP-TLS Test Setup ===
+2026-03-18 15:24:02,729 - myframework - INFO - Starting collecting logs from 10.16.177.66 for log file: /usr/local/forescout/log/plugin/dot1x/dot1x.log
+2026-03-18 15:24:02,730 - myframework - INFO - Starting collecting logs from 10.16.177.66 for log file: /usr/local/forescout/log/plugin/dot1x/radiusd.log
+2026-03-18 15:24:02,730 - myframework - INFO - Radius Common Setup
+2026-03-18 15:24:02,730 - myframework - INFO - Radius Server IP: 10.16.177.66
+2026-03-18 15:24:02,730 - myframework - INFO - Switch IP: 10.16.128.21
+2026-03-18 15:24:02,730 - myframework - INFO - Passthrough Management IP: 10.16.133.134
+2026-03-18 15:24:02,730 - myframework - INFO - Passthrough MAC: 98f2b301a055
+2026-03-18 15:24:02,730 - myframework - INFO - Test start time: 2026-03-18 15:24:02.730610
+2026-03-18 15:24:03,434 - myframework - INFO - Executing command on CounterAct: psql -t -A -F '|' -c "SELECT id, field_name, field_value FROM devinfo WHERE category='ad' AND field_name='ad_domain' AND field_value LIKE '%forescout.local%'"
+2026-03-18 15:24:03,516 - myframework - INFO - Command output:
+2026-03-18 15:24:03,516 - myframework - INFO -   txqalab2-dc1|ad_domain|txqalab2.txqalab.forescout.local
+2026-03-18 15:24:03,516 - myframework - INFO -   txqalab-dc1|ad_domain|txqalab.forescout.local
+2026-03-18 15:24:03,516 - myframework - INFO - AD domain and ad name mapping retrieved: {'txqalab2.txqalab.forescout.local': ['txqalab2-dc1'], 'txqalab.forescout.local': ['txqalab-dc1']}
+2026-03-18 15:24:03,517 - myframework - WARNING - No ad_name defined for ad_domain 'txqalab3.txqalab.forescout.local' in User Directory.
+2026-03-18 15:24:03,848 - myframework - INFO - CounterACT version on 10.16.177.66: 8.5.2
+2026-03-18 15:24:03,848 - myframework - INFO - CA version 8.5.2: using auth_value format 'txqalab-dc1:ad::testuser|administrator'
+2026-03-18 15:24:03,905 - myframework - INFO - === PEAP-EAP-TLS Test Teardown ===
+2026-03-18 15:24:03,905 - myframework - INFO - Removing certificates...
+2026-03-18 15:24:03,905 - myframework - INFO - Certificates removed
+2026-03-18 15:24:03,905 - myframework - INFO - radius common teardown
