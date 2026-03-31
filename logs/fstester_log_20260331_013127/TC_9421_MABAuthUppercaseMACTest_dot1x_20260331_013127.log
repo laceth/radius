@@ -1,0 +1,132 @@
+                                        {
+                                          'value' => 'MAB',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'MAB',
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:20908:1774938692.406396:Tue Mar 31 01:31:32 2026: recv.action_request_params:HASH(0xb80fde8)
+dot1x:20908:1774938692.406552:Tue Mar 31 01:31:32 2026: recv.plugin_call_netaction_new:4
+dot1x:20908:1774938692.407326:Tue Mar 31 01:31:32 2026: [98f2b301a055/Action/98f2b301a055] 1774938180(update_db_host:6361)
+dot1x:20908:1774938692.407483:Tue Mar 31 01:31:32 2026: [98f2b301a055/Action/98f2b301a055] 1774938180(update_db_host:6361)
+dot1x:20908:1774938692.407634:Tue Mar 31 01:31:32 2026: [98f2b301a055/Action/98f2b301a055] 1774938180(update_db_host:6361)
+dot1x:20908:1774938692.407750:Tue Mar 31 01:31:32 2026: [98f2b301a055/Action/98f2b301a055] 1774938180(update_db_host:6361)
+dot1x:20908:1774938692.407916:Tue Mar 31 01:31:32 2026: [98f2b301a055/Action/98f2b301a055] 1774938180(update_db_host:6361)
+dot1x:20908:1774938692.408056:Tue Mar 31 01:31:32 2026: [98f2b301a055/Action/98f2b301a055] 1774938180(update_db_host:6361)
+dot1x:20908:1774938692.408279:Tue Mar 31 01:31:32 2026: [98f2b301a055/Action/98f2b301a055] 1774938180(update_db_host:6361)
+dot1x:20908:1774938692.408381:Tue Mar 31 01:31:32 2026: [98f2b301a055/Action/98f2b301a055] 1774938180(update_db_host:6361)
+dot1x:20908:1774938692.408486:Tue Mar 31 01:31:32 2026: [98f2b301a055/Action/98f2b301a055] 1774938180(update_db_host:6361)
+dot1x:20908:1774938692.408642:Tue Mar 31 01:31:32 2026: [98f2b301a055/Action/98f2b301a055] 1774938180(update_db_host:6361)
+dot1x:20908:1774938706.614773:Tue Mar 31 01:31:46 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938705
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:20908:1774938706.616860:Tue Mar 31 01:31:46 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938705
+AuthStatus 'Access-Reject:'
+dot1x:20908:1774938706.617347:Tue Mar 31 01:31:46 2026: main::dot1x_update_authentication_props:3394:[fr-update]::0: <98f2b301a055|usr=98f2b301a055>Logon Failure: Rejected user 98f2b301a055: 
+dot1x:20908:1774938706.618535:Tue Mar 31 01:31:46 2026: [98f2b301a055/ntlmpl/98f2b301a055] 98f2b301a055 Failed Auth(dot1x_host_log:385)
+dot1x:20908:1774938706.619796:Tue Mar 31 01:31:46 2026: main::dot1x_fetchMar:2230:[ntlmpl]::0: <98f2b301a055|usr=98f2b301a055>no MAR entry for 98f2b301a055!
+dot1x:20908:1774938718.784696:Tue Mar 31 01:31:58 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026 12-13:14:53 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:14:53 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+12073 Tue Mar 31 01:10:11 2026       21:47 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+12076 Tue Mar 31 01:10:11 2026       21:47 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+20923 Tue Mar 31 01:16:11 2026       15:47 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+21004 Tue Mar 31 01:16:12 2026       15:46 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+21153 Tue Mar 31 01:16:14 2026       15:44 00:00:10 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+22450 Tue Mar 31 01:17:06 2026       14:52 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+22452 Tue Mar 31 01:17:06 2026       14:52 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:20908:1774938718.784954:Tue Mar 31 01:31:58 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:20908:1774938724.058776:Tue Mar 31 01:32:04 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938723
+AcctSid '00000D34'
+!
+dot1x:20908:1774938724.060798:Tue Mar 31 01:32:04 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938723
+AcctStatusType 'Stop'
+!
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:20908:1774938727.547032:Tue Mar 31 01:32:07 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:20908:1774938727.553042:Tue Mar 31 01:32:07 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:20908:1774938727.553773:Tue Mar 31 01:32:07 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:20908:1774938727.554162:Tue Mar 31 01:32:07 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:20908:1774938727.637949:Tue Mar 31 01:32:07 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:20908:1774938727.735838:Tue Mar 31 01:32:07 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'MAB',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'MAB',
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:20908:1774938733.814529:Tue Mar 31 01:32:13 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938733
+AssignedTo ''
+dot1x:20908:1774938733.815553:Tue Mar 31 01:32:13 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938733
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:20908:1774938733.817121:Tue Mar 31 01:32:13 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938733
+AuthStatus 'Access-Accept:default rule_1'
+dot1x:20908:1774938733.823906:Tue Mar 31 01:32:13 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938733
+Cisco-AVPair ''
+!
+dot1x:20908:1774938733.824765:Tue Mar 31 01:32:13 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938733
+Auth-Type 'Accept'
+!
+dot1x:20908:1774938733.935038:Tue Mar 31 01:32:13 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938733
+AcctSid '00000D37'
+!
+dot1x:20908:1774938733.942014:Tue Mar 31 01:32:13 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774938733
+Framed-IP-Address ''
