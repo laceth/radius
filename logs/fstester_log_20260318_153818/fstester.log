@@ -1,0 +1,328 @@
+2026-03-18 15:38:18,756 - myframework - INFO - 
+==========================================================================================Running Suite Setup===========================================================================================
+
+2026-03-18 15:38:18,756 - myframework - INFO - set up radius test suite
+2026-03-18 15:38:18,756 - myframework - INFO - RadiusFragmentSizeDefaultWired with {'fragment_size': '1024'}
+2026-03-18 15:38:18,756 - myframework - INFO - === Starting PEAP-EAP-TLS Test Setup ===
+2026-03-18 15:38:18,756 - myframework - INFO - Starting collecting logs from 10.16.177.66 for log file: /usr/local/forescout/log/plugin/dot1x/dot1x.log
+2026-03-18 15:38:18,758 - myframework - INFO - Starting collecting logs from 10.16.177.66 for log file: /usr/local/forescout/log/plugin/dot1x/radiusd.log
+2026-03-18 15:38:18,758 - myframework - INFO - Radius Common Setup
+2026-03-18 15:38:18,758 - myframework - INFO - Radius Server IP: 10.16.177.66
+2026-03-18 15:38:18,758 - myframework - INFO - Switch IP: 10.16.128.18
+2026-03-18 15:38:18,758 - myframework - INFO - Passthrough Management IP: 10.16.133.189
+2026-03-18 15:38:18,758 - myframework - INFO - Passthrough MAC: 98f2b3019774
+2026-03-18 15:38:18,758 - myframework - INFO - Test start time: 2026-03-18 15:38:18.758786
+2026-03-18 15:38:19,486 - myframework - INFO - Executing command on CounterAct: psql -t -A -F '|' -c "SELECT id, field_name, field_value FROM devinfo WHERE category='ad' AND field_name='ad_domain' AND field_value LIKE '%forescout.local%'"
+2026-03-18 15:38:19,673 - myframework - INFO - Command output:
+2026-03-18 15:38:19,673 - myframework - INFO -   txqalab2-dc1|ad_domain|txqalab2.txqalab.forescout.local
+2026-03-18 15:38:19,674 - myframework - INFO -   txqalab-dc1|ad_domain|txqalab.forescout.local
+2026-03-18 15:38:19,674 - myframework - INFO - AD domain and ad name mapping retrieved: {'txqalab2.txqalab.forescout.local': ['txqalab2-dc1'], 'txqalab.forescout.local': ['txqalab-dc1']}
+2026-03-18 15:38:19,674 - myframework - WARNING - No ad_name defined for ad_domain 'txqalab3.txqalab.forescout.local' in User Directory.
+2026-03-18 15:38:20,002 - myframework - INFO - CounterACT version on 10.16.177.66: 8.5.2
+2026-03-18 15:38:20,002 - myframework - INFO - CA version 8.5.2: using auth_value format 'txqalab-dc1:ad::testuser|administrator'
+2026-03-18 15:38:21,966 - myframework - INFO - Auth source 'txqalab-dc1' already configured in slot 1, skipping
+2026-03-18 15:38:21,967 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-18 15:38:21,967 - myframework - INFO - Checking RADIUS Authentication Source joined domain 'txqalab-dc1'
+2026-03-18 15:38:21,967 - myframework - INFO - Testing domain 'txqalab-dc1' joined status with testjoin command
+2026-03-18 15:38:21,967 - myframework - INFO - Executing command on CounterAct: fstool dot1x testjoin txqalab-dc1
+2026-03-18 15:38:25,118 - myframework - INFO - Test join command output: Join OK [txqalab-dc1]
+2026-03-18 15:38:25,119 - myframework - INFO - Domain 'txqalab-dc1' is already joined, skipping join operation
+2026-03-18 15:38:25,119 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-18 15:38:25,745 - myframework - INFO - Auth source null already set to 'txqalab-dc1', skipping
+2026-03-18 15:38:25,745 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.66
+2026-03-18 15:38:26,366 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-18 15:38:26,366 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-18 15:38:26,366 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-18 15:38:26,366 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-18 15:38:26,366 - myframework - INFO - Executing command on CounterAct: fstool dot1x set_property config.min_tls_version.value v1_2
+2026-03-18 15:38:27,784 - myframework - INFO - config.fragment_size.value already set to '1024', skipping
+2026-03-18 15:38:27,784 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-18 15:38:27,785 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-18 15:38:27,785 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-18 15:38:27,785 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-18 15:38:27,785 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-18 15:38:27,785 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-18 15:38:27,785 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-18 15:38:27,785 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-18 15:38:27,785 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-18 15:38:27,785 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-18 15:38:27,785 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-18 15:38:27,785 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-18 15:38:27,785 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-18 15:38:27,785 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-18 15:38:27,786 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-18 15:38:27,786 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-18 15:38:27,786 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-18 15:38:27,786 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-18 15:38:27,786 - myframework - INFO - Restarting dot1x plugin to apply pending changes...
+2026-03-18 15:38:27,786 - myframework - INFO - Restarting 802.1X plugin on 10.16.177.66
+2026-03-18 15:38:33,996 - myframework - INFO - Received 'Done starting RADIUS.' confirmation
+2026-03-18 15:38:33,996 - myframework - INFO - Sleeping 5 seconds for sub-processes to stabilise
+2026-03-18 15:38:38,996 - myframework - INFO - Starting endpoint cleanup for MAC: 98f2b3019774
+2026-03-18 15:38:39,232 - myframework - INFO - Raw hostinfo output for MAC 98f2b3019774: 224.0.164.76, 1773866153,Wed Mar 18 15:35:53 CDT 2026, mac, 98f2b3019774, (dot1x@5290463614721804985 []), 0, 1773864985
+224.0.164.76, 1773864985,Wed Mar 18 15:16:25 CDT 2026, assigned_by_type, mac, (dot1x@5290463614721804985 []), 0, 1773864985
+224.0.164.76, 1773865017,Wed Mar 18 15:16:57 CDT 2026, nc_ep_esg_by_mac, ???, (gen@5290463614721804985 []), no_plugin:ierr
+224.0.164.76, 1773865017,Wed Mar 18 15:16:57 CDT 2026, sw_duplicate_mac, ???, (sw@5290463614721804985 [sw]), sw_locate_mac_failed:err
+2026-03-18 15:38:39,232 - myframework - INFO - Found 4 IP(s) for MAC 98f2b3019774: ['224.0.164.76', '224.0.164.76', '224.0.164.76', '224.0.164.76']
+2026-03-18 15:38:39,232 - myframework - INFO - Found IP 224.0.164.76 for MAC 98f2b3019774
+2026-03-18 15:38:39,232 - myframework - INFO - Endpoint IP: 224.0.164.76
+2026-03-18 15:38:39,705 - myframework - WARNING - CA SSH error on attempt 1 (connection may have dropped), reconnecting: RuntimeError("Command 'fstool hostinfo 224.0.164.76 | grep 'host_id'' failed with exit code 1: ")
+2026-03-18 15:38:39,705 - myframework - INFO - [POOL] Evicted connection for key: 10.16.177.65
+2026-03-18 15:38:40,153 - myframework - INFO - host_id not found, using IP 224.0.164.76 as identifier
+2026-03-18 15:38:40,153 - myframework - INFO - Deleting endpoint with ID: 224.0.164.76
+2026-03-18 15:38:42,690 - myframework - INFO - Endpoint 224.0.164.76 removed successfully
+2026-03-18 15:38:42,690 - myframework - INFO - Target IP range 10.16.178.64/26 derived from VLAN 1688
+2026-03-18 15:38:42,690 - myframework - INFO - Starting RADIUS configuration on port GigabitEthernet1/0/1 for Cisco ios switch 10.16.128.18
+2026-03-18 15:38:42,690 - myframework - INFO - Starting RADIUS Configuration steps 1/6: dot1x system-auth-control
+2026-03-18 15:38:44,160 - myframework - INFO - Executing command on CiscoIOS: show running-config | inc dot1x
+2026-03-18 15:38:46,154 - myframework - INFO - dot1x system-auth-control already enabled on Cisco switch 10.16.128.18
+2026-03-18 15:38:46,154 - myframework - INFO - Starting RADIUS Configuration steps 2/6: RADIUS server
+2026-03-18 15:38:46,154 - myframework - INFO - Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-66
+2026-03-18 15:38:48,144 - myframework - INFO - Command output:
+2026-03-18 15:38:48,145 - myframework - INFO -   radius server server-automation-ipv4-177-66
+2026-03-18 15:38:48,145 - myframework - INFO -    address ipv4 10.16.177.66 auth-port 1812 acct-port 1813
+2026-03-18 15:38:48,145 - myframework - INFO -    key aristo
+2026-03-18 15:38:48,145 - myframework - INFO - Executing command on CiscoIOS: show running-config | section ^radius server
+2026-03-18 15:38:50,131 - myframework - INFO - RADIUS server server-automation-ipv4-177-66 already exists on 10.16.128.18
+2026-03-18 15:38:50,131 - myframework - INFO - Starting RADIUS Configuration steps 3/6: RADIUS group
+2026-03-18 15:38:50,131 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-18 15:38:52,297 - myframework - INFO - Command output:
+2026-03-18 15:38:52,298 - myframework - INFO -   aaa group server radius group-automation
+2026-03-18 15:38:52,298 - myframework - INFO -    server name server-automation-ipv4-177-66
+2026-03-18 15:38:52,298 - myframework - INFO -    deadtime 3
+2026-03-18 15:38:52,298 - myframework - INFO - RADIUS group group-automation already exists on 10.16.128.18
+2026-03-18 15:38:52,298 - myframework - INFO - Starting RADIUS Configuration steps 4/6: AAA authentication
+2026-03-18 15:38:52,298 - myframework - INFO - Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-18 15:38:54,254 - myframework - INFO - Command output:
+2026-03-18 15:38:54,254 - myframework - INFO -   aaa authentication login default local
+2026-03-18 15:38:54,254 - myframework - INFO -   aaa authentication dot1x default group group-automation
+2026-03-18 15:38:54,254 - myframework - INFO -   aaa authorization network default group group-automation 
+2026-03-18 15:38:54,254 - myframework - INFO -   aaa accounting dot1x default start-stop group group-automation
+2026-03-18 15:38:54,254 - myframework - INFO - AAA already exists with group group-automation on 10.16.128.18
+2026-03-18 15:38:54,254 - myframework - INFO - Starting RADIUS Configuration steps 5/6: RADIUS CoA (dynamic-author) client
+2026-03-18 15:38:54,254 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa server radius dynamic-author
+2026-03-18 15:38:56,208 - myframework - INFO - Command output:
+2026-03-18 15:38:56,208 - myframework - INFO -   aaa server radius dynamic-author
+2026-03-18 15:38:56,208 - myframework - INFO -    client 10.16.177.82 server-key aristo
+2026-03-18 15:38:56,208 - myframework - INFO -    client 10.100.49.73 server-key aristo
+2026-03-18 15:38:56,208 - myframework - INFO -    client 10.16.177.66 server-key aristo
+2026-03-18 15:38:56,208 - myframework - INFO - RADIUS dynamic-author client 10.16.177.66 already configured with same secret on 10.16.128.18
+2026-03-18 15:38:56,209 - myframework - INFO - Starting RADIUS Configuration steps 6/6: dot1x on port GigabitEthernet1/0/1
+2026-03-18 15:38:56,209 - myframework - INFO - Executing command on CiscoIOS: show run | section ^interface GigabitEthernet1/0/1$
+2026-03-18 15:38:58,234 - myframework - INFO - Command output:
+2026-03-18 15:38:58,234 - myframework - INFO -   interface GigabitEthernet1/0/1
+2026-03-18 15:38:58,234 - myframework - INFO -    description "Port Gi 1/0/1"
+2026-03-18 15:38:58,234 - myframework - INFO -    switchport access vlan 1688
+2026-03-18 15:38:58,234 - myframework - INFO -    switchport mode access
+2026-03-18 15:38:58,234 - myframework - INFO -    authentication port-control auto
+2026-03-18 15:38:58,234 - myframework - INFO -    authentication periodic
+2026-03-18 15:38:58,234 - myframework - INFO -    snmp trap mac-notification change added
+2026-03-18 15:38:58,234 - myframework - INFO -    snmp trap mac-notification change removed
+2026-03-18 15:38:58,234 - myframework - INFO -    dot1x pae authenticator
+2026-03-18 15:38:58,234 - myframework - INFO -    spanning-tree portfast
+2026-03-18 15:38:58,234 - myframework - INFO - Port GigabitEthernet1/0/1 already configured on Cisco switch 10.16.128.18
+2026-03-18 15:38:58,234 - myframework - INFO - Successfully setup all RADIUS configuration on Cisco switch 10.16.128.18
+2026-03-18 15:38:58,234 - myframework - INFO - Cleaning up all test certificates from Windows stores...
+2026-03-18 15:38:58,235 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; 
+$deleted = @()
+foreach ($store in @("My", "Root")) {
+    $certs = Get-ChildItem -Path Cert:\LocalMachine\$store | Where-Object { $_.Subject -like "*testdecodeA*" -or $_.Subject -like "*clientcert*" -or $_.Subject -like "*Dot1x-CLT-A*" -or $_.Subject -like "*Dot1x-CLT-B*" -or $_.Subject -like "*Dot1x-CLT-C*" -or $_.Subject -like "*Dot1x-CLT-D*" -or $_.Subject -like "*Dot1x-CLT-E*" -or $_.Subject -like "*Dot1x-CLT-F*" -or $_.Subject -like "*Dot1x-CLT-G*" -or $_.Subject -like "*Dot1xMSCA-CLT-A*" -or $_.Subject -like "*Dot1xMSCA-CLT-B*" -or $_.Subject -like "*Dot1xMSCA-CLT-C*" -or $_.Subject -like "*Dot1xMSCA-CLT-D*" -or $_.Subject -like "*Dot1xMSCA-CLT-E*" -or $_.Subject -like "*Dot1xMSCA-CLT-F*" -or $_.Subject -like "*Dot1xMSCA-CLT-G*" -or $_.Subject -like "*Dot1x-CLT-Expired*" -or $_.Subject -like "*Dot1x-CLT-Time*" -or $_.Subject -like "*Dot1x-CLT-Revoked*" -or $_.Subject -like "*Dot1x-CLT-Good*" -or $_.Subject -like "*Dot1x-CA*" -or $_.Subject -like "*Dot1xMSCA-CA*" }
+    foreach ($cert in $certs) {
+        Remove-Item -Path $cert.PSPath -Force
+        $deleted += "Deleted: $($cert.Subject) from $store"
+    }
+}
+if ($deleted.Count -gt 0) { $deleted -join "`n" } else { "No test certificates found" }
+
+2026-03-18 15:39:08,727 - myframework - INFO - [OK] Deleted: E=clientgood@internal.local, CN=Dot1x-CLT-Good, OU=Lab, O=Forescout, L=Allen, S=Texas, C=US from My
+2026-03-18 15:39:08,727 - myframework - INFO - [OK] Deleted: E=admin@internal.local, CN=Dot1x-CA, OU=Lab, O=Forescout, L=Dallas, S=Texas, C=US from Root
+2026-03-18 15:39:08,727 - myframework - INFO - Test certificates cleanup completed
+2026-03-18 15:39:08,727 - myframework - INFO - NIC: pciPassthru0
+2026-03-18 15:39:08,727 - myframework - INFO - 
+==============================================================Running test: RadiusFragmentSizeDefaultWired with {'fragment_size': '1024'}===============================================================
+
+2026-03-18 15:39:08,727 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.66
+2026-03-18 15:39:09,309 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-18 15:39:09,309 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-18 15:39:09,309 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-18 15:39:09,309 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-18 15:39:09,309 - myframework - INFO - config.min_tls_version.value already set to 'v1_2', skipping
+2026-03-18 15:39:09,309 - myframework - INFO - config.fragment_size.value already set to '1024', skipping
+2026-03-18 15:39:09,309 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-18 15:39:09,309 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-18 15:39:09,309 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-18 15:39:09,310 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-18 15:39:09,310 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-18 15:39:09,310 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-18 15:39:09,310 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-18 15:39:09,310 - myframework - INFO - Setting pre-admission rules: 3 rule(s)
+2026-03-18 15:39:09,310 - myframework - INFO - Using multi-rule format with auth values
+2026-03-18 15:39:09,310 - myframework - INFO - Building pre-admission rules: 3 rule(s)
+2026-03-18 15:39:09,310 - myframework - INFO - Rule 1: condition=[{"field":"EAP-Type","value":"PEAP","critClass":"forescout.plugin.dot1x.default_policy.D1XComboStringCriterion","selected":"PEAP"}]
+2026-03-18 15:39:09,310 - myframework - INFO - Rule 1: auth=vlan:	IsCOA:false
+2026-03-18 15:39:09,310 - myframework - INFO - Rule 2: condition=[{"field":"EAP-Type","value":"EAP-TLS","critClass":"forescout.plugin.dot1x.default_policy.D1XComboStringCriterion","selected":"EAP-TLS"}]
+2026-03-18 15:39:09,310 - myframework - INFO - Rule 2: auth=vlan:	IsCOA:false
+2026-03-18 15:39:09,310 - myframework - INFO - Rule 3: condition=[{"filType":"any","input":"yalla","field":"User-Name","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"}]
+2026-03-18 15:39:09,310 - myframework - INFO - Rule 3: auth=reject=dummy
+2026-03-18 15:39:09,310 - myframework - INFO - Check 21 key-value pairs properties in /usr/local/forescout/plugin/dot1x/local.properties on 10.16.177.66
+2026-03-18 15:39:11,953 - myframework - INFO - Successfully wrote pre-admission rules to /usr/local/forescout/plugin/dot1x/local.properties
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_cond8.value=
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_cond4.value=
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_cond1.value=[{"field":"EAP-Type","value":"PEAP","critClass":"forescout.plugin.dot1x.default_policy.D1XComboStringCriterion","selected":"PEAP"}]
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_auth4.value=
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_auth10.value=
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_cond9.value=
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_auth3.value=reject=dummy
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol.size.value=3
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_cond3.value=[{"filType":"any","input":"yalla","field":"User-Name","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"}]
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_auth9.value=
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_cond5.value=
+2026-03-18 15:39:12,053 - myframework - INFO -   Verified: config.defpol_auth2.value=vlan:	IsCOA:false
+2026-03-18 15:39:12,054 - myframework - INFO -   Verified: config.defpol_cond10.value=
+2026-03-18 15:39:12,054 - myframework - INFO -   Verified: config.defpol_cond6.value=
+2026-03-18 15:39:12,054 - myframework - INFO -   Verified: config.defpol_auth8.value=
+2026-03-18 15:39:12,054 - myframework - INFO -   Verified: config.defpol_auth7.value=
+2026-03-18 15:39:12,054 - myframework - INFO -   Verified: config.defpol_cond2.value=[{"field":"EAP-Type","value":"EAP-TLS","critClass":"forescout.plugin.dot1x.default_policy.D1XComboStringCriterion","selected":"EAP-TLS"}]
+2026-03-18 15:39:12,054 - myframework - INFO -   Verified: config.defpol_auth6.value=
+2026-03-18 15:39:12,054 - myframework - INFO -   Verified: config.defpol_auth1.value=vlan:	IsCOA:false
+2026-03-18 15:39:12,054 - myframework - INFO -   Verified: config.defpol_cond7.value=
+2026-03-18 15:39:12,054 - myframework - INFO -   Verified: config.defpol_auth5.value=
+2026-03-18 15:39:12,054 - myframework - INFO - Pre-admission rules have changes, set self.has_change = True
+2026-03-18 15:39:12,054 - myframework - INFO - Restarting dot1x plugin to apply pending changes...
+2026-03-18 15:39:12,054 - myframework - INFO - Restarting 802.1X plugin on 10.16.177.66
+2026-03-18 15:39:25,581 - myframework - INFO - Received 'Done starting RADIUS.' confirmation
+2026-03-18 15:39:25,581 - myframework - INFO - Sleeping 5 seconds for sub-processes to stabilise
+2026-03-18 15:39:30,582 - myframework - INFO - Importing certificate: Dot1x-CLT-Good.pfx
+2026-03-18 15:39:30,583 - myframework - INFO - Reading PFX file locally: /home/triley/fstester001/resources/radius/certificates/Dot1x-CA/WindowsFiles/Dot1x-CLT-Good.pfx
+2026-03-18 15:39:30,811 - myframework - INFO - [OK] Personal cert thumbprint: E5A1C5A45A5117A9A2CDBECD442D37A687D4CECE
+2026-03-18 15:39:30,811 - myframework - INFO -      Subject: <Name(C=US,ST=Texas,L=Allen,O=Forescout,OU=Lab,CN=Dot1x-CLT-Good,1.2.840.113549.1.9.1=clientgood@internal.local)>
+2026-03-18 15:39:30,811 - myframework - INFO - [OK] Trusted cert thumbprint: FBB88C61B92B928E24A3BF72219574E3EF12CBE1
+2026-03-18 15:39:30,811 - myframework - INFO -      Subject: <Name(C=US,ST=Texas,L=Dallas,O=Forescout,OU=Lab,CN=Dot1x-CA,1.2.840.113549.1.9.1=admin@internal.local)>
+2026-03-18 15:39:30,812 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Certificates' -ItemType Directory -Force | Out-Null
+2026-03-18 15:39:31,532 - myframework - INFO - Created directory: C:\Certificates
+2026-03-18 15:39:31,560 - myframework - INFO - Copying /home/triley/fstester001/resources/radius/certificates/Dot1x-CA/WindowsFiles/Dot1x-CLT-Good.pfx to C:\Certificates\Dot1x-CLT-Good.pfx
+2026-03-18 15:39:31,561 - myframework - INFO - File size: 5950 bytes
+2026-03-18 15:39:31,561 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Certificates' -ItemType Directory -Force | Out-Null
+2026-03-18 15:39:32,285 - myframework - INFO - Created directory: C:\Certificates
+2026-03-18 15:39:32,285 - myframework - INFO - Using pypsrp native file transfer
+2026-03-18 15:39:33,462 - myframework - INFO - Successfully copied /home/triley/fstester001/resources/radius/certificates/Dot1x-CA/WindowsFiles/Dot1x-CLT-Good.pfx to C:\Certificates\Dot1x-CLT-Good.pfx
+2026-03-18 15:39:33,463 - myframework - INFO - [OK] PFX copied to C:\Certificates\Dot1x-CLT-Good.pfx
+2026-03-18 15:39:33,463 - myframework - INFO - Deleting old certificates...
+2026-03-18 15:39:33,463 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\My |
+    Where-Object { $_.Thumbprint -eq "E5A1C5A45A5117A9A2CDBECD442D37A687D4CECE" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from My"
+} else {
+    "Certificate not found in My"
+}
+2026-03-18 15:39:34,269 - myframework - INFO - [OK] Certificate not found in My
+2026-03-18 15:39:34,269 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\My |
+    Where-Object { $_.Thumbprint -eq "FBB88C61B92B928E24A3BF72219574E3EF12CBE1" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from My"
+} else {
+    "Certificate not found in My"
+}
+2026-03-18 15:39:35,109 - myframework - INFO - [OK] Certificate not found in My
+2026-03-18 15:39:35,110 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\Root |
+    Where-Object { $_.Thumbprint -eq "FBB88C61B92B928E24A3BF72219574E3EF12CBE1" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from Root"
+} else {
+    "Certificate not found in Root"
+}
+2026-03-18 15:39:35,959 - myframework - INFO - [OK] Certificate not found in Root
+2026-03-18 15:39:35,959 - myframework - INFO - Importing PFX to Personal store...
+2026-03-18 15:39:35,960 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; 
+$securePassword = ConvertTo-SecureString -String "aristo" -Force -AsPlainText
+Import-PfxCertificate `
+    -FilePath "C:\Certificates\Dot1x-CLT-Good.pfx" `
+    -CertStoreLocation Cert:\LocalMachine\My `
+    -Password $securePassword `
+    -Exportable | Out-Null
+"PFX imported successfully"
+2026-03-18 15:39:36,893 - myframework - INFO - [OK] PFX imported successfully
+2026-03-18 15:39:36,894 - myframework - INFO - Copying trusted cert to C:\Certificates\trusted_ca.cer
+2026-03-18 15:39:36,894 - myframework - INFO - Copying /tmp/tmp_aicbm4w.cer to C:\Certificates\trusted_ca.cer
+2026-03-18 15:39:36,894 - myframework - INFO - File size: 1546 bytes
+2026-03-18 15:39:36,895 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Certificates' -ItemType Directory -Force | Out-Null
+2026-03-18 15:39:38,248 - myframework - INFO - Created directory: C:\Certificates
+2026-03-18 15:39:38,248 - myframework - INFO - Using pypsrp native file transfer
+2026-03-18 15:39:39,005 - myframework - INFO - Successfully copied /tmp/tmp_aicbm4w.cer to C:\Certificates\trusted_ca.cer
+2026-03-18 15:39:39,006 - myframework - INFO - Importing trusted cert to Root store...
+2026-03-18 15:39:39,006 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; 
+Import-Certificate `
+    -FilePath "C:\Certificates\trusted_ca.cer" `
+    -CertStoreLocation Cert:\LocalMachine\Root | Out-Null
+"Certificate imported to Root"
+2026-03-18 15:39:39,819 - myframework - INFO - [OK] Certificate imported to Root
+2026-03-18 15:39:39,819 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Test-Path -Path 'C:\Certificates\trusted_ca.cer'
+2026-03-18 15:39:40,569 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Remove-Item -Path 'C:\Certificates\trusted_ca.cer' -Force
+2026-03-18 15:39:41,265 - myframework - INFO - Removed file: C:\Certificates\trusted_ca.cer
+2026-03-18 15:39:41,266 - myframework - INFO - Certificate import completed
+2026-03-18 15:39:41,266 - myframework - INFO - Configuring LAN profile (builder) on 10.16.133.189
+2026-03-18 15:39:41,268 - myframework - INFO - Copying /tmp/tmpuywjxpkm.xml to C:\Profiles\lan_profile.xml
+2026-03-18 15:39:41,268 - myframework - INFO - File size: 3671 bytes
+2026-03-18 15:39:41,268 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Profiles' -ItemType Directory -Force | Out-Null
+2026-03-18 15:39:41,970 - myframework - INFO - Created directory: C:\Profiles
+2026-03-18 15:39:41,970 - myframework - INFO - Using pypsrp native file transfer
+2026-03-18 15:39:42,746 - myframework - INFO - Successfully copied /tmp/tmpuywjxpkm.xml to C:\Profiles\lan_profile.xml
+2026-03-18 15:39:42,746 - myframework - INFO - Deleting LAN profile from interface: pciPassthru0
+2026-03-18 15:39:42,746 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan delete profile interface="pciPassthru0"
+2026-03-18 15:39:43,539 - myframework - INFO - [OK] LAN profile deleted from pciPassthru0
+2026-03-18 15:39:43,539 - myframework - INFO - Adding LAN profile to interface: pciPassthru0
+2026-03-18 15:39:43,539 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan add profile filename="C:\Profiles\lan_profile.xml" interface="pciPassthru0"
+2026-03-18 15:39:44,553 - myframework - INFO - [OK] LAN profile added to pciPassthru0
+2026-03-18 15:39:44,553 - myframework - INFO - Waiting for 802.1X plugin to become ready on 10.16.177.66 (timeout=300s)
+2026-03-18 15:39:48,588 - myframework - INFO - dot1x status: winbindd=10s, redis-server=12163s, radiusd=DOWN — waiting for: radiusd
+2026-03-18 15:39:48,588 - myframework - INFO - Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:40:02,526 - myframework - INFO - dot1x status: radiusd=15s, winbindd=24s, redis-server=12177s — radiusd not yet stable (need 45s)
+2026-03-18 15:40:02,526 - myframework - INFO - Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:40:17,342 - myframework - INFO - dot1x status: radiusd=11s, winbindd=38s, redis-server=12191s — radiusd not yet stable (need 45s)
+2026-03-18 15:40:17,342 - myframework - INFO - Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:40:31,328 - myframework - INFO - dot1x status: radiusd=26s, winbindd=52s, redis-server=12205s — radiusd not yet stable (need 45s)
+2026-03-18 15:40:31,329 - myframework - INFO - Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:40:46,096 - myframework - INFO - dot1x status: radiusd=9s, winbindd=67s, redis-server=12220s — radiusd not yet stable (need 45s)
+2026-03-18 15:40:46,096 - myframework - INFO - Waiting for plugin to start... Retrying in 10 second(s)
+2026-03-18 15:40:49,516 - myframework - INFO - === PEAP-EAP-TLS Test Teardown ===
+2026-03-18 15:40:49,517 - myframework - INFO - Removing certificates...
+2026-03-18 15:40:49,517 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\My |
+    Where-Object { $_.Thumbprint -eq "E5A1C5A45A5117A9A2CDBECD442D37A687D4CECE" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from My"
+} else {
+    "Certificate not found in My"
+}
+2026-03-18 15:40:50,569 - myframework - INFO - [OK] Deleted certificate from My
+2026-03-18 15:40:50,569 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; 
+$cert = Get-ChildItem -Path Cert:\LocalMachine\Root |
+    Where-Object { $_.Thumbprint -eq "FBB88C61B92B928E24A3BF72219574E3EF12CBE1" }
+if ($cert) {
+    Remove-Item -Path $cert.PSPath -Force
+    "Deleted certificate from Root"
+} else {
+    "Certificate not found in Root"
+}
+2026-03-18 15:40:51,433 - myframework - INFO - [OK] Deleted certificate from Root
+2026-03-18 15:40:51,433 - myframework - INFO - Certificates removed
+2026-03-18 15:40:51,433 - myframework - INFO - radius common teardown
