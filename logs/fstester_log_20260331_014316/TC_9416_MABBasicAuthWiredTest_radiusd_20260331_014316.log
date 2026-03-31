@@ -1,0 +1,1026 @@
+radiusd:22452:1774939385.697748:Tue Mar 31 01:43:05 2026: Tue Mar 31 01:43:05 2026 : Debug: (26) eap: Request didn't contain an EAP-Message, not inserting EAP-Failure
+radiusd:22452:1774939385.697774:Tue Mar 31 01:43:05 2026: Tue Mar 31 01:43:05 2026 : Debug: (26)     modsingle[post-auth]: returned from eap (rlm_eap)
+radiusd:22452:1774939385.697801:Tue Mar 31 01:43:05 2026: Tue Mar 31 01:43:05 2026 : Debug: (26)     [eap] = noop
+radiusd:22452:1774939385.697829:Tue Mar 31 01:43:05 2026: Tue Mar 31 01:43:05 2026 : Debug: (26)   } # Post-Auth-Type REJECT = updated
+radiusd:22452:1774939385.697861:Tue Mar 31 01:43:05 2026: Tue Mar 31 01:43:05 2026 : Debug: (26) Sent Access-Reject Id 159 from 10.16.177.66:1812 to 10.16.128.21:1645 length 38
+radiusd:22452:1774939385.697888:Tue Mar 31 01:43:05 2026: Tue Mar 31 01:43:05 2026 : Debug: (26) Finished request
+radiusd:22452:1774939385.697926:Tue Mar 31 01:43:05 2026: Tue Mar 31 01:43:05 2026 : Debug: Thread 3 waiting to be assigned a request
+radiusd:22452:1774939386.016120:Tue Mar 31 01:43:06 2026: Tue Mar 31 01:43:06 2026 : Debug: Waking up in 4.6 seconds.
+radiusd:22452:1774939390.690102:Tue Mar 31 01:43:10 2026: Tue Mar 31 01:43:10 2026 : Debug: (26) Cleaning up request packet ID 159 with timestamp +1556 due to cleanup_delay was reached
+radiusd:22452:1774939390.690306:Tue Mar 31 01:43:10 2026: Tue Mar 31 01:43:10 2026 : Info: Ready to process requests
+radiusd:22452:1774939416.960479:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: Waking up in 0.3 seconds.
+radiusd:22452:1774939416.960583:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: Thread 2 got semaphore
+radiusd:22452:1774939416.960616:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: Thread 2 handling request 27, (6 handled so far)
+radiusd:22452:1774939416.960647:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) Received Access-Request Id 160 from 10.16.128.21:1645 to 10.16.177.66:1812 length 157
+radiusd:22452:1774939416.960676:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   User-Name = "98f2b301a055"
+radiusd:22452:1774939416.962702:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   User-Password = "****"
+radiusd:22452:1774939416.963494:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   Service-Type = Call-Check
+radiusd:22452:1774939416.964703:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   Framed-MTU = 1500
+radiusd:22452:1774939416.964942:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   Called-Station-Id = "00-1E-79-A9-7F-03"
+radiusd:22452:1774939416.965118:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   Calling-Station-Id = "98-F2-B3-01-A0-55"
+radiusd:22452:1774939416.965331:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   Message-Authenticator = 0xe1fe4aa1f9b99abe04798f14c0e18737
+radiusd:22452:1774939416.965510:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   NAS-Port-Type = Ethernet
+radiusd:22452:1774939416.965721:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   NAS-Port = 50001
+radiusd:22452:1774939416.965979:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   NAS-Port-Id = "FastEthernet0/1"
+radiusd:22452:1774939416.966183:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   NAS-IP-Address = 10.16.128.21
+radiusd:22452:1774939416.966923:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) session-state: No State attribute
+radiusd:22452:1774939416.967162:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) # Executing section authorize from file /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default
+radiusd:22452:1774939416.968032:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   authorize {
+radiusd:22452:1774939416.968425:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     if ("%{User-Name}" =~ /^host\/(.*)\.TXQALAB.FORESCOUT.LOCAL$/i) {
+radiusd:22452:1774939416.968542:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     EXPAND %{User-Name}
+radiusd:22452:1774939416.968704:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)        --> 98f2b301a055
+radiusd:22452:1774939416.968797:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     if ("%{User-Name}" =~ /^host\/(.*)\.TXQALAB.FORESCOUT.LOCAL$/i)  -> FALSE
+radiusd:22452:1774939416.968880:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: calling preprocess (rlm_preprocess)
+radiusd:22452:1774939416.968966:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: returned from preprocess (rlm_preprocess)
+radiusd:22452:1774939416.969048:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [preprocess] = ok
+radiusd:22452:1774939416.969110:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: calling chap (rlm_chap)
+radiusd:22452:1774939416.969329:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: returned from chap (rlm_chap)
+radiusd:22452:1774939416.969456:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [chap] = noop
+radiusd:22452:1774939416.969607:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: calling mschap (rlm_mschap)
+radiusd:22452:1774939416.969717:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: returned from mschap (rlm_mschap)
+radiusd:22452:1774939416.969791:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [mschap] = noop
+radiusd:22452:1774939416.969971:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: calling digest (rlm_digest)
+radiusd:22452:1774939416.970040:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: returned from digest (rlm_digest)
+radiusd:22452:1774939416.970096:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [digest] = noop
+radiusd:22452:1774939416.970155:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: calling suffix (rlm_realm)
+radiusd:22452:1774939416.970207:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) suffix: Checking for suffix after "@"
+radiusd:22452:1774939416.970259:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) suffix: No '@' in User-Name = "98f2b301a055", skipping NULL due to config.
+radiusd:22452:1774939416.970418:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: returned from suffix (rlm_realm)
+radiusd:22452:1774939416.970539:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [suffix] = noop
+radiusd:22452:1774939416.970648:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: calling ntdomain (rlm_realm)
+radiusd:22452:1774939416.970781:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) ntdomain: Checking for prefix before "\"
+radiusd:22452:1774939416.970841:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) ntdomain: No '\' in User-Name = "98f2b301a055", looking up realm NULL
+radiusd:22452:1774939416.970976:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) ntdomain: Found realm "NULL"
+radiusd:22452:1774939416.971080:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) ntdomain: Adding Realm = "NULL"
+radiusd:22452:1774939416.971178:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) ntdomain: Authentication realm is LOCAL
+radiusd:22452:1774939416.971243:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: returned from ntdomain (rlm_realm)
+radiusd:22452:1774939416.971295:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [ntdomain] = ok
+radiusd:22452:1774939416.971345:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: calling eap (rlm_eap)
+radiusd:22452:1774939416.971395:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) eap: No EAP-Message, not doing EAP
+radiusd:22452:1774939416.971476:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: returned from eap (rlm_eap)
+radiusd:22452:1774939416.971511:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [eap] = noop
+radiusd:22452:1774939416.971569:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: calling files (rlm_files)
+radiusd:22452:1774939416.971636:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) files: users: Checking entry DEFAULT at line 167
+radiusd:22452:1774939416.971674:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) files: users: Checking entry DEFAULT at line 174
+radiusd:22452:1774939416.971717:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) files: users: Checking entry DEFAULT at line 181
+radiusd:22452:1774939416.971752:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: returned from files (rlm_files)
+radiusd:22452:1774939416.971788:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [files] = noop
+radiusd:22452:1774939416.971840:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: calling expiration (rlm_expiration)
+radiusd:22452:1774939416.971886:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: returned from expiration (rlm_expiration)
+radiusd:22452:1774939416.971940:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [expiration] = noop
+radiusd:22452:1774939416.971976:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: calling logintime (rlm_logintime)
+radiusd:22452:1774939416.972045:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[authorize]: returned from logintime (rlm_logintime)
+radiusd:22452:1774939416.972079:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [logintime] = noop
+radiusd:22452:1774939416.972118:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     policy fs_authorize_mab {
+radiusd:22452:1774939416.972276:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)       if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/)) {
+radiusd:22452:1774939416.972328:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)       if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/))  -> TRUE
+radiusd:22452:1774939416.972365:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)       if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/))  {
+radiusd:22452:1774939416.972410:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)         if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i) {
+radiusd:22452:1774939416.972452:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)         if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i)  -> TRUE
+radiusd:22452:1774939416.972490:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)         if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i)  {
+radiusd:22452:1774939416.972525:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)           update request {
+radiusd:22452:1774939416.972561:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)             EXPAND %{tolower:%{1}%{2}%{3}%{4}%{5}%{6}}
+radiusd:22452:1774939416.972608:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)                --> 98f2b301a055
+radiusd:22452:1774939416.972715:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)             User-Name := 98f2b301a055
+radiusd:22452:1774939416.972774:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)             Overwriting value "98f2b301a055" with "98f2b301a055"
+radiusd:22452:1774939416.972952:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)             EXPAND %{User-Name}
+radiusd:22452:1774939416.972994:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)                --> 98f2b301a055
+radiusd:22452:1774939416.973088:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)             Calling-Station-Id = 98f2b301a055
+radiusd:22452:1774939416.973118:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)             Refusing to overwrite (use :=)
+radiusd:22452:1774939416.973137:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)           } # update request = noop
+radiusd:22452:1774939416.973156:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)           if ("%{redis:hget %{User-Name} dot1x_target_access }" =~ /.+/) {
+radiusd:22452:1774939416.973180:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: rlm_redis (redis): Reserved connection (2)
+radiusd:22452:1774939416.973198:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: rlm_redis (redis): executing the query: "hget 98f2b301a055 dot1x_target_access "
+radiusd:22452:1774939416.973238:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)           rlm_redis (redis): Can't write result, insufficient space or unsupported result 
+radiusd:22452:1774939416.973259:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: rlm_redis (redis): Released connection (2)
+radiusd:22452:1774939416.973277:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)           EXPAND %{redis:hget %{User-Name} dot1x_target_access }
+radiusd:22452:1774939416.973294:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)              --> 
+radiusd:22452:1774939416.973319:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)           if ("%{redis:hget %{User-Name} dot1x_target_access }" =~ /.+/)  -> FALSE
+radiusd:22452:1774939416.973339:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)           elsif ("%{redis:hget 000000000000 dot1x_target_access }" == "accept_unknown_mab") {
+radiusd:22452:1774939416.973364:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: rlm_redis (redis): Reserved connection (11)
+radiusd:22452:1774939416.973382:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: rlm_redis (redis): executing the query: "hget 000000000000 dot1x_target_access "
+radiusd:22452:1774939416.973400:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)           rlm_redis (redis): Can't write result, insufficient space or unsupported result 
+radiusd:22452:1774939416.973418:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: rlm_redis (redis): Released connection (11)
+radiusd:22452:1774939416.973435:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)           EXPAND %{redis:hget 000000000000 dot1x_target_access }
+radiusd:22452:1774939416.973453:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)              --> 
+radiusd:22452:1774939416.973470:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)           elsif ("%{redis:hget 000000000000 dot1x_target_access }" == "accept_unknown_mab")  -> FALSE
+radiusd:22452:1774939416.973490:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)         } # if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i)  = noop
+radiusd:22452:1774939416.973509:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)       } # if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/))  = noop
+radiusd:22452:1774939416.973527:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     } # policy fs_authorize_mab = noop
+radiusd:22452:1774939416.973544:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   } # authorize = ok
+radiusd:22452:1774939416.973563:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : ERROR: (27) No Auth-Type found: rejecting the user via Post-Auth-Type = Reject
+radiusd:22452:1774939416.973581:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) Failed to authenticate the user
+radiusd:22452:1774939416.973604:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) Using Post-Auth-Type Reject
+radiusd:22452:1774939416.973627:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) # Executing group from file /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default
+radiusd:22452:1774939416.973651:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   Post-Auth-Type REJECT {
+radiusd:22452:1774939416.973679:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[post-auth]: calling fs_properties (rlm_fs_properties)
+radiusd:22452:1774939416.973729:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 31
+radiusd:22452:1774939416.973766:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 5
+radiusd:22452:1774939416.973795:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 61
+radiusd:22452:1774939416.973819:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 4
+radiusd:22452:1774939416.973856:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 95
+radiusd:22452:1774939416.974028:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 95 is NULL
+radiusd:22452:1774939416.974059:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 30
+radiusd:22452:1774939416.974090:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1
+radiusd:22452:1774939416.974121:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1018
+radiusd:22452:1774939416.974151:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1018 is NULL
+radiusd:22452:1774939416.974176:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1920
+radiusd:22452:1774939416.974229:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1920 is NULL
+radiusd:22452:1774939416.974259:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1921
+radiusd:22452:1774939416.974289:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1921 is NULL
+radiusd:22452:1774939416.974320:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1922
+radiusd:22452:1774939416.974351:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1922 is NULL
+radiusd:22452:1774939416.974385:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1923
+radiusd:22452:1774939416.974417:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1923 is NULL
+radiusd:22452:1774939416.974445:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1924
+radiusd:22452:1774939416.974467:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1924 is NULL
+radiusd:22452:1774939416.974484:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1926
+radiusd:22452:1774939416.974569:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1926 is NULL
+radiusd:22452:1774939416.974591:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 44
+radiusd:22452:1774939416.974609:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 44 is NULL
+radiusd:22452:1774939416.974636:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 32
+radiusd:22452:1774939416.974697:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 32 is NULL
+radiusd:22452:1774939416.974739:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 87
+radiusd:22452:1774939416.974757:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 8
+radiusd:22452:1774939416.974780:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 8 is NULL
+radiusd:22452:1774939416.974797:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 96
+radiusd:22452:1774939416.974815:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 96 is NULL
+radiusd:22452:1774939416.974850:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 97
+radiusd:22452:1774939416.974878:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 97 is NULL
+radiusd:22452:1774939416.974947:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1939
+radiusd:22452:1774939416.974976:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1939 is NULL
+radiusd:22452:1774939416.975096:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1936
+radiusd:22452:1774939416.975256:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1936 is NULL
+radiusd:22452:1774939416.975289:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1960
+radiusd:22452:1774939416.975317:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1960 is NULL
+radiusd:22452:1774939416.975344:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1961
+radiusd:22452:1774939416.975370:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1961 is NULL
+radiusd:22452:1774939416.975397:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: found attr 1962
+radiusd:22452:1774939416.975432:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attr 1962 is NULL
+radiusd:22452:1774939416.975460:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: fs_properties_rlm:going to send the following message update 98-F2-B3-01-A0-55 1774939416  NASPort '50001'  NASPortType 'Ethernet'  NASIpAddress '10.16.128.21'  CalledSid '00-1E-79-A9-7F-03'  UserName '98f2b301a055'  NASPortIdStr 'FastEthernet0/1'   with len of 195 
+radiusd:22452:1774939416.975507:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939416.975536:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939416.975583:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: fs_properties_rlm: sent 195 bytes to 127.0.0.1 
+radiusd:22452:1774939416.975675:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[post-auth]: returned from fs_properties (rlm_fs_properties)
+radiusd:22452:1774939416.975758:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [fs_properties] = ok
+radiusd:22452:1774939416.975798:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     policy fs_auth_end {
+radiusd:22452:1774939416.975825:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: %{fs_properties:AuthStatus '%{reply:Packet-Type}:%{control:Reply-Message}'}
+radiusd:22452:1774939416.975925:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939416.975955:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: xlat --> fs_properties
+radiusd:22452:1774939416.976032:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: {
+radiusd:22452:1774939416.976072:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: 	literal --> AuthStatus '
+radiusd:22452:1774939416.976155:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: 	attribute --> Packet-Type
+radiusd:22452:1774939416.976192:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: 	literal --> :
+radiusd:22452:1774939416.976295:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: 	attribute --> Reply-Message
+radiusd:22452:1774939416.976344:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: 	literal --> '
+radiusd:22452:1774939416.976424:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: }
+radiusd:22452:1774939416.976499:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: AuthStatus 'Access-Reject:'
+radiusd:22452:1774939416.976541:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939416.976611:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: literal --> AuthStatus 'Access-Reject:'
+radiusd:22452:1774939416.976653:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)       EXPAND AuthStatus 'Access-Reject:'
+radiusd:22452:1774939416.976691:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)          --> AuthStatus 'Access-Reject:'
+radiusd:22452:1774939416.976887:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939416.976964:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939416.977037:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: fs_properties_rlm: sent 66 bytes to 127.0.0.1 
+radiusd:22452:1774939416.977062:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774939416  AuthStatus 'Access-Reject:'   with length: 66
+radiusd:22452:1774939416.977096:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)       EXPAND %{fs_properties:AuthStatus '%{reply:Packet-Type}:%{control:Reply-Message}'}
+radiusd:22452:1774939416.977136:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)          --> update 98-F2-B3-01-A0-55 1774939416  AuthStatus 'Access-Reject:'  
+radiusd:22452:1774939416.977160:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     } # policy fs_auth_end = ok
+radiusd:22452:1774939416.977195:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[post-auth]: calling attr_filter.access_reject (rlm_attr_filter)
+radiusd:22452:1774939416.977217:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: %{User-Name}
+radiusd:22452:1774939416.977236:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939416.977265:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: attribute --> User-Name
+radiusd:22452:1774939416.977287:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) attr_filter.access_reject: EXPAND %{User-Name}
+radiusd:22452:1774939416.977308:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) attr_filter.access_reject:    --> 98f2b301a055
+radiusd:22452:1774939416.977327:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) attr_filter.access_reject: Matched entry DEFAULT at line 11
+radiusd:22452:1774939416.977345:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[post-auth]: returned from attr_filter.access_reject (rlm_attr_filter)
+radiusd:22452:1774939416.977368:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [attr_filter.access_reject] = updated
+radiusd:22452:1774939416.977388:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[post-auth]: calling eap (rlm_eap)
+radiusd:22452:1774939416.977409:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) eap: Request didn't contain an EAP-Message, not inserting EAP-Failure
+radiusd:22452:1774939416.977431:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     modsingle[post-auth]: returned from eap (rlm_eap)
+radiusd:22452:1774939416.977515:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)     [eap] = noop
+radiusd:22452:1774939416.977543:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27)   } # Post-Auth-Type REJECT = updated
+radiusd:22452:1774939416.977571:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) Sent Access-Reject Id 160 from 10.16.177.66:1812 to 10.16.128.21:1645 length 38
+radiusd:22452:1774939416.977627:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: (27) Finished request
+radiusd:22452:1774939416.977649:Tue Mar 31 01:43:36 2026: Tue Mar 31 01:43:36 2026 : Debug: Thread 2 waiting to be assigned a request
+radiusd:22452:1774939417.293993:Tue Mar 31 01:43:37 2026: Tue Mar 31 01:43:37 2026 : Debug: Waking up in 4.6 seconds.
+radiusd:22452:1774939421.969469:Tue Mar 31 01:43:41 2026: Tue Mar 31 01:43:41 2026 : Debug: (27) Cleaning up request packet ID 160 with timestamp +1587 due to cleanup_delay was reached
+radiusd:22452:1774939421.969628:Tue Mar 31 01:43:41 2026: Tue Mar 31 01:43:41 2026 : Info: Ready to process requests
+radiusd:22452:1774939439.643779:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Waking up in 0.3 seconds.
+radiusd:22452:1774939439.643910:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Thread 1 got semaphore
+radiusd:22452:1774939439.643940:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Thread 1 handling request 28, (6 handled so far)
+radiusd:22452:1774939439.643963:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) Received Access-Request Id 161 from 10.16.128.21:1645 to 10.16.177.66:1812 length 157
+radiusd:22452:1774939439.643983:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   User-Name = "98f2b301a055"
+radiusd:22452:1774939439.644009:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   User-Password = "****"
+radiusd:22452:1774939439.644045:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   Service-Type = Call-Check
+radiusd:22452:1774939439.644064:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   Framed-MTU = 1500
+radiusd:22452:1774939439.644098:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   Called-Station-Id = "00-1E-79-A9-7F-03"
+radiusd:22452:1774939439.644117:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   Calling-Station-Id = "98-F2-B3-01-A0-55"
+radiusd:22452:1774939439.644139:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   Message-Authenticator = 0x7a7cd2f1d790dda133811ac0a3946e56
+radiusd:22452:1774939439.644160:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   NAS-Port-Type = Ethernet
+radiusd:22452:1774939439.644178:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   NAS-Port = 50001
+radiusd:22452:1774939439.644201:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   NAS-Port-Id = "FastEthernet0/1"
+radiusd:22452:1774939439.644228:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   NAS-IP-Address = 10.16.128.21
+radiusd:22452:1774939439.644250:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) session-state: No State attribute
+radiusd:22452:1774939439.644269:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) # Executing section authorize from file /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default
+radiusd:22452:1774939439.644287:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   authorize {
+radiusd:22452:1774939439.644305:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     if ("%{User-Name}" =~ /^host\/(.*)\.TXQALAB.FORESCOUT.LOCAL$/i) {
+radiusd:22452:1774939439.644326:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     EXPAND %{User-Name}
+radiusd:22452:1774939439.644347:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)        --> 98f2b301a055
+radiusd:22452:1774939439.644372:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     if ("%{User-Name}" =~ /^host\/(.*)\.TXQALAB.FORESCOUT.LOCAL$/i)  -> FALSE
+radiusd:22452:1774939439.644391:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: calling preprocess (rlm_preprocess)
+radiusd:22452:1774939439.644408:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: returned from preprocess (rlm_preprocess)
+radiusd:22452:1774939439.644426:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [preprocess] = ok
+radiusd:22452:1774939439.644445:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: calling chap (rlm_chap)
+radiusd:22452:1774939439.644463:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: returned from chap (rlm_chap)
+radiusd:22452:1774939439.644482:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [chap] = noop
+radiusd:22452:1774939439.644500:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: calling mschap (rlm_mschap)
+radiusd:22452:1774939439.644518:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: returned from mschap (rlm_mschap)
+radiusd:22452:1774939439.644535:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [mschap] = noop
+radiusd:22452:1774939439.644553:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: calling digest (rlm_digest)
+radiusd:22452:1774939439.644571:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: returned from digest (rlm_digest)
+radiusd:22452:1774939439.644588:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [digest] = noop
+radiusd:22452:1774939439.644606:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: calling suffix (rlm_realm)
+radiusd:22452:1774939439.644651:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) suffix: Checking for suffix after "@"
+radiusd:22452:1774939439.644670:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) suffix: No '@' in User-Name = "98f2b301a055", skipping NULL due to config.
+radiusd:22452:1774939439.644694:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: returned from suffix (rlm_realm)
+radiusd:22452:1774939439.644712:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [suffix] = noop
+radiusd:22452:1774939439.644730:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: calling ntdomain (rlm_realm)
+radiusd:22452:1774939439.644767:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) ntdomain: Checking for prefix before "\"
+radiusd:22452:1774939439.644791:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) ntdomain: No '\' in User-Name = "98f2b301a055", looking up realm NULL
+radiusd:22452:1774939439.644817:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) ntdomain: Found realm "NULL"
+radiusd:22452:1774939439.644838:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) ntdomain: Adding Realm = "NULL"
+radiusd:22452:1774939439.644857:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) ntdomain: Authentication realm is LOCAL
+radiusd:22452:1774939439.644876:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: returned from ntdomain (rlm_realm)
+radiusd:22452:1774939439.644904:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [ntdomain] = ok
+radiusd:22452:1774939439.644922:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: calling eap (rlm_eap)
+radiusd:22452:1774939439.644940:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) eap: No EAP-Message, not doing EAP
+radiusd:22452:1774939439.644958:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: returned from eap (rlm_eap)
+radiusd:22452:1774939439.644975:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [eap] = noop
+radiusd:22452:1774939439.644993:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: calling files (rlm_files)
+radiusd:22452:1774939439.645013:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) files: users: Checking entry DEFAULT at line 167
+radiusd:22452:1774939439.645031:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) files: users: Checking entry DEFAULT at line 174
+radiusd:22452:1774939439.645048:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) files: users: Checking entry DEFAULT at line 181
+radiusd:22452:1774939439.645071:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: returned from files (rlm_files)
+radiusd:22452:1774939439.645089:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [files] = noop
+radiusd:22452:1774939439.645107:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: calling expiration (rlm_expiration)
+radiusd:22452:1774939439.645125:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: returned from expiration (rlm_expiration)
+radiusd:22452:1774939439.645143:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [expiration] = noop
+radiusd:22452:1774939439.645161:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: calling logintime (rlm_logintime)
+radiusd:22452:1774939439.645179:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[authorize]: returned from logintime (rlm_logintime)
+radiusd:22452:1774939439.645197:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [logintime] = noop
+radiusd:22452:1774939439.645215:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     policy fs_authorize_mab {
+radiusd:22452:1774939439.645233:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/)) {
+radiusd:22452:1774939439.645304:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/))  -> TRUE
+radiusd:22452:1774939439.645325:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/))  {
+radiusd:22452:1774939439.645343:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i) {
+radiusd:22452:1774939439.645363:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i)  -> TRUE
+radiusd:22452:1774939439.645383:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i)  {
+radiusd:22452:1774939439.645402:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           update request {
+radiusd:22452:1774939439.645420:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             EXPAND %{tolower:%{1}%{2}%{3}%{4}%{5}%{6}}
+radiusd:22452:1774939439.645437:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)                --> 98f2b301a055
+radiusd:22452:1774939439.645456:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             User-Name := 98f2b301a055
+radiusd:22452:1774939439.645498:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             Overwriting value "98f2b301a055" with "98f2b301a055"
+radiusd:22452:1774939439.645516:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             EXPAND %{User-Name}
+radiusd:22452:1774939439.645533:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)                --> 98f2b301a055
+radiusd:22452:1774939439.645551:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             Calling-Station-Id = 98f2b301a055
+radiusd:22452:1774939439.645569:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             Refusing to overwrite (use :=)
+radiusd:22452:1774939439.645587:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           } # update request = noop
+radiusd:22452:1774939439.645606:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           if ("%{redis:hget %{User-Name} dot1x_target_access }" =~ /.+/) {
+radiusd:22452:1774939439.645624:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): Reserved connection (3)
+radiusd:22452:1774939439.645648:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): executing the query: "hget 98f2b301a055 dot1x_target_access "
+radiusd:22452:1774939439.645667:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): Released connection (3)
+radiusd:22452:1774939439.645703:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           EXPAND %{redis:hget %{User-Name} dot1x_target_access }
+radiusd:22452:1774939439.645725:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)              --> vlan:	IsCOA:false
+radiusd:22452:1774939439.645743:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           if ("%{redis:hget %{User-Name} dot1x_target_access }" =~ /.+/)  -> TRUE
+radiusd:22452:1774939439.645763:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           if ("%{redis:hget %{User-Name} dot1x_target_access }" =~ /.+/)  {
+radiusd:22452:1774939439.645783:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             update control {
+radiusd:22452:1774939439.645802:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)               Proxy-To-Realm := Local
+radiusd:22452:1774939439.645820:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             } # update control = noop
+radiusd:22452:1774939439.645842:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             if (!EAP-Message) {
+radiusd:22452:1774939439.645860:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             if (!EAP-Message)  -> TRUE
+radiusd:22452:1774939439.645877:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             if (!EAP-Message)  {
+radiusd:22452:1774939439.645905:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)               update control {
+radiusd:22452:1774939439.645923:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)                 Auth-Type := Accept
+radiusd:22452:1774939439.645941:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)               } # update control = noop
+radiusd:22452:1774939439.645960:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             } # if (!EAP-Message)  = noop
+radiusd:22452:1774939439.645978:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             ... skipping else: Preceding "if" was taken
+radiusd:22452:1774939439.645996:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             if ("%{0}" != "vlan:\tIsCOA:false" && "%{0}" != "vlan:") {
+radiusd:22452:1774939439.646014:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             EXPAND %{0}
+radiusd:22452:1774939439.646037:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)                --> vlan:	IsCOA:false
+radiusd:22452:1774939439.646056:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             if ("%{0}" != "vlan:\tIsCOA:false" && "%{0}" != "vlan:")  -> FALSE
+radiusd:22452:1774939439.646075:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             if ( !("%{EAP-Type}" =~ /MD5/) ) {
+radiusd:22452:1774939439.646092:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             EXPAND %{EAP-Type}
+radiusd:22452:1774939439.646109:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)                --> 
+radiusd:22452:1774939439.646127:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             if ( !("%{EAP-Type}" =~ /MD5/) )  -> TRUE
+radiusd:22452:1774939439.646146:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             ( !("%{EAP-Type}" =~ /MD5/) )  { ... } # empty sub-section is ignored
+radiusd:22452:1774939439.646164:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             ... skipping else: Preceding "if" was taken
+radiusd:22452:1774939439.646182:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           } # if ("%{redis:hget %{User-Name} dot1x_target_access }" =~ /.+/)  = noop
+radiusd:22452:1774939439.646200:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           ... skipping elsif: Preceding "if" was taken
+radiusd:22452:1774939439.646219:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         } # if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i)  = noop
+radiusd:22452:1774939439.646238:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       } # if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/))  = noop
+radiusd:22452:1774939439.646256:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     } # policy fs_authorize_mab = noop
+radiusd:22452:1774939439.646279:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   } # authorize = ok
+radiusd:22452:1774939439.646299:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) Found Auth-Type = Accept
+radiusd:22452:1774939439.646318:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) Auth-Type = Accept, accepting the user
+radiusd:22452:1774939439.646339:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) # Executing section post-auth from file /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default
+radiusd:22452:1774939439.646358:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   post-auth {
+radiusd:22452:1774939439.646380:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     if ( "%{redis:hget %{Calling-Station-Id} InnerUserName}" =~ /.+/ ) {
+radiusd:22452:1774939439.646399:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): Reserved connection (0)
+radiusd:22452:1774939439.646417:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): executing the query: "hget 98-F2-B3-01-A0-55 InnerUserName"
+radiusd:22452:1774939439.646435:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     rlm_redis (redis): Can't write result, insufficient space or unsupported result 
+radiusd:22452:1774939439.646453:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): Released connection (0)
+radiusd:22452:1774939439.646470:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     EXPAND %{redis:hget %{Calling-Station-Id} InnerUserName}
+radiusd:22452:1774939439.646487:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)        --> 
+radiusd:22452:1774939439.646505:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     if ( "%{redis:hget %{Calling-Station-Id} InnerUserName}" =~ /.+/ )  -> FALSE
+radiusd:22452:1774939439.646523:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     redundant {
+radiusd:22452:1774939439.646541:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       policy fs_action_restrict {
+radiusd:22452:1774939439.646558:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         if ( (Calling-Station-Id) && ("%{Calling-Station-Id}" =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i) ) {
+radiusd:22452:1774939439.646578:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         EXPAND %{Calling-Station-Id}
+radiusd:22452:1774939439.646595:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)            --> 98-F2-B3-01-A0-55
+radiusd:22452:1774939439.646612:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         if ( (Calling-Station-Id) && ("%{Calling-Station-Id}" =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i) )  -> TRUE
+radiusd:22452:1774939439.646631:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         if ( (Calling-Station-Id) && ("%{Calling-Station-Id}" =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i) )  {
+radiusd:22452:1774939439.646653:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           if ("%{redis:hget %{tolower:%{1}%{2}%{3}%{4}%{5}%{6}} dot1x_req_restrictions}" )  {
+radiusd:22452:1774939439.646673:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): Reserved connection (6)
+radiusd:22452:1774939439.646691:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): executing the query: "hget 98f2b301a055 dot1x_req_restrictions"
+radiusd:22452:1774939439.646716:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           rlm_redis (redis): Can't write result, insufficient space or unsupported result 
+radiusd:22452:1774939439.646735:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): Released connection (6)
+radiusd:22452:1774939439.646752:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           EXPAND %{redis:hget %{tolower:%{1}%{2}%{3}%{4}%{5}%{6}} dot1x_req_restrictions}
+radiusd:22452:1774939439.646770:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)              --> 
+radiusd:22452:1774939439.646788:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           if ("%{redis:hget %{tolower:%{1}%{2}%{3}%{4}%{5}%{6}} dot1x_req_restrictions}" )   -> FALSE
+radiusd:22452:1774939439.646806:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           if (control:Reply-Message) {
+radiusd:22452:1774939439.646828:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           if (control:Reply-Message)  -> FALSE
+radiusd:22452:1774939439.646846:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           else {
+radiusd:22452:1774939439.646863:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             modsingle[post-auth]: calling fail (rlm_always)
+radiusd:22452:1774939439.646881:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             modsingle[post-auth]: returned from fail (rlm_always)
+radiusd:22452:1774939439.646908:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             [fail] = fail
+radiusd:22452:1774939439.646926:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           } # else = fail
+radiusd:22452:1774939439.646944:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         } # if ( (Calling-Station-Id) && ("%{Calling-Station-Id}" =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i) )  = fail
+radiusd:22452:1774939439.646963:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       } # policy fs_action_restrict = fail
+radiusd:22452:1774939439.646981:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       policy rule_1 {
+radiusd:22452:1774939439.646999:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         if ( ( control:Auth-Type == "Accept" ) ){
+radiusd:22452:1774939439.647025:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         if ( ( control:Auth-Type == "Accept" ) ) -> TRUE
+radiusd:22452:1774939439.647043:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         if ( ( control:Auth-Type == "Accept" ) ) {
+radiusd:22452:1774939439.647063:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           update control {
+radiusd:22452:1774939439.647084:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)             &Reply-Message := 'default rule_1'
+radiusd:22452:1774939439.647103:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)           } # update control = noop
+radiusd:22452:1774939439.647121:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         } # if ( ( control:Auth-Type == "Accept" ) ) = noop
+radiusd:22452:1774939439.647143:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)         ... skipping else: Preceding "if" was taken
+radiusd:22452:1774939439.647161:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       } # policy rule_1 = noop
+radiusd:22452:1774939439.647178:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     } # redundant = noop
+radiusd:22452:1774939439.647196:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[post-auth]: calling fs_restrictions (rlm_fs_restrictions)
+radiusd:22452:1774939439.647214:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: %{redis:hget default rule_1}
+radiusd:22452:1774939439.647231:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939439.647253:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: xlat --> redis
+radiusd:22452:1774939439.647270:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: {
+radiusd:22452:1774939439.647289:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal --> hget default rule_1
+radiusd:22452:1774939439.647306:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: }
+radiusd:22452:1774939439.647324:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): Reserved connection (8)
+radiusd:22452:1774939439.647342:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): executing the query: "hget default rule_1"
+radiusd:22452:1774939439.647359:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): Released connection (8)
+radiusd:22452:1774939439.647401:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) fs_restrictions: EXPAND %{redis:hget default rule_1}
+radiusd:22452:1774939439.647420:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) fs_restrictions:    --> vlan:	IsCOA:false
+radiusd:22452:1774939439.647438:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_restirctions_rlm: invalid format skipping attribute vlan:.
+radiusd:22452:1774939439.647455:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_restirctions_rlm: invalid format skipping attribute IsCOA:false.
+radiusd:22452:1774939439.647473:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_restirctions_rlm: 0 attributes were added to reply
+radiusd:22452:1774939439.647490:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: %{fs_properties:AssignedTo ''}
+radiusd:22452:1774939439.647507:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939439.647524:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: xlat --> fs_properties
+radiusd:22452:1774939439.647541:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: {
+radiusd:22452:1774939439.647559:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal --> AssignedTo ''
+radiusd:22452:1774939439.647576:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: }
+radiusd:22452:1774939439.647593:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: AssignedTo ''
+radiusd:22452:1774939439.647611:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939439.647629:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: literal --> AssignedTo ''
+radiusd:22452:1774939439.647646:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) fs_restrictions: EXPAND AssignedTo ''
+radiusd:22452:1774939439.647664:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) fs_restrictions:    --> AssignedTo ''
+radiusd:22452:1774939439.647682:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939439.647700:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939439.647723:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm: sent 52 bytes to 127.0.0.1 
+radiusd:22452:1774939439.647747:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774939439  AssignedTo ''   with length: 52
+radiusd:22452:1774939439.647771:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) fs_restrictions: EXPAND %{fs_properties:AssignedTo ''}
+radiusd:22452:1774939439.647794:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) fs_restrictions:    --> update 98-F2-B3-01-A0-55 1774939439  AssignedTo ''  
+radiusd:22452:1774939439.647822:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[post-auth]: returned from fs_restrictions (rlm_fs_restrictions)
+radiusd:22452:1774939439.647840:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [fs_restrictions] = ok
+radiusd:22452:1774939439.647867:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[post-auth]: calling fs_properties (rlm_fs_properties)
+radiusd:22452:1774939439.647888:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 31
+radiusd:22452:1774939439.647918:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 5
+radiusd:22452:1774939439.647936:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 61
+radiusd:22452:1774939439.647953:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 4
+radiusd:22452:1774939439.647971:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 95
+radiusd:22452:1774939439.647993:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 95 is NULL
+radiusd:22452:1774939439.648014:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 30
+radiusd:22452:1774939439.648032:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1
+radiusd:22452:1774939439.648049:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1018
+radiusd:22452:1774939439.648067:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1018 is NULL
+radiusd:22452:1774939439.648084:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1920
+radiusd:22452:1774939439.648101:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1920 is NULL
+radiusd:22452:1774939439.648118:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1921
+radiusd:22452:1774939439.648135:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1921 is NULL
+radiusd:22452:1774939439.648152:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1922
+radiusd:22452:1774939439.648170:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1922 is NULL
+radiusd:22452:1774939439.648187:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1923
+radiusd:22452:1774939439.648204:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1923 is NULL
+radiusd:22452:1774939439.648221:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1924
+radiusd:22452:1774939439.648238:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1924 is NULL
+radiusd:22452:1774939439.648255:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1926
+radiusd:22452:1774939439.648273:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1926 is NULL
+radiusd:22452:1774939439.648290:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 44
+radiusd:22452:1774939439.648307:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 44 is NULL
+radiusd:22452:1774939439.648324:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 32
+radiusd:22452:1774939439.648341:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 32 is NULL
+radiusd:22452:1774939439.648358:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 87
+radiusd:22452:1774939439.648374:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 8
+radiusd:22452:1774939439.648392:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 8 is NULL
+radiusd:22452:1774939439.648410:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 96
+radiusd:22452:1774939439.648427:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 96 is NULL
+radiusd:22452:1774939439.648449:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 97
+radiusd:22452:1774939439.648467:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 97 is NULL
+radiusd:22452:1774939439.648484:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1939
+radiusd:22452:1774939439.648501:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1939 is NULL
+radiusd:22452:1774939439.648526:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1936
+radiusd:22452:1774939439.648549:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1936 is NULL
+radiusd:22452:1774939439.648567:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1960
+radiusd:22452:1774939439.648589:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1960 is NULL
+radiusd:22452:1774939439.648611:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1961
+radiusd:22452:1774939439.648628:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1961 is NULL
+radiusd:22452:1774939439.648766:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: found attr 1962
+radiusd:22452:1774939439.648792:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: attr 1962 is NULL
+radiusd:22452:1774939439.648811:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:going to send the following message update 98-F2-B3-01-A0-55 1774939439  NASPort '50001'  NASPortType 'Ethernet'  NASIpAddress '10.16.128.21'  CalledSid '00-1E-79-A9-7F-03'  UserName '98f2b301a055'  NASPortIdStr 'FastEthernet0/1'   with len of 195 
+radiusd:22452:1774939439.648846:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939439.648865:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939439.648883:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm: sent 195 bytes to 127.0.0.1 
+radiusd:22452:1774939439.648911:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[post-auth]: returned from fs_properties (rlm_fs_properties)
+radiusd:22452:1774939439.648929:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [fs_properties] = ok
+radiusd:22452:1774939439.648949:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     policy fs_auth_end {
+radiusd:22452:1774939439.648967:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: %{fs_properties:AuthStatus '%{reply:Packet-Type}:%{control:Reply-Message}'}
+radiusd:22452:1774939439.648984:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939439.649001:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: xlat --> fs_properties
+radiusd:22452:1774939439.649018:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: {
+radiusd:22452:1774939439.649036:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal --> AuthStatus '
+radiusd:22452:1774939439.649054:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	attribute --> Packet-Type
+radiusd:22452:1774939439.649071:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal --> :
+radiusd:22452:1774939439.649089:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	attribute --> Reply-Message
+radiusd:22452:1774939439.649106:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal --> '
+radiusd:22452:1774939439.649124:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: }
+radiusd:22452:1774939439.649141:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: AuthStatus 'Access-Accept:default rule_1'
+radiusd:22452:1774939439.649159:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939439.649176:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: literal --> AuthStatus 'Access-Accept:default rule_1'
+radiusd:22452:1774939439.649194:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       EXPAND AuthStatus 'Access-Accept:default rule_1'
+radiusd:22452:1774939439.649212:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)          --> AuthStatus 'Access-Accept:default rule_1'
+radiusd:22452:1774939439.649229:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939439.649254:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939439.649273:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm: sent 80 bytes to 127.0.0.1 
+radiusd:22452:1774939439.649291:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774939439  AuthStatus 'Access-Accept:default rule_1'   with length: 80
+radiusd:22452:1774939439.649311:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       EXPAND %{fs_properties:AuthStatus '%{reply:Packet-Type}:%{control:Reply-Message}'}
+radiusd:22452:1774939439.649331:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)          --> update 98-F2-B3-01-A0-55 1774939439  AuthStatus 'Access-Accept:default rule_1'  
+radiusd:22452:1774939439.649352:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     } # policy fs_auth_end = ok
+radiusd:22452:1774939439.649372:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: %{redis:hdel %{Calling-Station-Id} InnerEapType }
+radiusd:22452:1774939439.649389:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939439.649419:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: xlat --> redis
+radiusd:22452:1774939439.649450:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: {
+radiusd:22452:1774939439.649470:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal --> hdel 
+radiusd:22452:1774939439.649491:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	attribute --> Calling-Station-Id
+radiusd:22452:1774939439.649509:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal -->  InnerEapType 
+radiusd:22452:1774939439.649526:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: }
+radiusd:22452:1774939439.649543:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): Reserved connection (5)
+radiusd:22452:1774939439.649561:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): executing the query: "hdel 98-F2-B3-01-A0-55 InnerEapType "
+radiusd:22452:1774939439.649578:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: rlm_redis (redis): Released connection (5)
+radiusd:22452:1774939439.649596:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     EXPAND %{redis:hdel %{Calling-Station-Id} InnerEapType }
+radiusd:22452:1774939439.649613:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)        --> 0
+radiusd:22452:1774939439.649631:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: %{fs_properties:Cisco-AVPair '%{Cisco-AVPair}'  !}
+radiusd:22452:1774939439.649648:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939439.649665:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: xlat --> fs_properties
+radiusd:22452:1774939439.649682:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: {
+radiusd:22452:1774939439.649699:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal --> Cisco-AVPair '
+radiusd:22452:1774939439.649716:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	attribute --> Cisco-AVPair
+radiusd:22452:1774939439.649733:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal --> '  !
+radiusd:22452:1774939439.649750:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: }
+radiusd:22452:1774939439.649767:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Cisco-AVPair ''  !
+radiusd:22452:1774939439.649784:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939439.649802:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: literal --> Cisco-AVPair ''  !
+radiusd:22452:1774939439.649820:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     EXPAND Cisco-AVPair ''  !
+radiusd:22452:1774939439.649841:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)        --> Cisco-AVPair ''  !
+radiusd:22452:1774939439.649860:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939439.649878:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939439.649906:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm: sent 57 bytes to 127.0.0.1 
+radiusd:22452:1774939439.649924:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774939439  Cisco-AVPair ''  !   with length: 57
+radiusd:22452:1774939439.649942:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     EXPAND %{fs_properties:Cisco-AVPair '%{Cisco-AVPair}'  !}
+radiusd:22452:1774939439.649966:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)        --> update 98-F2-B3-01-A0-55 1774939439  Cisco-AVPair ''  !  
+radiusd:22452:1774939439.649990:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: %{fs_properties:Auth-Type '%{control:Auth-Type}'  !}
+radiusd:22452:1774939439.650007:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939439.650032:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: xlat --> fs_properties
+radiusd:22452:1774939439.650049:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: {
+radiusd:22452:1774939439.650079:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal --> Auth-Type '
+radiusd:22452:1774939439.650098:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	attribute --> Auth-Type
+radiusd:22452:1774939439.650121:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: 	literal --> '  !
+radiusd:22452:1774939439.650138:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: }
+radiusd:22452:1774939439.650155:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Auth-Type 'Accept'  !
+radiusd:22452:1774939439.650183:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939439.650201:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: literal --> Auth-Type 'Accept'  !
+radiusd:22452:1774939439.650244:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     EXPAND Auth-Type 'Accept'  !
+radiusd:22452:1774939439.650265:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)        --> Auth-Type 'Accept'  !
+radiusd:22452:1774939439.650283:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939439.650301:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939439.650318:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm: sent 60 bytes to 127.0.0.1 
+radiusd:22452:1774939439.650335:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774939439  Auth-Type 'Accept'  !   with length: 60
+radiusd:22452:1774939439.650353:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     EXPAND %{fs_properties:Auth-Type '%{control:Auth-Type}'  !}
+radiusd:22452:1774939439.650370:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)        --> update 98-F2-B3-01-A0-55 1774939439  Auth-Type 'Accept'  !  
+radiusd:22452:1774939439.650387:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     update reply {
+radiusd:22452:1774939439.650405:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : WARNING: (28)       List "proxy-reply" is not available
+radiusd:22452:1774939439.650437:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       EXPAND %{proxy-reply:User-Name}
+radiusd:22452:1774939439.650454:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)          --> 
+radiusd:22452:1774939439.650472:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       &User-Name := 
+radiusd:22452:1774939439.650491:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     } # update reply = noop
+radiusd:22452:1774939439.650509:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     update {
+radiusd:22452:1774939439.650526:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)       No attributes updated for RHS &session-state:
+radiusd:22452:1774939439.650570:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     } # update = noop
+radiusd:22452:1774939439.650589:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[post-auth]: calling exec (rlm_exec)
+radiusd:22452:1774939439.650606:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     modsingle[post-auth]: returned from exec (rlm_exec)
+radiusd:22452:1774939439.650628:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)     [exec] = noop
+radiusd:22452:1774939439.650672:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   } # post-auth = ok
+radiusd:22452:1774939439.650690:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) Sent Access-Accept Id 161 from 10.16.177.66:1812 to 10.16.128.21:1645 length 38
+radiusd:22452:1774939439.650708:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28)   User-Name := ""
+radiusd:22452:1774939439.650732:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: (28) Finished request
+radiusd:22452:1774939439.650753:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Thread 1 waiting to be assigned a request
+radiusd:22452:1774939439.977562:Tue Mar 31 01:43:59 2026: Tue Mar 31 01:43:59 2026 : Debug: Waking up in 4.6 seconds.
+radiusd:22452:1774939440.525214:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Waking up in 0.3 seconds.
+radiusd:22452:1774939440.525737:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Thread 4 got semaphore
+radiusd:22452:1774939440.525945:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Thread 4 handling request 29, (6 handled so far)
+radiusd:22452:1774939440.526065:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) Received Accounting-Request Id 238 from 10.16.128.21:1646 to 10.16.177.66:1813 length 151
+radiusd:22452:1774939440.526166:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   Acct-Session-Id = "00000D46"
+radiusd:22452:1774939440.526335:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   Calling-Station-Id = "98-F2-B3-01-A0-55"
+radiusd:22452:1774939440.526471:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   User-Name = "98f2b301a055"
+radiusd:22452:1774939440.526570:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   Acct-Authentic = RADIUS
+radiusd:22452:1774939440.526666:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   Acct-Status-Type = Start
+radiusd:22452:1774939440.526857:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   NAS-Port-Type = Ethernet
+radiusd:22452:1774939440.527008:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   NAS-Port = 50001
+radiusd:22452:1774939440.527185:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   NAS-Port-Id = "FastEthernet0/1"
+radiusd:22452:1774939440.527294:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   Called-Station-Id = "00-1E-79-A9-7F-03"
+radiusd:22452:1774939440.527391:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   Service-Type = Framed-User
+radiusd:22452:1774939440.527486:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   NAS-IP-Address = 10.16.128.21
+radiusd:22452:1774939440.527580:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   PMIP6-Home-HN-Prefix = 3345:3145:4445::/54
+radiusd:22452:1774939440.527674:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   Acct-Delay-Time = 0
+radiusd:22452:1774939440.527757:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) # Executing section preacct from file /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default
+radiusd:22452:1774939440.528009:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   preacct {
+radiusd:22452:1774939440.528149:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[preacct]: calling preprocess (rlm_preprocess)
+radiusd:22452:1774939440.528256:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[preacct]: returned from preprocess (rlm_preprocess)
+radiusd:22452:1774939440.528394:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     [preprocess] = ok
+radiusd:22452:1774939440.528502:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     if (Acct-Session-Id =~ /(.*)\\(.*)/) {
+radiusd:22452:1774939440.528608:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     if (Acct-Session-Id =~ /(.*)\\(.*)/)  -> FALSE
+radiusd:22452:1774939440.528734:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: %{fs_properties:AcctSid '%{Acct-Session-Id}'  !}
+radiusd:22452:1774939440.528828:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939440.528975:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: xlat --> fs_properties
+radiusd:22452:1774939440.529184:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: {
+radiusd:22452:1774939440.529278:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: 	literal --> AcctSid '
+radiusd:22452:1774939440.529445:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: 	attribute --> Acct-Session-Id
+radiusd:22452:1774939440.529548:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: 	literal --> '  !
+radiusd:22452:1774939440.529649:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: }
+radiusd:22452:1774939440.529753:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: AcctSid '00000D46'  !
+radiusd:22452:1774939440.529873:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939440.530003:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: literal --> AcctSid '00000D46'  !
+radiusd:22452:1774939440.530138:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     EXPAND AcctSid '00000D46'  !
+radiusd:22452:1774939440.530360:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)        --> AcctSid '00000D46'  !
+radiusd:22452:1774939440.530494:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939440.530608:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939440.530712:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: fs_properties_rlm: sent 60 bytes to 127.0.0.1 
+radiusd:22452:1774939440.530841:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774939440  AcctSid '00000D46'  !   with length: 60
+radiusd:22452:1774939440.531098:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     EXPAND %{fs_properties:AcctSid '%{Acct-Session-Id}'  !}
+radiusd:22452:1774939440.531329:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)        --> update 98-F2-B3-01-A0-55 1774939440  AcctSid '00000D46'  !  
+radiusd:22452:1774939440.531847:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     policy acct_unique {
+radiusd:22452:1774939440.532018:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       update request {
+radiusd:22452:1774939440.533584:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)         &Tmp-String-9 := "ai:"
+radiusd:22452:1774939440.533730:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       } # update request = noop
+radiusd:22452:1774939440.533837:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       if (("%{hex:&Class}" =~ /^%{hex:&Tmp-String-9}/) && 	    ("%{string:&Class}" =~ /^ai:([0-9a-f]{32})/i)) {
+radiusd:22452:1774939440.533973:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       EXPAND %{hex:&Class}
+radiusd:22452:1774939440.534087:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)          --> 
+radiusd:22452:1774939440.534256:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       EXPAND ^%{hex:&Tmp-String-9}
+radiusd:22452:1774939440.534388:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)          --> ^61693a
+radiusd:22452:1774939440.534502:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       if (("%{hex:&Class}" =~ /^%{hex:&Tmp-String-9}/) && 	    ("%{string:&Class}" =~ /^ai:([0-9a-f]{32})/i))  -> FALSE
+radiusd:22452:1774939440.534662:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       else {
+radiusd:22452:1774939440.534752:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)         update request {
+radiusd:22452:1774939440.534826:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)           EXPAND %{md5:%{User-Name},%{Acct-Session-ID},%{%{NAS-IPv6-Address}:-%{NAS-IP-Address}},%{NAS-Identifier},%{NAS-Port-ID},%{NAS-Port}}
+radiusd:22452:1774939440.534915:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)              --> 9ac0727790040db8c46c01f27a5e4976
+radiusd:22452:1774939440.534992:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)           &Acct-Unique-Session-Id := 9ac0727790040db8c46c01f27a5e4976
+radiusd:22452:1774939440.535067:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)         } # update request = noop
+radiusd:22452:1774939440.535152:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       } # else = noop
+radiusd:22452:1774939440.535236:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       update request {
+radiusd:22452:1774939440.535329:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)         &Tmp-String-9 !* ANY
+radiusd:22452:1774939440.535412:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       } # update request = noop
+radiusd:22452:1774939440.535515:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     } # policy acct_unique = noop
+radiusd:22452:1774939440.535637:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[preacct]: calling suffix (rlm_realm)
+radiusd:22452:1774939440.535961:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) suffix: Checking for suffix after "@"
+radiusd:22452:1774939440.536065:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) suffix: No '@' in User-Name = "98f2b301a055", skipping NULL due to config.
+radiusd:22452:1774939440.536143:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[preacct]: returned from suffix (rlm_realm)
+radiusd:22452:1774939440.536239:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     [suffix] = noop
+radiusd:22452:1774939440.536339:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[preacct]: calling ntdomain (rlm_realm)
+radiusd:22452:1774939440.536413:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) ntdomain: Checking for prefix before "\"
+radiusd:22452:1774939440.536486:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) ntdomain: No '\' in User-Name = "98f2b301a055", looking up realm NULL
+radiusd:22452:1774939440.536636:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) ntdomain: Found realm "NULL"
+radiusd:22452:1774939440.536818:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) ntdomain: Adding Realm = "NULL"
+radiusd:22452:1774939440.536938:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) ntdomain: Accounting realm is LOCAL
+radiusd:22452:1774939440.537029:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[preacct]: returned from ntdomain (rlm_realm)
+radiusd:22452:1774939440.537159:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     [ntdomain] = ok
+radiusd:22452:1774939440.537250:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[preacct]: calling files (rlm_files)
+radiusd:22452:1774939440.537331:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[preacct]: returned from files (rlm_files)
+radiusd:22452:1774939440.537409:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     [files] = noop
+radiusd:22452:1774939440.537482:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   } # preacct = ok
+radiusd:22452:1774939440.537557:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) # Executing section accounting from file /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default
+radiusd:22452:1774939440.537648:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   accounting {
+radiusd:22452:1774939440.537743:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     if (Acct-Status-Type == Start || Acct-Status-Type == Interim-Update) {
+radiusd:22452:1774939440.537837:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     if (Acct-Status-Type == Start || Acct-Status-Type == Interim-Update)  -> TRUE
+radiusd:22452:1774939440.537954:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     if (Acct-Status-Type == Start || Acct-Status-Type == Interim-Update)  {
+radiusd:22452:1774939440.538055:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       if ("%{Framed-IP-Address}" !~ /^169\.254\./) {
+radiusd:22452:1774939440.538130:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       EXPAND %{Framed-IP-Address}
+radiusd:22452:1774939440.538202:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)          --> 
+radiusd:22452:1774939440.538276:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       if ("%{Framed-IP-Address}" !~ /^169\.254\./)  -> TRUE
+radiusd:22452:1774939440.538369:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       if ("%{Framed-IP-Address}" !~ /^169\.254\./)  {
+radiusd:22452:1774939440.538474:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: %{fs_properties:Framed-IP-Address '%{Framed-IP-Address}'}  !
+radiusd:22452:1774939440.538578:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939440.538654:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: xlat --> fs_properties
+radiusd:22452:1774939440.538747:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: {
+radiusd:22452:1774939440.538853:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: 	literal --> Framed-IP-Address '
+radiusd:22452:1774939440.538973:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: 	attribute --> Framed-IP-Address
+radiusd:22452:1774939440.539050:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: 	literal --> '
+radiusd:22452:1774939440.539123:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: }
+radiusd:22452:1774939440.539195:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: literal -->   !
+radiusd:22452:1774939440.539267:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Framed-IP-Address ''
+radiusd:22452:1774939440.539337:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939440.539425:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: literal --> Framed-IP-Address ''
+radiusd:22452:1774939440.539715:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)         EXPAND Framed-IP-Address ''
+radiusd:22452:1774939440.539833:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)            --> Framed-IP-Address ''
+radiusd:22452:1774939440.539965:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939440.540143:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939440.540237:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: fs_properties_rlm: sent 59 bytes to 127.0.0.1 
+radiusd:22452:1774939440.540313:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774939440  Framed-IP-Address ''   with length: 59
+radiusd:22452:1774939440.540386:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)         EXPAND %{fs_properties:Framed-IP-Address '%{Framed-IP-Address}'}  !
+radiusd:22452:1774939440.540462:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)            --> update 98-F2-B3-01-A0-55 1774939440  Framed-IP-Address ''    !
+radiusd:22452:1774939440.540555:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       } # if ("%{Framed-IP-Address}" !~ /^169\.254\./)  = noop
+radiusd:22452:1774939440.540644:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       update control {
+radiusd:22452:1774939440.540727:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)         Tmp-String-1 := ""
+radiusd:22452:1774939440.540806:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       } # update control = noop
+radiusd:22452:1774939440.540886:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       if ("%{Cisco-AVPair[*]}" =~ /(?i)vlan-id=([0-9]+)/) {
+radiusd:22452:1774939440.540999:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       EXPAND %{Cisco-AVPair[*]}
+radiusd:22452:1774939440.541113:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)          --> 
+radiusd:22452:1774939440.541190:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       if ("%{Cisco-AVPair[*]}" =~ /(?i)vlan-id=([0-9]+)/)  -> FALSE
+radiusd:22452:1774939440.541270:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       else {
+radiusd:22452:1774939440.541342:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)         if ("%{Airespace-Wlan-Id}" =~ /^[0-9]+$/) {
+radiusd:22452:1774939440.541414:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)         EXPAND %{Airespace-Wlan-Id}
+radiusd:22452:1774939440.541485:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)            --> 
+radiusd:22452:1774939440.541564:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)         if ("%{Airespace-Wlan-Id}" =~ /^[0-9]+$/)  -> FALSE
+radiusd:22452:1774939440.541654:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       } # else = noop
+radiusd:22452:1774939440.541773:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       if ("%{control:Tmp-String-0}" =~ /^[0-9]+$/) {
+radiusd:22452:1774939440.541850:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       EXPAND %{control:Tmp-String-0}
+radiusd:22452:1774939440.541931:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)          --> 
+radiusd:22452:1774939440.542023:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)       if ("%{control:Tmp-String-0}" =~ /^[0-9]+$/)  -> FALSE
+radiusd:22452:1774939440.542104:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     } # if (Acct-Status-Type == Start || Acct-Status-Type == Interim-Update)  = noop
+radiusd:22452:1774939440.542216:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     if (Acct-Status-Type == Stop){
+radiusd:22452:1774939440.542291:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     if (Acct-Status-Type == Stop) -> FALSE
+radiusd:22452:1774939440.542366:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[accounting]: calling exec (rlm_exec)
+radiusd:22452:1774939440.542460:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[accounting]: returned from exec (rlm_exec)
+radiusd:22452:1774939440.542532:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     [exec] = noop
+radiusd:22452:1774939440.542605:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[accounting]: calling attr_filter.accounting_response (rlm_attr_filter)
+radiusd:22452:1774939440.542732:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: %{User-Name}
+radiusd:22452:1774939440.542840:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939440.542933:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: attribute --> User-Name
+radiusd:22452:1774939440.542995:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) attr_filter.accounting_response: EXPAND %{User-Name}
+radiusd:22452:1774939440.543078:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) attr_filter.accounting_response:    --> 98f2b301a055
+radiusd:22452:1774939440.543184:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) attr_filter.accounting_response: Matched entry DEFAULT at line 12
+radiusd:22452:1774939440.543411:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     modsingle[accounting]: returned from attr_filter.accounting_response (rlm_attr_filter)
+radiusd:22452:1774939440.543491:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)     [attr_filter.accounting_response] = updated
+radiusd:22452:1774939440.543566:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29)   } # accounting = updated
+radiusd:22452:1774939440.543674:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) Sent Accounting-Response Id 238 from 10.16.177.66:1813 to 10.16.128.21:1646 length 20
+radiusd:22452:1774939440.543764:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) Finished request
+radiusd:22452:1774939440.543846:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Thread 4 waiting to be assigned a request
+radiusd:22452:1774939440.858045:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: (29) Cleaning up request packet ID 238 with timestamp +1611 due to timer
+radiusd:22452:1774939440.858487:Tue Mar 31 01:44:00 2026: Tue Mar 31 01:44:00 2026 : Debug: Waking up in 3.7 seconds.
+radiusd:22452:1774939444.650033:Tue Mar 31 01:44:04 2026: Tue Mar 31 01:44:04 2026 : Debug: (28) Cleaning up request packet ID 161 with timestamp +1610 due to cleanup_delay was reached
+radiusd:22452:1774939444.650151:Tue Mar 31 01:44:04 2026: Tue Mar 31 01:44:04 2026 : Info: Ready to process requests
+radiusd:22452:1774939461.721841:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: Waking up in 0.3 seconds.
+radiusd:22452:1774939461.722061:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: Thread 5 got semaphore
+radiusd:22452:1774939461.722109:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: Thread 5 handling request 30, (7 handled so far)
+radiusd:22452:1774939461.722155:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) Received Accounting-Request Id 239 from 10.16.128.21:1646 to 10.16.177.66:1813 length 187
+radiusd:22452:1774939461.722196:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Acct-Session-Id = "00000D46"
+radiusd:22452:1774939461.725631:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Calling-Station-Id = "98-F2-B3-01-A0-55"
+radiusd:22452:1774939461.726166:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   User-Name = "98f2b301a055"
+radiusd:22452:1774939461.726712:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Acct-Authentic = RADIUS
+radiusd:22452:1774939461.727017:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Acct-Terminate-Cause = Admin-Reset
+radiusd:22452:1774939461.727238:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Acct-Session-Time = 21
+radiusd:22452:1774939461.727400:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Acct-Input-Octets = 19349
+radiusd:22452:1774939461.728165:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Acct-Output-Octets = 27285
+radiusd:22452:1774939461.728359:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Acct-Input-Packets = 148
+radiusd:22452:1774939461.728589:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Acct-Output-Packets = 93
+radiusd:22452:1774939461.728882:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Acct-Status-Type = Stop
+radiusd:22452:1774939461.729014:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   NAS-Port-Type = Ethernet
+radiusd:22452:1774939461.729293:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   NAS-Port = 50001
+radiusd:22452:1774939461.729530:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   NAS-Port-Id = "FastEthernet0/1"
+radiusd:22452:1774939461.729612:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Called-Station-Id = "00-1E-79-A9-7F-03"
+radiusd:22452:1774939461.729741:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Service-Type = Framed-User
+radiusd:22452:1774939461.729841:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   NAS-IP-Address = 10.16.128.21
+radiusd:22452:1774939461.730004:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   PMIP6-Home-HN-Prefix = 3345:3145:4445::/54
+radiusd:22452:1774939461.730134:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   Acct-Delay-Time = 0
+radiusd:22452:1774939461.730258:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) # Executing section preacct from file /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default
+radiusd:22452:1774939461.730379:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   preacct {
+radiusd:22452:1774939461.730426:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[preacct]: calling preprocess (rlm_preprocess)
+radiusd:22452:1774939461.730532:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[preacct]: returned from preprocess (rlm_preprocess)
+radiusd:22452:1774939461.730644:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     [preprocess] = ok
+radiusd:22452:1774939461.730711:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     if (Acct-Session-Id =~ /(.*)\\(.*)/) {
+radiusd:22452:1774939461.730772:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     if (Acct-Session-Id =~ /(.*)\\(.*)/)  -> FALSE
+radiusd:22452:1774939461.730840:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: %{fs_properties:AcctSid '%{Acct-Session-Id}'  !}
+radiusd:22452:1774939461.730887:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939461.731040:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: xlat --> fs_properties
+radiusd:22452:1774939461.731086:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: {
+radiusd:22452:1774939461.731120:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: 	literal --> AcctSid '
+radiusd:22452:1774939461.731162:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: 	attribute --> Acct-Session-Id
+radiusd:22452:1774939461.731275:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: 	literal --> '  !
+radiusd:22452:1774939461.731417:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: }
+radiusd:22452:1774939461.731613:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: AcctSid '00000D46'  !
+radiusd:22452:1774939461.731655:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939461.731772:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: literal --> AcctSid '00000D46'  !
+radiusd:22452:1774939461.731972:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     EXPAND AcctSid '00000D46'  !
+radiusd:22452:1774939461.732015:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)        --> AcctSid '00000D46'  !
+radiusd:22452:1774939461.732099:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939461.732135:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939461.732168:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: fs_properties_rlm: sent 60 bytes to 127.0.0.1 
+radiusd:22452:1774939461.732257:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774939461  AcctSid '00000D46'  !   with length: 60
+radiusd:22452:1774939461.732294:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     EXPAND %{fs_properties:AcctSid '%{Acct-Session-Id}'  !}
+radiusd:22452:1774939461.732327:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)        --> update 98-F2-B3-01-A0-55 1774939461  AcctSid '00000D46'  !  
+radiusd:22452:1774939461.732411:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     policy acct_unique {
+radiusd:22452:1774939461.732444:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       update request {
+radiusd:22452:1774939461.732492:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)         &Tmp-String-9 := "ai:"
+radiusd:22452:1774939461.732605:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       } # update request = noop
+radiusd:22452:1774939461.732656:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       if (("%{hex:&Class}" =~ /^%{hex:&Tmp-String-9}/) && 	    ("%{string:&Class}" =~ /^ai:([0-9a-f]{32})/i)) {
+radiusd:22452:1774939461.732695:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       EXPAND %{hex:&Class}
+radiusd:22452:1774939461.732727:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)          --> 
+radiusd:22452:1774939461.732830:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       EXPAND ^%{hex:&Tmp-String-9}
+radiusd:22452:1774939461.732887:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)          --> ^61693a
+radiusd:22452:1774939461.732961:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       if (("%{hex:&Class}" =~ /^%{hex:&Tmp-String-9}/) && 	    ("%{string:&Class}" =~ /^ai:([0-9a-f]{32})/i))  -> FALSE
+radiusd:22452:1774939461.733022:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       else {
+radiusd:22452:1774939461.733077:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)         update request {
+radiusd:22452:1774939461.733289:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)           EXPAND %{md5:%{User-Name},%{Acct-Session-ID},%{%{NAS-IPv6-Address}:-%{NAS-IP-Address}},%{NAS-Identifier},%{NAS-Port-ID},%{NAS-Port}}
+radiusd:22452:1774939461.733323:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)              --> 9ac0727790040db8c46c01f27a5e4976
+radiusd:22452:1774939461.733499:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)           &Acct-Unique-Session-Id := 9ac0727790040db8c46c01f27a5e4976
+radiusd:22452:1774939461.733549:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)         } # update request = noop
+radiusd:22452:1774939461.733618:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       } # else = noop
+radiusd:22452:1774939461.733652:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       update request {
+radiusd:22452:1774939461.733686:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)         &Tmp-String-9 !* ANY
+radiusd:22452:1774939461.733719:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       } # update request = noop
+radiusd:22452:1774939461.733755:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     } # policy acct_unique = noop
+radiusd:22452:1774939461.733789:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[preacct]: calling suffix (rlm_realm)
+radiusd:22452:1774939461.733823:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) suffix: Checking for suffix after "@"
+radiusd:22452:1774939461.733855:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) suffix: No '@' in User-Name = "98f2b301a055", skipping NULL due to config.
+radiusd:22452:1774939461.733908:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[preacct]: returned from suffix (rlm_realm)
+radiusd:22452:1774939461.733943:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     [suffix] = noop
+radiusd:22452:1774939461.733985:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[preacct]: calling ntdomain (rlm_realm)
+radiusd:22452:1774939461.734038:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) ntdomain: Checking for prefix before "\"
+radiusd:22452:1774939461.734074:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) ntdomain: No '\' in User-Name = "98f2b301a055", looking up realm NULL
+radiusd:22452:1774939461.734247:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) ntdomain: Found realm "NULL"
+radiusd:22452:1774939461.734292:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) ntdomain: Adding Realm = "NULL"
+radiusd:22452:1774939461.734347:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) ntdomain: Accounting realm is LOCAL
+radiusd:22452:1774939461.734550:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[preacct]: returned from ntdomain (rlm_realm)
+radiusd:22452:1774939461.734591:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     [ntdomain] = ok
+radiusd:22452:1774939461.734628:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[preacct]: calling files (rlm_files)
+radiusd:22452:1774939461.734662:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[preacct]: returned from files (rlm_files)
+radiusd:22452:1774939461.734821:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     [files] = noop
+radiusd:22452:1774939461.734953:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   } # preacct = ok
+radiusd:22452:1774939461.735000:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) # Executing section accounting from file /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default
+radiusd:22452:1774939461.735115:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   accounting {
+radiusd:22452:1774939461.735166:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     if (Acct-Status-Type == Start || Acct-Status-Type == Interim-Update) {
+radiusd:22452:1774939461.735296:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     if (Acct-Status-Type == Start || Acct-Status-Type == Interim-Update)  -> FALSE
+radiusd:22452:1774939461.735389:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     if (Acct-Status-Type == Stop){
+radiusd:22452:1774939461.735428:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     if (Acct-Status-Type == Stop) -> TRUE
+radiusd:22452:1774939461.735493:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     if (Acct-Status-Type == Stop) {
+radiusd:22452:1774939461.735565:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: %{fs_properties:AcctStatusType '%{Acct-Status-Type}'  !}
+radiusd:22452:1774939461.735602:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939461.735634:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: xlat --> fs_properties
+radiusd:22452:1774939461.735669:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: {
+radiusd:22452:1774939461.735701:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: 	literal --> AcctStatusType '
+radiusd:22452:1774939461.735813:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: 	attribute --> Acct-Status-Type
+radiusd:22452:1774939461.735850:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: 	literal --> '  !
+radiusd:22452:1774939461.735967:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: }
+radiusd:22452:1774939461.736026:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: AcctStatusType 'Stop'  !
+radiusd:22452:1774939461.736069:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939461.736194:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: literal --> AcctStatusType 'Stop'  !
+radiusd:22452:1774939461.736307:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       EXPAND AcctStatusType 'Stop'  !
+radiusd:22452:1774939461.736422:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)          --> AcctStatusType 'Stop'  !
+radiusd:22452:1774939461.736514:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939461.736556:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939461.736604:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: fs_properties_rlm: sent 63 bytes to 127.0.0.1 
+radiusd:22452:1774939461.736644:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774939461  AcctStatusType 'Stop'  !   with length: 63
+radiusd:22452:1774939461.736670:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)       EXPAND %{fs_properties:AcctStatusType '%{Acct-Status-Type}'  !}
+radiusd:22452:1774939461.736695:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)          --> update 98-F2-B3-01-A0-55 1774939461  AcctStatusType 'Stop'  !  
+radiusd:22452:1774939461.736748:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     } # if (Acct-Status-Type == Stop) = noop
+radiusd:22452:1774939461.736769:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[accounting]: calling exec (rlm_exec)
+radiusd:22452:1774939461.736788:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[accounting]: returned from exec (rlm_exec)
+radiusd:22452:1774939461.736811:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     [exec] = noop
+radiusd:22452:1774939461.736836:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[accounting]: calling attr_filter.accounting_response (rlm_attr_filter)
+radiusd:22452:1774939461.736861:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: %{User-Name}
+radiusd:22452:1774939461.736887:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939461.737000:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: attribute --> User-Name
+radiusd:22452:1774939461.737020:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) attr_filter.accounting_response: EXPAND %{User-Name}
+radiusd:22452:1774939461.737038:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) attr_filter.accounting_response:    --> 98f2b301a055
+radiusd:22452:1774939461.737062:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) attr_filter.accounting_response: Matched entry DEFAULT at line 12
+radiusd:22452:1774939461.737086:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     modsingle[accounting]: returned from attr_filter.accounting_response (rlm_attr_filter)
+radiusd:22452:1774939461.737151:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)     [attr_filter.accounting_response] = updated
+radiusd:22452:1774939461.737172:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30)   } # accounting = updated
+radiusd:22452:1774939461.737199:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) Sent Accounting-Response Id 239 from 10.16.177.66:1813 to 10.16.128.21:1646 length 20
+radiusd:22452:1774939461.737236:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: (30) Finished request
+radiusd:22452:1774939461.737335:Tue Mar 31 01:44:21 2026: Tue Mar 31 01:44:21 2026 : Debug: Thread 5 waiting to be assigned a request
+radiusd:22452:1774939462.055435:Tue Mar 31 01:44:22 2026: Tue Mar 31 01:44:22 2026 : Debug: (30) Cleaning up request packet ID 239 with timestamp +1632 due to timer
+radiusd:22452:1774939462.055972:Tue Mar 31 01:44:22 2026: Tue Mar 31 01:44:22 2026 : Info: Ready to process requests
+radiusd:22452:1774939473.654712:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: Waking up in 0.3 seconds.
+radiusd:22452:1774939473.654867:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: Thread 3 got semaphore
+radiusd:22452:1774939473.654926:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: Thread 3 handling request 31, (7 handled so far)
+radiusd:22452:1774939473.655014:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) Received Access-Request Id 162 from 10.16.128.21:1645 to 10.16.177.66:1812 length 157
+radiusd:22452:1774939473.655069:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   User-Name = "98f2b301a055"
+radiusd:22452:1774939473.655144:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   User-Password = "****"
+radiusd:22452:1774939473.655221:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   Service-Type = Call-Check
+radiusd:22452:1774939473.655267:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   Framed-MTU = 1500
+radiusd:22452:1774939473.655330:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   Called-Station-Id = "00-1E-79-A9-7F-03"
+radiusd:22452:1774939473.655373:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   Calling-Station-Id = "98-F2-B3-01-A0-55"
+radiusd:22452:1774939473.655413:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   Message-Authenticator = 0x3680d9469149e97ea0e41634073b9c7f
+radiusd:22452:1774939473.655455:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   NAS-Port-Type = Ethernet
+radiusd:22452:1774939473.655499:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   NAS-Port = 50001
+radiusd:22452:1774939473.655547:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   NAS-Port-Id = "FastEthernet0/1"
+radiusd:22452:1774939473.655581:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   NAS-IP-Address = 10.16.128.21
+radiusd:22452:1774939473.655619:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) session-state: No State attribute
+radiusd:22452:1774939473.655666:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) # Executing section authorize from file /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default
+radiusd:22452:1774939473.655699:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   authorize {
+radiusd:22452:1774939473.655801:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     if ("%{User-Name}" =~ /^host\/(.*)\.TXQALAB.FORESCOUT.LOCAL$/i) {
+radiusd:22452:1774939473.655849:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     EXPAND %{User-Name}
+radiusd:22452:1774939473.655881:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)        --> 98f2b301a055
+radiusd:22452:1774939473.655988:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     if ("%{User-Name}" =~ /^host\/(.*)\.TXQALAB.FORESCOUT.LOCAL$/i)  -> FALSE
+radiusd:22452:1774939473.656034:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: calling preprocess (rlm_preprocess)
+radiusd:22452:1774939473.656076:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: returned from preprocess (rlm_preprocess)
+radiusd:22452:1774939473.656107:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [preprocess] = ok
+radiusd:22452:1774939473.656147:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: calling chap (rlm_chap)
+radiusd:22452:1774939473.656267:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: returned from chap (rlm_chap)
+radiusd:22452:1774939473.656311:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [chap] = noop
+radiusd:22452:1774939473.656345:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: calling mschap (rlm_mschap)
+radiusd:22452:1774939473.656385:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: returned from mschap (rlm_mschap)
+radiusd:22452:1774939473.656477:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [mschap] = noop
+radiusd:22452:1774939473.656518:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: calling digest (rlm_digest)
+radiusd:22452:1774939473.656557:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: returned from digest (rlm_digest)
+radiusd:22452:1774939473.656627:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [digest] = noop
+radiusd:22452:1774939473.656667:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: calling suffix (rlm_realm)
+radiusd:22452:1774939473.656720:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) suffix: Checking for suffix after "@"
+radiusd:22452:1774939473.656763:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) suffix: No '@' in User-Name = "98f2b301a055", skipping NULL due to config.
+radiusd:22452:1774939473.656978:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: returned from suffix (rlm_realm)
+radiusd:22452:1774939473.657041:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [suffix] = noop
+radiusd:22452:1774939473.657126:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: calling ntdomain (rlm_realm)
+radiusd:22452:1774939473.657168:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) ntdomain: Checking for prefix before "\"
+radiusd:22452:1774939473.657246:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) ntdomain: No '\' in User-Name = "98f2b301a055", looking up realm NULL
+radiusd:22452:1774939473.657291:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) ntdomain: Found realm "NULL"
+radiusd:22452:1774939473.657324:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) ntdomain: Adding Realm = "NULL"
+radiusd:22452:1774939473.657365:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) ntdomain: Authentication realm is LOCAL
+radiusd:22452:1774939473.657436:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: returned from ntdomain (rlm_realm)
+radiusd:22452:1774939473.657483:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [ntdomain] = ok
+radiusd:22452:1774939473.657908:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: calling eap (rlm_eap)
+radiusd:22452:1774939473.657995:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) eap: No EAP-Message, not doing EAP
+radiusd:22452:1774939473.658053:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: returned from eap (rlm_eap)
+radiusd:22452:1774939473.658088:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [eap] = noop
+radiusd:22452:1774939473.658142:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: calling files (rlm_files)
+radiusd:22452:1774939473.658174:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) files: users: Checking entry DEFAULT at line 167
+radiusd:22452:1774939473.658205:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) files: users: Checking entry DEFAULT at line 174
+radiusd:22452:1774939473.658242:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) files: users: Checking entry DEFAULT at line 181
+radiusd:22452:1774939473.658274:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: returned from files (rlm_files)
+radiusd:22452:1774939473.658330:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [files] = noop
+radiusd:22452:1774939473.658363:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: calling expiration (rlm_expiration)
+radiusd:22452:1774939473.658409:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: returned from expiration (rlm_expiration)
+radiusd:22452:1774939473.658469:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [expiration] = noop
+radiusd:22452:1774939473.658571:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: calling logintime (rlm_logintime)
+radiusd:22452:1774939473.658689:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[authorize]: returned from logintime (rlm_logintime)
+radiusd:22452:1774939473.658736:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [logintime] = noop
+radiusd:22452:1774939473.658790:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     policy fs_authorize_mab {
+radiusd:22452:1774939473.658838:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)       if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/)) {
+radiusd:22452:1774939473.658905:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)       if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/))  -> TRUE
+radiusd:22452:1774939473.658951:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)       if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/))  {
+radiusd:22452:1774939473.659003:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)         if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i) {
+radiusd:22452:1774939473.659049:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)         if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i)  -> TRUE
+radiusd:22452:1774939473.659085:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)         if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i)  {
+radiusd:22452:1774939473.659119:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)           update request {
+radiusd:22452:1774939473.659160:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)             EXPAND %{tolower:%{1}%{2}%{3}%{4}%{5}%{6}}
+radiusd:22452:1774939473.659237:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)                --> 98f2b301a055
+radiusd:22452:1774939473.659278:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)             User-Name := 98f2b301a055
+radiusd:22452:1774939473.659310:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)             Overwriting value "98f2b301a055" with "98f2b301a055"
+radiusd:22452:1774939473.659339:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)             EXPAND %{User-Name}
+radiusd:22452:1774939473.659394:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)                --> 98f2b301a055
+radiusd:22452:1774939473.659434:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)             Calling-Station-Id = 98f2b301a055
+radiusd:22452:1774939473.659466:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)             Refusing to overwrite (use :=)
+radiusd:22452:1774939473.659518:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)           } # update request = noop
+radiusd:22452:1774939473.659568:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)           if ("%{redis:hget %{User-Name} dot1x_target_access }" =~ /.+/) {
+radiusd:22452:1774939473.659619:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: rlm_redis (redis): Reserved connection (1)
+radiusd:22452:1774939473.659651:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: rlm_redis (redis): executing the query: "hget 98f2b301a055 dot1x_target_access "
+radiusd:22452:1774939473.659681:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)           rlm_redis (redis): Can't write result, insufficient space or unsupported result 
+radiusd:22452:1774939473.659730:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: rlm_redis (redis): Released connection (1)
+radiusd:22452:1774939473.659772:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)           EXPAND %{redis:hget %{User-Name} dot1x_target_access }
+radiusd:22452:1774939473.659821:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)              --> 
+radiusd:22452:1774939473.659888:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)           if ("%{redis:hget %{User-Name} dot1x_target_access }" =~ /.+/)  -> FALSE
+radiusd:22452:1774939473.659957:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)           elsif ("%{redis:hget 000000000000 dot1x_target_access }" == "accept_unknown_mab") {
+radiusd:22452:1774939473.660022:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: rlm_redis (redis): Reserved connection (10)
+radiusd:22452:1774939473.660092:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: rlm_redis (redis): executing the query: "hget 000000000000 dot1x_target_access "
+radiusd:22452:1774939473.660124:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)           rlm_redis (redis): Can't write result, insufficient space or unsupported result 
+radiusd:22452:1774939473.660159:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: rlm_redis (redis): Released connection (10)
+radiusd:22452:1774939473.660189:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)           EXPAND %{redis:hget 000000000000 dot1x_target_access }
+radiusd:22452:1774939473.660218:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)              --> 
+radiusd:22452:1774939473.660249:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)           elsif ("%{redis:hget 000000000000 dot1x_target_access }" == "accept_unknown_mab")  -> FALSE
+radiusd:22452:1774939473.660283:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)         } # if (User-Name =~ /^([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})[^0-9a-f]?([0-9a-f]{2})$/i)  = noop
+radiusd:22452:1774939473.660315:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)       } # if (!EAP-Message || ("%{EAP-Type}" =~ /MD5/))  = noop
+radiusd:22452:1774939473.660346:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     } # policy fs_authorize_mab = noop
+radiusd:22452:1774939473.660376:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   } # authorize = ok
+radiusd:22452:1774939473.660408:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : ERROR: (31) No Auth-Type found: rejecting the user via Post-Auth-Type = Reject
+radiusd:22452:1774939473.660452:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) Failed to authenticate the user
+radiusd:22452:1774939473.660493:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) Using Post-Auth-Type Reject
+radiusd:22452:1774939473.660531:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) # Executing group from file /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default
+radiusd:22452:1774939473.660571:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   Post-Auth-Type REJECT {
+radiusd:22452:1774939473.660608:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[post-auth]: calling fs_properties (rlm_fs_properties)
+radiusd:22452:1774939473.660664:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 31
+radiusd:22452:1774939473.660694:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 5
+radiusd:22452:1774939473.660724:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 61
+radiusd:22452:1774939473.660774:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 4
+radiusd:22452:1774939473.660804:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 95
+radiusd:22452:1774939473.660834:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 95 is NULL
+radiusd:22452:1774939473.660864:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 30
+radiusd:22452:1774939473.660914:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1
+radiusd:22452:1774939473.660955:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1018
+radiusd:22452:1774939473.661013:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1018 is NULL
+radiusd:22452:1774939473.661110:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1920
+radiusd:22452:1774939473.661144:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1920 is NULL
+radiusd:22452:1774939473.661193:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1921
+radiusd:22452:1774939473.661243:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1921 is NULL
+radiusd:22452:1774939473.661282:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1922
+radiusd:22452:1774939473.661319:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1922 is NULL
+radiusd:22452:1774939473.661349:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1923
+radiusd:22452:1774939473.661378:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1923 is NULL
+radiusd:22452:1774939473.661408:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1924
+radiusd:22452:1774939473.661438:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1924 is NULL
+radiusd:22452:1774939473.661467:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1926
+radiusd:22452:1774939473.661496:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1926 is NULL
+radiusd:22452:1774939473.661525:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 44
+radiusd:22452:1774939473.661588:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 44 is NULL
+radiusd:22452:1774939473.661619:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 32
+radiusd:22452:1774939473.661659:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 32 is NULL
+radiusd:22452:1774939473.661798:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 87
+radiusd:22452:1774939473.661831:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 8
+radiusd:22452:1774939473.661875:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 8 is NULL
+radiusd:22452:1774939473.661931:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 96
+radiusd:22452:1774939473.661970:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 96 is NULL
+radiusd:22452:1774939473.662000:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 97
+radiusd:22452:1774939473.662027:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 97 is NULL
+radiusd:22452:1774939473.662055:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1939
+radiusd:22452:1774939473.662085:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1939 is NULL
+radiusd:22452:1774939473.662114:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1936
+radiusd:22452:1774939473.662145:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1936 is NULL
+radiusd:22452:1774939473.662174:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1960
+radiusd:22452:1774939473.662227:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1960 is NULL
+radiusd:22452:1774939473.662276:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1961
+radiusd:22452:1774939473.662342:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1961 is NULL
+radiusd:22452:1774939473.662374:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: found attr 1962
+radiusd:22452:1774939473.662515:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attr 1962 is NULL
+radiusd:22452:1774939473.662604:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: fs_properties_rlm:going to send the following message update 98-F2-B3-01-A0-55 1774939473  NASPort '50001'  NASPortType 'Ethernet'  NASIpAddress '10.16.128.21'  CalledSid '00-1E-79-A9-7F-03'  UserName '98f2b301a055'  NASPortIdStr 'FastEthernet0/1'   with len of 195 
+radiusd:22452:1774939473.662657:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939473.662694:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939473.662734:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: fs_properties_rlm: sent 195 bytes to 127.0.0.1 
+radiusd:22452:1774939473.662840:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[post-auth]: returned from fs_properties (rlm_fs_properties)
+radiusd:22452:1774939473.662906:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [fs_properties] = ok
+radiusd:22452:1774939473.662949:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     policy fs_auth_end {
+radiusd:22452:1774939473.663045:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: %{fs_properties:AuthStatus '%{reply:Packet-Type}:%{control:Reply-Message}'}
+radiusd:22452:1774939473.663082:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939473.663149:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: xlat --> fs_properties
+radiusd:22452:1774939473.663183:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: {
+radiusd:22452:1774939473.663231:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: 	literal --> AuthStatus '
+radiusd:22452:1774939473.663300:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: 	attribute --> Packet-Type
+radiusd:22452:1774939473.663333:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: 	literal --> :
+radiusd:22452:1774939473.663370:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: 	attribute --> Reply-Message
+radiusd:22452:1774939473.663438:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: 	literal --> '
+radiusd:22452:1774939473.663532:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: }
+radiusd:22452:1774939473.663584:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: AuthStatus 'Access-Reject:'
+radiusd:22452:1774939473.663659:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939473.663704:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: literal --> AuthStatus 'Access-Reject:'
+radiusd:22452:1774939473.663747:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)       EXPAND AuthStatus 'Access-Reject:'
+radiusd:22452:1774939473.663797:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)          --> AuthStatus 'Access-Reject:'
+radiusd:22452:1774939473.663831:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: fs_properties_rlm:trying to find a connection for instance fs_properties
+radiusd:22452:1774939473.663883:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: fs_properties_rlm:found available connection inst name fs_properties fd 32
+radiusd:22452:1774939473.663932:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: fs_properties_rlm: sent 66 bytes to 127.0.0.1 
+radiusd:22452:1774939473.663973:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774939473  AuthStatus 'Access-Reject:'   with length: 66
+radiusd:22452:1774939473.664013:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)       EXPAND %{fs_properties:AuthStatus '%{reply:Packet-Type}:%{control:Reply-Message}'}
+radiusd:22452:1774939473.664135:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)          --> update 98-F2-B3-01-A0-55 1774939473  AuthStatus 'Access-Reject:'  
+radiusd:22452:1774939473.664181:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     } # policy fs_auth_end = ok
+radiusd:22452:1774939473.664249:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[post-auth]: calling attr_filter.access_reject (rlm_attr_filter)
+radiusd:22452:1774939473.664335:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: %{User-Name}
+radiusd:22452:1774939473.664370:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: Parsed xlat tree:
+radiusd:22452:1774939473.664443:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: attribute --> User-Name
+radiusd:22452:1774939473.664532:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) attr_filter.access_reject: EXPAND %{User-Name}
+radiusd:22452:1774939473.664567:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) attr_filter.access_reject:    --> 98f2b301a055
+radiusd:22452:1774939473.664607:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) attr_filter.access_reject: Matched entry DEFAULT at line 11
+radiusd:22452:1774939473.664646:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[post-auth]: returned from attr_filter.access_reject (rlm_attr_filter)
+radiusd:22452:1774939473.664703:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [attr_filter.access_reject] = updated
+radiusd:22452:1774939473.664791:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[post-auth]: calling eap (rlm_eap)
+radiusd:22452:1774939473.664851:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) eap: Request didn't contain an EAP-Message, not inserting EAP-Failure
+radiusd:22452:1774939473.664908:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     modsingle[post-auth]: returned from eap (rlm_eap)
+radiusd:22452:1774939473.664948:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)     [eap] = noop
+radiusd:22452:1774939473.664981:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31)   } # Post-Auth-Type REJECT = updated
+radiusd:22452:1774939473.665090:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) Sent Access-Reject Id 162 from 10.16.177.66:1812 to 10.16.128.21:1645 length 38
+radiusd:22452:1774939473.665133:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: (31) Finished request
+radiusd:22452:1774939473.665165:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: Thread 3 waiting to be assigned a request
+radiusd:22452:1774939473.988441:Tue Mar 31 01:44:33 2026: Tue Mar 31 01:44:33 2026 : Debug: Waking up in 4.6 seconds.
