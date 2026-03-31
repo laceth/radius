@@ -1,0 +1,494 @@
+dot1x:317:1774542379.408561:Thu Mar 26 11:26:19 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542379.411440:Thu Mar 26 11:26:19 2026: Latest version: 48060036
+dot1x:317:1774542381.773761:Thu Mar 26 11:26:21 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542381.776722:Thu Mar 26 11:26:21 2026: Latest version: 48060036
+dot1x:317:1774542384.043370:Thu Mar 26 11:26:24 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542384.046641:Thu Mar 26 11:26:24 2026: Latest version: 48060036
+dot1x:317:1774542386.298450:Thu Mar 26 11:26:26 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542386.301367:Thu Mar 26 11:26:26 2026: Latest version: 48060036
+dot1x:317:1774542388.533635:Thu Mar 26 11:26:28 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542388.536538:Thu Mar 26 11:26:28 2026: Latest version: 48060036
+dot1x:317:1774542390.816449:Thu Mar 26 11:26:30 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542390.819560:Thu Mar 26 11:26:30 2026: Latest version: 48060036
+dot1x:317:1774542393.168114:Thu Mar 26 11:26:33 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542393.171403:Thu Mar 26 11:26:33 2026: Latest version: 48060036
+dot1x:317:1774542395.416661:Thu Mar 26 11:26:35 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542395.419723:Thu Mar 26 11:26:35 2026: Latest version: 48060036
+dot1x:317:1774542397.673308:Thu Mar 26 11:26:37 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542397.676183:Thu Mar 26 11:26:37 2026: Latest version: 48060036
+dot1x:317:1774542399.950798:Thu Mar 26 11:26:39 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542399.953751:Thu Mar 26 11:26:39 2026: Latest version: 48060036
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:317:1774542401.899803:Thu Mar 26 11:26:41 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:317:1774542401.905799:Thu Mar 26 11:26:41 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:317:1774542401.984991:Thu Mar 26 11:26:41 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:317:1774542402.081470:Thu Mar 26 11:26:42 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'EAP-TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'EAP-TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'PEAP',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'PEAP',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      },
+          'rule_3' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:317:1774542403.308952:Thu Mar 26 11:26:43 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542403.311850:Thu Mar 26 11:26:43 2026: Latest version: 48060036
+dot1x:317:1774542405.642765:Thu Mar 26 11:26:45 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542405.645925:Thu Mar 26 11:26:45 2026: Latest version: 48060036
+dot1x:317:1774542407.910808:Thu Mar 26 11:26:47 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:317:1774542407.913778:Thu Mar 26 11:26:47 2026: Latest version: 48060036
+dot1x:317:1774542407.998811:Thu Mar 26 11:26:47 2026: In plugin_usocket
+dot1x:317:1774542407.999025:Thu Mar 26 11:26:47 2026: Got message stop_stop
+dot1x:317:1774542407.999356:Thu Mar 26 11:26:47 2026: Stopping bundled Free-Radius...
+dot1x:317:1774542412.174858:Thu Mar 26 11:26:52 2026: flushing Redis DB...
+dot1x:317:1774542412.189383:Thu Mar 26 11:26:52 2026: Handling stop message stop_stop
+dot1x:317:1774542412.191814:Thu Mar 26 11:26:52 2026: Plugin stopped
+dot1x:6288:1774542414.145681:Thu Mar 26 11:26:54 CDT -0500 2026: Started: version: 4.8.6-48060039 1769799728 (id: dot1x-0.544231454084979)
+dot1x:6288:1774542414.293618:Thu Mar 26 11:26:54 2026: main::cb_1x_ready:1136:[other]::0: ===== Started; Policy-Enabled=1 =====
+dot1x:6288:1774542414.298491:Thu Mar 26 11:26:54 2026: mar module has started. listening...(open_child_process:5806)
+dot1x:6288:1774542415.242287:Thu Mar 26 11:26:55 2026: disconnect module has started. listening...(open_child_process:5806)
+dot1x:6288:1774542419.159073:Thu Mar 26 11:26:59 2026: main::dot1x_configure:892:[other]::0: Loading complete (for 0 proxies)
+dot1x:6288:1774542419.288306:Thu Mar 26 11:26:59 2026: Adding <TXQALAB.FORESCOUT.LOCAL> to krb5.conf file, DC: <10.100.127.1>(dot1x_generate_krb5_conf_file:7578)
+dot1x:6288:1774542419.289250:Thu Mar 26 11:26:59 2026: Wrote krb5 conf file: /usr/local/forescout/plugin/dot1x/fs_radius/etc/krb5.conf.fr.all(dot1x_generate_krb5_conf_file:7610)
+dot1x:6288:1774542419.339227:Thu Mar 26 11:26:59 2026: cmd=echo stub | sudo fstool dot1x_net ads testjoin -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab(fs_radius_test_ads_join:199)
+dot1x:6288:1774542419.515113:Thu Mar 26 11:26:59 2026: test_ads_join returned: Join is OK(dot1x_start_winbind:7451)
+dot1x:6288:1774542419.515299:Thu Mar 26 11:26:59 2026: Started winbind for [txqalab-dc1], smb domain: [txqalab], args: [/usr/local/forescout/plugin/dot1x/fs_radius -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab], restart: [](dot1x_start_winbind:7460)
+dot1x:6288:1774542425.001790:Thu Mar 26 11:27:05 2026: main::dot1x_configure:900:[other]::0: Loading complete (for 1 domains)
+dot1x:6288:1774542425.012611:Thu Mar 26 11:27:05 2026: main::dot1x_configure_edit_attr_filter:4026:[other]::0: Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:6288:1774542425.018563:Thu Mar 26 11:27:05 2026: main::dot1x_configure_edit_attr_filter:4046:[other]::0: Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:6288:1774542425.096172:Thu Mar 26 11:27:05 2026: No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:6288:1774542425.194166:Thu Mar 26 11:27:05 2026: Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'EAP-TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'EAP-TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'PEAP',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'PEAP',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      },
+          'rule_3' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:6288:1774542437.271818:Thu Mar 26 11:27:17 2026: main::connect_to_fr:3776: setsockopt: ok=1
+dot1x:6288:1774542438.622437:Thu Mar 26 11:27:18 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542438.625748:Thu Mar 26 11:27:18 2026: Latest version: 48060036
+dot1x:6288:1774542438.627585:Thu Mar 26 11:27:18 2026: Accepting connections on port 13065
+dot1x:6288:1774542442.985994:Thu Mar 26 11:27:22 2026: CounterACT Appliance connected
+dot1x:6288:1774542442.987196:Thu Mar 26 11:27:22 2026: main::cb_1x_connected:1188:[other]::0: Connected with the CU
+dot1x:6288:1774542444.397516:Thu Mar 26 11:27:24 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542444.400373:Thu Mar 26 11:27:24 2026: Latest version: 48060036
+dot1x:6288:1774542444.402769:Thu Mar 26 11:27:24 2026: Memory usage: 44961792 bytes
+dot1x:6288:1774542444.541708:Thu Mar 26 11:27:24 2026: Sending queued messages
+dot1x:6288:1774542444.542276:Thu Mar 26 11:27:24 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542441
+AssignedTo ''
+dot1x:6288:1774542444.681416:Thu Mar 26 11:27:24 2026: Starting SDK stats timer with period 3600
+dot1x:6288:1774542444.681906:Thu Mar 26 11:27:24 2026: Started plugin timer with delay 300 and period 3600
+dot1x:6288:1774542444.683668:Thu Mar 26 11:27:24 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542441
+NASPort '50101'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.17'
+CalledSid '00-6B-F1-56-66-40'
+UserName 'host/Dot1x-CLT-Good'
+EapType 'TLS'
+1x_sr '546ec271db8d7b92'
+1x_ex '460102162300Z'
+1x_is '/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local'
+1x_su '/C=US/ST=Texas/L=Allen/O=Forescout/OU=Lab/CN=Dot1x-CLT-Good/emailAddress=clientgood@internal.local'
+1x_cn 'Dot1x-CLT-Good'
+NASPortIdStr 'TenGigabitEthernet1/1'
+FramedIpAddress '10.16.178.68'
+1x_eku '1.3.6.1.5.5.7.3.2'
+dot1x:6288:1774542444.695698:Thu Mar 26 11:27:24 2026: Error: [98f2b301a096/fr-update] Bad FREERADIUS input '98f2b301a096 1x_eku 1.3.6.1.5.5.7.3.2'(dot1x_set_fr_property:3732)
+dot1x:6288:1774542444.763791:Thu Mar 26 11:27:24 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542441
+AuthStatus 'Access-Accept:default rule_2'
+dot1x:6288:1774542444.766727:Thu Mar 26 11:27:24 2026: main::dot1x_fetchMar:2230:[ntlmpl]::0: <98f2b301a096|usr=host/Dot1x-CLT-Good>no MAR entry for 98f2b301a096!
+dot1x:6288:1774542444.830027:Thu Mar 26 11:27:24 2026: Error: Failure to connect during reconf for Authentication source: [txqalab-dc1](dot1x_reconf_ad:7864)
+dot1x:6288:1774542444.830266:Thu Mar 26 11:27:24 2026: main::dot1x_reconf_ad:7883:[other]::0: no relevant changes, do not restart radius server
+dot1x:6288:1774542444.831288:Thu Mar 26 11:27:24 2026: main::cb_1x_device_reload:1543:[other]::0: c_dbg_def MAR devices load result= MACs valid=0 invalid=0
+dot1x:6288:1774542444.831609:Thu Mar 26 11:27:24 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542441
+Cisco-AVPair 'service-type=Framed'
+!
+dot1x:6288:1774542444.839479:Thu Mar 26 11:27:24 2026: recv.plugin_call_netaction_new:4
+dot1x:6288:1774542444.839783:Thu Mar 26 11:27:24 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542441
+Auth-Type 'EAP'
+!
+dot1x:6288:1774542444.841584:Thu Mar 26 11:27:24 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542441
+AcctSid '000006C6'
+!
+dot1x:6288:1774542444.847373:Thu Mar 26 11:27:24 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542441
+Framed-IP-Address '10.16.178.68'
+dot1x:6288:1774542444.931341:Thu Mar 26 11:27:24 2026: Restart FreeRadius due to not Nas(disconnect_cb:5915)
+dot1x:6288:1774542455.737743:Thu Mar 26 11:27:35 2026: Error: Cannot update field dot1x_reauth_method without csid ()(dot1x_reauth_err_msg:5902)
+dot1x:6288:1774542457.044086:Thu Mar 26 11:27:37 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542457.046964:Thu Mar 26 11:27:37 2026: Latest version: 48060036
+dot1x:6288:1774542457.048113:Thu Mar 26 11:27:37 2026: Memory usage: 45953024 bytes
+dot1x:6288:1774542457.076649:Thu Mar 26 11:27:37 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3577 Wed Mar 18 12:18:09 2026  7-23:09:27 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3579 Wed Mar 18 12:18:09 2026  7-23:09:27 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6296 Thu Mar 26 11:26:53 2026       00:43 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6317 Thu Mar 26 11:26:54 2026       00:42 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6431 Thu Mar 26 11:26:56 2026       00:40 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6893 Thu Mar 26 11:27:04 2026       00:32 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6895 Thu Mar 26 11:27:04 2026       00:32 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 7825 Thu Mar 26 11:27:29 2026       00:07 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 7827 Thu Mar 26 11:27:29 2026       00:07 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6288:1774542457.077180:Thu Mar 26 11:27:37 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6288:1774542457.102057:Thu Mar 26 11:27:37 2026: Error: Cannot update field dot1x_reauth_method without csid ()(dot1x_reauth_err_msg:5902)
+dot1x:6288:1774542459.355515:Thu Mar 26 11:27:39 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542459.358541:Thu Mar 26 11:27:39 2026: Latest version: 48060036
+dot1x:6288:1774542459.540846:Thu Mar 26 11:27:39 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3577 Wed Mar 18 12:18:09 2026  7-23:09:29 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3579 Wed Mar 18 12:18:09 2026  7-23:09:29 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6296 Thu Mar 26 11:26:53 2026       00:45 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6317 Thu Mar 26 11:26:54 2026       00:44 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6431 Thu Mar 26 11:26:56 2026       00:42 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6893 Thu Mar 26 11:27:04 2026       00:34 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6895 Thu Mar 26 11:27:04 2026       00:34 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 7825 Thu Mar 26 11:27:29 2026       00:09 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 7827 Thu Mar 26 11:27:29 2026       00:09 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6288:1774542459.541094:Thu Mar 26 11:27:39 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6288:1774542461.595231:Thu Mar 26 11:27:41 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542461.598288:Thu Mar 26 11:27:41 2026: Latest version: 48060036
+dot1x:6288:1774542463.827665:Thu Mar 26 11:27:43 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542463.830536:Thu Mar 26 11:27:43 2026: Latest version: 48060036
+dot1x:6288:1774542466.078990:Thu Mar 26 11:27:46 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542466.081898:Thu Mar 26 11:27:46 2026: Latest version: 48060036
+dot1x:6288:1774542468.391096:Thu Mar 26 11:27:48 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542468.394222:Thu Mar 26 11:27:48 2026: Latest version: 48060036
+dot1x:6288:1774542468.396366:Thu Mar 26 11:27:48 2026: NAS update received at Thu Mar 26 11:27:48 2026(handle_nas_dev_update:6202)
+dot1x:6288:1774542468.396483:Thu Mar 26 11:27:48 2026: FreeRADIUS NAS Update recieved at Thu Mar 26 11:27:48 2026(handle_nas_dev_update:6211)
+dot1x:6288:1774542470.779071:Thu Mar 26 11:27:50 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542470.782022:Thu Mar 26 11:27:50 2026: Latest version: 48060036
+dot1x:6288:1774542473.014760:Thu Mar 26 11:27:53 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542473.017685:Thu Mar 26 11:27:53 2026: Latest version: 48060036
+dot1x:6288:1774542473.455946:Thu Mar 26 11:27:53 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3577 Wed Mar 18 12:18:09 2026  7-23:09:43 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3579 Wed Mar 18 12:18:09 2026  7-23:09:43 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6296 Thu Mar 26 11:26:53 2026       00:59 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6317 Thu Mar 26 11:26:54 2026       00:58 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6431 Thu Mar 26 11:26:56 2026       00:56 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6893 Thu Mar 26 11:27:04 2026       00:48 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6895 Thu Mar 26 11:27:04 2026       00:48 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 7825 Thu Mar 26 11:27:29 2026       00:23 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 7827 Thu Mar 26 11:27:29 2026       00:23 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6288:1774542473.456185:Thu Mar 26 11:27:53 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6288:1774542474.018680:Thu Mar 26 11:27:54 2026: 10(cb_1x_heartbeat:782)
+dot1x:6288:1774542486.232101:Thu Mar 26 11:28:06 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542486.235247:Thu Mar 26 11:28:06 2026: Latest version: 48060036
+dot1x:6288:1774542487.239122:Thu Mar 26 11:28:07 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3577 Wed Mar 18 12:18:09 2026  7-23:09:57 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3579 Wed Mar 18 12:18:09 2026  7-23:09:57 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6296 Thu Mar 26 11:26:53 2026       01:13 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6317 Thu Mar 26 11:26:54 2026       01:12 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6431 Thu Mar 26 11:26:56 2026       01:10 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6893 Thu Mar 26 11:27:04 2026       01:02 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6895 Thu Mar 26 11:27:04 2026       01:02 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 8636 Thu Mar 26 11:27:58 2026       00:08 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 8638 Thu Mar 26 11:27:58 2026       00:08 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6288:1774542487.239559:Thu Mar 26 11:28:07 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6288:1774542488.505706:Thu Mar 26 11:28:08 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542488.508668:Thu Mar 26 11:28:08 2026: Latest version: 48060036
+dot1x:6288:1774542490.745730:Thu Mar 26 11:28:10 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542490.748679:Thu Mar 26 11:28:10 2026: Latest version: 48060036
+dot1x:6288:1774542493.034951:Thu Mar 26 11:28:13 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542493.037944:Thu Mar 26 11:28:13 2026: Latest version: 48060036
+dot1x:6288:1774542495.392441:Thu Mar 26 11:28:15 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542495.395309:Thu Mar 26 11:28:15 2026: Latest version: 48060036
+dot1x:6288:1774542497.661781:Thu Mar 26 11:28:17 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542497.664792:Thu Mar 26 11:28:17 2026: Latest version: 48060036
+dot1x:6288:1774542499.921398:Thu Mar 26 11:28:19 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542499.924322:Thu Mar 26 11:28:19 2026: Latest version: 48060036
+dot1x:6288:1774542502.247112:Thu Mar 26 11:28:22 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542502.249967:Thu Mar 26 11:28:22 2026: Latest version: 48060036
+dot1x:6288:1774542502.286531:Thu Mar 26 11:28:22 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3577 Wed Mar 18 12:18:09 2026  7-23:10:12 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3579 Wed Mar 18 12:18:09 2026  7-23:10:12 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6296 Thu Mar 26 11:26:53 2026       01:28 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6317 Thu Mar 26 11:26:54 2026       01:27 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6431 Thu Mar 26 11:26:56 2026       01:25 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6893 Thu Mar 26 11:27:04 2026       01:17 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6895 Thu Mar 26 11:27:04 2026       01:17 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 8636 Thu Mar 26 11:27:58 2026       00:23 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 8638 Thu Mar 26 11:27:58 2026       00:23 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6288:1774542502.287072:Thu Mar 26 11:28:22 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6288:1774542504.490125:Thu Mar 26 11:28:24 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542504.492978:Thu Mar 26 11:28:24 2026: Latest version: 48060036
+dot1x:6288:1774542506.815729:Thu Mar 26 11:28:26 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542506.819431:Thu Mar 26 11:28:26 2026: Latest version: 48060036
+dot1x:6288:1774542509.077067:Thu Mar 26 11:28:29 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542509.080284:Thu Mar 26 11:28:29 2026: Latest version: 48060036
+dot1x:6288:1774542511.358475:Thu Mar 26 11:28:31 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542511.361634:Thu Mar 26 11:28:31 2026: Latest version: 48060036
+dot1x:6288:1774542513.697619:Thu Mar 26 11:28:33 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542513.700526:Thu Mar 26 11:28:33 2026: Latest version: 48060036
+dot1x:6288:1774542515.963695:Thu Mar 26 11:28:35 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542515.966736:Thu Mar 26 11:28:35 2026: Latest version: 48060036
+dot1x:6288:1774542516.000162:Thu Mar 26 11:28:36 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3577 Wed Mar 18 12:18:09 2026  7-23:10:26 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3579 Wed Mar 18 12:18:09 2026  7-23:10:26 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6296 Thu Mar 26 11:26:53 2026       01:42 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6317 Thu Mar 26 11:26:54 2026       01:41 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6431 Thu Mar 26 11:26:56 2026       01:39 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6893 Thu Mar 26 11:27:04 2026       01:31 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6895 Thu Mar 26 11:27:04 2026       01:31 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 8636 Thu Mar 26 11:27:58 2026       00:37 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 8638 Thu Mar 26 11:27:58 2026       00:37 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6288:1774542516.000379:Thu Mar 26 11:28:36 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:6288:1774542517.954664:Thu Mar 26 11:28:37 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:6288:1774542517.977004:Thu Mar 26 11:28:37 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:6288:1774542518.096554:Thu Mar 26 11:28:38 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:6288:1774542518.220972:Thu Mar 26 11:28:38 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'EAP-TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'EAP-TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'PEAP',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'PEAP',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      },
+          'rule_3' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:6288:1774542519.553680:Thu Mar 26 11:28:39 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542519.556502:Thu Mar 26 11:28:39 2026: Latest version: 48060036
+dot1x:6288:1774542521.838879:Thu Mar 26 11:28:41 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542521.841868:Thu Mar 26 11:28:41 2026: Latest version: 48060036
+dot1x:6288:1774542524.129822:Thu Mar 26 11:28:44 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542524.132714:Thu Mar 26 11:28:44 2026: Latest version: 48060036
+dot1x:6288:1774542526.418014:Thu Mar 26 11:28:46 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542526.420988:Thu Mar 26 11:28:46 2026: Latest version: 48060036
+dot1x:6288:1774542528.796144:Thu Mar 26 11:28:48 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542528.799142:Thu Mar 26 11:28:48 2026: Latest version: 48060036
+dot1x:6288:1774542528.842706:Thu Mar 26 11:28:48 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3577 Wed Mar 18 12:18:09 2026  7-23:10:39 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3579 Wed Mar 18 12:18:09 2026  7-23:10:39 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6296 Thu Mar 26 11:26:53 2026       01:55 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6317 Thu Mar 26 11:26:54 2026       01:54 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6431 Thu Mar 26 11:26:56 2026       01:52 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6893 Thu Mar 26 11:27:04 2026       01:44 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6895 Thu Mar 26 11:27:04 2026       01:44 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 8636 Thu Mar 26 11:27:58 2026       00:50 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 8638 Thu Mar 26 11:27:58 2026       00:50 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6288:1774542528.843024:Thu Mar 26 11:28:48 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6288:1774542531.244172:Thu Mar 26 11:28:51 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542531.247362:Thu Mar 26 11:28:51 2026: Latest version: 48060036
+dot1x:6288:1774542533.535712:Thu Mar 26 11:28:53 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542533.538621:Thu Mar 26 11:28:53 2026: Latest version: 48060036
+dot1x:6288:1774542533.998570:Thu Mar 26 11:28:53 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542533
+AcctSid '000006C6'
+!
+dot1x:6288:1774542534.001003:Thu Mar 26 11:28:54 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542533
+AcctStatusType 'Stop'
+!
+dot1x:6288:1774542535.796077:Thu Mar 26 11:28:55 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542535.799405:Thu Mar 26 11:28:55 2026: Latest version: 48060036
+dot1x:6288:1774542538.044351:Thu Mar 26 11:28:58 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542538.047219:Thu Mar 26 11:28:58 2026: Latest version: 48060036
+dot1x:6288:1774542540.347895:Thu Mar 26 11:29:00 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542540.350877:Thu Mar 26 11:29:00 2026: Latest version: 48060036
+dot1x:6288:1774542542.623764:Thu Mar 26 11:29:02 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542542.626971:Thu Mar 26 11:29:02 2026: Latest version: 48060036
+dot1x:6288:1774542544.884959:Thu Mar 26 11:29:04 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542544.887823:Thu Mar 26 11:29:04 2026: Latest version: 48060036
+dot1x:6288:1774542547.306308:Thu Mar 26 11:29:07 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542547.310306:Thu Mar 26 11:29:07 2026: Latest version: 48060036
+dot1x:6288:1774542549.661634:Thu Mar 26 11:29:09 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542549.664674:Thu Mar 26 11:29:09 2026: Latest version: 48060036
+dot1x:6288:1774542549.707473:Thu Mar 26 11:29:09 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542549
+AssignedTo ''
+dot1x:6288:1774542549.710991:Thu Mar 26 11:29:09 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542549
+NASPort '50101'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.17'
+CalledSid '00-6B-F1-56-66-40'
+UserName 'host/Dot1x-CLT-Good'
+EapType 'TLS'
+1x_sr '546ec271db8d7b92'
+1x_ex '460102162300Z'
+1x_is '/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local'
+1x_su '/C=US/ST=Texas/L=Allen/O=Forescout/OU=Lab/CN=Dot1x-CLT-Good/emailAddress=clientgood@internal.local'
+1x_cn 'Dot1x-CLT-Good'
+NASPortIdStr 'TenGigabitEthernet1/1'
+FramedIpAddress '10.16.178.68'
+1x_eku '1.3.6.1.5.5.7.3.2'
+dot1x:6288:1774542549.721574:Thu Mar 26 11:29:09 2026: Error: [98f2b301a096/fr-update/host/Dot1x-CLT-Good] Bad FREERADIUS input '98f2b301a096 1x_eku 1.3.6.1.5.5.7.3.2'(dot1x_set_fr_property:3732)
+dot1x:6288:1774542549.722031:Thu Mar 26 11:29:09 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542549
+AuthStatus 'Access-Accept:default rule_2'
+dot1x:6288:1774542549.724723:Thu Mar 26 11:29:09 2026: main::dot1x_fetchMar:2230:[ntlmpl]::0: <98f2b301a096|usr=host/Dot1x-CLT-Good>no MAR entry for 98f2b301a096!
+dot1x:6288:1774542549.731206:Thu Mar 26 11:29:09 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542549
+Cisco-AVPair 'service-type=Framed'
+!
+dot1x:6288:1774542549.732722:Thu Mar 26 11:29:09 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542549
+Auth-Type 'EAP'
+!
+dot1x:6288:1774542552.001857:Thu Mar 26 11:29:12 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542552.004949:Thu Mar 26 11:29:12 2026: Latest version: 48060036
+dot1x:6288:1774542552.006116:Thu Mar 26 11:29:12 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542550
+AcctSid '000006C7'
+!
+dot1x:6288:1774542552.007507:Thu Mar 26 11:29:12 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542550
+Framed-IP-Address '10.16.178.68'
+dot1x:6288:1774542552.524822:Thu Mar 26 11:29:12 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542552
+AcctSid '000006C7'
+!
+dot1x:6288:1774542554.258020:Thu Mar 26 11:29:14 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542554.260857:Thu Mar 26 11:29:14 2026: Latest version: 48060036
+dot1x:6288:1774542554.531732:Thu Mar 26 11:29:14 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542554
+AcctSid '000006C7'
+!
+dot1x:6288:1774542554.534059:Thu Mar 26 11:29:14 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-96 1774542554
+Framed-IP-Address '10.16.178.68'
+dot1x:6288:1774542556.506428:Thu Mar 26 11:29:16 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542556.509305:Thu Mar 26 11:29:16 2026: Latest version: 48060036
+dot1x:6288:1774542558.857895:Thu Mar 26 11:29:18 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542558.861488:Thu Mar 26 11:29:18 2026: Latest version: 48060036
+dot1x:6288:1774542561.273227:Thu Mar 26 11:29:21 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542561.276248:Thu Mar 26 11:29:21 2026: Latest version: 48060036
+dot1x:6288:1774542563.555293:Thu Mar 26 11:29:23 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542563.558212:Thu Mar 26 11:29:23 2026: Latest version: 48060036
+dot1x:6288:1774542565.788936:Thu Mar 26 11:29:25 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:6288:1774542565.791963:Thu Mar 26 11:29:25 2026: Latest version: 48060036

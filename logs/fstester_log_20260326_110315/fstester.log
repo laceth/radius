@@ -1,0 +1,800 @@
+2026-03-26 11:03:15,206 - myframework - INFO - 
+==========================================================================================Running Suite Setup===========================================================================================
+
+2026-03-26 11:03:15,206 - myframework - INFO - set up radius test suite
+2026-03-26 11:03:15,206 - myframework - INFO - RadiusFragmentSizeDefaultWiredPeap with {'fragment_size': 'SIZE_1024'}
+2026-03-26 11:03:15,206 - myframework - INFO - === Starting PEAP Test Setup ===
+2026-03-26 11:03:15,206 - myframework - INFO - Starting collecting logs from 10.16.177.68 for log file: /usr/local/forescout/log/plugin/dot1x/dot1x.log
+2026-03-26 11:03:15,206 - myframework - INFO - Starting collecting logs from 10.16.177.68 for log file: /usr/local/forescout/log/plugin/dot1x/radiusd.log
+2026-03-26 11:03:15,207 - myframework - INFO - Radius Common Setup
+2026-03-26 11:03:15,207 - myframework - INFO - Radius Server IP: 10.16.177.68
+2026-03-26 11:03:15,207 - myframework - INFO - Switch IP: 10.16.128.17
+2026-03-26 11:03:15,207 - myframework - INFO - Passthrough Management IP: 10.16.133.130
+2026-03-26 11:03:15,207 - myframework - INFO - Passthrough MAC: 98f2b301a096
+2026-03-26 11:03:15,207 - myframework - INFO - Test start time: 2026-03-26 11:03:15.207518
+2026-03-26 11:03:15,906 - myframework - INFO - Executing command on CounterAct: psql -t -A -F '|' -c "SELECT id, field_name, field_value FROM devinfo WHERE category='ad' AND field_name='ad_domain' AND field_value LIKE '%forescout.local%'"
+2026-03-26 11:03:16,019 - myframework - INFO - Command output:
+2026-03-26 11:03:16,019 - myframework - INFO -   TXQALAB2-DC1|ad_domain|txqalab2.txqalab.forescout.local
+2026-03-26 11:03:16,019 - myframework - INFO -   txqalab-dc1|ad_domain|txqalab.forescout.local
+2026-03-26 11:03:16,019 - myframework - INFO - AD domain and ad name mapping retrieved: {'txqalab2.txqalab.forescout.local': ['TXQALAB2-DC1'], 'txqalab.forescout.local': ['txqalab-dc1']}
+2026-03-26 11:03:16,019 - myframework - WARNING - No ad_name defined for ad_domain 'txqalab3.txqalab.forescout.local' in User Directory.
+2026-03-26 11:03:16,276 - myframework - INFO - CounterACT version on 10.16.177.68: 8.5.4
+2026-03-26 11:03:16,276 - myframework - INFO - CA version 8.5.4: using auth_value format 'txqalab-dc1:ad::testuser|administrator'
+2026-03-26 11:03:17,737 - myframework - INFO - Auth source 'txqalab-dc1' already configured in slot 1, skipping
+2026-03-26 11:03:17,737 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-26 11:03:17,737 - myframework - INFO - Checking RADIUS Authentication Source joined domain 'txqalab-dc1'
+2026-03-26 11:03:17,737 - myframework - INFO - Testing domain 'txqalab-dc1' joined status with testjoin command
+2026-03-26 11:03:17,737 - myframework - INFO - Executing command on CounterAct: fstool dot1x testjoin txqalab-dc1
+2026-03-26 11:03:21,667 - myframework - INFO - Test join command output: Join OK [txqalab-dc1]
+2026-03-26 11:03:21,667 - myframework - INFO - Domain 'txqalab-dc1' is already joined, skipping join operation
+2026-03-26 11:03:21,667 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-26 11:03:22,381 - myframework - INFO - Auth source null already set to 'txqalab-dc1', skipping
+2026-03-26 11:03:22,382 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.68
+2026-03-26 11:03:23,030 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-26 11:03:23,030 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-26 11:03:23,030 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-26 11:03:23,030 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-26 11:03:23,030 - myframework - INFO - config.min_tls_version.value already set to 'v1_2', skipping
+2026-03-26 11:03:23,030 - myframework - INFO - Executing command on CounterAct: fstool dot1x set_property config.fragment_size.value 1024
+2026-03-26 11:03:24,554 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-26 11:03:24,554 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-26 11:03:24,554 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-26 11:03:24,554 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-26 11:03:24,554 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-26 11:03:24,555 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-26 11:03:24,555 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-26 11:03:24,555 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-26 11:03:24,555 - myframework - INFO - Restarting dot1x plugin to apply pending changes...
+2026-03-26 11:03:24,555 - myframework - INFO - Restarting 802.1X plugin on 10.16.177.68
+2026-03-26 11:03:31,198 - myframework - INFO - Received 'Done starting RADIUS.' confirmation
+2026-03-26 11:03:31,198 - myframework - INFO - Sleeping 5 seconds for sub-processes to stabilise
+2026-03-26 11:03:36,200 - myframework - INFO - Starting endpoint cleanup for MAC: 98f2b301a096
+2026-03-26 11:03:36,477 - myframework - INFO - Raw hostinfo output for MAC 98f2b301a096: 224.0.112.139, 1774540857,Thu Mar 26 11:00:57 CDT 2026, mac, 98f2b301a096, (dot1x@2265362190338307284 []), 0, 1774539289
+224.0.112.139, 1774539289,Thu Mar 26 10:34:49 CDT 2026, assigned_by_type, mac, (dot1x@2265362190338307284 []), 0, 1774539289
+224.0.112.139, 1774539319,Thu Mar 26 10:35:19 CDT 2026, nc_ep_esg_by_mac, ???, (nc@2265362190338307284 [nc]), gen_error:err
+224.0.112.139, 1774539319,Thu Mar 26 10:35:19 CDT 2026, sw_duplicate_mac, ???, (gen@2265362190338307284 []), no_plugin:ierr
+2026-03-26 11:03:36,477 - myframework - INFO - Found 4 IP(s) for MAC 98f2b301a096: ['224.0.112.139', '224.0.112.139', '224.0.112.139', '224.0.112.139']
+2026-03-26 11:03:36,478 - myframework - INFO - Found IP 224.0.112.139 for MAC 98f2b301a096
+2026-03-26 11:03:36,478 - myframework - INFO - Endpoint IP: 224.0.112.139
+2026-03-26 11:03:37,226 - myframework - WARNING - CA SSH error on attempt 1 (connection may have dropped), reconnecting: RuntimeError("Command 'fstool hostinfo 224.0.112.139 | grep 'host_id'' failed with exit code 1: ")
+2026-03-26 11:03:37,227 - myframework - INFO - [POOL] Evicted connection for key: 10.16.177.67
+2026-03-26 11:03:37,658 - myframework - INFO - host_id not found, using IP 224.0.112.139 as identifier
+2026-03-26 11:03:37,658 - myframework - INFO - Deleting endpoint with ID: 224.0.112.139
+2026-03-26 11:03:39,817 - myframework - INFO - Endpoint 224.0.112.139 removed successfully
+2026-03-26 11:03:39,817 - myframework - INFO - Target IP range 10.16.178.64/26 derived from VLAN 1688
+2026-03-26 11:03:39,817 - myframework - INFO - Starting RADIUS configuration on port TenGigabitEthernet1/1 for Cisco ios switch 10.16.128.17
+2026-03-26 11:03:39,818 - myframework - INFO - Starting RADIUS Configuration steps 1/6: dot1x system-auth-control
+2026-03-26 11:03:50,878 - myframework - INFO - Executing command on CiscoIOS: show running-config | inc dot1x
+2026-03-26 11:03:51,307 - myframework - INFO - dot1x system-auth-control already enabled on Cisco switch 10.16.128.17
+2026-03-26 11:03:51,307 - myframework - INFO - Starting RADIUS Configuration steps 2/6: RADIUS server
+2026-03-26 11:03:51,308 - myframework - INFO - Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-68
+2026-03-26 11:03:51,843 - myframework - INFO - Command output:
+2026-03-26 11:03:51,843 - myframework - INFO -   radius server server-automation-ipv4-177-68
+2026-03-26 11:03:51,843 - myframework - INFO -    address ipv4 10.16.177.68 auth-port 1812 acct-port 1813
+2026-03-26 11:03:51,843 - myframework - INFO -    key aristo
+2026-03-26 11:03:51,844 - myframework - INFO - Executing command on CiscoIOS: show running-config | section ^radius server
+2026-03-26 11:03:52,305 - myframework - INFO - RADIUS server server-automation-ipv4-177-68 already exists on 10.16.128.17
+2026-03-26 11:03:52,305 - myframework - INFO - Starting RADIUS Configuration steps 3/6: RADIUS group
+2026-03-26 11:03:52,305 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-26 11:03:52,774 - myframework - INFO - Command output:
+2026-03-26 11:03:52,774 - myframework - INFO -   aaa group server radius group-automation
+2026-03-26 11:03:52,774 - myframework - INFO -    server name server-automation-ipv4-177-68
+2026-03-26 11:03:52,774 - myframework - INFO -    deadtime 3
+2026-03-26 11:03:52,774 - myframework - INFO - RADIUS group group-automation already exists on 10.16.128.17
+2026-03-26 11:03:52,774 - myframework - INFO - Starting RADIUS Configuration steps 4/6: AAA authentication
+2026-03-26 11:03:52,774 - myframework - INFO - Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-26 11:03:53,252 - myframework - INFO - Command output:
+2026-03-26 11:03:53,252 - myframework - INFO -   aaa authentication dot1x default group group-automation
+2026-03-26 11:03:53,252 - myframework - INFO -   aaa authorization network default group group-automation 
+2026-03-26 11:03:53,253 - myframework - INFO -   aaa accounting dot1x default start-stop group group-automation
+2026-03-26 11:03:53,253 - myframework - INFO - AAA already exists with group group-automation on 10.16.128.17
+2026-03-26 11:03:53,253 - myframework - INFO - Starting RADIUS Configuration steps 5/6: RADIUS CoA (dynamic-author) client
+2026-03-26 11:03:53,253 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa server radius dynamic-author
+2026-03-26 11:03:53,792 - myframework - INFO - Command output:
+2026-03-26 11:03:53,793 - myframework - INFO -   aaa server radius dynamic-author
+2026-03-26 11:03:53,793 - myframework - INFO -    client 10.16.177.66 server-key aristo
+2026-03-26 11:03:53,793 - myframework - INFO -    client 10.16.177.82 server-key aristo
+2026-03-26 11:03:53,793 - myframework - INFO -    client 10.16.177.68 server-key aristo
+2026-03-26 11:03:53,794 - myframework - INFO - RADIUS dynamic-author client 10.16.177.68 already configured with same secret on 10.16.128.17
+2026-03-26 11:03:53,794 - myframework - INFO - Starting RADIUS Configuration steps 6/6: dot1x on port TenGigabitEthernet1/1
+2026-03-26 11:03:53,795 - myframework - INFO - Executing command on CiscoIOS: show run | section ^interface TenGigabitEthernet1/1$
+2026-03-26 11:03:54,261 - myframework - INFO - Command output:
+2026-03-26 11:03:54,261 - myframework - INFO -   interface TenGigabitEthernet1/1
+2026-03-26 11:03:54,261 - myframework - INFO -    description port1
+2026-03-26 11:03:54,261 - myframework - INFO -    switchport access vlan 1688
+2026-03-26 11:03:54,262 - myframework - INFO -    switchport mode access
+2026-03-26 11:03:54,262 - myframework - INFO -    authentication port-control auto
+2026-03-26 11:03:54,262 - myframework - INFO -    authentication periodic
+2026-03-26 11:03:54,262 - myframework - INFO -    snmp trap mac-notification change added
+2026-03-26 11:03:54,262 - myframework - INFO -    snmp trap mac-notification change removed
+2026-03-26 11:03:54,262 - myframework - INFO -    dot1x pae authenticator
+2026-03-26 11:03:54,262 - myframework - INFO -    spanning-tree portfast edge
+2026-03-26 11:03:54,262 - myframework - INFO - Port TenGigabitEthernet1/1 already configured on Cisco switch 10.16.128.17
+2026-03-26 11:03:54,262 - myframework - INFO - Successfully setup all RADIUS configuration on Cisco switch 10.16.128.17
+2026-03-26 11:03:54,262 - myframework - INFO - NIC: pciPassthru0
+2026-03-26 11:03:54,263 - myframework - INFO - === Checking/Downloading PsExec ===
+2026-03-26 11:03:54,263 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Test-Path 'C:\PSTools\PsExec.exe'
+2026-03-26 11:04:02,055 - myframework - INFO - [OK] PsExec already exists at: C:\PSTools\PsExec.exe
+2026-03-26 11:04:02,055 - myframework - INFO - 
+==========================================================Running test: RadiusFragmentSizeDefaultWiredPeap with {'fragment_size': 'SIZE_1024'}==========================================================
+
+2026-03-26 11:04:02,055 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.68
+2026-03-26 11:04:02,704 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - config.min_tls_version.value already set to 'v1_2', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - config.fragment_size.value already set to '1024', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-26 11:04:02,704 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-26 11:04:02,704 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-26 11:04:02,705 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-26 11:04:02,705 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-26 11:04:02,705 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-26 11:04:02,705 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-26 11:04:02,705 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-26 11:04:02,705 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-26 11:04:02,707 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-26 11:04:02,707 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-26 11:04:02,707 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-26 11:04:02,707 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-26 11:04:02,707 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-26 11:04:02,707 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-26 11:04:02,707 - myframework - INFO - Configuring LAN profile (builder) on 10.16.133.130
+2026-03-26 11:04:02,725 - myframework - INFO - Copying /tmp/tmpjlhjkw6o.xml to C:\Profiles\lan_profile.xml
+2026-03-26 11:04:02,725 - myframework - INFO - File size: 2797 bytes
+2026-03-26 11:04:02,725 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Profiles' -ItemType Directory -Force | Out-Null
+2026-03-26 11:04:03,567 - myframework - INFO - Created directory: C:\Profiles
+2026-03-26 11:04:03,567 - myframework - INFO - Using pypsrp native file transfer
+2026-03-26 11:04:04,966 - myframework - INFO - Successfully copied /tmp/tmpjlhjkw6o.xml to C:\Profiles\lan_profile.xml
+2026-03-26 11:04:04,966 - myframework - INFO - Deleting LAN profile from interface: pciPassthru0
+2026-03-26 11:04:04,966 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan delete profile interface="pciPassthru0"
+2026-03-26 11:04:05,997 - myframework - INFO - [OK] LAN profile deleted from pciPassthru0
+2026-03-26 11:04:05,997 - myframework - INFO - Adding LAN profile to interface: pciPassthru0
+2026-03-26 11:04:05,997 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan add profile filename="C:\Profiles\lan_profile.xml" interface="pciPassthru0"
+2026-03-26 11:04:06,848 - myframework - INFO - [OK] LAN profile added to pciPassthru0
+2026-03-26 11:04:06,849 - myframework - INFO - Setting up PEAP credentials for: txqalab\dotonex
+2026-03-26 11:04:06,849 - myframework - INFO - Copying /home/triley/fstester001/scripts/radius_nic_PEAP_credentials_config.ps1 to C:\Scripts\radius_nic_PEAP_credentials_config.ps1
+2026-03-26 11:04:06,849 - myframework - INFO - File size: 7142 bytes
+2026-03-26 11:04:06,849 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Scripts' -ItemType Directory -Force | Out-Null
+2026-03-26 11:04:08,213 - myframework - INFO - Created directory: C:\Scripts
+2026-03-26 11:04:08,213 - myframework - INFO - Using pypsrp native file transfer
+2026-03-26 11:04:09,016 - myframework - INFO - Successfully copied /home/triley/fstester001/scripts/radius_nic_PEAP_credentials_config.ps1 to C:\Scripts\radius_nic_PEAP_credentials_config.ps1
+2026-03-26 11:04:09,016 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Logs' -ItemType Directory -Force | Out-Null
+2026-03-26 11:04:09,946 - myframework - INFO - Created directory: C:\Logs
+2026-03-26 11:04:09,946 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Test-Path -Path 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:04:10,702 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log' -ItemType File -Force | Out-Null
+2026-03-26 11:04:11,497 - myframework - INFO - Executing command on WindowsPassthrough: query session
+2026-03-26 11:04:11,232 - myframework - INFO - Found session for Administrator: ID=1, State=Active
+2026-03-26 11:04:11,232 - myframework - INFO - Session 1 is in state 'Active', no need to attach
+2026-03-26 11:04:11,232 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Test-Path -Path 'C:\Scripts\setup_nic_peap_credentials.ps1'
+2026-03-26 11:04:11,962 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Remove-Item -Path 'C:\Scripts\setup_nic_peap_credentials.ps1' -Force
+2026-03-26 11:04:12,734 - myframework - INFO - Removed file: C:\Scripts\setup_nic_peap_credentials.ps1
+2026-03-26 11:04:12,735 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Set-Content -Path 'C:\Scripts\setup_nic_peap_credentials.ps1' -Value 'C:\PSTools\PsExec.exe -accepteula -u "Administrator" -p "aristo" -i 1 -h -d powershell.exe -ExecutionPolicy Bypass -File "C:\Scripts\radius_nic_PEAP_credentials_config.ps1" -username "txqalab\dotonex" -password "aristo" -nicname "pciPassthru0" -logfile "C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log"' -Encoding ASCII
+2026-03-26 11:04:13,600 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; & "C:\Scripts\setup_nic_peap_credentials.ps1"
+2026-03-26 11:04:22,199 - myframework - INFO - Waiting for script completion (max 500s)...
+2026-03-26 11:04:22,199 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:04:28,294 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:04:34,259 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:04:40,029 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:04:45,215 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:04:51,126 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:04:56,913 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:05:02,699 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:05:08,386 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:05:14,242 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:05:14,451 - myframework - INFO - Script execution completed successfully
+2026-03-26 11:05:14,451 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110406.log'
+2026-03-26 11:05:15,244 - myframework - INFO - Verifying log content for completion marker: 'Script Execution Completed'
+2026-03-26 11:05:15,244 - myframework - INFO - [OK] Found completion marker: 'Script Execution Completed'
+2026-03-26 11:05:15,244 - myframework - INFO - PEAP credentials setup completed
+2026-03-26 11:05:15,244 - myframework - INFO - Toggling NIC to trigger re-authentication (updated test_start_time: 2026-03-26 11:05:15.244845) on 10.16.133.130
+2026-03-26 11:05:15,244 - myframework - INFO - Toggling NIC: pciPassthru0
+2026-03-26 11:05:15,244 - myframework - INFO - Disabling NIC: pciPassthru0
+2026-03-26 11:05:15,244 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Disable-NetAdapter -Name 'pciPassthru0' -Confirm:$false
+2026-03-26 11:05:21,546 - myframework - INFO - Waiting for NIC 'pciPassthru0' to reach 'Disabled' status (max 30s)...
+2026-03-26 11:05:21,546 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetAdapter -Name "pciPassthru0" -ErrorAction SilentlyContinue).Status
+2026-03-26 11:05:23,777 - myframework - INFO - [OK] NIC 'pciPassthru0' status: 'Disabled'
+2026-03-26 11:05:23,777 - myframework - INFO - [OK] NIC pciPassthru0 is disabled
+2026-03-26 11:05:23,777 - myframework - INFO - Enabling NIC: pciPassthru0
+2026-03-26 11:05:23,777 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Enable-NetAdapter -Name 'pciPassthru0' -Confirm:$false
+2026-03-26 11:05:26,913 - myframework - INFO - Waiting for NIC 'pciPassthru0' MediaConnectionState 'Connected' (max 30s)...
+2026-03-26 11:05:26,913 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetAdapter -Name "pciPassthru0").MediaConnectionState
+2026-03-26 11:05:33,861 - myframework - INFO - [OK] NIC 'pciPassthru0' MediaConnectionState: 'Connected'
+2026-03-26 11:05:33,861 - myframework - INFO - [OK] NIC pciPassthru0 is connected
+2026-03-26 11:05:33,861 - myframework - INFO - [OK] NIC pciPassthru0 toggled successfully
+2026-03-26 11:05:33,861 - myframework - INFO - Waiting for NIC 'pciPassthru0' 802.1X authentication (max 90s)...
+2026-03-26 11:05:33,861 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:05:39,375 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:05:44,927 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:05:49,610 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:05:55,260 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:01,077 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:06,699 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:12,286 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:17,097 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:22,650 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:28,161 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:33,806 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:39,508 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:45,048 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:49,887 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:06:55,522 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:07:01,097 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:07:06,667 - myframework - ERROR - [T131689] FAIL: NIC 'pciPassthru0' did not reach authentication status 'Authentication succeeded' within 90s. Actual status: 'There are 2 interfaces on the system:
+
+    Name             : Ethernet
+    Description      : vmxnet3 Ethernet Adapter
+    GUID             : 68f81204-8fdb-4922-8147-ea059f0e41cd
+    Physical Address : 00-50-56-B8-7C-52
+    State            : Connected. Network does not support authentication.
+
+    Name             : pciPassthru0
+    Description      : Broadcom NetXtreme Gigabit Ethernet
+    GUID             : 8f1ee8b7-54e0-4412-8e8a-e101388ac147
+    Physical Address : 98-F2-B3-01-A0-96
+    State            : Connection blocked. Authentication failed.'
+2026-03-26 11:07:06,667 - myframework - ERROR - 
+=======================================================Test Failed: RadiusFragmentSizeDefaultWiredPeap with {'fragment_size': 'SIZE_1024'} Failed=======================================================
+
+2026-03-26 11:07:06,667 - myframework - ERROR - Error: NIC 'pciPassthru0' did not reach authentication status 'Authentication succeeded' within 90s. Actual status: 'There are 2 interfaces on the system:
+
+    Name             : Ethernet
+    Description      : vmxnet3 Ethernet Adapter
+    GUID             : 68f81204-8fdb-4922-8147-ea059f0e41cd
+    Physical Address : 00-50-56-B8-7C-52
+    State            : Connected. Network does not support authentication.
+
+    Name             : pciPassthru0
+    Description      : Broadcom NetXtreme Gigabit Ethernet
+    GUID             : 8f1ee8b7-54e0-4412-8e8a-e101388ac147
+    Physical Address : 98-F2-B3-01-A0-96
+    State            : Connection blocked. Authentication failed.'
+2026-03-26 11:07:06,667 - myframework - INFO - === PEAP Test Teardown ===
+2026-03-26 11:07:06,667 - myframework - INFO - radius common teardown
+2026-03-26 11:07:06,667 - myframework - INFO - RadiusFragmentSizeDefaultWiredPeap with {'fragment_size': 'SIZE_1400'}
+2026-03-26 11:07:06,668 - myframework - INFO - === Starting PEAP Test Setup ===
+2026-03-26 11:07:06,668 - myframework - INFO - Starting collecting logs from 10.16.177.68 for log file: /usr/local/forescout/log/plugin/dot1x/dot1x.log
+2026-03-26 11:07:06,668 - myframework - INFO - Starting collecting logs from 10.16.177.68 for log file: /usr/local/forescout/log/plugin/dot1x/radiusd.log
+2026-03-26 11:07:06,668 - myframework - INFO - Radius Common Setup
+2026-03-26 11:07:06,668 - myframework - INFO - Radius Server IP: 10.16.177.68
+2026-03-26 11:07:06,668 - myframework - INFO - Switch IP: 10.16.128.17
+2026-03-26 11:07:06,668 - myframework - INFO - Passthrough Management IP: 10.16.133.130
+2026-03-26 11:07:06,668 - myframework - INFO - Passthrough MAC: 98f2b301a096
+2026-03-26 11:07:06,668 - myframework - INFO - Test start time: 2026-03-26 11:07:06.668691
+2026-03-26 11:07:06,668 - myframework - INFO - Executing command on CounterAct: psql -t -A -F '|' -c "SELECT id, field_name, field_value FROM devinfo WHERE category='ad' AND field_name='ad_domain' AND field_value LIKE '%forescout.local%'"
+2026-03-26 11:07:06,771 - myframework - INFO - Command output:
+2026-03-26 11:07:06,772 - myframework - INFO -   TXQALAB2-DC1|ad_domain|txqalab2.txqalab.forescout.local
+2026-03-26 11:07:06,772 - myframework - INFO -   txqalab-dc1|ad_domain|txqalab.forescout.local
+2026-03-26 11:07:06,772 - myframework - INFO - AD domain and ad name mapping retrieved: {'txqalab2.txqalab.forescout.local': ['TXQALAB2-DC1'], 'txqalab.forescout.local': ['txqalab-dc1']}
+2026-03-26 11:07:06,772 - myframework - WARNING - No ad_name defined for ad_domain 'txqalab3.txqalab.forescout.local' in User Directory.
+2026-03-26 11:07:07,615 - myframework - INFO - CounterACT version on 10.16.177.68: 8.5.4
+2026-03-26 11:07:07,615 - myframework - INFO - CA version 8.5.4: using auth_value format 'txqalab-dc1:ad::testuser|administrator'
+2026-03-26 11:07:08,961 - myframework - INFO - Auth source 'txqalab-dc1' already configured in slot 1, skipping
+2026-03-26 11:07:08,961 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-26 11:07:08,961 - myframework - INFO - Checking RADIUS Authentication Source joined domain 'txqalab-dc1'
+2026-03-26 11:07:08,961 - myframework - INFO - Testing domain 'txqalab-dc1' joined status with testjoin command
+2026-03-26 11:07:08,961 - myframework - INFO - Executing command on CounterAct: fstool dot1x testjoin txqalab-dc1
+2026-03-26 11:07:12,551 - myframework - INFO - Test join command output: Join OK [txqalab-dc1]
+2026-03-26 11:07:12,552 - myframework - INFO - Domain 'txqalab-dc1' is already joined, skipping join operation
+2026-03-26 11:07:12,552 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-26 11:07:13,137 - myframework - INFO - Auth source null already set to 'txqalab-dc1', skipping
+2026-03-26 11:07:13,137 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.68
+2026-03-26 11:07:13,839 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - config.min_tls_version.value already set to 'v1_2', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - config.fragment_size.value already set to '1024', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-26 11:07:13,839 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-26 11:07:13,839 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-26 11:07:13,839 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-26 11:07:13,840 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-26 11:07:13,840 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-26 11:07:13,840 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-26 11:07:13,840 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-26 11:07:13,840 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-26 11:07:13,841 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-26 11:07:13,841 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-26 11:07:13,841 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-26 11:07:13,841 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-26 11:07:13,841 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-26 11:07:13,841 - myframework - INFO - Starting endpoint cleanup for MAC: 98f2b301a096
+2026-03-26 11:07:14,082 - myframework - INFO - Raw hostinfo output for MAC 98f2b301a096: 224.0.112.140, 1774541145,Thu Mar 26 11:05:45 CDT 2026, mac, 98f2b301a096, (dot1x@2265362190338307284 []), 0, 1774541110
+224.0.112.140, 1774541110,Thu Mar 26 11:05:10 CDT 2026, assigned_by_type, mac, (dot1x@2265362190338307284 []), 0, 1774541110
+224.0.112.140, 1774541140,Thu Mar 26 11:05:40 CDT 2026, nc_ep_esg_by_mac, ???, (nc@2265362190338307284 [nc]), gen_error:err
+224.0.112.140, 1774541140,Thu Mar 26 11:05:40 CDT 2026, sw_duplicate_mac, ???, (gen@2265362190338307284 []), no_plugin:ierr
+2026-03-26 11:07:14,082 - myframework - INFO - Found 4 IP(s) for MAC 98f2b301a096: ['224.0.112.140', '224.0.112.140', '224.0.112.140', '224.0.112.140']
+2026-03-26 11:07:14,082 - myframework - INFO - Found IP 224.0.112.140 for MAC 98f2b301a096
+2026-03-26 11:07:14,082 - myframework - INFO - Endpoint IP: 224.0.112.140
+2026-03-26 11:07:14,340 - myframework - WARNING - CA SSH error on attempt 1 (connection may have dropped), reconnecting: RuntimeError("Command 'fstool hostinfo 224.0.112.140 | grep 'host_id'' failed with exit code 1: ")
+2026-03-26 11:07:14,340 - myframework - INFO - [POOL] Evicted connection for key: 10.16.177.67
+2026-03-26 11:07:14,804 - myframework - INFO - host_id not found, using IP 224.0.112.140 as identifier
+2026-03-26 11:07:14,805 - myframework - INFO - Deleting endpoint with ID: 224.0.112.140
+2026-03-26 11:07:17,715 - myframework - INFO - Endpoint 224.0.112.140 removed successfully
+2026-03-26 11:07:17,715 - myframework - INFO - Target IP range 10.16.178.64/26 derived from VLAN 1688
+2026-03-26 11:07:17,716 - myframework - INFO - Starting RADIUS configuration on port TenGigabitEthernet1/1 for Cisco ios switch 10.16.128.17
+2026-03-26 11:07:17,716 - myframework - INFO - Starting RADIUS Configuration steps 1/6: dot1x system-auth-control
+2026-03-26 11:07:17,716 - myframework - INFO - Executing command on CiscoIOS: show running-config | inc dot1x
+2026-03-26 11:07:18,226 - myframework - INFO - dot1x system-auth-control already enabled on Cisco switch 10.16.128.17
+2026-03-26 11:07:18,226 - myframework - INFO - Starting RADIUS Configuration steps 2/6: RADIUS server
+2026-03-26 11:07:18,226 - myframework - INFO - Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-68
+2026-03-26 11:07:18,709 - myframework - INFO - Command output:
+2026-03-26 11:07:18,710 - myframework - INFO -   radius server server-automation-ipv4-177-68
+2026-03-26 11:07:18,710 - myframework - INFO -    address ipv4 10.16.177.68 auth-port 1812 acct-port 1813
+2026-03-26 11:07:18,710 - myframework - INFO -    key aristo
+2026-03-26 11:07:18,711 - myframework - INFO - Executing command on CiscoIOS: show running-config | section ^radius server
+2026-03-26 11:07:19,202 - myframework - INFO - RADIUS server server-automation-ipv4-177-68 already exists on 10.16.128.17
+2026-03-26 11:07:19,202 - myframework - INFO - Starting RADIUS Configuration steps 3/6: RADIUS group
+2026-03-26 11:07:19,202 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-26 11:07:19,697 - myframework - INFO - Command output:
+2026-03-26 11:07:19,697 - myframework - INFO -   aaa group server radius group-automation
+2026-03-26 11:07:19,697 - myframework - INFO -    server name server-automation-ipv4-177-68
+2026-03-26 11:07:19,697 - myframework - INFO -    deadtime 3
+2026-03-26 11:07:19,697 - myframework - INFO - RADIUS group group-automation already exists on 10.16.128.17
+2026-03-26 11:07:19,697 - myframework - INFO - Starting RADIUS Configuration steps 4/6: AAA authentication
+2026-03-26 11:07:19,697 - myframework - INFO - Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-26 11:07:20,271 - myframework - INFO - Command output:
+2026-03-26 11:07:20,271 - myframework - INFO -   aaa authentication dot1x default group group-automation
+2026-03-26 11:07:20,272 - myframework - INFO -   aaa authorization network default group group-automation 
+2026-03-26 11:07:20,272 - myframework - INFO -   aaa accounting dot1x default start-stop group group-automation
+2026-03-26 11:07:20,272 - myframework - INFO - AAA already exists with group group-automation on 10.16.128.17
+2026-03-26 11:07:20,272 - myframework - INFO - Starting RADIUS Configuration steps 5/6: RADIUS CoA (dynamic-author) client
+2026-03-26 11:07:20,272 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa server radius dynamic-author
+2026-03-26 11:07:20,002 - myframework - INFO - Command output:
+2026-03-26 11:07:20,003 - myframework - INFO -   aaa server radius dynamic-author
+2026-03-26 11:07:20,004 - myframework - INFO -    client 10.16.177.66 server-key aristo
+2026-03-26 11:07:20,004 - myframework - INFO -    client 10.16.177.82 server-key aristo
+2026-03-26 11:07:20,004 - myframework - INFO -    client 10.16.177.68 server-key aristo
+2026-03-26 11:07:20,004 - myframework - INFO - RADIUS dynamic-author client 10.16.177.68 already configured with same secret on 10.16.128.17
+2026-03-26 11:07:20,004 - myframework - INFO - Starting RADIUS Configuration steps 6/6: dot1x on port TenGigabitEthernet1/1
+2026-03-26 11:07:20,005 - myframework - INFO - Executing command on CiscoIOS: show run | section ^interface TenGigabitEthernet1/1$
+2026-03-26 11:07:20,487 - myframework - INFO - Command output:
+2026-03-26 11:07:20,487 - myframework - INFO -   interface TenGigabitEthernet1/1
+2026-03-26 11:07:20,487 - myframework - INFO -    description port1
+2026-03-26 11:07:20,488 - myframework - INFO -    switchport access vlan 1688
+2026-03-26 11:07:20,488 - myframework - INFO -    switchport mode access
+2026-03-26 11:07:20,488 - myframework - INFO -    authentication port-control auto
+2026-03-26 11:07:20,488 - myframework - INFO -    authentication periodic
+2026-03-26 11:07:20,488 - myframework - INFO -    snmp trap mac-notification change added
+2026-03-26 11:07:20,488 - myframework - INFO -    snmp trap mac-notification change removed
+2026-03-26 11:07:20,488 - myframework - INFO -    dot1x pae authenticator
+2026-03-26 11:07:20,488 - myframework - INFO -    spanning-tree portfast edge
+2026-03-26 11:07:20,488 - myframework - INFO - Port TenGigabitEthernet1/1 already configured on Cisco switch 10.16.128.17
+2026-03-26 11:07:20,488 - myframework - INFO - Successfully setup all RADIUS configuration on Cisco switch 10.16.128.17
+2026-03-26 11:07:20,488 - myframework - INFO - NIC: pciPassthru0
+2026-03-26 11:07:20,488 - myframework - INFO - === Checking/Downloading PsExec ===
+2026-03-26 11:07:20,489 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Test-Path 'C:\PSTools\PsExec.exe'
+2026-03-26 11:07:21,279 - myframework - INFO - [OK] PsExec already exists at: C:\PSTools\PsExec.exe
+2026-03-26 11:07:21,279 - myframework - INFO - 
+==========================================================Running test: RadiusFragmentSizeDefaultWiredPeap with {'fragment_size': 'SIZE_1400'}==========================================================
+
+2026-03-26 11:07:21,279 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.68
+2026-03-26 11:07:21,946 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-26 11:07:21,946 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-26 11:07:21,946 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-26 11:07:21,946 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-26 11:07:21,946 - myframework - INFO - config.min_tls_version.value already set to 'v1_2', skipping
+2026-03-26 11:07:21,946 - myframework - INFO - Executing command on CounterAct: fstool dot1x set_property config.fragment_size.value 1400
+2026-03-26 11:07:23,385 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-26 11:07:23,385 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-26 11:07:23,385 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-26 11:07:23,385 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-26 11:07:23,385 - myframework - INFO - Restarting dot1x plugin to apply pending changes...
+2026-03-26 11:07:23,385 - myframework - INFO - Restarting 802.1X plugin on 10.16.177.68
+2026-03-26 11:07:30,355 - myframework - INFO - Received 'Done starting RADIUS.' confirmation
+2026-03-26 11:07:30,356 - myframework - INFO - Sleeping 5 seconds for sub-processes to stabilise
+2026-03-26 11:07:35,357 - myframework - INFO - Configuring LAN profile (builder) on 10.16.133.130
+2026-03-26 11:07:35,361 - myframework - INFO - Copying /tmp/tmpok31_r1q.xml to C:\Profiles\lan_profile.xml
+2026-03-26 11:07:35,362 - myframework - INFO - File size: 2797 bytes
+2026-03-26 11:07:35,362 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Profiles' -ItemType Directory -Force | Out-Null
+2026-03-26 11:07:36,180 - myframework - INFO - Created directory: C:\Profiles
+2026-03-26 11:07:36,180 - myframework - INFO - Using pypsrp native file transfer
+2026-03-26 11:07:36,962 - myframework - INFO - Successfully copied /tmp/tmpok31_r1q.xml to C:\Profiles\lan_profile.xml
+2026-03-26 11:07:36,962 - myframework - INFO - Deleting LAN profile from interface: pciPassthru0
+2026-03-26 11:07:36,962 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan delete profile interface="pciPassthru0"
+2026-03-26 11:07:37,445 - myframework - INFO - [OK] LAN profile deleted from pciPassthru0
+2026-03-26 11:07:37,445 - myframework - INFO - Adding LAN profile to interface: pciPassthru0
+2026-03-26 11:07:37,445 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan add profile filename="C:\Profiles\lan_profile.xml" interface="pciPassthru0"
+2026-03-26 11:07:38,356 - myframework - INFO - [OK] LAN profile added to pciPassthru0
+2026-03-26 11:07:38,358 - myframework - INFO - Setting up PEAP credentials for: txqalab\dotonex
+2026-03-26 11:07:38,358 - myframework - INFO - Copying /home/triley/fstester001/scripts/radius_nic_PEAP_credentials_config.ps1 to C:\Scripts\radius_nic_PEAP_credentials_config.ps1
+2026-03-26 11:07:38,358 - myframework - INFO - File size: 7142 bytes
+2026-03-26 11:07:38,358 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Scripts' -ItemType Directory -Force | Out-Null
+2026-03-26 11:07:39,082 - myframework - INFO - Created directory: C:\Scripts
+2026-03-26 11:07:39,082 - myframework - INFO - Using pypsrp native file transfer
+2026-03-26 11:07:39,996 - myframework - INFO - Successfully copied /home/triley/fstester001/scripts/radius_nic_PEAP_credentials_config.ps1 to C:\Scripts\radius_nic_PEAP_credentials_config.ps1
+2026-03-26 11:07:39,996 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Logs' -ItemType Directory -Force | Out-Null
+2026-03-26 11:07:40,720 - myframework - INFO - Created directory: C:\Logs
+2026-03-26 11:07:40,720 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Test-Path -Path 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:07:41,451 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log' -ItemType File -Force | Out-Null
+2026-03-26 11:07:42,302 - myframework - INFO - Executing command on WindowsPassthrough: query session
+2026-03-26 11:07:42,765 - myframework - INFO - Found session for Administrator: ID=1, State=Active
+2026-03-26 11:07:42,765 - myframework - INFO - Session 1 is in state 'Active', no need to attach
+2026-03-26 11:07:42,765 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Test-Path -Path 'C:\Scripts\setup_nic_peap_credentials.ps1'
+2026-03-26 11:07:43,457 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Remove-Item -Path 'C:\Scripts\setup_nic_peap_credentials.ps1' -Force
+2026-03-26 11:07:44,172 - myframework - INFO - Removed file: C:\Scripts\setup_nic_peap_credentials.ps1
+2026-03-26 11:07:44,172 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Set-Content -Path 'C:\Scripts\setup_nic_peap_credentials.ps1' -Value 'C:\PSTools\PsExec.exe -accepteula -u "Administrator" -p "aristo" -i 1 -h -d powershell.exe -ExecutionPolicy Bypass -File "C:\Scripts\radius_nic_PEAP_credentials_config.ps1" -username "txqalab\dotonex" -password "aristo" -nicname "pciPassthru0" -logfile "C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log"' -Encoding ASCII
+2026-03-26 11:07:44,935 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; & "C:\Scripts\setup_nic_peap_credentials.ps1"
+2026-03-26 11:07:51,928 - myframework - INFO - Waiting for script completion (max 500s)...
+2026-03-26 11:07:51,929 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:07:58,282 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:08:04,096 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:08:09,994 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:08:15,692 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:08:21,546 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:08:26,604 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:08:33,482 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:08:40,851 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:08:41,887 - myframework - INFO - Script execution completed successfully
+2026-03-26 11:08:41,887 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_110738.log'
+2026-03-26 11:08:42,690 - myframework - INFO - Verifying log content for completion marker: 'Script Execution Completed'
+2026-03-26 11:08:42,690 - myframework - INFO - [OK] Found completion marker: 'Script Execution Completed'
+2026-03-26 11:08:42,690 - myframework - INFO - PEAP credentials setup completed
+2026-03-26 11:08:42,690 - myframework - INFO - Toggling NIC to trigger re-authentication (updated test_start_time: 2026-03-26 11:08:42.690969) on 10.16.133.130
+2026-03-26 11:08:42,691 - myframework - INFO - Toggling NIC: pciPassthru0
+2026-03-26 11:08:42,691 - myframework - INFO - Disabling NIC: pciPassthru0
+2026-03-26 11:08:42,691 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Disable-NetAdapter -Name 'pciPassthru0' -Confirm:$false
+2026-03-26 11:08:46,041 - myframework - INFO - Waiting for NIC 'pciPassthru0' to reach 'Disabled' status (max 30s)...
+2026-03-26 11:08:46,042 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetAdapter -Name "pciPassthru0" -ErrorAction SilentlyContinue).Status
+2026-03-26 11:08:48,382 - myframework - INFO - [OK] NIC 'pciPassthru0' status: 'Disabled'
+2026-03-26 11:08:48,383 - myframework - INFO - [OK] NIC pciPassthru0 is disabled
+2026-03-26 11:08:48,383 - myframework - INFO - Enabling NIC: pciPassthru0
+2026-03-26 11:08:48,383 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Enable-NetAdapter -Name 'pciPassthru0' -Confirm:$false
+2026-03-26 11:08:50,959 - myframework - INFO - Waiting for NIC 'pciPassthru0' MediaConnectionState 'Connected' (max 30s)...
+2026-03-26 11:08:50,959 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetAdapter -Name "pciPassthru0").MediaConnectionState
+2026-03-26 11:08:54,432 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetAdapter -Name "pciPassthru0").MediaConnectionState
+2026-03-26 11:08:56,417 - myframework - INFO - [OK] NIC 'pciPassthru0' MediaConnectionState: 'Connected'
+2026-03-26 11:08:56,417 - myframework - INFO - [OK] NIC pciPassthru0 is connected
+2026-03-26 11:08:56,417 - myframework - INFO - [OK] NIC pciPassthru0 toggled successfully
+2026-03-26 11:08:56,417 - myframework - INFO - Waiting for NIC 'pciPassthru0' 802.1X authentication (max 90s)...
+2026-03-26 11:08:56,417 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:01,889 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:07,380 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:12,957 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:18,453 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:24,059 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:28,844 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:34,324 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:39,886 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:45,388 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:50,901 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:09:56,443 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:10:01,484 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:10:07,093 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:10:12,741 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:10:18,275 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:10:23,779 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-26 11:10:29,387 - myframework - ERROR - [T131689] FAIL: NIC 'pciPassthru0' did not reach authentication status 'Authentication succeeded' within 90s. Actual status: 'There are 2 interfaces on the system:
+
+    Name             : Ethernet
+    Description      : vmxnet3 Ethernet Adapter
+    GUID             : 68f81204-8fdb-4922-8147-ea059f0e41cd
+    Physical Address : 00-50-56-B8-7C-52
+    State            : Connected. Network does not support authentication.
+
+    Name             : pciPassthru0
+    Description      : Broadcom NetXtreme Gigabit Ethernet
+    GUID             : 8f1ee8b7-54e0-4412-8e8a-e101388ac147
+    Physical Address : 98-F2-B3-01-A0-96
+    State            : Connection blocked. Authentication failed.'
+2026-03-26 11:10:29,387 - myframework - ERROR - 
+=======================================================Test Failed: RadiusFragmentSizeDefaultWiredPeap with {'fragment_size': 'SIZE_1400'} Failed=======================================================
+
+2026-03-26 11:10:29,387 - myframework - ERROR - Error: NIC 'pciPassthru0' did not reach authentication status 'Authentication succeeded' within 90s. Actual status: 'There are 2 interfaces on the system:
+
+    Name             : Ethernet
+    Description      : vmxnet3 Ethernet Adapter
+    GUID             : 68f81204-8fdb-4922-8147-ea059f0e41cd
+    Physical Address : 00-50-56-B8-7C-52
+    State            : Connected. Network does not support authentication.
+
+    Name             : pciPassthru0
+    Description      : Broadcom NetXtreme Gigabit Ethernet
+    GUID             : 8f1ee8b7-54e0-4412-8e8a-e101388ac147
+    Physical Address : 98-F2-B3-01-A0-96
+    State            : Connection blocked. Authentication failed.'
+2026-03-26 11:10:29,387 - myframework - INFO - === PEAP Test Teardown ===
+2026-03-26 11:10:29,387 - myframework - INFO - radius common teardown
+2026-03-26 11:10:29,388 - myframework - INFO - RadiusFragmentSizeDefaultWiredPeap with {'fragment_size': 'SIZE_1230'}
+2026-03-26 11:10:29,388 - myframework - INFO - === Starting PEAP Test Setup ===
+2026-03-26 11:10:29,388 - myframework - INFO - Starting collecting logs from 10.16.177.68 for log file: /usr/local/forescout/log/plugin/dot1x/dot1x.log
+2026-03-26 11:10:29,388 - myframework - INFO - Starting collecting logs from 10.16.177.68 for log file: /usr/local/forescout/log/plugin/dot1x/radiusd.log
+2026-03-26 11:10:29,388 - myframework - INFO - Radius Common Setup
+2026-03-26 11:10:29,388 - myframework - INFO - Radius Server IP: 10.16.177.68
+2026-03-26 11:10:29,388 - myframework - INFO - Switch IP: 10.16.128.17
+2026-03-26 11:10:29,388 - myframework - INFO - Passthrough Management IP: 10.16.133.130
+2026-03-26 11:10:29,388 - myframework - INFO - Passthrough MAC: 98f2b301a096
+2026-03-26 11:10:29,388 - myframework - INFO - Test start time: 2026-03-26 11:10:29.388897
+2026-03-26 11:10:29,388 - myframework - INFO - Executing command on CounterAct: psql -t -A -F '|' -c "SELECT id, field_name, field_value FROM devinfo WHERE category='ad' AND field_name='ad_domain' AND field_value LIKE '%forescout.local%'"
+2026-03-26 11:10:29,511 - myframework - INFO - Command output:
+2026-03-26 11:10:29,511 - myframework - INFO -   TXQALAB2-DC1|ad_domain|txqalab2.txqalab.forescout.local
+2026-03-26 11:10:29,511 - myframework - INFO -   txqalab-dc1|ad_domain|txqalab.forescout.local
+2026-03-26 11:10:29,511 - myframework - INFO - AD domain and ad name mapping retrieved: {'txqalab2.txqalab.forescout.local': ['TXQALAB2-DC1'], 'txqalab.forescout.local': ['txqalab-dc1']}
+2026-03-26 11:10:29,511 - myframework - WARNING - No ad_name defined for ad_domain 'txqalab3.txqalab.forescout.local' in User Directory.
+2026-03-26 11:10:29,654 - myframework - INFO - CounterACT version on 10.16.177.68: 8.5.4
+2026-03-26 11:10:29,654 - myframework - INFO - CA version 8.5.4: using auth_value format 'txqalab-dc1:ad::testuser|administrator'
+2026-03-26 11:10:31,090 - myframework - INFO - Auth source 'txqalab-dc1' already configured in slot 1, skipping
+2026-03-26 11:10:31,090 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-26 11:10:31,090 - myframework - INFO - Checking RADIUS Authentication Source joined domain 'txqalab-dc1'
+2026-03-26 11:10:31,090 - myframework - INFO - Testing domain 'txqalab-dc1' joined status with testjoin command
+2026-03-26 11:10:31,090 - myframework - INFO - Executing command on CounterAct: fstool dot1x testjoin txqalab-dc1
+2026-03-26 11:10:34,397 - myframework - INFO - Test join command output: Join OK [txqalab-dc1]
+2026-03-26 11:10:34,397 - myframework - INFO - Domain 'txqalab-dc1' is already joined, skipping join operation
+2026-03-26 11:10:34,397 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-26 11:10:35,122 - myframework - INFO - Auth source null already set to 'txqalab-dc1', skipping
+2026-03-26 11:10:35,122 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.68
+2026-03-26 11:10:35,943 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-26 11:10:35,943 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-26 11:10:35,943 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-26 11:10:35,943 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-26 11:10:35,943 - myframework - INFO - config.min_tls_version.value already set to 'v1_2', skipping
+2026-03-26 11:10:35,943 - myframework - INFO - Executing command on CounterAct: fstool dot1x set_property config.fragment_size.value 1024
+2026-03-26 11:10:37,365 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-26 11:10:37,365 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-26 11:10:37,365 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-26 11:10:37,366 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-26 11:10:37,366 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-26 11:10:37,366 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-26 11:10:37,366 - myframework - INFO - Restarting dot1x plugin to apply pending changes...
+2026-03-26 11:10:37,366 - myframework - INFO - Restarting 802.1X plugin on 10.16.177.68
+2026-03-26 11:10:44,126 - myframework - INFO - Received 'Done starting RADIUS.' confirmation
+2026-03-26 11:10:44,126 - myframework - INFO - Sleeping 5 seconds for sub-processes to stabilise
+2026-03-26 11:10:49,127 - myframework - INFO - Starting endpoint cleanup for MAC: 98f2b301a096
+2026-03-26 11:10:49,342 - myframework - INFO - Raw hostinfo output for MAC 98f2b301a096: 224.0.112.141, 1774541383,Thu Mar 26 11:09:43 CDT 2026, mac, 98f2b301a096, (dot1x@2265362190338307284 []), 0, 1774541323
+224.0.112.141, 1774541323,Thu Mar 26 11:08:43 CDT 2026, assigned_by_type, mac, (dot1x@2265362190338307284 []), 0, 1774541323
+224.0.112.141, 1774541353,Thu Mar 26 11:09:13 CDT 2026, nc_ep_esg_by_mac, ???, (nc@2265362190338307284 [nc]), gen_error:err
+224.0.112.141, 1774541353,Thu Mar 26 11:09:13 CDT 2026, sw_duplicate_mac, ???, (gen@2265362190338307284 []), no_plugin:ierr
+2026-03-26 11:10:49,342 - myframework - INFO - Found 4 IP(s) for MAC 98f2b301a096: ['224.0.112.141', '224.0.112.141', '224.0.112.141', '224.0.112.141']
+2026-03-26 11:10:49,342 - myframework - INFO - Found IP 224.0.112.141 for MAC 98f2b301a096
+2026-03-26 11:10:49,342 - myframework - INFO - Endpoint IP: 224.0.112.141
+2026-03-26 11:10:49,543 - myframework - WARNING - CA SSH error on attempt 1 (connection may have dropped), reconnecting: RuntimeError("Command 'fstool hostinfo 224.0.112.141 | grep 'host_id'' failed with exit code 1: ")
+2026-03-26 11:10:49,544 - myframework - INFO - [POOL] Evicted connection for key: 10.16.177.67
+2026-03-26 11:10:50,086 - myframework - INFO - host_id not found, using IP 224.0.112.141 as identifier
+2026-03-26 11:10:50,086 - myframework - INFO - Deleting endpoint with ID: 224.0.112.141
+2026-03-26 11:10:52,744 - myframework - INFO - Endpoint 224.0.112.141 removed successfully
+2026-03-26 11:10:52,744 - myframework - INFO - Target IP range 10.16.178.64/26 derived from VLAN 1688
+2026-03-26 11:10:52,745 - myframework - INFO - Starting RADIUS configuration on port TenGigabitEthernet1/1 for Cisco ios switch 10.16.128.17
+2026-03-26 11:10:52,745 - myframework - INFO - Starting RADIUS Configuration steps 1/6: dot1x system-auth-control
+2026-03-26 11:10:52,745 - myframework - INFO - Executing command on CiscoIOS: show running-config | inc dot1x
+2026-03-26 11:10:53,203 - myframework - INFO - dot1x system-auth-control already enabled on Cisco switch 10.16.128.17
+2026-03-26 11:10:53,204 - myframework - INFO - Starting RADIUS Configuration steps 2/6: RADIUS server
+2026-03-26 11:10:53,204 - myframework - INFO - Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-68
+2026-03-26 11:10:53,685 - myframework - INFO - Command output:
+2026-03-26 11:10:53,685 - myframework - INFO -   radius server server-automation-ipv4-177-68
+2026-03-26 11:10:53,685 - myframework - INFO -    address ipv4 10.16.177.68 auth-port 1812 acct-port 1813
+2026-03-26 11:10:53,685 - myframework - INFO -    key aristo
+2026-03-26 11:10:53,685 - myframework - INFO - Executing command on CiscoIOS: show running-config | section ^radius server
+2026-03-26 11:10:54,246 - myframework - INFO - RADIUS server server-automation-ipv4-177-68 already exists on 10.16.128.17
+2026-03-26 11:10:54,246 - myframework - INFO - Starting RADIUS Configuration steps 3/6: RADIUS group
+2026-03-26 11:10:54,246 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-26 11:10:54,721 - myframework - INFO - Command output:
+2026-03-26 11:10:54,721 - myframework - INFO -   aaa group server radius group-automation
+2026-03-26 11:10:54,721 - myframework - INFO -    server name server-automation-ipv4-177-68
+2026-03-26 11:10:54,721 - myframework - INFO -    deadtime 3
+2026-03-26 11:10:54,721 - myframework - INFO - RADIUS group group-automation already exists on 10.16.128.17
+2026-03-26 11:10:54,721 - myframework - INFO - Starting RADIUS Configuration steps 4/6: AAA authentication
+2026-03-26 11:10:54,722 - myframework - INFO - Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-26 11:10:55,224 - myframework - INFO - Command output:
+2026-03-26 11:10:55,224 - myframework - INFO -   aaa authentication dot1x default group group-automation
+2026-03-26 11:10:55,224 - myframework - INFO -   aaa authorization network default group group-automation 
+2026-03-26 11:10:55,224 - myframework - INFO -   aaa accounting dot1x default start-stop group group-automation
+2026-03-26 11:10:55,224 - myframework - INFO - AAA already exists with group group-automation on 10.16.128.17
+2026-03-26 11:10:55,224 - myframework - INFO - Starting RADIUS Configuration steps 5/6: RADIUS CoA (dynamic-author) client
+2026-03-26 11:10:55,225 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa server radius dynamic-author
+2026-03-26 11:10:55,693 - myframework - INFO - Command output:
+2026-03-26 11:10:55,693 - myframework - INFO -   aaa server radius dynamic-author
+2026-03-26 11:10:55,694 - myframework - INFO -    client 10.16.177.66 server-key aristo
+2026-03-26 11:10:55,694 - myframework - INFO -    client 10.16.177.82 server-key aristo
+2026-03-26 11:10:55,694 - myframework - INFO -    client 10.16.177.68 server-key aristo
+2026-03-26 11:10:55,694 - myframework - INFO - RADIUS dynamic-author client 10.16.177.68 already configured with same secret on 10.16.128.17
+2026-03-26 11:10:55,694 - myframework - INFO - Starting RADIUS Configuration steps 6/6: dot1x on port TenGigabitEthernet1/1
+2026-03-26 11:10:55,694 - myframework - INFO - Executing command on CiscoIOS: show run | section ^interface TenGigabitEthernet1/1$
+2026-03-26 11:10:56,251 - myframework - INFO - Command output:
+2026-03-26 11:10:56,251 - myframework - INFO -   interface TenGigabitEthernet1/1
+2026-03-26 11:10:56,251 - myframework - INFO -    description port1
+2026-03-26 11:10:56,251 - myframework - INFO -    switchport access vlan 1688
+2026-03-26 11:10:56,251 - myframework - INFO -    switchport mode access
+2026-03-26 11:10:56,251 - myframework - INFO -    authentication port-control auto
+2026-03-26 11:10:56,251 - myframework - INFO -    authentication periodic
+2026-03-26 11:10:56,251 - myframework - INFO -    snmp trap mac-notification change added
+2026-03-26 11:10:56,251 - myframework - INFO -    snmp trap mac-notification change removed
+2026-03-26 11:10:56,251 - myframework - INFO -    dot1x pae authenticator
+2026-03-26 11:10:56,251 - myframework - INFO -    spanning-tree portfast edge
+2026-03-26 11:10:56,251 - myframework - INFO - Port TenGigabitEthernet1/1 already configured on Cisco switch 10.16.128.17
+2026-03-26 11:10:56,251 - myframework - INFO - Successfully setup all RADIUS configuration on Cisco switch 10.16.128.17
+2026-03-26 11:10:56,251 - myframework - INFO - NIC: pciPassthru0
+2026-03-26 11:10:56,251 - myframework - INFO - === Checking/Downloading PsExec ===
+2026-03-26 11:10:56,251 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Test-Path 'C:\PSTools\PsExec.exe'
+2026-03-26 11:10:57,154 - myframework - INFO - [OK] PsExec already exists at: C:\PSTools\PsExec.exe
+2026-03-26 11:10:57,155 - myframework - INFO - 
+==========================================================Running test: RadiusFragmentSizeDefaultWiredPeap with {'fragment_size': 'SIZE_1230'}==========================================================
+
+2026-03-26 11:10:57,155 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.68
+2026-03-26 11:10:57,783 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-26 11:10:57,783 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-26 11:10:57,783 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-26 11:10:57,783 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-26 11:10:57,783 - myframework - INFO - config.min_tls_version.value already set to 'v1_2', skipping
+2026-03-26 11:10:57,783 - myframework - INFO - Executing command on CounterAct: fstool dot1x set_property config.fragment_size.value 1230
+2026-03-26 11:10:59,352 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-26 11:10:59,352 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-26 11:10:59,352 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-26 11:10:59,352 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-26 11:10:59,352 - myframework - INFO - Restarting dot1x plugin to apply pending changes...
+2026-03-26 11:10:59,352 - myframework - INFO - Restarting 802.1X plugin on 10.16.177.68
+2026-03-26 11:11:20,217 - myframework - INFO - Received 'Done starting RADIUS.' confirmation
+2026-03-26 11:11:20,218 - myframework - INFO - Sleeping 5 seconds for sub-processes to stabilise
+2026-03-26 11:11:25,227 - myframework - INFO - Configuring LAN profile (builder) on 10.16.133.130
+2026-03-26 11:11:25,228 - myframework - INFO - Copying /tmp/tmpvjoaxlys.xml to C:\Profiles\lan_profile.xml
+2026-03-26 11:11:25,228 - myframework - INFO - File size: 2797 bytes
+2026-03-26 11:11:25,228 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Profiles' -ItemType Directory -Force | Out-Null
+2026-03-26 11:11:26,165 - myframework - INFO - Created directory: C:\Profiles
+2026-03-26 11:11:26,165 - myframework - INFO - Using pypsrp native file transfer
+2026-03-26 11:11:27,449 - myframework - INFO - Successfully copied /tmp/tmpvjoaxlys.xml to C:\Profiles\lan_profile.xml
+2026-03-26 11:11:27,449 - myframework - INFO - Deleting LAN profile from interface: pciPassthru0
+2026-03-26 11:11:27,449 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan delete profile interface="pciPassthru0"
+2026-03-26 11:11:28,355 - myframework - INFO - [OK] LAN profile deleted from pciPassthru0
+2026-03-26 11:11:28,355 - myframework - INFO - Adding LAN profile to interface: pciPassthru0
+2026-03-26 11:11:28,356 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan add profile filename="C:\Profiles\lan_profile.xml" interface="pciPassthru0"
+2026-03-26 11:11:29,921 - myframework - INFO - [OK] LAN profile added to pciPassthru0
+2026-03-26 11:11:29,922 - myframework - INFO - Setting up PEAP credentials for: txqalab\dotonex
+2026-03-26 11:11:29,922 - myframework - INFO - Copying /home/triley/fstester001/scripts/radius_nic_PEAP_credentials_config.ps1 to C:\Scripts\radius_nic_PEAP_credentials_config.ps1
+2026-03-26 11:11:29,922 - myframework - INFO - File size: 7142 bytes
+2026-03-26 11:11:29,922 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Scripts' -ItemType Directory -Force | Out-Null
+2026-03-26 11:11:31,582 - myframework - INFO - Created directory: C:\Scripts
+2026-03-26 11:11:31,582 - myframework - INFO - Using pypsrp native file transfer
+2026-03-26 11:11:32,209 - myframework - INFO - Successfully copied /home/triley/fstester001/scripts/radius_nic_PEAP_credentials_config.ps1 to C:\Scripts\radius_nic_PEAP_credentials_config.ps1
+2026-03-26 11:11:32,209 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Logs' -ItemType Directory -Force | Out-Null
+2026-03-26 11:11:32,947 - myframework - INFO - Created directory: C:\Logs
+2026-03-26 11:11:32,947 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Test-Path -Path 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:11:33,679 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log' -ItemType File -Force | Out-Null
+2026-03-26 11:11:34,514 - myframework - INFO - Executing command on WindowsPassthrough: query session
+2026-03-26 11:11:34,876 - myframework - INFO - Found session for Administrator: ID=1, State=Active
+2026-03-26 11:11:34,876 - myframework - INFO - Session 1 is in state 'Active', no need to attach
+2026-03-26 11:11:34,876 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Test-Path -Path 'C:\Scripts\setup_nic_peap_credentials.ps1'
+2026-03-26 11:11:35,649 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Remove-Item -Path 'C:\Scripts\setup_nic_peap_credentials.ps1' -Force
+2026-03-26 11:11:36,389 - myframework - INFO - Removed file: C:\Scripts\setup_nic_peap_credentials.ps1
+2026-03-26 11:11:36,390 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Set-Content -Path 'C:\Scripts\setup_nic_peap_credentials.ps1' -Value 'C:\PSTools\PsExec.exe -accepteula -u "Administrator" -p "aristo" -i 1 -h -d powershell.exe -ExecutionPolicy Bypass -File "C:\Scripts\radius_nic_PEAP_credentials_config.ps1" -username "txqalab\dotonex" -password "aristo" -nicname "pciPassthru0" -logfile "C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log"' -Encoding ASCII
+2026-03-26 11:11:37,293 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; & "C:\Scripts\setup_nic_peap_credentials.ps1"
+2026-03-26 11:11:45,575 - myframework - INFO - Waiting for script completion (max 500s)...
+2026-03-26 11:11:45,575 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:11:51,893 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:11:57,615 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:03,727 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:08,766 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:14,563 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:20,291 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:26,006 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:31,773 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:36,821 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:42,588 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:48,274 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:54,021 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:12:59,782 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:13:05,681 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:13:11,063 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:13:17,097 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:13:22,779 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:13:28,673 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:13:34,363 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:13:39,285 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:13:45,092 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:13:51,000 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:13:56,805 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:02,524 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:08,227 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:13,421 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:19,137 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:25,059 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:30,882 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:37,094 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:42,076 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:47,822 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:53,546 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:14:59,248 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:15:04,975 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:15:10,687 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:15:16,045 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:15:22,078 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:15:27,758 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:15:33,453 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:15:39,175 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:15:44,106 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:15:49,842 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:15:55,607 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:01,458 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:07,447 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:13,165 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:18,422 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:24,183 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:29,887 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:35,638 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:41,392 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:47,101 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:52,224 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:16:57,944 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:03,664 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:09,520 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:15,241 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:20,157 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:25,879 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:31,638 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:37,379 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:43,169 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:49,037 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:53,919 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:17:59,670 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:18:05,518 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:18:11,252 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:18:16,953 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:18:22,267 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:18:28,243 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:18:33,924 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:18:39,614 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:18:45,298 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:18:51,013 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:18:56,249 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:19:01,937 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:19:07,672 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'
+2026-03-26 11:19:13,440 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Get-Content 'C:\Logs\radius_nic_PEAP_credentials_config_20260326_111129.log'

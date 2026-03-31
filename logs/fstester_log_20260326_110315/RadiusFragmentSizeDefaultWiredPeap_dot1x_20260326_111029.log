@@ -1,0 +1,707 @@
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:3462:1774541425.176997:Thu Mar 26 11:10:25 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:3462:1774541425.179958:Thu Mar 26 11:10:25 2026: Latest version: 48060036
+dot1x:3462:1774541427.500732:Thu Mar 26 11:10:27 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:3462:1774541427.503670:Thu Mar 26 11:10:27 2026: Latest version: 48060036
+dot1x:3462:1774541429.755017:Thu Mar 26 11:10:29 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:3462:1774541429.758056:Thu Mar 26 11:10:29 2026: Latest version: 48060036
+dot1x:3462:1774541431.962429:Thu Mar 26 11:10:31 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:3462:1774541431.965403:Thu Mar 26 11:10:31 2026: Latest version: 48060036
+dot1x:3462:1774541434.301457:Thu Mar 26 11:10:34 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:3462:1774541434.304379:Thu Mar 26 11:10:34 2026: Latest version: 48060036
+dot1x:3462:1774541436.587581:Thu Mar 26 11:10:36 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:3462:1774541436.590402:Thu Mar 26 11:10:36 2026: Latest version: 48060036
+dot1x:3462:1774541438.972195:Thu Mar 26 11:10:38 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:3462:1774541438.975904:Thu Mar 26 11:10:38 2026: Latest version: 48060036
+dot1x:3462:1774541438.976786:Thu Mar 26 11:10:38 2026: In plugin_usocket
+dot1x:3462:1774541438.976933:Thu Mar 26 11:10:38 2026: Got message stop_stop
+dot1x:3462:1774541438.977198:Thu Mar 26 11:10:38 2026: Stopping bundled Free-Radius...
+dot1x:3462:1774541443.083643:Thu Mar 26 11:10:43 2026: flushing Redis DB...
+dot1x:3462:1774541443.096950:Thu Mar 26 11:10:43 2026: Handling stop message stop_stop
+dot1x:3462:1774541443.097494:Thu Mar 26 11:10:43 2026: Plugin stopped
+dot1x:8251:1774541444.836211:Thu Mar 26 11:10:44 CDT -0500 2026: Started: version: 4.8.6-48060039 1769799728 (id: dot1x-0.544231454084979)
+dot1x:8251:1774541444.990864:Thu Mar 26 11:10:44 2026: main::cb_1x_ready:1136:[other]::0: ===== Started; Policy-Enabled=1 =====
+dot1x:8251:1774541444.996581:Thu Mar 26 11:10:44 2026: mar module has started. listening...(open_child_process:5806)
+dot1x:8251:1774541445.946037:Thu Mar 26 11:10:45 2026: disconnect module has started. listening...(open_child_process:5806)
+dot1x:8251:1774541449.958060:Thu Mar 26 11:10:49 2026: main::dot1x_configure:892:[other]::0: Loading complete (for 0 proxies)
+dot1x:8251:1774541450.080295:Thu Mar 26 11:10:50 2026: Adding <TXQALAB.FORESCOUT.LOCAL> to krb5.conf file, DC: <10.100.127.1>(dot1x_generate_krb5_conf_file:7578)
+dot1x:8251:1774541450.081734:Thu Mar 26 11:10:50 2026: Wrote krb5 conf file: /usr/local/forescout/plugin/dot1x/fs_radius/etc/krb5.conf.fr.all(dot1x_generate_krb5_conf_file:7610)
+dot1x:8251:1774541450.110381:Thu Mar 26 11:10:50 2026: cmd=echo stub | sudo fstool dot1x_net ads testjoin -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab(fs_radius_test_ads_join:199)
+dot1x:8251:1774541450.271628:Thu Mar 26 11:10:50 2026: test_ads_join returned: Join is OK(dot1x_start_winbind:7451)
+dot1x:8251:1774541450.271850:Thu Mar 26 11:10:50 2026: Started winbind for [txqalab-dc1], smb domain: [txqalab], args: [/usr/local/forescout/plugin/dot1x/fs_radius -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab], restart: [](dot1x_start_winbind:7460)
+dot1x:8251:1774541455.722954:Thu Mar 26 11:10:55 2026: main::dot1x_configure:900:[other]::0: Loading complete (for 1 domains)
+dot1x:8251:1774541455.739661:Thu Mar 26 11:10:55 2026: main::dot1x_configure_edit_attr_filter:4026:[other]::0: Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:8251:1774541455.746222:Thu Mar 26 11:10:55 2026: main::dot1x_configure_edit_attr_filter:4046:[other]::0: Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:8251:1774541455.828361:Thu Mar 26 11:10:55 2026: No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:8251:1774541455.918368:Thu Mar 26 11:10:55 2026: Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false	Reply-Message=Authorization by MAR entry',
+                        'criteria' => [
+                                        {
+                                          'value' => 'MAB',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'MAB',
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:8251:1774541467.662630:Thu Mar 26 11:11:07 2026: main::connect_to_fr:3776: setsockopt: ok=1
+dot1x:8251:1774541468.900886:Thu Mar 26 11:11:08 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:8251:1774541468.903998:Thu Mar 26 11:11:08 2026: Latest version: 48060036
+dot1x:8251:1774541468.905108:Thu Mar 26 11:11:08 2026: Accepting connections on port 13065
+dot1x:8251:1774541473.764437:Thu Mar 26 11:11:13 2026: CounterACT Appliance connected
+dot1x:8251:1774541473.765504:Thu Mar 26 11:11:13 2026: main::cb_1x_connected:1188:[other]::0: Connected with the CU
+dot1x:8251:1774541475.049755:Thu Mar 26 11:11:15 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:8251:1774541475.052605:Thu Mar 26 11:11:15 2026: Latest version: 48060036
+dot1x:8251:1774541475.055574:Thu Mar 26 11:11:15 2026: Memory usage: 44793856 bytes
+dot1x:8251:1774541475.057134:Thu Mar 26 11:11:15 2026: In plugin_usocket
+dot1x:8251:1774541475.057234:Thu Mar 26 11:11:15 2026: Got message stop_stop
+dot1x:8251:1774541475.057382:Thu Mar 26 11:11:15 2026: Stopping bundled Free-Radius...
+dot1x:8251:1774541479.047434:Thu Mar 26 11:11:19 2026: flushing Redis DB...
+dot1x:8251:1774541479.072048:Thu Mar 26 11:11:19 2026: Handling stop message stop_stop
+dot1x:8251:1774541479.073412:Thu Mar 26 11:11:19 2026: Plugin stopped
+dot1x:11914:1774541480.751224:Thu Mar 26 11:11:20 CDT -0500 2026: Started: version: 4.8.6-48060039 1769799728 (id: dot1x-0.544231454084979)
+dot1x:11914:1774541480.883546:Thu Mar 26 11:11:20 2026: main::cb_1x_ready:1136:[other]::0: ===== Started; Policy-Enabled=1 =====
+dot1x:11914:1774541480.887354:Thu Mar 26 11:11:20 2026: mar module has started. listening...(open_child_process:5806)
+dot1x:11914:1774541481.907856:Thu Mar 26 11:11:21 2026: disconnect module has started. listening...(open_child_process:5806)
+dot1x:11914:1774541485.891675:Thu Mar 26 11:11:25 2026: main::dot1x_configure:892:[other]::0: Loading complete (for 0 proxies)
+dot1x:11914:1774541486.026912:Thu Mar 26 11:11:26 2026: Adding <TXQALAB.FORESCOUT.LOCAL> to krb5.conf file, DC: <10.100.127.1>(dot1x_generate_krb5_conf_file:7578)
+dot1x:11914:1774541486.027555:Thu Mar 26 11:11:26 2026: Wrote krb5 conf file: /usr/local/forescout/plugin/dot1x/fs_radius/etc/krb5.conf.fr.all(dot1x_generate_krb5_conf_file:7610)
+dot1x:11914:1774541486.061833:Thu Mar 26 11:11:26 2026: cmd=echo stub | sudo fstool dot1x_net ads testjoin -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab(fs_radius_test_ads_join:199)
+dot1x:11914:1774541486.220299:Thu Mar 26 11:11:26 2026: test_ads_join returned: Join is OK(dot1x_start_winbind:7451)
+dot1x:11914:1774541486.220465:Thu Mar 26 11:11:26 2026: Started winbind for [txqalab-dc1], smb domain: [txqalab], args: [/usr/local/forescout/plugin/dot1x/fs_radius -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab], restart: [](dot1x_start_winbind:7460)
+dot1x:11914:1774541491.581300:Thu Mar 26 11:11:31 2026: main::dot1x_configure:900:[other]::0: Loading complete (for 1 domains)
+dot1x:11914:1774541491.591942:Thu Mar 26 11:11:31 2026: main::dot1x_configure_edit_attr_filter:4026:[other]::0: Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541491.597085:Thu Mar 26 11:11:31 2026: main::dot1x_configure_edit_attr_filter:4046:[other]::0: Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541491.673488:Thu Mar 26 11:11:31 2026: No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:11914:1774541491.776673:Thu Mar 26 11:11:31 2026: Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false	Reply-Message=Authorization by MAR entry',
+                        'criteria' => [
+                                        {
+                                          'value' => 'MAB',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'MAB',
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:11914:1774541503.545971:Thu Mar 26 11:11:43 2026: main::connect_to_fr:3776: setsockopt: ok=1
+dot1x:11914:1774541504.830169:Thu Mar 26 11:11:44 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541504.833017:Thu Mar 26 11:11:44 2026: Latest version: 48060036
+dot1x:11914:1774541504.833963:Thu Mar 26 11:11:44 2026: Accepting connections on port 13065
+dot1x:11914:1774541509.687450:Thu Mar 26 11:11:49 2026: CounterACT Appliance connected
+dot1x:11914:1774541509.688672:Thu Mar 26 11:11:49 2026: main::cb_1x_connected:1188:[other]::0: Connected with the CU
+dot1x:11914:1774541510.923959:Thu Mar 26 11:11:50 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541510.926860:Thu Mar 26 11:11:50 2026: Latest version: 48060036
+dot1x:11914:1774541510.927977:Thu Mar 26 11:11:50 2026: Memory usage: 45031424 bytes
+dot1x:11914:1774541511.066815:Thu Mar 26 11:11:51 2026: Sending queued messages
+dot1x:11914:1774541511.204943:Thu Mar 26 11:11:51 2026: Starting SDK stats timer with period 3600
+dot1x:11914:1774541511.205195:Thu Mar 26 11:11:51 2026: Started plugin timer with delay 300 and period 3600
+dot1x:11914:1774541511.283098:Thu Mar 26 11:11:51 2026: Error: Failure to connect during reconf for Authentication source: [txqalab-dc1](dot1x_reconf_ad:7864)
+dot1x:11914:1774541511.283999:Thu Mar 26 11:11:51 2026: main::dot1x_reconf_ad:7883:[other]::0: no relevant changes, do not restart radius server
+dot1x:11914:1774541511.285080:Thu Mar 26 11:11:51 2026: main::cb_1x_device_reload:1543:[other]::0: c_dbg_def MAR devices load result= MACs valid=0 invalid=0
+dot1x:11914:1774541511.286168:Thu Mar 26 11:11:51 2026: recv.plugin_call_netaction_new:4
+dot1x:11914:1774541511.324189:Thu Mar 26 11:11:51 2026: Restart FreeRadius due to not Nas(disconnect_cb:5915)
+dot1x:11914:1774541522.158181:Thu Mar 26 11:12:02 2026: Error: Cannot update field dot1x_reauth_method without csid ()(dot1x_reauth_err_msg:5902)
+dot1x:11914:1774541523.460350:Thu Mar 26 11:12:03 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541523.463337:Thu Mar 26 11:12:03 2026: Latest version: 48060036
+dot1x:11914:1774541523.465530:Thu Mar 26 11:12:03 2026: Memory usage: 46202880 bytes
+dot1x:11914:1774541523.492838:Thu Mar 26 11:12:03 2026: Error: Cannot update field dot1x_reauth_method without csid ()(dot1x_reauth_err_msg:5902)
+dot1x:11914:1774541525.726900:Thu Mar 26 11:12:05 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541525.730213:Thu Mar 26 11:12:05 2026: Latest version: 48060036
+dot1x:11914:1774541527.953809:Thu Mar 26 11:12:07 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541527.956645:Thu Mar 26 11:12:07 2026: Latest version: 48060036
+dot1x:11914:1774541530.261687:Thu Mar 26 11:12:10 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541530.264554:Thu Mar 26 11:12:10 2026: Latest version: 48060036
+dot1x:11914:1774541532.551764:Thu Mar 26 11:12:12 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541532.554602:Thu Mar 26 11:12:12 2026: Latest version: 48060036
+dot1x:11914:1774541533.515698:Thu Mar 26 11:12:13 2026: NAS update received at Thu Mar 26 11:12:13 2026(handle_nas_dev_update:6202)
+dot1x:11914:1774541533.515844:Thu Mar 26 11:12:13 2026: FreeRADIUS NAS Update recieved at Thu Mar 26 11:12:13 2026(handle_nas_dev_update:6211)
+dot1x:11914:1774541534.862343:Thu Mar 26 11:12:14 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541534.865204:Thu Mar 26 11:12:14 2026: Latest version: 48060036
+dot1x:11914:1774541537.082930:Thu Mar 26 11:12:17 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541537.085744:Thu Mar 26 11:12:17 2026: Latest version: 48060036
+dot1x:11914:1774541539.376553:Thu Mar 26 11:12:19 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541539.379562:Thu Mar 26 11:12:19 2026: Latest version: 48060036
+dot1x:11914:1774541540.381692:Thu Mar 26 11:12:20 2026: 10(cb_1x_heartbeat:782)
+dot1x:11914:1774541552.572484:Thu Mar 26 11:12:32 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541552.575713:Thu Mar 26 11:12:32 2026: Latest version: 48060036
+dot1x:11914:1774541554.859817:Thu Mar 26 11:12:34 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541554.862615:Thu Mar 26 11:12:34 2026: Latest version: 48060036
+dot1x:11914:1774541557.102601:Thu Mar 26 11:12:37 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541557.105556:Thu Mar 26 11:12:37 2026: Latest version: 48060036
+dot1x:11914:1774541559.448729:Thu Mar 26 11:12:39 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541559.451611:Thu Mar 26 11:12:39 2026: Latest version: 48060036
+dot1x:11914:1774541561.785378:Thu Mar 26 11:12:41 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541561.788557:Thu Mar 26 11:12:41 2026: Latest version: 48060036
+dot1x:11914:1774541564.030719:Thu Mar 26 11:12:44 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541564.033796:Thu Mar 26 11:12:44 2026: Latest version: 48060036
+dot1x:11914:1774541566.319362:Thu Mar 26 11:12:46 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541566.323477:Thu Mar 26 11:12:46 2026: Latest version: 48060036
+dot1x:11914:1774541568.675856:Thu Mar 26 11:12:48 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541568.679008:Thu Mar 26 11:12:48 2026: Latest version: 48060036
+dot1x:11914:1774541570.968800:Thu Mar 26 11:12:50 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541570.971697:Thu Mar 26 11:12:50 2026: Latest version: 48060036
+dot1x:11914:1774541573.206124:Thu Mar 26 11:12:53 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541573.209083:Thu Mar 26 11:12:53 2026: Latest version: 48060036
+dot1x:11914:1774541575.502007:Thu Mar 26 11:12:55 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541575.504953:Thu Mar 26 11:12:55 2026: Latest version: 48060036
+dot1x:11914:1774541577.893884:Thu Mar 26 11:12:57 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541577.896753:Thu Mar 26 11:12:57 2026: Latest version: 48060036
+dot1x:11914:1774541580.273760:Thu Mar 26 11:13:00 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541580.276950:Thu Mar 26 11:13:00 2026: Latest version: 48060036
+dot1x:11914:1774541582.519876:Thu Mar 26 11:13:02 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541582.523071:Thu Mar 26 11:13:02 2026: Latest version: 48060036
+dot1x:11914:1774541584.785334:Thu Mar 26 11:13:04 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541584.788225:Thu Mar 26 11:13:04 2026: Latest version: 48060036
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:11914:1774541586.756708:Thu Mar 26 11:13:06 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541586.764066:Thu Mar 26 11:13:06 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541586.863561:Thu Mar 26 11:13:06 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:11914:1774541586.961950:Thu Mar 26 11:13:06 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false	Reply-Message=Authorization by MAR entry',
+                        'criteria' => [
+                                        {
+                                          'value' => 'MAB',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'MAB',
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:11914:1774541588.160813:Thu Mar 26 11:13:08 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541588.163681:Thu Mar 26 11:13:08 2026: Latest version: 48060036
+dot1x:11914:1774541590.435471:Thu Mar 26 11:13:10 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541590.438299:Thu Mar 26 11:13:10 2026: Latest version: 48060036
+dot1x:11914:1774541592.693977:Thu Mar 26 11:13:12 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541592.696768:Thu Mar 26 11:13:12 2026: Latest version: 48060036
+dot1x:11914:1774541594.986377:Thu Mar 26 11:13:14 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541594.989243:Thu Mar 26 11:13:14 2026: Latest version: 48060036
+dot1x:11914:1774541597.265166:Thu Mar 26 11:13:17 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541597.268286:Thu Mar 26 11:13:17 2026: Latest version: 48060036
+dot1x:11914:1774541599.548997:Thu Mar 26 11:13:19 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541599.552054:Thu Mar 26 11:13:19 2026: Latest version: 48060036
+dot1x:11914:1774541601.926077:Thu Mar 26 11:13:21 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541601.928905:Thu Mar 26 11:13:21 2026: Latest version: 48060036
+dot1x:11914:1774541604.264502:Thu Mar 26 11:13:24 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541604.267904:Thu Mar 26 11:13:24 2026: Latest version: 48060036
+dot1x:11914:1774541606.575643:Thu Mar 26 11:13:26 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541606.579210:Thu Mar 26 11:13:26 2026: Latest version: 48060036
+dot1x:11914:1774541608.780453:Thu Mar 26 11:13:28 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541608.783352:Thu Mar 26 11:13:28 2026: Latest version: 48060036
+dot1x:11914:1774541611.027965:Thu Mar 26 11:13:31 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541611.030819:Thu Mar 26 11:13:31 2026: Latest version: 48060036
+dot1x:11914:1774541613.328307:Thu Mar 26 11:13:33 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541613.331217:Thu Mar 26 11:13:33 2026: Latest version: 48060036
+dot1x:11914:1774541615.594863:Thu Mar 26 11:13:35 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541615.597942:Thu Mar 26 11:13:35 2026: Latest version: 48060036
+dot1x:11914:1774541617.831192:Thu Mar 26 11:13:37 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541617.834078:Thu Mar 26 11:13:37 2026: Latest version: 48060036
+dot1x:11914:1774541620.120202:Thu Mar 26 11:13:40 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541620.123084:Thu Mar 26 11:13:40 2026: Latest version: 48060036
+dot1x:11914:1774541622.406927:Thu Mar 26 11:13:42 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541622.409846:Thu Mar 26 11:13:42 2026: Latest version: 48060036
+dot1x:11914:1774541624.680706:Thu Mar 26 11:13:44 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541624.683616:Thu Mar 26 11:13:44 2026: Latest version: 48060036
+dot1x:11914:1774541626.910063:Thu Mar 26 11:13:46 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541626.912930:Thu Mar 26 11:13:46 2026: Latest version: 48060036
+dot1x:11914:1774541629.134850:Thu Mar 26 11:13:49 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541629.137804:Thu Mar 26 11:13:49 2026: Latest version: 48060036
+dot1x:11914:1774541631.384410:Thu Mar 26 11:13:51 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541631.387287:Thu Mar 26 11:13:51 2026: Latest version: 48060036
+dot1x:11914:1774541633.609630:Thu Mar 26 11:13:53 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541633.612812:Thu Mar 26 11:13:53 2026: Latest version: 48060036
+dot1x:11914:1774541635.886539:Thu Mar 26 11:13:55 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541635.889464:Thu Mar 26 11:13:55 2026: Latest version: 48060036
+dot1x:11914:1774541638.103189:Thu Mar 26 11:13:58 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541638.106043:Thu Mar 26 11:13:58 2026: Latest version: 48060036
+dot1x:11914:1774541640.451720:Thu Mar 26 11:14:00 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541640.454867:Thu Mar 26 11:14:00 2026: Latest version: 48060036
+dot1x:11914:1774541642.684699:Thu Mar 26 11:14:02 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541642.687918:Thu Mar 26 11:14:02 2026: Latest version: 48060036
+dot1x:11914:1774541644.944291:Thu Mar 26 11:14:04 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541644.947625:Thu Mar 26 11:14:04 2026: Latest version: 48060036
+dot1x:11914:1774541647.227815:Thu Mar 26 11:14:07 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541647.230727:Thu Mar 26 11:14:07 2026: Latest version: 48060036
+dot1x:11914:1774541649.511602:Thu Mar 26 11:14:09 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541649.514529:Thu Mar 26 11:14:09 2026: Latest version: 48060036
+dot1x:11914:1774541652.630030:Thu Mar 26 11:14:12 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541652.632970:Thu Mar 26 11:14:12 2026: Latest version: 48060036
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:11914:1774541653.709585:Thu Mar 26 11:14:13 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541653.717955:Thu Mar 26 11:14:13 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541653.825494:Thu Mar 26 11:14:13 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:11914:1774541653.934660:Thu Mar 26 11:14:13 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false	Reply-Message=Authorization by MAR entry',
+                        'criteria' => [
+                                        {
+                                          'value' => 'MAB',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'MAB',
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:11914:1774541655.230533:Thu Mar 26 11:14:15 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541655.233370:Thu Mar 26 11:14:15 2026: Latest version: 48060036
+dot1x:11914:1774541657.499770:Thu Mar 26 11:14:17 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541657.503176:Thu Mar 26 11:14:17 2026: Latest version: 48060036
+dot1x:11914:1774541659.753657:Thu Mar 26 11:14:19 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541659.756564:Thu Mar 26 11:14:19 2026: Latest version: 48060036
+dot1x:11914:1774541662.002503:Thu Mar 26 11:14:22 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541662.005395:Thu Mar 26 11:14:22 2026: Latest version: 48060036
+dot1x:11914:1774541664.271490:Thu Mar 26 11:14:24 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541664.274593:Thu Mar 26 11:14:24 2026: Latest version: 48060036
+dot1x:11914:1774541666.544307:Thu Mar 26 11:14:26 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541666.547764:Thu Mar 26 11:14:26 2026: Latest version: 48060036
+dot1x:11914:1774541668.846098:Thu Mar 26 11:14:28 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541668.849021:Thu Mar 26 11:14:28 2026: Latest version: 48060036
+dot1x:11914:1774541671.056749:Thu Mar 26 11:14:31 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541671.059607:Thu Mar 26 11:14:31 2026: Latest version: 48060036
+dot1x:11914:1774541673.390015:Thu Mar 26 11:14:33 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541673.392899:Thu Mar 26 11:14:33 2026: Latest version: 48060036
+dot1x:11914:1774541675.641113:Thu Mar 26 11:14:35 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541675.644102:Thu Mar 26 11:14:35 2026: Latest version: 48060036
+dot1x:11914:1774541677.886253:Thu Mar 26 11:14:37 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541677.889195:Thu Mar 26 11:14:37 2026: Latest version: 48060036
+dot1x:11914:1774541680.252429:Thu Mar 26 11:14:40 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541680.255285:Thu Mar 26 11:14:40 2026: Latest version: 48060036
+dot1x:11914:1774541682.554330:Thu Mar 26 11:14:42 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541682.557147:Thu Mar 26 11:14:42 2026: Latest version: 48060036
+dot1x:11914:1774541684.792445:Thu Mar 26 11:14:44 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541684.795475:Thu Mar 26 11:14:44 2026: Latest version: 48060036
+dot1x:11914:1774541686.998891:Thu Mar 26 11:14:46 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541687.001700:Thu Mar 26 11:14:47 2026: Latest version: 48060036
+dot1x:11914:1774541689.341917:Thu Mar 26 11:14:49 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541689.344850:Thu Mar 26 11:14:49 2026: Latest version: 48060036
+dot1x:11914:1774541691.629053:Thu Mar 26 11:14:51 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541691.631939:Thu Mar 26 11:14:51 2026: Latest version: 48060036
+dot1x:11914:1774541693.923741:Thu Mar 26 11:14:53 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541693.926922:Thu Mar 26 11:14:53 2026: Latest version: 48060036
+dot1x:11914:1774541696.220265:Thu Mar 26 11:14:56 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541696.223374:Thu Mar 26 11:14:56 2026: Latest version: 48060036
+dot1x:11914:1774541698.454015:Thu Mar 26 11:14:58 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541698.456853:Thu Mar 26 11:14:58 2026: Latest version: 48060036
+dot1x:11914:1774541700.803958:Thu Mar 26 11:15:00 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541700.806916:Thu Mar 26 11:15:00 2026: Latest version: 48060036
+dot1x:11914:1774541703.115870:Thu Mar 26 11:15:03 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541703.119792:Thu Mar 26 11:15:03 2026: Latest version: 48060036
+dot1x:11914:1774541705.380920:Thu Mar 26 11:15:05 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541705.384053:Thu Mar 26 11:15:05 2026: Latest version: 48060036
+dot1x:11914:1774541707.656727:Thu Mar 26 11:15:07 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541707.659953:Thu Mar 26 11:15:07 2026: Latest version: 48060036
+dot1x:11914:1774541710.028059:Thu Mar 26 11:15:10 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541710.030889:Thu Mar 26 11:15:10 2026: Latest version: 48060036
+dot1x:11914:1774541712.320331:Thu Mar 26 11:15:12 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541712.323255:Thu Mar 26 11:15:12 2026: Latest version: 48060036
+dot1x:11914:1774541714.577315:Thu Mar 26 11:15:14 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541714.580459:Thu Mar 26 11:15:14 2026: Latest version: 48060036
+dot1x:11914:1774541717.648669:Thu Mar 26 11:15:17 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541717.651653:Thu Mar 26 11:15:17 2026: Latest version: 48060036
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:11914:1774541718.720694:Thu Mar 26 11:15:18 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541718.730036:Thu Mar 26 11:15:18 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541718.845659:Thu Mar 26 11:15:18 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:11914:1774541718.960817:Thu Mar 26 11:15:18 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false	Reply-Message=Authorization by MAR entry',
+                        'criteria' => [
+                                        {
+                                          'value' => 'MAB',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'MAB',
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:11914:1774541720.179816:Thu Mar 26 11:15:20 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541720.183001:Thu Mar 26 11:15:20 2026: Latest version: 48060036
+dot1x:11914:1774541722.421523:Thu Mar 26 11:15:22 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541722.424397:Thu Mar 26 11:15:22 2026: Latest version: 48060036
+dot1x:11914:1774541724.737502:Thu Mar 26 11:15:24 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541724.740556:Thu Mar 26 11:15:24 2026: Latest version: 48060036
+dot1x:11914:1774541726.985588:Thu Mar 26 11:15:26 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541726.988645:Thu Mar 26 11:15:26 2026: Latest version: 48060036
+dot1x:11914:1774541729.191155:Thu Mar 26 11:15:29 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541729.194111:Thu Mar 26 11:15:29 2026: Latest version: 48060036
+dot1x:11914:1774541731.473550:Thu Mar 26 11:15:31 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541731.476570:Thu Mar 26 11:15:31 2026: Latest version: 48060036
+dot1x:11914:1774541733.770942:Thu Mar 26 11:15:33 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541733.773933:Thu Mar 26 11:15:33 2026: Latest version: 48060036
+dot1x:11914:1774541736.019202:Thu Mar 26 11:15:36 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541736.022188:Thu Mar 26 11:15:36 2026: Latest version: 48060036
+dot1x:11914:1774541738.285216:Thu Mar 26 11:15:38 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541738.288257:Thu Mar 26 11:15:38 2026: Latest version: 48060036
+dot1x:11914:1774541740.520941:Thu Mar 26 11:15:40 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541740.523872:Thu Mar 26 11:15:40 2026: Latest version: 48060036
+dot1x:11914:1774541742.775506:Thu Mar 26 11:15:42 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541742.778428:Thu Mar 26 11:15:42 2026: Latest version: 48060036
+dot1x:11914:1774541745.072153:Thu Mar 26 11:15:45 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541745.075690:Thu Mar 26 11:15:45 2026: Latest version: 48060036
+dot1x:11914:1774541747.326925:Thu Mar 26 11:15:47 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541747.330093:Thu Mar 26 11:15:47 2026: Latest version: 48060036
+dot1x:11914:1774541749.601979:Thu Mar 26 11:15:49 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541749.604768:Thu Mar 26 11:15:49 2026: Latest version: 48060036
+dot1x:11914:1774541751.911409:Thu Mar 26 11:15:51 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541751.914258:Thu Mar 26 11:15:51 2026: Latest version: 48060036
+dot1x:11914:1774541754.349410:Thu Mar 26 11:15:54 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541754.352268:Thu Mar 26 11:15:54 2026: Latest version: 48060036
+dot1x:11914:1774541756.608888:Thu Mar 26 11:15:56 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541756.611710:Thu Mar 26 11:15:56 2026: Latest version: 48060036
+dot1x:11914:1774541758.840208:Thu Mar 26 11:15:58 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541758.843043:Thu Mar 26 11:15:58 2026: Latest version: 48060036
+dot1x:11914:1774541761.095344:Thu Mar 26 11:16:01 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541761.098256:Thu Mar 26 11:16:01 2026: Latest version: 48060036
+dot1x:11914:1774541763.389503:Thu Mar 26 11:16:03 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541763.392522:Thu Mar 26 11:16:03 2026: Latest version: 48060036
+dot1x:11914:1774541765.680140:Thu Mar 26 11:16:05 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541765.683038:Thu Mar 26 11:16:05 2026: Latest version: 48060036
+dot1x:11914:1774541767.956746:Thu Mar 26 11:16:07 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541767.959682:Thu Mar 26 11:16:07 2026: Latest version: 48060036
+dot1x:11914:1774541770.241922:Thu Mar 26 11:16:10 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541770.244759:Thu Mar 26 11:16:10 2026: Latest version: 48060036
+dot1x:11914:1774541772.606861:Thu Mar 26 11:16:12 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541772.610204:Thu Mar 26 11:16:12 2026: Latest version: 48060036
+dot1x:11914:1774541774.873271:Thu Mar 26 11:16:14 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541774.876320:Thu Mar 26 11:16:14 2026: Latest version: 48060036
+dot1x:11914:1774541777.081962:Thu Mar 26 11:16:17 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541777.084880:Thu Mar 26 11:16:17 2026: Latest version: 48060036
+dot1x:11914:1774541779.366522:Thu Mar 26 11:16:19 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541779.369426:Thu Mar 26 11:16:19 2026: Latest version: 48060036
+dot1x:11914:1774541781.617989:Thu Mar 26 11:16:21 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541781.620784:Thu Mar 26 11:16:21 2026: Latest version: 48060036
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:11914:1774541783.575961:Thu Mar 26 11:16:23 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541783.584721:Thu Mar 26 11:16:23 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541783.699885:Thu Mar 26 11:16:23 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:11914:1774541783.823561:Thu Mar 26 11:16:23 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false	Reply-Message=Authorization by MAR entry',
+                        'criteria' => [
+                                        {
+                                          'value' => 'MAB',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'MAB',
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:11914:1774541785.292270:Thu Mar 26 11:16:25 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541785.295108:Thu Mar 26 11:16:25 2026: Latest version: 48060036
+dot1x:11914:1774541787.628903:Thu Mar 26 11:16:27 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541787.632096:Thu Mar 26 11:16:27 2026: Latest version: 48060036
+dot1x:11914:1774541789.923613:Thu Mar 26 11:16:29 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541789.926512:Thu Mar 26 11:16:29 2026: Latest version: 48060036
+dot1x:11914:1774541792.132118:Thu Mar 26 11:16:32 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541792.134972:Thu Mar 26 11:16:32 2026: Latest version: 48060036
+dot1x:11914:1774541794.397470:Thu Mar 26 11:16:34 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541794.400288:Thu Mar 26 11:16:34 2026: Latest version: 48060036
+dot1x:11914:1774541796.765591:Thu Mar 26 11:16:36 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541796.768514:Thu Mar 26 11:16:36 2026: Latest version: 48060036
+dot1x:11914:1774541799.160999:Thu Mar 26 11:16:39 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541799.163981:Thu Mar 26 11:16:39 2026: Latest version: 48060036
+dot1x:11914:1774541801.425347:Thu Mar 26 11:16:41 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541801.428341:Thu Mar 26 11:16:41 2026: Latest version: 48060036
+dot1x:11914:1774541803.644567:Thu Mar 26 11:16:43 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541803.647472:Thu Mar 26 11:16:43 2026: Latest version: 48060036
+dot1x:11914:1774541805.962525:Thu Mar 26 11:16:45 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541805.965379:Thu Mar 26 11:16:45 2026: Latest version: 48060036
+dot1x:11914:1774541808.394880:Thu Mar 26 11:16:48 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541808.397731:Thu Mar 26 11:16:48 2026: Latest version: 48060036
+dot1x:11914:1774541810.652024:Thu Mar 26 11:16:50 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541810.654979:Thu Mar 26 11:16:50 2026: Latest version: 48060036
+dot1x:11914:1774541811.206603:Thu Mar 26 11:16:51 2026: SDK stats timer popped at Thu Mar 26 11:16:51 2026
+dot1x:11914:1774541812.897504:Thu Mar 26 11:16:52 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541812.900464:Thu Mar 26 11:16:52 2026: Latest version: 48060036
+dot1x:11914:1774541815.156821:Thu Mar 26 11:16:55 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541815.159717:Thu Mar 26 11:16:55 2026: Latest version: 48060036
+dot1x:11914:1774541817.510364:Thu Mar 26 11:16:57 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541817.513423:Thu Mar 26 11:16:57 2026: Latest version: 48060036
+dot1x:11914:1774541819.798254:Thu Mar 26 11:16:59 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541819.801493:Thu Mar 26 11:16:59 2026: Latest version: 48060036
+dot1x:11914:1774541822.014634:Thu Mar 26 11:17:02 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541822.017481:Thu Mar 26 11:17:02 2026: Latest version: 48060036
+dot1x:11914:1774541824.325970:Thu Mar 26 11:17:04 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541824.328802:Thu Mar 26 11:17:04 2026: Latest version: 48060036
+dot1x:11914:1774541826.758654:Thu Mar 26 11:17:06 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541826.761606:Thu Mar 26 11:17:06 2026: Latest version: 48060036
+dot1x:11914:1774541829.065931:Thu Mar 26 11:17:09 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541829.069098:Thu Mar 26 11:17:09 2026: Latest version: 48060036
+dot1x:11914:1774541831.291308:Thu Mar 26 11:17:11 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541831.294591:Thu Mar 26 11:17:11 2026: Latest version: 48060036
+dot1x:11914:1774541833.499693:Thu Mar 26 11:17:13 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541833.502592:Thu Mar 26 11:17:13 2026: Latest version: 48060036
+dot1x:11914:1774541835.788238:Thu Mar 26 11:17:15 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541835.791109:Thu Mar 26 11:17:15 2026: Latest version: 48060036
+dot1x:11914:1774541838.040853:Thu Mar 26 11:17:18 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541838.044043:Thu Mar 26 11:17:18 2026: Latest version: 48060036
+dot1x:11914:1774541840.379202:Thu Mar 26 11:17:20 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541840.382364:Thu Mar 26 11:17:20 2026: Latest version: 48060036
+dot1x:11914:1774541842.712456:Thu Mar 26 11:17:22 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541842.715375:Thu Mar 26 11:17:22 2026: Latest version: 48060036
+dot1x:11914:1774541845.090978:Thu Mar 26 11:17:25 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541845.094071:Thu Mar 26 11:17:25 2026: Latest version: 48060036
+dot1x:11914:1774541847.469452:Thu Mar 26 11:17:27 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541847.472408:Thu Mar 26 11:17:27 2026: Latest version: 48060036
+dot1x:11914:1774541849.761937:Thu Mar 26 11:17:29 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541849.765263:Thu Mar 26 11:17:29 2026: Latest version: 48060036
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:11914:1774541851.664142:Thu Mar 26 11:17:31 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541851.673001:Thu Mar 26 11:17:31 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541851.768501:Thu Mar 26 11:17:31 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:11914:1774541851.877922:Thu Mar 26 11:17:31 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false	Reply-Message=Authorization by MAR entry',
+                        'criteria' => [
+                                        {
+                                          'value' => 'MAB',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'MAB',
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:11914:1774541853.357328:Thu Mar 26 11:17:33 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541853.360247:Thu Mar 26 11:17:33 2026: Latest version: 48060036
+dot1x:11914:1774541855.601165:Thu Mar 26 11:17:35 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541855.604390:Thu Mar 26 11:17:35 2026: Latest version: 48060036
+dot1x:11914:1774541857.816818:Thu Mar 26 11:17:37 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541857.819845:Thu Mar 26 11:17:37 2026: Latest version: 48060036
+dot1x:11914:1774541860.171371:Thu Mar 26 11:17:40 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541860.174314:Thu Mar 26 11:17:40 2026: Latest version: 48060036
+dot1x:11914:1774541862.584263:Thu Mar 26 11:17:42 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541862.587150:Thu Mar 26 11:17:42 2026: Latest version: 48060036
+dot1x:11914:1774541864.847496:Thu Mar 26 11:17:44 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541864.851144:Thu Mar 26 11:17:44 2026: Latest version: 48060036
+dot1x:11914:1774541867.076992:Thu Mar 26 11:17:47 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541867.079953:Thu Mar 26 11:17:47 2026: Latest version: 48060036
+dot1x:11914:1774541869.381588:Thu Mar 26 11:17:49 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541869.384458:Thu Mar 26 11:17:49 2026: Latest version: 48060036
+dot1x:11914:1774541871.703815:Thu Mar 26 11:17:51 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541871.706699:Thu Mar 26 11:17:51 2026: Latest version: 48060036
+dot1x:11914:1774541874.001905:Thu Mar 26 11:17:54 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541874.004750:Thu Mar 26 11:17:54 2026: Latest version: 48060036
+dot1x:11914:1774541876.219338:Thu Mar 26 11:17:56 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541876.222623:Thu Mar 26 11:17:56 2026: Latest version: 48060036
+dot1x:11914:1774541878.444198:Thu Mar 26 11:17:58 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541878.447099:Thu Mar 26 11:17:58 2026: Latest version: 48060036
+dot1x:11914:1774541880.729977:Thu Mar 26 11:18:00 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541880.732807:Thu Mar 26 11:18:00 2026: Latest version: 48060036
+dot1x:11914:1774541882.994918:Thu Mar 26 11:18:02 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541882.998187:Thu Mar 26 11:18:02 2026: Latest version: 48060036
+dot1x:11914:1774541885.201125:Thu Mar 26 11:18:05 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541885.204258:Thu Mar 26 11:18:05 2026: Latest version: 48060036
+dot1x:11914:1774541887.486715:Thu Mar 26 11:18:07 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541887.489900:Thu Mar 26 11:18:07 2026: Latest version: 48060036
+dot1x:11914:1774541889.794919:Thu Mar 26 11:18:09 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541889.797782:Thu Mar 26 11:18:09 2026: Latest version: 48060036
+dot1x:11914:1774541892.035596:Thu Mar 26 11:18:12 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541892.038465:Thu Mar 26 11:18:12 2026: Latest version: 48060036
+dot1x:11914:1774541894.230749:Thu Mar 26 11:18:14 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541894.233641:Thu Mar 26 11:18:14 2026: Latest version: 48060036
+dot1x:11914:1774541896.439222:Thu Mar 26 11:18:16 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541896.442095:Thu Mar 26 11:18:16 2026: Latest version: 48060036
+dot1x:11914:1774541898.860754:Thu Mar 26 11:18:18 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541898.863627:Thu Mar 26 11:18:18 2026: Latest version: 48060036
+dot1x:11914:1774541901.177345:Thu Mar 26 11:18:21 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541901.180483:Thu Mar 26 11:18:21 2026: Latest version: 48060036
+dot1x:11914:1774541903.493438:Thu Mar 26 11:18:23 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541903.496707:Thu Mar 26 11:18:23 2026: Latest version: 48060036
+dot1x:11914:1774541905.711619:Thu Mar 26 11:18:25 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541905.714486:Thu Mar 26 11:18:25 2026: Latest version: 48060036
+dot1x:11914:1774541908.004072:Thu Mar 26 11:18:28 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541908.006966:Thu Mar 26 11:18:28 2026: Latest version: 48060036
+dot1x:11914:1774541910.294767:Thu Mar 26 11:18:30 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541910.297610:Thu Mar 26 11:18:30 2026: Latest version: 48060036
+dot1x:11914:1774541912.546238:Thu Mar 26 11:18:32 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541912.549501:Thu Mar 26 11:18:32 2026: Latest version: 48060036
+dot1x:11914:1774541914.772820:Thu Mar 26 11:18:34 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541914.775677:Thu Mar 26 11:18:34 2026: Latest version: 48060036
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:11914:1774541916.770849:Thu Mar 26 11:18:36 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541916.777952:Thu Mar 26 11:18:36 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:11914:1774541916.875983:Thu Mar 26 11:18:36 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4484)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:11914:1774541916.981386:Thu Mar 26 11:18:36 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false	Reply-Message=Authorization by MAR entry',
+                        'criteria' => [
+                                        {
+                                          'value' => 'MAB',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'MAB',
+                                          'field' => 'Authentication-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5370)
+dot1x:11914:1774541918.216030:Thu Mar 26 11:18:38 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541918.219135:Thu Mar 26 11:18:38 2026: Latest version: 48060036
+dot1x:11914:1774541920.468880:Thu Mar 26 11:18:40 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541920.471722:Thu Mar 26 11:18:40 2026: Latest version: 48060036
+dot1x:11914:1774541922.728854:Thu Mar 26 11:18:42 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541922.731707:Thu Mar 26 11:18:42 2026: Latest version: 48060036
+dot1x:11914:1774541925.015568:Thu Mar 26 11:18:45 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541925.018438:Thu Mar 26 11:18:45 2026: Latest version: 48060036
+dot1x:11914:1774541927.252901:Thu Mar 26 11:18:47 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541927.255845:Thu Mar 26 11:18:47 2026: Latest version: 48060036
+dot1x:11914:1774541929.514926:Thu Mar 26 11:18:49 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541929.517794:Thu Mar 26 11:18:49 2026: Latest version: 48060036
+dot1x:11914:1774541931.797427:Thu Mar 26 11:18:51 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541931.800274:Thu Mar 26 11:18:51 2026: Latest version: 48060036
+dot1x:11914:1774541934.067574:Thu Mar 26 11:18:54 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541934.070706:Thu Mar 26 11:18:54 2026: Latest version: 48060036
+dot1x:11914:1774541936.307469:Thu Mar 26 11:18:56 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541936.310500:Thu Mar 26 11:18:56 2026: Latest version: 48060036
+dot1x:11914:1774541938.594187:Thu Mar 26 11:18:58 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541938.597152:Thu Mar 26 11:18:58 2026: Latest version: 48060036
+dot1x:11914:1774541940.886051:Thu Mar 26 11:19:00 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541940.888922:Thu Mar 26 11:19:00 2026: Latest version: 48060036
+dot1x:11914:1774541943.215667:Thu Mar 26 11:19:03 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541943.218677:Thu Mar 26 11:19:03 2026: Latest version: 48060036
+dot1x:11914:1774541945.523793:Thu Mar 26 11:19:05 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541945.526945:Thu Mar 26 11:19:05 2026: Latest version: 48060036
+dot1x:11914:1774541947.804212:Thu Mar 26 11:19:07 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541947.807128:Thu Mar 26 11:19:07 2026: Latest version: 48060036
+dot1x:11914:1774541950.177651:Thu Mar 26 11:19:10 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541950.180485:Thu Mar 26 11:19:10 2026: Latest version: 48060036
+dot1x:11914:1774541952.482860:Thu Mar 26 11:19:12 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541952.485725:Thu Mar 26 11:19:12 2026: Latest version: 48060036
+dot1x:11914:1774541954.729022:Thu Mar 26 11:19:14 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541954.731874:Thu Mar 26 11:19:14 2026: Latest version: 48060036
+dot1x:11914:1774541956.940193:Thu Mar 26 11:19:16 2026: Last install file timestamp: 1770094730, Last install file: /usr/local/forescout/plugin/dot1x/install.properties1770094730
+dot1x:11914:1774541956.943068:Thu Mar 26 11:19:16 2026: Latest version: 48060036

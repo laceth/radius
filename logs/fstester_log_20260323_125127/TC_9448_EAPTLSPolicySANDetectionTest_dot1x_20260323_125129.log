@@ -1,0 +1,368 @@
+                                        {
+                                          'value' => 'TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:22679:1774288321.381316:Mon Mar 23 12:52:01 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288321.390922:Mon Mar 23 12:52:01 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288321.391574:Mon Mar 23 12:52:01 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288321.391871:Mon Mar 23 12:52:01 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288321.493966:Mon Mar 23 12:52:01 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:22679:1774288321.603466:Mon Mar 23 12:52:01 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:22679:1774288323.256736:Mon Mar 23 12:52:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288323
+NASPort '50101'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.18'
+CalledSid '00-6C-BC-CF-C0-81'
+UserName 'host/AUTOBVT-GIG6GUR'
+EapType 'PEAP'
+NASIdentifier 'Cisco_3850_B'
+NASPortIdStr 'GigabitEthernet1/0/1'
+dot1x:22679:1774288323.258904:Mon Mar 23 12:52:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288323
+AuthStatus 'Access-Reject:'
+dot1x:22679:1774288323.259314:Mon Mar 23 12:52:03 2026: main::dot1x_update_authentication_props:3394:[fr-update]::0: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Logon Failure: Rejected user AUTOBVT-GIG6GUR: 
+dot1x:22679:1774288323.260657:Mon Mar 23 12:52:03 2026: [98f2b301a055/ntlmpl/host/AUTOBVT-GIG6GUR] 98f2b301a055 Failed Auth(dot1x_host_log:385)
+dot1x:22679:1774288323.263515:Mon Mar 23 12:52:03 2026: main::dot1x_fetchMar:2230:[ntlmpl]::0: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>no MAR entry for 98f2b301a055!
+dot1x:22679:1774288323.277048:Mon Mar 23 12:52:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288323
+AcctSid '00000235'
+!
+dot1x:22679:1774288323.278351:Mon Mar 23 12:52:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288323
+AcctStatusType 'Stop'
+!
+dot1x:22679:1774288336.599194:Mon Mar 23 12:52:16 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026  5-00:35:10 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026  5-00:35:10 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+22691 Mon Mar 23 11:44:56 2026    01:07:19 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+22716 Mon Mar 23 11:44:57 2026    01:07:18 00:00:02 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+22898 Mon Mar 23 11:44:59 2026    01:07:16 00:01:28 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+23369 Mon Mar 23 11:45:07 2026    01:07:08 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+23371 Mon Mar 23 11:45:07 2026    01:07:08 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+25145 Mon Mar 23 11:46:03 2026    01:06:12 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+25147 Mon Mar 23 11:46:03 2026    01:06:12 00:00:02 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:22679:1774288336.599452:Mon Mar 23 12:52:16 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:22679:1774288352.119298:Mon Mar 23 12:52:32 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288350
+AssignedTo ''
+dot1x:22679:1774288352.120155:Mon Mar 23 12:52:32 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288350
+NASPort '50101'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.18'
+CalledSid '00-6C-BC-CF-C0-81'
+UserName 'host/Dot1x-CLT-G'
+EapType 'TLS'
+1x_sr '4525faa35ab242a5'
+1x_ex '460102234000Z'
+1x_is '/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local'
+1x_su '/C=US/ST=Texas/L=Ranger/O=Forescout/OU=Lab/CN=Dot1x-CLT-G/emailAddress=clientg@internl.local'
+1x_cn 'Dot1x-CLT-G'
+NASIdentifier 'Cisco_3850_B'
+NASPortIdStr 'GigabitEthernet1/0/1'
+1x_san 'URI:E2EQADeviceId://qae2e-san-testid-12345'
+1x_eku '1.3.6.1.5.5.7.3.2'
+dot1x:22679:1774288352.123098:Mon Mar 23 12:52:32 2026: Error: [98f2b301a055/fr-update/host/AUTOBVT-GIG6GUR] Bad FREERADIUS input '98f2b301a055 1x_eku 1.3.6.1.5.5.7.3.2'(dot1x_set_fr_property:3732)
+dot1x:22679:1774288352.123326:Mon Mar 23 12:52:32 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288350
+AuthStatus 'Access-Accept:default rule_1'
+dot1x:22679:1774288352.127760:Mon Mar 23 12:52:32 2026: main::dot1x_fetchMar:2230:[ntlmpl]::0: <98f2b301a055|usr=host/Dot1x-CLT-G>no MAR entry for 98f2b301a055!
+dot1x:22679:1774288352.147826:Mon Mar 23 12:52:32 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288350
+Cisco-AVPair 'service-type=Framed'
+!
+dot1x:22679:1774288352.149289:Mon Mar 23 12:52:32 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288350
+Auth-Type 'EAP'
+!
+dot1x:22679:1774288352.150041:Mon Mar 23 12:52:32 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288350
+AcctSid '00000236'
+!
+dot1x:22679:1774288352.151326:Mon Mar 23 12:52:32 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288350
+Framed-IP-Address ''
+dot1x:22679:1774288368.574639:Mon Mar 23 12:52:48 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026  5-00:35:42 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026  5-00:35:42 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+22691 Mon Mar 23 11:44:56 2026    01:07:51 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+22716 Mon Mar 23 11:44:57 2026    01:07:50 00:00:02 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+22898 Mon Mar 23 11:44:59 2026    01:07:48 00:01:29 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+23369 Mon Mar 23 11:45:07 2026    01:07:40 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+23371 Mon Mar 23 11:45:07 2026    01:07:40 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+25145 Mon Mar 23 11:46:03 2026    01:06:44 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+25147 Mon Mar 23 11:46:03 2026    01:06:44 00:00:02 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:22679:1774288368.574876:Mon Mar 23 12:52:48 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:22679:1774288373.755093:Mon Mar 23 12:52:53 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288373
+AcctSid '00000236'
+!
+dot1x:22679:1774288373.756410:Mon Mar 23 12:52:53 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288373
+AcctStatusType 'Stop'
+!
+dot1x:22679:1774288383.130712:Mon Mar 23 12:53:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288382
+AssignedTo ''
+dot1x:22679:1774288383.131514:Mon Mar 23 12:53:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288382
+NASPort '50101'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.18'
+CalledSid '00-6C-BC-CF-C0-81'
+UserName 'host/Dot1x-CLT-G'
+EapType 'TLS'
+1x_sr '4525faa35ab242a5'
+1x_ex '460102234000Z'
+1x_is '/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local'
+1x_su '/C=US/ST=Texas/L=Ranger/O=Forescout/OU=Lab/CN=Dot1x-CLT-G/emailAddress=clientg@internl.local'
+1x_cn 'Dot1x-CLT-G'
+NASIdentifier 'Cisco_3850_B'
+NASPortIdStr 'GigabitEthernet1/0/1'
+1x_san 'URI:E2EQADeviceId://qae2e-san-testid-12345'
+1x_eku '1.3.6.1.5.5.7.3.2'
+dot1x:22679:1774288383.134341:Mon Mar 23 12:53:03 2026: Error: [98f2b301a055/fr-update/host/Dot1x-CLT-G] Bad FREERADIUS input '98f2b301a055 1x_eku 1.3.6.1.5.5.7.3.2'(dot1x_set_fr_property:3732)
+dot1x:22679:1774288383.137067:Mon Mar 23 12:53:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288382
+AuthStatus 'Access-Accept:default rule_1'
+dot1x:22679:1774288383.139670:Mon Mar 23 12:53:03 2026: main::dot1x_fetchMar:2230:[ntlmpl]::0: <98f2b301a055|usr=host/Dot1x-CLT-G>no MAR entry for 98f2b301a055!
+dot1x:22679:1774288383.152765:Mon Mar 23 12:53:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288382
+Cisco-AVPair 'service-type=Framed'
+!
+dot1x:22679:1774288383.153696:Mon Mar 23 12:53:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288382
+Auth-Type 'EAP'
+!
+dot1x:22679:1774288383.154127:Mon Mar 23 12:53:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288382
+AcctSid '00000237'
+!
+dot1x:22679:1774288383.154939:Mon Mar 23 12:53:03 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774288382
+Framed-IP-Address ''
+dot1x:22679:1774288384.192864:Mon Mar 23 12:53:04 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288384.198797:Mon Mar 23 12:53:04 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288384.199995:Mon Mar 23 12:53:04 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288384.200457:Mon Mar 23 12:53:04 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288384.296738:Mon Mar 23 12:53:04 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:22679:1774288384.412169:Mon Mar 23 12:53:04 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:22679:1774288449.057582:Mon Mar 23 12:54:09 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288449.066205:Mon Mar 23 12:54:09 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288449.067012:Mon Mar 23 12:54:09 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288449.067339:Mon Mar 23 12:54:09 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288449.168675:Mon Mar 23 12:54:09 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:22679:1774288449.286326:Mon Mar 23 12:54:09 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:22679:1774288513.675987:Mon Mar 23 12:55:13 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288513.683790:Mon Mar 23 12:55:13 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288513.684550:Mon Mar 23 12:55:13 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288513.684953:Mon Mar 23 12:55:13 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288513.795339:Mon Mar 23 12:55:13 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:22679:1774288513.919101:Mon Mar 23 12:55:13 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:22679:1774288576.242114:Mon Mar 23 12:56:16 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288576.250978:Mon Mar 23 12:56:16 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288576.251963:Mon Mar 23 12:56:16 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288576.252353:Mon Mar 23 12:56:16 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288576.355639:Mon Mar 23 12:56:16 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:22679:1774288576.475419:Mon Mar 23 12:56:16 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:22679:1774288640.950802:Mon Mar 23 12:57:20 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288640.956468:Mon Mar 23 12:57:20 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:22679:1774288640.956984:Mon Mar 23 12:57:20 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288640.957258:Mon Mar 23 12:57:20 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:22679:1774288641.044999:Mon Mar 23 12:57:21 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:22679:1774288641.140480:Mon Mar 23 12:57:21 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
