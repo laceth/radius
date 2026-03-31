@@ -1,0 +1,209 @@
+2026-03-19 11:41:26,343 - myframework - INFO - 
+==========================================================================================Running Suite Setup===========================================================================================
+
+2026-03-19 11:41:26,343 - myframework - INFO - set up radius test suite
+2026-03-19 11:41:26,343 - myframework - INFO - === Starting EAP-TLS Test Setup ===
+2026-03-19 11:41:26,343 - myframework - INFO - Starting collecting logs from 10.16.177.66 for log file: /usr/local/forescout/log/plugin/dot1x/dot1x.log
+2026-03-19 11:41:26,343 - myframework - INFO - Starting collecting logs from 10.16.177.66 for log file: /usr/local/forescout/log/plugin/dot1x/radiusd.log
+2026-03-19 11:41:26,344 - myframework - INFO - Radius Common Setup
+2026-03-19 11:41:26,344 - myframework - INFO - Radius Server IP: 10.16.177.66
+2026-03-19 11:41:26,344 - myframework - INFO - Switch IP: 10.16.128.21
+2026-03-19 11:41:26,344 - myframework - INFO - Passthrough Management IP: 10.6.129.140
+2026-03-19 11:41:26,344 - myframework - INFO - Passthrough MAC: B4B024291F32
+2026-03-19 11:41:26,344 - myframework - INFO - Test start time: 2026-03-19 11:41:26.344293
+2026-03-19 11:41:27,038 - myframework - INFO - Executing command on CounterAct: psql -t -A -F '|' -c "SELECT id, field_name, field_value FROM devinfo WHERE category='ad' AND field_name='ad_domain' AND field_value LIKE '%forescout.local%'"
+2026-03-19 11:41:27,173 - myframework - INFO - Command output:
+2026-03-19 11:41:27,174 - myframework - INFO -   txqalab2-dc1|ad_domain|txqalab2.txqalab.forescout.local
+2026-03-19 11:41:27,174 - myframework - INFO -   txqalab-dc1|ad_domain|txqalab.forescout.local
+2026-03-19 11:41:27,174 - myframework - INFO - AD domain and ad name mapping retrieved: {'txqalab2.txqalab.forescout.local': ['txqalab2-dc1'], 'txqalab.forescout.local': ['txqalab-dc1']}
+2026-03-19 11:41:27,174 - myframework - WARNING - No ad_name defined for ad_domain 'txqalab3.txqalab.forescout.local' in User Directory.
+2026-03-19 11:41:27,458 - myframework - INFO - CounterACT version on 10.16.177.66: 8.5.2
+2026-03-19 11:41:27,458 - myframework - INFO - CA version 8.5.2: using auth_value format 'txqalab-dc1:ad::testuser|administrator'
+2026-03-19 11:41:28,890 - myframework - INFO - Auth source 'txqalab-dc1' already configured in slot 1, skipping
+2026-03-19 11:41:28,891 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-19 11:41:28,891 - myframework - INFO - Checking RADIUS Authentication Source joined domain 'txqalab-dc1'
+2026-03-19 11:41:28,891 - myframework - INFO - Testing domain 'txqalab-dc1' joined status with testjoin command
+2026-03-19 11:41:28,891 - myframework - INFO - Executing command on CounterAct: fstool dot1x testjoin txqalab-dc1
+2026-03-19 11:41:32,638 - myframework - INFO - Test join command output: Join OK [txqalab-dc1]
+2026-03-19 11:41:32,638 - myframework - INFO - Domain 'txqalab-dc1' is already joined, skipping join operation
+2026-03-19 11:41:32,638 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-19 11:41:33,257 - myframework - INFO - Setting auth_source txqalab-dc1 to Null (current: '')
+2026-03-19 11:41:35,737 - myframework - INFO - Updated property: config.auth_source_null.value=txqalab-dc1
+2026-03-19 11:41:35,737 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.66
+2026-03-19 11:41:36,639 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-19 11:41:36,639 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-19 11:41:36,639 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-19 11:41:36,639 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-19 11:41:36,639 - myframework - INFO - Executing command on CounterAct: fstool dot1x set_property config.min_tls_version.value v1_2
+2026-03-19 11:41:36,157 - myframework - INFO - config.fragment_size.value already set to '1024', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-19 11:41:36,157 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-19 11:41:36,157 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-19 11:41:36,157 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-19 11:41:36,157 - myframework - INFO - Restarting dot1x plugin to apply pending changes...
+2026-03-19 11:41:36,157 - myframework - INFO - Restarting 802.1X plugin on 10.16.177.66
+2026-03-19 11:41:43,851 - myframework - INFO - Received 'Done starting RADIUS.' confirmation
+2026-03-19 11:41:43,851 - myframework - INFO - Sleeping 5 seconds for sub-processes to stabilise
+2026-03-19 11:41:48,859 - myframework - INFO - Starting endpoint cleanup for MAC: B4B024291F32
+2026-03-19 11:41:49,179 - myframework - WARNING - CA SSH error on attempt 1 (connection may have dropped), reconnecting: RuntimeError("Command 'fstool hostinfo B4B024291F32 | grep mac,' failed with exit code 1: ")
+2026-03-19 11:41:49,179 - myframework - INFO - [POOL] Evicted connection for key: 10.16.177.66
+2026-03-19 11:41:49,676 - myframework - WARNING - Could not delete endpoint by MAC B4B024291F32: MAC address B4B024291F32 not found on CA after 0s: Command 'fstool hostinfo B4B024291F32 | grep mac,' failed with exit code 1: 
+2026-03-19 11:41:49,677 - myframework - INFO - Target IP range 10.16.178.64/26 derived from VLAN 1688
+2026-03-19 11:41:49,677 - myframework - INFO - Starting RADIUS configuration on port FastEthernet0/1 for Cisco ios switch 10.16.128.21
+2026-03-19 11:41:49,677 - myframework - INFO - Starting RADIUS Configuration steps 1/6: dot1x system-auth-control
+2026-03-19 11:41:52,342 - myframework - INFO - Executing command on CiscoIOS: show running-config | inc dot1x
+2026-03-19 11:41:53,807 - myframework - INFO - dot1x system-auth-control already enabled on Cisco switch 10.16.128.21
+2026-03-19 11:41:53,807 - myframework - INFO - Starting RADIUS Configuration steps 2/6: RADIUS server
+2026-03-19 11:41:53,808 - myframework - INFO - Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-66
+2026-03-19 11:41:55,384 - myframework - INFO - Command output:
+2026-03-19 11:41:55,385 - myframework - INFO -   radius server server-automation-ipv4-177-66
+2026-03-19 11:41:55,385 - myframework - INFO -    address ipv4 10.16.177.66 auth-port 1812 acct-port 1813
+2026-03-19 11:41:55,385 - myframework - INFO -    key aristo
+2026-03-19 11:41:55,385 - myframework - INFO - Executing command on CiscoIOS: show running-config | section ^radius server
+2026-03-19 11:41:57,021 - myframework - INFO - RADIUS server server-automation-ipv4-177-66 already exists on 10.16.128.21
+2026-03-19 11:41:57,022 - myframework - INFO - Starting RADIUS Configuration steps 3/6: RADIUS group
+2026-03-19 11:41:57,022 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-19 11:41:58,619 - myframework - INFO - Command output:
+2026-03-19 11:41:58,619 - myframework - INFO -   aaa group server radius group-automation
+2026-03-19 11:41:58,620 - myframework - INFO -    server name server-automation-ipv4-177-66
+2026-03-19 11:41:58,620 - myframework - INFO -    deadtime 3
+2026-03-19 11:41:58,620 - myframework - INFO - RADIUS group group-automation already exists on 10.16.128.21
+2026-03-19 11:41:58,620 - myframework - INFO - Starting RADIUS Configuration steps 4/6: AAA authentication
+2026-03-19 11:41:58,620 - myframework - INFO - Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-19 11:42:00,279 - myframework - INFO - Command output:
+2026-03-19 11:42:00,279 - myframework - INFO -   aaa authentication dot1x default group group-automation
+2026-03-19 11:42:00,279 - myframework - INFO -   aaa authorization network default group group-automation 
+2026-03-19 11:42:00,279 - myframework - INFO -   aaa accounting dot1x default start-stop group group-automation
+2026-03-19 11:42:00,279 - myframework - INFO - AAA already exists with group group-automation on 10.16.128.21
+2026-03-19 11:42:00,279 - myframework - INFO - Starting RADIUS Configuration steps 5/6: RADIUS CoA (dynamic-author) client
+2026-03-19 11:42:00,280 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa server radius dynamic-author
+2026-03-19 11:42:01,851 - myframework - INFO - Command output:
+2026-03-19 11:42:01,851 - myframework - INFO -   aaa server radius dynamic-author
+2026-03-19 11:42:01,851 - myframework - INFO -    client FD6F:9D5E:221E:1823::73 server-key aristo
+2026-03-19 11:42:01,851 - myframework - INFO -    client 10.100.49.69 server-key aristo
+2026-03-19 11:42:01,851 - myframework - INFO -    client 10.16.177.66 server-key aristo
+2026-03-19 11:42:01,865 - myframework - INFO - RADIUS dynamic-author client 10.16.177.66 already configured with same secret on 10.16.128.21
+2026-03-19 11:42:01,865 - myframework - INFO - Starting RADIUS Configuration steps 6/6: dot1x on port FastEthernet0/1
+2026-03-19 11:42:01,865 - myframework - INFO - Executing command on CiscoIOS: show run | section ^interface FastEthernet0/1$
+2026-03-19 11:42:03,396 - myframework - INFO - Command output:
+2026-03-19 11:42:03,396 - myframework - INFO -   interface FastEthernet0/1
+2026-03-19 11:42:03,396 - myframework - INFO -    switchport access vlan 1688
+2026-03-19 11:42:03,396 - myframework - INFO -    switchport mode access
+2026-03-19 11:42:03,396 - myframework - INFO -    authentication port-control auto
+2026-03-19 11:42:03,396 - myframework - INFO -    authentication periodic
+2026-03-19 11:42:03,396 - myframework - INFO -    snmp trap mac-notification change added
+2026-03-19 11:42:03,396 - myframework - INFO -    snmp trap mac-notification change removed
+2026-03-19 11:42:03,396 - myframework - INFO -    dot1x pae authenticator
+2026-03-19 11:42:03,397 - myframework - INFO -    spanning-tree portfast
+2026-03-19 11:42:03,397 - myframework - INFO - Port FastEthernet0/1 already configured on Cisco switch 10.16.128.21
+2026-03-19 11:42:03,397 - myframework - INFO - Successfully setup all RADIUS configuration on Cisco switch 10.16.128.21
+2026-03-19 11:42:03,397 - myframework - INFO - Cleaning up all test certificates from Windows stores...
+2026-03-19 11:42:03,397 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; 
+$deleted = @()
+foreach ($store in @("My", "Root")) {
+    $certs = Get-ChildItem -Path Cert:\LocalMachine\$store | Where-Object { $_.Subject -like "*testdecodeA*" -or $_.Subject -like "*clientcert*" -or $_.Subject -like "*Dot1x-CLT-A*" -or $_.Subject -like "*Dot1x-CLT-B*" -or $_.Subject -like "*Dot1x-CLT-C*" -or $_.Subject -like "*Dot1x-CLT-D*" -or $_.Subject -like "*Dot1x-CLT-E*" -or $_.Subject -like "*Dot1x-CLT-F*" -or $_.Subject -like "*Dot1x-CLT-G*" -or $_.Subject -like "*Dot1xMSCA-CLT-A*" -or $_.Subject -like "*Dot1xMSCA-CLT-B*" -or $_.Subject -like "*Dot1xMSCA-CLT-C*" -or $_.Subject -like "*Dot1xMSCA-CLT-D*" -or $_.Subject -like "*Dot1xMSCA-CLT-E*" -or $_.Subject -like "*Dot1xMSCA-CLT-F*" -or $_.Subject -like "*Dot1xMSCA-CLT-G*" -or $_.Subject -like "*Dot1x-CLT-Expired*" -or $_.Subject -like "*Dot1x-CLT-Time*" -or $_.Subject -like "*Dot1x-CLT-Revoked*" -or $_.Subject -like "*Dot1x-CLT-Good*" -or $_.Subject -like "*Dot1x-CA*" -or $_.Subject -like "*Dot1xMSCA-CA*" }
+    foreach ($cert in $certs) {
+        Remove-Item -Path $cert.PSPath -Force
+        $deleted += "Deleted: $($cert.Subject) from $store"
+    }
+}
+if ($deleted.Count -gt 0) { $deleted -join "`n" } else { "No test certificates found" }
+
+2026-03-19 11:42:05,370 - myframework - INFO - Test certificates cleanup completed
+2026-03-19 11:42:05,370 - myframework - INFO - NIC: pciPassthru0
+2026-03-19 11:42:05,370 - myframework - INFO - 
+================================================================================Running test: EAPTLSPreAdmissionSANTest=================================================================================
+
+2026-03-19 11:42:05,370 - myframework - INFO - Configuring LAN profile (builder) on 10.6.129.140
+2026-03-19 11:42:05,384 - myframework - INFO - Copying /tmp/tmpg5daxvat.xml to C:\Profiles\lan_profile.xml
+2026-03-19 11:42:05,384 - myframework - INFO - File size: 2162 bytes
+2026-03-19 11:42:05,384 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Profiles' -ItemType Directory -Force | Out-Null
+2026-03-19 11:42:06,018 - myframework - INFO - Created directory: C:\Profiles
+2026-03-19 11:42:06,019 - myframework - INFO - Using pypsrp native file transfer
+2026-03-19 11:42:07,441 - myframework - INFO - Successfully copied /tmp/tmpg5daxvat.xml to C:\Profiles\lan_profile.xml
+2026-03-19 11:42:07,441 - myframework - INFO - Deleting LAN profile from interface: pciPassthru0
+2026-03-19 11:42:07,441 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan delete profile interface="pciPassthru0"
+2026-03-19 11:42:06,023 - myframework - INFO - [OK] LAN profile deleted from pciPassthru0
+2026-03-19 11:42:06,023 - myframework - INFO - Adding LAN profile to interface: pciPassthru0
+2026-03-19 11:42:06,023 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan add profile filename="C:\Profiles\lan_profile.xml" interface="pciPassthru0"
+2026-03-19 11:42:06,524 - myframework - ERROR - [T1316924] FAIL: Command failed (code=1)
+STDOUT:
+There is no such interface on the system.
+STDERR:
+<empty>
+COMMAND:
+netsh lan add profile filename="C:\Profiles\lan_profile.xml" interface="pciPassthru0"
+2026-03-19 11:42:06,524 - myframework - ERROR - 
+=============================================================================Test Failed: EAPTLSPreAdmissionSANTest Failed==============================================================================
+
+2026-03-19 11:42:06,524 - myframework - ERROR - Error: Command failed (code=1)
+STDOUT:
+There is no such interface on the system.
+STDERR:
+<empty>
+COMMAND:
+netsh lan add profile filename="C:\Profiles\lan_profile.xml" interface="pciPassthru0"
+2026-03-19 11:42:06,524 - myframework - INFO - === EAP-TLS Test Teardown ===
+2026-03-19 11:42:06,524 - myframework - INFO - Removing certificates...
+2026-03-19 11:42:06,524 - myframework - INFO - Certificates removed
+2026-03-19 11:42:06,524 - myframework - INFO - radius common teardown
+2026-03-19 11:42:06,525 - myframework - INFO - 
+=========================================================================================Running Suite Teardown=========================================================================================
+
+2026-03-19 11:42:06,525 - myframework - INFO - teardown radius suite
+2026-03-19 11:42:06,525 - myframework - INFO - Starting RADIUS teardown on port FastEthernet0/1 for Cisco ios switch 10.16.128.21
+2026-03-19 11:42:06,525 - myframework - INFO - Starting RADIUS teardown steps 1/5: dot1x on port FastEthernet0/1
+2026-03-19 11:42:06,525 - myframework - INFO - Executing command on CiscoIOS: ['interface FastEthernet0/1', 'no mab', 'dot1x pae authenticator']
+2026-03-19 11:42:06,858 - myframework - INFO - Command output:
+2026-03-19 11:42:06,858 - myframework - INFO -   Cisco_3560_Automation#configure terminal
+2026-03-19 11:42:06,858 - myframework - INFO -   Enter configuration commands, one per line.  End with CNTL/Z.
+2026-03-19 11:42:06,859 - myframework - INFO -   Cisco_3560_Automatio(config)#interface FastEthernet0/1
+2026-03-19 11:42:06,859 - myframework - INFO -   Cisco_3560_Automatio(config-if)#no mab
+2026-03-19 11:42:06,859 - myframework - INFO -   Cisco_3560_Automatio(config-if)#dot1x pae authenticator
+2026-03-19 11:42:06,859 - myframework - INFO -   Cisco_3560_Automatio(config-if)#end
+2026-03-19 11:42:06,859 - myframework - INFO -   Cisco_3560_Automation#
+2026-03-19 11:42:06,859 - myframework - INFO - Succeed to teardown port config on FastEthernet0/1 on Cisco switch 10.16.128.21
+2026-03-19 11:42:06,859 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa server radius dynamic-author
+2026-03-19 11:42:08,486 - myframework - INFO - Command output:
+2026-03-19 11:42:08,486 - myframework - INFO -   aaa server radius dynamic-author
+2026-03-19 11:42:08,486 - myframework - INFO -    client FD6F:9D5E:221E:1823::73 server-key aristo
+2026-03-19 11:42:08,487 - myframework - INFO -    client 10.100.49.69 server-key aristo
+2026-03-19 11:42:08,487 - myframework - INFO -    client 10.16.177.66 server-key aristo
+2026-03-19 11:42:08,487 - myframework - INFO - Preserving RADIUS dynamic-author client 10.16.177.66 as it existed before setup, skipping teardown
+2026-03-19 11:42:08,487 - myframework - INFO - Starting RADIUS teardown steps 3/5: AAA authentication
+2026-03-19 11:42:08,487 - myframework - INFO - Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-19 11:42:10,006 - myframework - INFO - Command output:
+2026-03-19 11:42:10,006 - myframework - INFO -   aaa authentication dot1x default group group-automation
+2026-03-19 11:42:10,006 - myframework - INFO -   aaa authorization network default group group-automation 
+2026-03-19 11:42:10,006 - myframework - INFO -   aaa accounting dot1x default start-stop group group-automation
+2026-03-19 11:42:10,006 - myframework - INFO - AAA was already configured with group group-automation before setup, skipping teardown
+2026-03-19 11:42:10,006 - myframework - INFO - Starting RADIUS teardown steps 4/5: RADIUS group
+2026-03-19 11:42:10,006 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-19 11:42:11,527 - myframework - INFO - Command output:
+2026-03-19 11:42:11,527 - myframework - INFO -   aaa group server radius group-automation
+2026-03-19 11:42:11,527 - myframework - INFO -    server name server-automation-ipv4-177-66
+2026-03-19 11:42:11,527 - myframework - INFO -    deadtime 3
+2026-03-19 11:42:11,527 - myframework - INFO - RADIUS group group-automation was configured on 10.16.128.21 before setup, skipping teardown
+2026-03-19 11:42:11,527 - myframework - INFO - Starting RADIUS teardown steps 5/5: RADIUS server
+2026-03-19 11:42:11,527 - myframework - INFO - Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-66
+2026-03-19 11:42:13,260 - myframework - INFO - Command output:
+2026-03-19 11:42:13,260 - myframework - INFO -   radius server server-automation-ipv4-177-66
+2026-03-19 11:42:13,260 - myframework - INFO -    address ipv4 10.16.177.66 auth-port 1812 acct-port 1813
+2026-03-19 11:42:13,260 - myframework - INFO -    key aristo
+2026-03-19 11:42:13,260 - myframework - INFO - RADIUS server server-automation-ipv4-177-66 was configured on 10.16.128.21 before setup, skipping teardown
+2026-03-19 11:42:13,260 - myframework - INFO - Successfully teardown all RADIUS configuration on Cisco switch 10.16.128.21
+2026-03-19 11:42:13,260 - myframework - INFO - Closing all connections

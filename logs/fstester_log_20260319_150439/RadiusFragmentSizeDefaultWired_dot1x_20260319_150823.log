@@ -1,0 +1,112 @@
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:13962:1773950904.867207:Thu Mar 19 15:08:24 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <failcheck>Timer failcheck/failcheck=HASH(0xb1cb9e8) timeout in 1773950903, Now=1773950904
+dot1x:13962:1773950904.868693:Thu Mar 19 15:08:24 2026: main::dot1x_set_timer:2866:[Timers]::5: <failcheck>Set Timer failcheck/failcheck=HASH(0xb2a9798): Reschedule failcheck
+dot1x:13962:1773950904.869372:Thu Mar 19 15:08:24 2026: main::dot1x_handle_timer:2680:[Timers]::1: <failcheck>[3 / 3] remaining attempts to recheck AD sources failed.
+dot1x:13962:1773950904.869777:Thu Mar 19 15:08:24 2026: main::dot1x_handle_timer:2682:[Timers]::1: <failcheck>Testing failed configurations.
+dot1x:13962:1773950904.870368:Thu Mar 19 15:08:24 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <initially_unavailable>Timer initially_unavailable/initially_unavailable=HASH(0x97ae248) timeout in 1773950903, Now=1773950904
+dot1x:13962:1773950904.870922:Thu Mar 19 15:08:24 2026: main::dot1x_set_timer:2866:[Timers]::5: <initially_unavailable>Set Timer initially_unavailable/initially_unavailable=HASH(0xb291e50): Reschedule init unavailable check
+dot1x:13962:1773950904.871244:Thu Mar 19 15:08:24 2026: main::dot1x_handle_timer:2731:[Timers]::1: <initially_unavailable>[1 / 2] remaining attempts to recheck AD sources that failed init.
+dot1x:13962:1773950904.871708:Thu Mar 19 15:08:24 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:13962:1773950906.724340:Thu Mar 19 15:08:26 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-19 15:08:24",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 10,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 10,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      },
+      "rule_3" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Thu Mar 19 15:07:53 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]",
+      "rule_3" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:13962:1773950907.729512:Thu Mar 19 15:08:27 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xb1b5a80) timeout in 1773950906, Now=1773950907
+dot1x:13962:1773950907.729738:Thu Mar 19 15:08:27 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xb26d4b8): Reschedule gatekeeper
+dot1x:13962:1773950907.729914:Thu Mar 19 15:08:27 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xb208718) timeout in 1773950906, Now=1773950907
+dot1x:13962:1773950907.730082:Thu Mar 19 15:08:27 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xb0bb0e8): Reschedule housekeep
+dot1x:13962:1773950907.730190:Thu Mar 19 15:08:27 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[3 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:13962:1773950907.730287:Thu Mar 19 15:08:27 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:13962:1773950909.975783:Thu Mar 19 15:08:29 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-19 15:08:27",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 10,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 10,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      },
+      "rule_3" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Thu Mar 19 15:07:53 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]",
+      "rule_3" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
