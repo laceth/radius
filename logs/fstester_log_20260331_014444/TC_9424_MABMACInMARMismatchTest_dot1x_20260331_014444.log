@@ -1,0 +1,664 @@
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:20908:1774939473.662573:Tue Mar 31 01:44:33 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939473
+AuthStatus 'Access-Reject:'
+dot1x:20908:1774939473.663558:Tue Mar 31 01:44:33 2026: main::dot1x_update_authentication_props:3394:[fr-update]::0: <98f2b301a055|usr=98f2b301a055>Logon Failure: Rejected user 98f2b301a055: Active Directory Accept
+dot1x:20908:1774939473.666978:Tue Mar 31 01:44:33 2026: [98f2b301a055/ntlmpl/98f2b301a055] 98f2b301a055 Failed Auth(dot1x_host_log:385)
+dot1x:20908:1774939473.669198:Tue Mar 31 01:44:33 2026: main::dot1x_fetchMar:2230:[ntlmpl]::0: <98f2b301a055|usr=98f2b301a055>no MAR entry for 98f2b301a055!
+dot1x:20908:1774939504.485050:Tue Mar 31 01:45:04 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939504
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:20908:1774939504.491695:Tue Mar 31 01:45:04 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939504
+AuthStatus 'Access-Reject:'
+dot1x:20908:1774939504.492429:Tue Mar 31 01:45:04 2026: main::dot1x_update_authentication_props:3394:[fr-update]::0: <98f2b301a055|usr=98f2b301a055>Logon Failure: Rejected user 98f2b301a055: 
+dot1x:20908:1774939504.494353:Tue Mar 31 01:45:04 2026: [98f2b301a055/ntlmpl/98f2b301a055] 98f2b301a055 Failed Auth(dot1x_host_log:385)
+dot1x:20908:1774939504.496560:Tue Mar 31 01:45:04 2026: main::dot1x_fetchMar:2230:[ntlmpl]::0: <98f2b301a055|usr=98f2b301a055>no MAR entry for 98f2b301a055!
+dot1x:20908:1774939509.258135:Tue Mar 31 01:45:09 2026: In plugin_usocket
+dot1x:20908:1774939509.258254:Tue Mar 31 01:45:09 2026: Got message stop_stop
+dot1x:20908:1774939509.258448:Tue Mar 31 01:45:09 2026: Stopping winbind...
+dot1x:20908:1774939509.258511:Tue Mar 31 01:45:09 2026: Stopping bundled Free-Radius...
+dot1x:20908:1774939513.525159:Tue Mar 31 01:45:13 2026: flushing Redis DB...
+dot1x:20908:1774939513.534510:Tue Mar 31 01:45:13 2026: Handling stop message stop_stop
+dot1x:20908:1774939513.534761:Tue Mar 31 01:45:13 2026: Plugin stopped
+dot1x:1106:1774939515.375451:Tue Mar 31 01:45:15 CDT -0500 2026: Started: version: 4.8.6-48060050 1770406166 (id: dot1x-0.520559197466241)
+dot1x:1106:1774939515.527004:Tue Mar 31 01:45:15 2026: main::cb_1x_ready:1136:[other]::0: ===== Started; Policy-Enabled=1 =====
+dot1x:1106:1774939515.532517:Tue Mar 31 01:45:15 2026: mar module has started. listening...(open_child_process:5825)
+dot1x:1106:1774939516.539383:Tue Mar 31 01:45:16 2026: disconnect module has started. listening...(open_child_process:5825)
+dot1x:1106:1774939522.110609:Tue Mar 31 01:45:22 2026: main::dot1x_configure:892:[other]::0: Loading complete (for 0 proxies)
+dot1x:1106:1774939522.284387:Tue Mar 31 01:45:22 2026: Adding <TXQALAB.FORESCOUT.LOCAL> to krb5.conf file, DC: <10.100.127.1>(dot1x_generate_krb5_conf_file:7597)
+dot1x:1106:1774939522.285067:Tue Mar 31 01:45:22 2026: Wrote krb5 conf file: /usr/local/forescout/plugin/dot1x/fs_radius/etc/krb5.conf.fr.all(dot1x_generate_krb5_conf_file:7629)
+dot1x:1106:1774939522.322415:Tue Mar 31 01:45:22 2026: cmd=echo stub | sudo fstool dot1x_net ads testjoin -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab(fs_radius_test_ads_join:199)
+dot1x:1106:1774939522.673018:Tue Mar 31 01:45:22 2026: test_ads_join returned: Join is OK(dot1x_start_winbind:7470)
+dot1x:1106:1774939522.673318:Tue Mar 31 01:45:22 2026: Started winbind for [txqalab-dc1], smb domain: [txqalab], args: [/usr/local/forescout/plugin/dot1x/fs_radius -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab], restart: [](dot1x_start_winbind:7479)
+dot1x:1106:1774939528.451673:Tue Mar 31 01:45:28 2026: main::dot1x_configure:900:[other]::0: Loading complete (for 1 domains)
+dot1x:1106:1774939528.463259:Tue Mar 31 01:45:28 2026: main::dot1x_configure_edit_attr_filter:4026:[other]::0: Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:1106:1774939528.470718:Tue Mar 31 01:45:28 2026: main::dot1x_configure_edit_attr_filter:4046:[other]::0: Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:1106:1774939528.471136:Tue Mar 31 01:45:28 2026: main::dot1x_configure_upn2sam:4064:[other]::0: Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:1106:1774939528.471325:Tue Mar 31 01:45:28 2026: main::dot1x_configure_upn2sam:4125:[other]::0: Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:1106:1774939528.562267:Tue Mar 31 01:45:28 2026: No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:1106:1774939528.657885:Tue Mar 31 01:45:28 2026: Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'checked' => bless( do{\(my $o = 1)}, 'JSON::PP::Boolean' ),
+                                          'value' => 'true',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XBooleanCriterion',
+                                          'field' => 'MAC Found in MAR'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:1106:1774939540.523739:Tue Mar 31 01:45:40 2026: main::connect_to_fr:3776: setsockopt: ok=1
+dot1x:1106:1774939541.889293:Tue Mar 31 01:45:41 2026: Accepting connections on port 13065
+dot1x:1106:1774939544.275783:Tue Mar 31 01:45:44 2026: CounterACT Appliance connected
+dot1x:1106:1774939544.276559:Tue Mar 31 01:45:44 2026: main::cb_1x_connected:1188:[other]::0: Connected with the CU
+dot1x:1106:1774939545.640918:Tue Mar 31 01:45:45 2026: Memory usage: 46120960 bytes
+dot1x:1106:1774939545.671592:Tue Mar 31 01:45:45 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 1118 Tue Mar 31 01:45:14 2026       00:31 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 1142 Tue Mar 31 01:45:15 2026       00:30 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 1253 Tue Mar 31 01:45:17 2026       00:28 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 1690 Tue Mar 31 01:45:27 2026       00:18 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 1693 Tue Mar 31 01:45:27 2026       00:18 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 2166 Tue Mar 31 01:45:33 2026       00:12 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 2169 Tue Mar 31 01:45:33 2026       00:12 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+ 3493 Wed Mar 18 12:17:05 2026 12-13:28:40 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:28:40 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+dot1x:1106:1774939545.671853:Tue Mar 31 01:45:45 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:1106:1774939545.704160:Tue Mar 31 01:45:45 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 1118 Tue Mar 31 01:45:14 2026       00:31 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 1142 Tue Mar 31 01:45:15 2026       00:30 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 1253 Tue Mar 31 01:45:17 2026       00:28 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 1690 Tue Mar 31 01:45:27 2026       00:18 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 1693 Tue Mar 31 01:45:27 2026       00:18 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 2166 Tue Mar 31 01:45:33 2026       00:12 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 2169 Tue Mar 31 01:45:33 2026       00:12 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+ 3493 Wed Mar 18 12:17:05 2026 12-13:28:40 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:28:40 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+dot1x:1106:1774939545.704419:Tue Mar 31 01:45:45 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:1106:1774939545.848977:Tue Mar 31 01:45:45 2026: Sending queued messages
+dot1x:1106:1774939546.016135:Tue Mar 31 01:45:46 2026: Error: Failure to connect during reconf for Authentication source: [txqalab-dc1](dot1x_reconf_ad:7883)
+dot1x:1106:1774939546.016401:Tue Mar 31 01:45:46 2026: main::dot1x_reconf_ad:7902:[other]::0: no relevant changes, do not restart radius server
+dot1x:1106:1774939546.017511:Tue Mar 31 01:45:46 2026: main::cb_1x_device_reload:1543:[other]::0: c_dbg_def MAR devices load result= MACs valid=2 invalid=0
+dot1x:1106:1774939546.019362:Tue Mar 31 01:45:46 2026: recv.plugin_call_netaction_new:4
+dot1x:1106:1774939546.151643:Tue Mar 31 01:45:46 2026: Restart FreeRadius due to not Nas(disconnect_cb:5934)
+dot1x:1106:1774939556.966520:Tue Mar 31 01:45:56 2026: Error: Cannot update field dot1x_reauth_method without csid ()(dot1x_reauth_err_msg:5921)
+dot1x:1106:1774939558.312349:Tue Mar 31 01:45:58 2026: Memory usage: 46276608 bytes
+dot1x:1106:1774939558.346517:Tue Mar 31 01:45:58 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 1118 Tue Mar 31 01:45:14 2026       00:43 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 1142 Tue Mar 31 01:45:15 2026       00:42 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 1253 Tue Mar 31 01:45:17 2026       00:40 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 1690 Tue Mar 31 01:45:27 2026       00:30 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 1693 Tue Mar 31 01:45:27 2026       00:30 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 2821 Tue Mar 31 01:45:50 2026       00:07 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 2823 Tue Mar 31 01:45:50 2026       00:07 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+ 3493 Wed Mar 18 12:17:05 2026 12-13:28:52 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:28:52 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+dot1x:1106:1774939558.346969:Tue Mar 31 01:45:58 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:1106:1774939558.419248:Tue Mar 31 01:45:58 2026: Error: Cannot update field dot1x_reauth_method without csid ()(dot1x_reauth_err_msg:5921)
+dot1x:1106:1774939565.672910:Tue Mar 31 01:46:05 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939564
+AssignedTo 'reject=dummy	'
+dot1x:1106:1774939565.673856:Tue Mar 31 01:46:05 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939564
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:1106:1774939565.675484:Tue Mar 31 01:46:05 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939564
+AuthStatus 'Access-Accept:default rule_1'
+dot1x:1106:1774939565.684875:Tue Mar 31 01:46:05 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939564
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:1106:1774939565.686599:Tue Mar 31 01:46:05 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939564
+AuthStatus 'Access-Reject:default rule_1'
+dot1x:1106:1774939565.687107:Tue Mar 31 01:46:05 2026: main::dot1x_update_authentication_props:3394:[fr-update]::0: <98f2b301a055|usr=98f2b301a055>Logon Failure: Rejected user 98f2b301a055: Active Directory Accept
+dot1x:1106:1774939565.688255:Tue Mar 31 01:46:05 2026: [98f2b301a055/ntlmpl/98f2b301a055] 98f2b301a055 Failed Auth(dot1x_host_log:385)
+dot1x:1106:1774939568.332592:Tue Mar 31 01:46:08 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 1118 Tue Mar 31 01:45:14 2026       00:53 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 1142 Tue Mar 31 01:45:15 2026       00:52 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 1253 Tue Mar 31 01:45:17 2026       00:50 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 1690 Tue Mar 31 01:45:27 2026       00:40 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 1693 Tue Mar 31 01:45:27 2026       00:40 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 2821 Tue Mar 31 01:45:50 2026       00:17 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 2823 Tue Mar 31 01:45:50 2026       00:17 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+ 3493 Wed Mar 18 12:17:05 2026 12-13:29:02 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:29:02 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+dot1x:1106:1774939568.332886:Tue Mar 31 01:46:08 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:1106:1774939568.334017:Tue Mar 31 01:46:08 2026: Memory usage: 46444544 bytes
+dot1x:1106:1774939568.441580:Tue Mar 31 01:46:08 2026: NAS update received at Tue Mar 31 01:46:08 2026(handle_nas_dev_update:6221)
+dot1x:1106:1774939568.441771:Tue Mar 31 01:46:08 2026: FreeRADIUS NAS Update recieved at Tue Mar 31 01:46:08 2026(handle_nas_dev_update:6230)
+dot1x:1106:1774939576.274755:Tue Mar 31 01:46:16 2026: 10(cb_1x_heartbeat:782)
+dot1x:1106:1774939588.677148:Tue Mar 31 01:46:28 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 1118 Tue Mar 31 01:45:14 2026       01:14 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 1142 Tue Mar 31 01:45:15 2026       01:13 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 1253 Tue Mar 31 01:45:17 2026       01:11 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 1690 Tue Mar 31 01:45:27 2026       01:01 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 1693 Tue Mar 31 01:45:27 2026       01:01 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 3493 Wed Mar 18 12:17:05 2026 12-13:29:23 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:29:23 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 3883 Tue Mar 31 01:46:20 2026       00:08 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 3885 Tue Mar 31 01:46:20 2026       00:08 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:1106:1774939588.677433:Tue Mar 31 01:46:28 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:1106:1774939596.249778:Tue Mar 31 01:46:36 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 1118 Tue Mar 31 01:45:14 2026       01:21 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 1142 Tue Mar 31 01:45:15 2026       01:20 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 1253 Tue Mar 31 01:45:17 2026       01:18 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 1690 Tue Mar 31 01:45:27 2026       01:08 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 1693 Tue Mar 31 01:45:27 2026       01:08 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 3493 Wed Mar 18 12:17:05 2026 12-13:29:30 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:29:30 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 3883 Tue Mar 31 01:46:20 2026       00:15 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 3885 Tue Mar 31 01:46:20 2026       00:15 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:1106:1774939596.249986:Tue Mar 31 01:46:36 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:1106:1774939609.957200:Tue Mar 31 01:46:49 2026: Memory usage: 47079424 bytes
+dot1x:1106:1774939610.085988:Tue Mar 31 01:46:50 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 1118 Tue Mar 31 01:45:14 2026       01:35 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 1142 Tue Mar 31 01:45:15 2026       01:34 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 1253 Tue Mar 31 01:45:17 2026       01:32 00:00:02 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 1690 Tue Mar 31 01:45:27 2026       01:22 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 1693 Tue Mar 31 01:45:27 2026       01:22 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 3493 Wed Mar 18 12:17:05 2026 12-13:29:44 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:29:44 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 3883 Tue Mar 31 01:46:20 2026       00:29 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 3885 Tue Mar 31 01:46:20 2026       00:29 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:1106:1774939610.086444:Tue Mar 31 01:46:50 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:1106:1774939621.445829:Tue Mar 31 01:47:01 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:1106:1774939621.452084:Tue Mar 31 01:47:01 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:1106:1774939621.452600:Tue Mar 31 01:47:01 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:1106:1774939621.452899:Tue Mar 31 01:47:01 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:1106:1774939621.544664:Tue Mar 31 01:47:01 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:1106:1774939621.693574:Tue Mar 31 01:47:01 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'checked' => bless( do{\(my $o = 1)}, 'JSON::PP::Boolean' ),
+                                          'value' => 'true',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XBooleanCriterion',
+                                          'field' => 'MAC Found in MAR'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:1106:1774939623.949652:Tue Mar 31 01:47:03 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 1118 Tue Mar 31 01:45:14 2026       01:49 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 1142 Tue Mar 31 01:45:15 2026       01:48 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 1253 Tue Mar 31 01:45:17 2026       01:46 00:00:02 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 1690 Tue Mar 31 01:45:27 2026       01:36 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 1693 Tue Mar 31 01:45:27 2026       01:36 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 3493 Wed Mar 18 12:17:05 2026 12-13:29:58 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:29:58 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 3883 Tue Mar 31 01:46:20 2026       00:43 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 3885 Tue Mar 31 01:46:20 2026       00:43 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:1106:1774939623.949905:Tue Mar 31 01:47:03 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:1106:1774939625.441967:Tue Mar 31 01:47:05 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939624
+AssignedTo 'reject=dummy	'
+dot1x:1106:1774939625.442820:Tue Mar 31 01:47:05 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939624
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:1106:1774939625.444296:Tue Mar 31 01:47:05 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939624
+AuthStatus 'Access-Accept:default rule_1'
+dot1x:1106:1774939625.457949:Tue Mar 31 01:47:05 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939624
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:1106:1774939625.460011:Tue Mar 31 01:47:05 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939624
+AuthStatus 'Access-Reject:default rule_1'
+dot1x:1106:1774939625.460566:Tue Mar 31 01:47:05 2026: main::dot1x_update_authentication_props:3394:[fr-update]::0: <98f2b301a055|usr=98f2b301a055>Logon Failure: Rejected user 98f2b301a055: Active Directory Accept
+dot1x:1106:1774939625.461679:Tue Mar 31 01:47:05 2026: [98f2b301a055/ntlmpl/98f2b301a055] 98f2b301a055 Failed Auth(dot1x_host_log:385)
+dot1x:1106:1774939637.872541:Tue Mar 31 01:47:17 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 1118 Tue Mar 31 01:45:14 2026       02:03 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 1142 Tue Mar 31 01:45:15 2026       02:02 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 1253 Tue Mar 31 01:45:17 2026       02:00 00:00:02 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 1690 Tue Mar 31 01:45:27 2026       01:50 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 1693 Tue Mar 31 01:45:27 2026       01:50 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 3493 Wed Mar 18 12:17:05 2026 12-13:30:12 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:30:12 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 3883 Tue Mar 31 01:46:20 2026       00:57 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 3885 Tue Mar 31 01:46:20 2026       00:57 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:1106:1774939637.872801:Tue Mar 31 01:47:17 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:1106:1774939654.081325:Tue Mar 31 01:47:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939654
+AssignedTo 'reject=dummy	'
+dot1x:1106:1774939654.082337:Tue Mar 31 01:47:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939654
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:1106:1774939654.084004:Tue Mar 31 01:47:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939654
+AuthStatus 'Access-Accept:default rule_1'
+dot1x:1106:1774939654.097157:Tue Mar 31 01:47:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939654
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:1106:1774939654.099480:Tue Mar 31 01:47:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939654
+AuthStatus 'Access-Reject:default rule_1'
+dot1x:1106:1774939654.100107:Tue Mar 31 01:47:34 2026: main::dot1x_update_authentication_props:3394:[fr-update]::0: <98f2b301a055|usr=98f2b301a055>Logon Failure: Rejected user 98f2b301a055: Active Directory Accept
+dot1x:1106:1774939654.101284:Tue Mar 31 01:47:34 2026: [98f2b301a055/ntlmpl/98f2b301a055] 98f2b301a055 Failed Auth(dot1x_host_log:385)
+dot1x:1106:1774939658.740250:Tue Mar 31 01:47:38 2026: In plugin_usocket
+dot1x:1106:1774939658.740384:Tue Mar 31 01:47:38 2026: Got message stop_stop
+dot1x:1106:1774939658.740592:Tue Mar 31 01:47:38 2026: Stopping winbind...
+dot1x:1106:1774939658.740678:Tue Mar 31 01:47:38 2026: Stopping bundled Free-Radius...
+dot1x:1106:1774939662.683122:Tue Mar 31 01:47:42 2026: flushing Redis DB...
+dot1x:1106:1774939662.717240:Tue Mar 31 01:47:42 2026: Handling stop message stop_stop
+dot1x:1106:1774939662.717671:Tue Mar 31 01:47:42 2026: Plugin stopped
+dot1x:6044:1774939664.542515:Tue Mar 31 01:47:44 CDT -0500 2026: Started: version: 4.8.6-48060050 1770406166 (id: dot1x-0.520559197466241)
+dot1x:6044:1774939664.679779:Tue Mar 31 01:47:44 2026: main::cb_1x_ready:1136:[other]::0: ===== Started; Policy-Enabled=1 =====
+dot1x:6044:1774939664.685411:Tue Mar 31 01:47:44 2026: mar module has started. listening...(open_child_process:5825)
+dot1x:6044:1774939665.672584:Tue Mar 31 01:47:45 2026: disconnect module has started. listening...(open_child_process:5825)
+dot1x:6044:1774939669.633580:Tue Mar 31 01:47:49 2026: main::dot1x_configure:892:[other]::0: Loading complete (for 0 proxies)
+dot1x:6044:1774939669.767223:Tue Mar 31 01:47:49 2026: Adding <TXQALAB.FORESCOUT.LOCAL> to krb5.conf file, DC: <10.100.127.1>(dot1x_generate_krb5_conf_file:7597)
+dot1x:6044:1774939669.767928:Tue Mar 31 01:47:49 2026: Wrote krb5 conf file: /usr/local/forescout/plugin/dot1x/fs_radius/etc/krb5.conf.fr.all(dot1x_generate_krb5_conf_file:7629)
+dot1x:6044:1774939669.795281:Tue Mar 31 01:47:49 2026: cmd=echo stub | sudo fstool dot1x_net ads testjoin -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab(fs_radius_test_ads_join:199)
+dot1x:6044:1774939669.952731:Tue Mar 31 01:47:49 2026: test_ads_join returned: Join is OK(dot1x_start_winbind:7470)
+dot1x:6044:1774939669.953092:Tue Mar 31 01:47:49 2026: Started winbind for [txqalab-dc1], smb domain: [txqalab], args: [/usr/local/forescout/plugin/dot1x/fs_radius -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab], restart: [](dot1x_start_winbind:7479)
+dot1x:6044:1774939675.527640:Tue Mar 31 01:47:55 2026: main::dot1x_configure:900:[other]::0: Loading complete (for 1 domains)
+dot1x:6044:1774939675.540088:Tue Mar 31 01:47:55 2026: main::dot1x_configure_edit_attr_filter:4026:[other]::0: Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:6044:1774939675.548609:Tue Mar 31 01:47:55 2026: main::dot1x_configure_edit_attr_filter:4046:[other]::0: Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:6044:1774939675.549076:Tue Mar 31 01:47:55 2026: main::dot1x_configure_upn2sam:4064:[other]::0: Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:6044:1774939675.549256:Tue Mar 31 01:47:55 2026: main::dot1x_configure_upn2sam:4125:[other]::0: Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:6044:1774939675.623834:Tue Mar 31 01:47:55 2026: No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:6044:1774939675.738432:Tue Mar 31 01:47:55 2026: Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'checked' => bless( do{\(my $o = 1)}, 'JSON::PP::Boolean' ),
+                                          'value' => 'true',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XBooleanCriterion',
+                                          'field' => 'MAC Found in MAR'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:6044:1774939687.741676:Tue Mar 31 01:48:07 2026: main::connect_to_fr:3776: setsockopt: ok=1
+dot1x:6044:1774939689.098857:Tue Mar 31 01:48:09 2026: Accepting connections on port 13065
+dot1x:6044:1774939693.410016:Tue Mar 31 01:48:13 2026: CounterACT Appliance connected
+dot1x:6044:1774939693.411372:Tue Mar 31 01:48:13 2026: main::cb_1x_connected:1188:[other]::0: Connected with the CU
+dot1x:6044:1774939694.721987:Tue Mar 31 01:48:14 2026: Memory usage: 46383104 bytes
+dot1x:6044:1774939694.753845:Tue Mar 31 01:48:14 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026 12-13:31:09 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:31:09 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6055 Tue Mar 31 01:47:44 2026       00:30 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6095 Tue Mar 31 01:47:45 2026       00:29 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6224 Tue Mar 31 01:47:46 2026       00:28 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6715 Tue Mar 31 01:47:54 2026       00:20 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6717 Tue Mar 31 01:47:54 2026       00:20 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 6999 Tue Mar 31 01:48:01 2026       00:13 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 7001 Tue Mar 31 01:48:01 2026       00:13 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6044:1774939694.754243:Tue Mar 31 01:48:14 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6044:1774939694.796226:Tue Mar 31 01:48:14 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026 12-13:31:09 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:31:09 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6055 Tue Mar 31 01:47:44 2026       00:30 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6095 Tue Mar 31 01:47:45 2026       00:29 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6224 Tue Mar 31 01:47:46 2026       00:28 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6715 Tue Mar 31 01:47:54 2026       00:20 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6717 Tue Mar 31 01:47:54 2026       00:20 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 6999 Tue Mar 31 01:48:01 2026       00:13 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 7001 Tue Mar 31 01:48:01 2026       00:13 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6044:1774939694.796399:Tue Mar 31 01:48:14 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6044:1774939694.937121:Tue Mar 31 01:48:14 2026: Sending queued messages
+dot1x:6044:1774939695.098366:Tue Mar 31 01:48:15 2026: Error: Failure to connect during reconf for Authentication source: [txqalab-dc1](dot1x_reconf_ad:7883)
+dot1x:6044:1774939695.098804:Tue Mar 31 01:48:15 2026: main::dot1x_reconf_ad:7902:[other]::0: no relevant changes, do not restart radius server
+dot1x:6044:1774939695.099882:Tue Mar 31 01:48:15 2026: main::cb_1x_device_reload:1543:[other]::0: c_dbg_def MAR devices load result= MACs valid=2 invalid=0
+dot1x:6044:1774939695.100900:Tue Mar 31 01:48:15 2026: recv.plugin_call_netaction_new:4
+dot1x:6044:1774939695.211285:Tue Mar 31 01:48:15 2026: Restart FreeRadius due to not Nas(disconnect_cb:5934)
+dot1x:6044:1774939706.153098:Tue Mar 31 01:48:26 2026: Error: Cannot update field dot1x_reauth_method without csid ()(dot1x_reauth_err_msg:5921)
+dot1x:6044:1774939707.504824:Tue Mar 31 01:48:27 2026: Memory usage: 46600192 bytes
+dot1x:6044:1774939707.539210:Tue Mar 31 01:48:27 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026 12-13:31:21 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:31:21 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6055 Tue Mar 31 01:47:44 2026       00:42 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6095 Tue Mar 31 01:47:45 2026       00:41 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6224 Tue Mar 31 01:47:46 2026       00:40 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6715 Tue Mar 31 01:47:54 2026       00:32 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6717 Tue Mar 31 01:47:54 2026       00:32 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 7672 Tue Mar 31 01:48:19 2026       00:07 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 7674 Tue Mar 31 01:48:19 2026       00:07 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6044:1774939707.539563:Tue Mar 31 01:48:27 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6044:1774939707.568753:Tue Mar 31 01:48:27 2026: Error: Cannot update field dot1x_reauth_method without csid ()(dot1x_reauth_err_msg:5921)
+dot1x:6044:1774939714.626681:Tue Mar 31 01:48:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939714
+AssignedTo ''
+dot1x:6044:1774939714.627794:Tue Mar 31 01:48:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939714
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:6044:1774939714.629256:Tue Mar 31 01:48:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939714
+AuthStatus 'Access-Accept:default rule_1'
+dot1x:6044:1774939714.637242:Tue Mar 31 01:48:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939714
+Cisco-AVPair ''
+!
+dot1x:6044:1774939714.644988:Tue Mar 31 01:48:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939714
+Auth-Type 'Accept'
+!
+dot1x:6044:1774939715.521157:Tue Mar 31 01:48:35 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939715
+AcctSid '00000D4C'
+!
+dot1x:6044:1774939715.524673:Tue Mar 31 01:48:35 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939715
+Framed-IP-Address ''
+dot1x:6044:1774939717.034931:Tue Mar 31 01:48:37 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026 12-13:31:31 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:31:31 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6055 Tue Mar 31 01:47:44 2026       00:52 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6095 Tue Mar 31 01:47:45 2026       00:51 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6224 Tue Mar 31 01:47:46 2026       00:50 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6715 Tue Mar 31 01:47:54 2026       00:42 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6717 Tue Mar 31 01:47:54 2026       00:42 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 7672 Tue Mar 31 01:48:19 2026       00:17 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 7674 Tue Mar 31 01:48:19 2026       00:17 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6044:1774939717.035251:Tue Mar 31 01:48:37 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6044:1774939717.506539:Tue Mar 31 01:48:37 2026: Memory usage: 46768128 bytes
+dot1x:6044:1774939717.592988:Tue Mar 31 01:48:37 2026: NAS update received at Tue Mar 31 01:48:37 2026(handle_nas_dev_update:6221)
+dot1x:6044:1774939717.593182:Tue Mar 31 01:48:37 2026: FreeRADIUS NAS Update recieved at Tue Mar 31 01:48:37 2026(handle_nas_dev_update:6230)
+dot1x:6044:1774939725.162993:Tue Mar 31 01:48:45 2026: 10(cb_1x_heartbeat:782)
+dot1x:6044:1774939737.658696:Tue Mar 31 01:48:57 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026 12-13:31:51 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:31:51 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6055 Tue Mar 31 01:47:44 2026       01:12 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6095 Tue Mar 31 01:47:45 2026       01:11 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6224 Tue Mar 31 01:47:46 2026       01:10 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6715 Tue Mar 31 01:47:54 2026       01:02 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6717 Tue Mar 31 01:47:54 2026       01:02 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 8438 Tue Mar 31 01:48:49 2026       00:07 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 8440 Tue Mar 31 01:48:49 2026       00:07 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6044:1774939737.658885:Tue Mar 31 01:48:57 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6044:1774939744.881464:Tue Mar 31 01:49:04 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026 12-13:31:59 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:31:59 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6055 Tue Mar 31 01:47:44 2026       01:20 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6095 Tue Mar 31 01:47:45 2026       01:19 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6224 Tue Mar 31 01:47:46 2026       01:18 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6715 Tue Mar 31 01:47:54 2026       01:10 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6717 Tue Mar 31 01:47:54 2026       01:10 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 8438 Tue Mar 31 01:48:49 2026       00:15 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 8440 Tue Mar 31 01:48:49 2026       00:15 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6044:1774939744.881698:Tue Mar 31 01:49:04 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6044:1774939757.553958:Tue Mar 31 01:49:17 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026 12-13:32:11 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:32:11 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6055 Tue Mar 31 01:47:44 2026       01:32 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6095 Tue Mar 31 01:47:45 2026       01:31 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6224 Tue Mar 31 01:47:46 2026       01:30 00:00:02 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6715 Tue Mar 31 01:47:54 2026       01:22 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6717 Tue Mar 31 01:47:54 2026       01:22 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 8438 Tue Mar 31 01:48:49 2026       00:27 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 8440 Tue Mar 31 01:48:49 2026       00:27 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6044:1774939757.554177:Tue Mar 31 01:49:17 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6044:1774939757.623477:Tue Mar 31 01:49:17 2026: Memory usage: 47271936 bytes
+checking the NETLOGON for domain[TXQALAB] dc connection to "txqalab-dc1.txqalab.forescout.local" succeeded
+dot1x:6044:1774939773.140982:Tue Mar 31 01:49:33 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:6044:1774939773.150404:Tue Mar 31 01:49:33 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:6044:1774939773.151175:Tue Mar 31 01:49:33 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:6044:1774939773.151485:Tue Mar 31 01:49:33 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:6044:1774939773.246734:Tue Mar 31 01:49:33 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:6044:1774939773.344521:Tue Mar 31 01:49:33 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'checked' => bless( do{\(my $o = 1)}, 'JSON::PP::Boolean' ),
+                                          'value' => 'true',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XBooleanCriterion',
+                                          'field' => 'MAC Found in MAR'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:6044:1774939774.787094:Tue Mar 31 01:49:34 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026 12-13:32:29 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:32:29 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6055 Tue Mar 31 01:47:44 2026       01:50 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6095 Tue Mar 31 01:47:45 2026       01:49 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6224 Tue Mar 31 01:47:46 2026       01:48 00:00:02 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6715 Tue Mar 31 01:47:54 2026       01:40 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6717 Tue Mar 31 01:47:54 2026       01:40 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 8438 Tue Mar 31 01:48:49 2026       00:45 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 8440 Tue Mar 31 01:48:49 2026       00:45 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6044:1774939774.787310:Tue Mar 31 01:49:34 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6044:1774939785.216513:Tue Mar 31 01:49:45 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026 12-13:32:39 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026 12-13:32:39 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+ 6055 Tue Mar 31 01:47:44 2026       02:00 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+ 6095 Tue Mar 31 01:47:45 2026       01:59 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+ 6224 Tue Mar 31 01:47:46 2026       01:58 00:00:02 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+ 6715 Tue Mar 31 01:47:54 2026       01:50 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+ 6717 Tue Mar 31 01:47:54 2026       01:50 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+ 8438 Tue Mar 31 01:48:49 2026       00:55 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+ 8440 Tue Mar 31 01:48:49 2026       00:55 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:6044:1774939785.216740:Tue Mar 31 01:49:45 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:6044:1774939789.176103:Tue Mar 31 01:49:49 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939788
+AcctSid '00000D4C'
+!
+dot1x:6044:1774939789.177538:Tue Mar 31 01:49:49 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939788
+AcctStatusType 'Stop'
+!
+dot1x:6044:1774939801.313940:Tue Mar 31 01:50:01 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939801
+AssignedTo ''
+dot1x:6044:1774939801.316000:Tue Mar 31 01:50:01 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939801
+NASPort '50001'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.21'
+CalledSid '00-1E-79-A9-7F-03'
+UserName '98f2b301a055'
+NASPortIdStr 'FastEthernet0/1'
+dot1x:6044:1774939801.319590:Tue Mar 31 01:50:01 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939801
+AuthStatus 'Access-Accept:default rule_1'
+dot1x:6044:1774939801.332861:Tue Mar 31 01:50:01 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939801
+Cisco-AVPair ''
+!
+dot1x:6044:1774939801.333941:Tue Mar 31 01:50:01 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939801
+Auth-Type 'Accept'
+!
+dot1x:6044:1774939802.043062:Tue Mar 31 01:50:02 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939802
+AcctSid '00000D4E'
+!
+dot1x:6044:1774939802.045633:Tue Mar 31 01:50:02 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774939802
+Framed-IP-Address ''

@@ -1,0 +1,410 @@
+2026-03-31 02:15:07,582 - myframework - INFO - 
+==========================================================================================Running Suite Setup===========================================================================================
+
+2026-03-31 02:15:07,582 - myframework - INFO - set up radius test suite
+2026-03-31 02:15:07,582 - myframework - INFO - === MAB Test Setup ===
+2026-03-31 02:15:07,582 - myframework - INFO - Starting collecting logs from 10.16.177.66 for log file: /usr/local/forescout/log/plugin/dot1x/dot1x.log
+2026-03-31 02:15:07,582 - myframework - INFO - Starting collecting logs from 10.16.177.66 for log file: /usr/local/forescout/log/plugin/dot1x/radiusd.log
+2026-03-31 02:15:07,582 - myframework - INFO - Test start time: 2026-03-31 02:15:07.582857
+2026-03-31 02:15:07,582 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.66
+2026-03-31 02:15:08,727 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.min_tls_version.value already set to 'v1_2', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.fragment_size.value already set to '1024', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-31 02:15:08,727 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-31 02:15:08,727 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-31 02:15:08,727 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-31 02:15:08,727 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-31 02:15:08,727 - myframework - INFO - Starting endpoint cleanup for MAC: 98f2b301a055
+2026-03-31 02:15:08,967 - myframework - INFO - SSH connected to root@10.16.177.66
+2026-03-31 02:15:09,301 - myframework - INFO - Raw hostinfo output for MAC 98f2b301a055: 10.16.148.129, 1774941294,Tue Mar 31 02:14:54 CDT 2026, mac, 98f2b301a055, (dot1x@5290463614721804985 []), 0, 1774941171
+10.16.148.129, 1774941202,Tue Mar 31 02:13:22 CDT 2026, nc_ep_esg_by_mac, ???, (gen@5290463614721804985 []), no_plugin:ierr
+10.16.148.129, 1774941202,Tue Mar 31 02:13:22 CDT 2026, sw_duplicate_mac, ???, (sw@5290463614721804985 [sw]), sw_unknown_property_value:err
+2026-03-31 02:15:09,301 - myframework - INFO - Found 3 IP(s) for MAC 98f2b301a055: ['10.16.148.129', '10.16.148.129', '10.16.148.129']
+2026-03-31 02:15:09,301 - myframework - INFO - Found IP 10.16.148.129 for MAC 98f2b301a055 (preferred from 3 candidates)
+2026-03-31 02:15:09,301 - myframework - INFO - Endpoint IP: 10.16.148.129
+2026-03-31 02:15:09,520 - myframework - INFO - SSH connected to root@10.16.177.65
+2026-03-31 02:15:09,765 - myframework - WARNING - CA SSH error on attempt 1 (connection may have dropped), reconnecting: RuntimeError("Command 'fstool hostinfo 10.16.148.129 | grep 'host_id'' failed with exit code 1: ")
+2026-03-31 02:15:09,765 - myframework - INFO - [POOL] Evicted connection for key: 10.16.177.65
+2026-03-31 02:15:10,047 - myframework - INFO - SSH connected to root@10.16.177.65
+2026-03-31 02:15:10,268 - myframework - INFO - host_id not found, using IP 10.16.148.129 as identifier
+2026-03-31 02:15:10,269 - myframework - INFO - Deleting endpoint with ID: 10.16.148.129
+2026-03-31 02:15:13,351 - myframework - INFO - Endpoint 10.16.148.129 removed successfully
+2026-03-31 02:15:13,351 - myframework - INFO - Configuring switch for MAB authentication
+2026-03-31 02:15:13,352 - myframework - INFO - Starting RADIUS configuration on port FastEthernet0/1 for Cisco ios switch 10.16.128.21
+2026-03-31 02:15:13,352 - myframework - INFO - Starting RADIUS Configuration steps 1/6: dot1x system-auth-control
+2026-03-31 02:15:14,581 - myframework - INFO - Executing command on CiscoIOS: show running-config | inc dot1x
+2026-03-31 02:15:16,194 - myframework - INFO - dot1x system-auth-control already enabled on Cisco switch 10.16.128.21
+2026-03-31 02:15:16,194 - myframework - INFO - Starting RADIUS Configuration steps 2/6: RADIUS server
+2026-03-31 02:15:16,195 - myframework - INFO - Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-66
+2026-03-31 02:15:17,936 - myframework - INFO - Command output:
+2026-03-31 02:15:17,937 - myframework - INFO -   radius server server-automation-ipv4-177-66
+2026-03-31 02:15:17,937 - myframework - INFO -    address ipv4 10.16.177.66 auth-port 1812 acct-port 1813
+2026-03-31 02:15:17,937 - myframework - INFO -    key aristo
+2026-03-31 02:15:17,938 - myframework - INFO - Executing command on CiscoIOS: show running-config | section ^radius server
+2026-03-31 02:15:19,625 - myframework - INFO - RADIUS server server-automation-ipv4-177-66 already exists on 10.16.128.21
+2026-03-31 02:15:19,626 - myframework - INFO - Starting RADIUS Configuration steps 3/6: RADIUS group
+2026-03-31 02:15:19,626 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-31 02:15:20,515 - myframework - INFO - Command output:
+2026-03-31 02:15:20,516 - myframework - INFO -   aaa group server radius group-automation
+2026-03-31 02:15:20,516 - myframework - INFO -    server name server-automation-ipv4-177-66
+2026-03-31 02:15:20,516 - myframework - INFO -    deadtime 3
+2026-03-31 02:15:20,516 - myframework - INFO - RADIUS group group-automation already exists on 10.16.128.21
+2026-03-31 02:15:20,516 - myframework - INFO - Starting RADIUS Configuration steps 4/6: AAA authentication
+2026-03-31 02:15:20,516 - myframework - INFO - Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-31 02:15:22,271 - myframework - INFO - Command output:
+2026-03-31 02:15:22,271 - myframework - INFO -   aaa authentication dot1x default group group-automation
+2026-03-31 02:15:22,271 - myframework - INFO -   aaa authorization network default group group-automation 
+2026-03-31 02:15:22,271 - myframework - INFO -   aaa accounting dot1x default start-stop group group-automation
+2026-03-31 02:15:22,271 - myframework - INFO - AAA already exists with group group-automation on 10.16.128.21
+2026-03-31 02:15:22,272 - myframework - INFO - Starting RADIUS Configuration steps 5/6: RADIUS CoA (dynamic-author) client
+2026-03-31 02:15:22,272 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa server radius dynamic-author
+2026-03-31 02:15:23,997 - myframework - INFO - Command output:
+2026-03-31 02:15:23,998 - myframework - INFO -   aaa server radius dynamic-author
+2026-03-31 02:15:23,998 - myframework - INFO -    client FD6F:9D5E:221E:1823::73 server-key aristo
+2026-03-31 02:15:23,998 - myframework - INFO -    client 10.100.49.69 server-key aristo
+2026-03-31 02:15:23,998 - myframework - INFO -    client 10.16.177.66 server-key aristo
+2026-03-31 02:15:23,999 - myframework - INFO - RADIUS dynamic-author client 10.16.177.66 already configured with same secret on 10.16.128.21
+2026-03-31 02:15:24,000 - myframework - INFO - Starting RADIUS Configuration steps 6/6: MAB on port FastEthernet0/1
+2026-03-31 02:15:24,000 - myframework - INFO - Executing command on CiscoIOS: show run | section ^interface FastEthernet0/1$
+2026-03-31 02:15:25,693 - myframework - INFO - Command output:
+2026-03-31 02:15:25,694 - myframework - INFO -   interface FastEthernet0/1
+2026-03-31 02:15:25,694 - myframework - INFO -    switchport access vlan 1570
+2026-03-31 02:15:25,694 - myframework - INFO -    switchport mode access
+2026-03-31 02:15:25,694 - myframework - INFO -    authentication port-control auto
+2026-03-31 02:15:25,694 - myframework - INFO -    authentication periodic
+2026-03-31 02:15:25,694 - myframework - INFO -    snmp trap mac-notification change added
+2026-03-31 02:15:25,694 - myframework - INFO -    snmp trap mac-notification change removed
+2026-03-31 02:15:25,694 - myframework - INFO -    dot1x pae authenticator
+2026-03-31 02:15:25,694 - myframework - INFO -    spanning-tree portfast
+2026-03-31 02:15:25,695 - myframework - INFO - Executing command on CiscoIOS: ['interface FastEthernet0/1', 'mab', 'no dot1x pae authenticator']
+2026-03-31 02:15:26,132 - myframework - INFO - Command output:
+2026-03-31 02:15:26,133 - myframework - INFO -   Cisco_3560_Automation#configure terminal
+2026-03-31 02:15:26,133 - myframework - INFO -   Enter configuration commands, one per line.  End with CNTL/Z.
+2026-03-31 02:15:26,133 - myframework - INFO -   Cisco_3560_Automatio(config)#interface FastEthernet0/1
+2026-03-31 02:15:26,133 - myframework - INFO -   Cisco_3560_Automatio(config-if)#mab
+2026-03-31 02:15:26,133 - myframework - INFO -   Cisco_3560_Automatio(config-if)#no dot1x pae authenticator
+2026-03-31 02:15:26,133 - myframework - INFO -   Cisco_3560_Automatio(config-if)#end
+2026-03-31 02:15:26,133 - myframework - INFO -   Cisco_3560_Automation#
+2026-03-31 02:15:26,133 - myframework - INFO - Succeed to setup port config on FastEthernet0/1 on Cisco switch 10.16.128.21
+2026-03-31 02:15:26,133 - myframework - INFO - Successfully setup all RADIUS configuration on Cisco switch 10.16.128.21
+2026-03-31 02:15:26,133 - myframework - INFO - Configuring MAB LAN profile (802.1X disabled)
+2026-03-31 02:15:26,133 - myframework - INFO - Configuring LAN profile (builder) on 10.16.133.134
+2026-03-31 02:15:26,140 - myframework - INFO - Copying /tmp/tmpold1ws_e.xml to C:\Profiles\lan_profile.xml
+2026-03-31 02:15:26,140 - myframework - INFO - File size: 213 bytes
+2026-03-31 02:15:26,140 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; New-Item -Path 'C:\Profiles' -ItemType Directory -Force | Out-Null
+2026-03-31 02:15:26,725 - myframework - INFO - Created directory: C:\Profiles
+2026-03-31 02:15:26,726 - myframework - INFO - Using pypsrp native file transfer
+2026-03-31 02:15:27,427 - myframework - INFO - Successfully copied /tmp/tmpold1ws_e.xml to C:\Profiles\lan_profile.xml
+2026-03-31 02:15:27,428 - myframework - INFO - Deleting LAN profile from interface: pciPassthru0
+2026-03-31 02:15:27,428 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan delete profile interface="pciPassthru0"
+2026-03-31 02:15:27,801 - myframework - INFO - [OK] LAN profile deleted from pciPassthru0
+2026-03-31 02:15:27,802 - myframework - INFO - Adding LAN profile to interface: pciPassthru0
+2026-03-31 02:15:27,802 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan add profile filename="C:\Profiles\lan_profile.xml" interface="pciPassthru0"
+2026-03-31 02:15:28,226 - myframework - INFO - [OK] LAN profile added to pciPassthru0
+2026-03-31 02:15:28,227 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetAdapter -Name "pciPassthru0" -ErrorAction Stop).MacAddress
+2026-03-31 02:15:30,066 - myframework - INFO - NIC 'pciPassthru0' MAC address: 98-F2-B3-01-A0-55
+2026-03-31 02:15:30,067 - myframework - INFO - Test NIC MAC address: 98-F2-B3-01-A0-55
+2026-03-31 02:15:30,067 - myframework - INFO - 
+===============================================================================Running test: TC_9415_MABLargeMARTableTest===============================================================================
+
+2026-03-31 02:15:30,165 - myframework - INFO - Generated 10000 MAR entries to /tmp/mar_bulk_import_q1mk7317.csv
+2026-03-31 02:15:30,983 - myframework - INFO - Running bulk MAR script /tmp/fs_mar_bulk_import.pl (timeout=300s)
+2026-03-31 02:15:36,454 - myframework - INFO - Bulk MAR result: progress 200 (200 ok 0 fail)
+progress 400 (400 ok 0 fail)
+progress 600 (600 ok 0 fail)
+progress 800 (800 ok 0 fail)
+progress 1000 (1000 ok 0 fail)
+progress 1200 (1200 ok 0 fail)
+progress 1400 (1400 ok 0 fail)
+progress 1600 (1600 ok 0 fail)
+progress 1800 (1800 ok 0 fail)
+progress 2000 (2000 ok 0 fail)
+progress 2200 (2200 ok 0 fail)
+progress 2400 (2400 ok 0 fail)
+progress 2600 (2600 ok 0 fail)
+progress 2800 (2800 ok 0 fail)
+progress 3000 (3000 ok 0 fail)
+progress 3200 (3200 ok 0 fail)
+progress 3400 (3400 ok 0 fail)
+progress 3600 (3600 ok 0 fail)
+progress 3800 (3800 ok 0 fail)
+progress 4000 (4000 ok 0 fail)
+progress 4200 (4200 ok 0 fail)
+progress 4400 (4400 ok 0 fail)
+progress 4600 (4600 ok 0 fail)
+progress 4800 (4800 ok 0 fail)
+progress 5000 (5000 ok 0 fail)
+progress 5200 (5200 ok 0 fail)
+progress 5400 (5400 ok 0 fail)
+progress 5600 (5600 ok 0 fail)
+progress 5800 (5800 ok 0 fail)
+progress 6000 (6000 ok 0 fail)
+progress 6200 (6200 ok 0 fail)
+progress 6400 (6400 ok 0 fail)
+progress 6600 (6600 ok 0 fail)
+progress 6800 (6800 ok 0 fail)
+progress 7000 (7000 ok 0 fail)
+progress 7200 (7200 ok 0 fail)
+progress 7400 (7400 ok 0 fail)
+progress 7600 (7600 ok 0 fail)
+progress 7800 (7800 ok 0 fail)
+progress 8000 (8000 ok 0 fail)
+progress 8200 (8200 ok 0 fail)
+progress 8400 (8400 ok 0 fail)
+progress 8600 (8600 ok 0 fail)
+progress 8800 (8800 ok 0 fail)
+progress 9000 (9000 ok 0 fail)
+progress 9200 (9200 ok 0 fail)
+progress 9400 (9400 ok 0 fail)
+progress 9600 (9600 ok 0 fail)
+progress 9800 (9800 ok 0 fail)
+progress 10000 (10000 ok 0 fail)
+done ok=10000 fail=0 total=10000
+2026-03-31 02:15:36,731 - myframework - INFO - Bulk MAR import complete: 10000 entries submitted
+2026-03-31 02:15:36,731 - myframework - INFO - Setting pre-admission rules: 2 rule(s)
+2026-03-31 02:15:36,731 - myframework - INFO - Using multi-rule format with auth values
+2026-03-31 02:15:36,731 - myframework - INFO - Building pre-admission rules: 2 rule(s)
+2026-03-31 02:15:36,731 - myframework - INFO - Rule 1: condition=[{"field":"Authentication-Type","value":"MAB","critClass":"forescout.plugin.dot1x.default_policy.D1XComboStringCriterion","selected":"MAB"}]
+2026-03-31 02:15:36,731 - myframework - INFO - Rule 1: auth=vlan:	IsCOA:false
+2026-03-31 02:15:36,731 - myframework - INFO - Rule 2: condition=[{"filType":"any","input":"yalla","field":"User-Name","value":".*","critClass":"forescout.plugin.dot1x.default_policy.D1XStringCriterion"}]
+2026-03-31 02:15:36,731 - myframework - INFO - Rule 2: auth=reject=dummy
+2026-03-31 02:15:36,731 - myframework - INFO - Check 21 key-value pairs properties in /usr/local/forescout/plugin/dot1x/local.properties on 10.16.177.66
+2026-03-31 02:15:37,587 - myframework - INFO - No pre-admission rule changes detected for /usr/local/forescout/plugin/dot1x/local.properties
+2026-03-31 02:15:37,587 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-31 02:15:37,587 - myframework - INFO - Adding MAC '98-F2-B3-01-A0-55' to MAR via fstool devinfo on EM (auth=vlan:	IsCOA:false)
+2026-03-31 02:15:38,540 - myframework - INFO - MAR devinfo update result: Excuting command update for mar : 98f2b301a055
+Fields: dot1x_mac=98f2b301a055 dot1x_target_access=vlan:	IsCOA:false
+2026-03-31 02:15:38,541 - myframework - INFO - Getting MAR entry for MAC '98-F2-B3-01-A0-55' via fstool devinfo dump
+2026-03-31 02:15:39,254 - myframework - INFO - Found MAR entry for '98-F2-B3-01-A0-55': {'dot1x_mac': '98f2b301a055', 'dot1x_target_access': 'vlan:\tIsCOA:false'}
+2026-03-31 02:15:39,255 - myframework - INFO - MAC '98-F2-B3-01-A0-55' exists in MAR: True
+2026-03-31 02:15:39,255 - myframework - INFO - Successfully added MAC '98-F2-B3-01-A0-55' to MAR
+2026-03-31 02:15:39,255 - myframework - INFO - Getting MAR entry for MAC '98-F2-B3-01-A0-55' via fstool devinfo dump
+2026-03-31 02:15:39,960 - myframework - INFO - Found MAR entry for '98-F2-B3-01-A0-55': {'dot1x_mac': '98f2b301a055', 'dot1x_target_access': 'vlan:\tIsCOA:false'}
+2026-03-31 02:15:39,961 - myframework - INFO - MAC '98-F2-B3-01-A0-55' exists in MAR: True
+2026-03-31 02:15:39,961 - myframework - INFO - Verified MAC 98-F2-B3-01-A0-55 exists in MAR
+2026-03-31 02:15:39,961 - myframework - INFO - Waiting for 802.1X plugin to become ready on 10.16.177.66 (timeout=300s)
+2026-03-31 02:15:44,333 - myframework - INFO - dot1x status: radiusd=376s, winbindd=340s, redis-server=1087117s — plugin is ready
+2026-03-31 02:15:44,334 - myframework - INFO - 802.1X plugin is ready
+2026-03-31 02:15:44,334 - myframework - INFO - Toggling NIC to trigger re-authentication (updated test_start_time: 2026-03-31 02:15:44.334145) on 10.16.133.134
+2026-03-31 02:15:44,334 - myframework - INFO - Toggling NIC: pciPassthru0
+2026-03-31 02:15:44,334 - myframework - INFO - Disabling NIC: pciPassthru0
+2026-03-31 02:15:44,334 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Disable-NetAdapter -Name 'pciPassthru0' -Confirm:$false
+2026-03-31 02:15:47,155 - myframework - INFO - Waiting for NIC 'pciPassthru0' to reach 'Disabled' status (max 30s)...
+2026-03-31 02:15:47,156 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetAdapter -Name "pciPassthru0" -ErrorAction SilentlyContinue).Status
+2026-03-31 02:15:48,872 - myframework - INFO - [OK] NIC 'pciPassthru0' status: 'Disabled'
+2026-03-31 02:15:48,872 - myframework - INFO - [OK] NIC pciPassthru0 is disabled
+2026-03-31 02:15:48,872 - myframework - INFO - Enabling NIC: pciPassthru0
+2026-03-31 02:15:48,873 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; Enable-NetAdapter -Name 'pciPassthru0' -Confirm:$false
+2026-03-31 02:15:50,796 - myframework - INFO - Waiting for NIC 'pciPassthru0' MediaConnectionState 'Connected' (max 30s)...
+2026-03-31 02:15:50,797 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetAdapter -Name "pciPassthru0").MediaConnectionState
+2026-03-31 02:15:53,593 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetAdapter -Name "pciPassthru0").MediaConnectionState
+2026-03-31 02:15:55,334 - myframework - INFO - [OK] NIC 'pciPassthru0' MediaConnectionState: 'Connected'
+2026-03-31 02:15:55,335 - myframework - INFO - [OK] NIC pciPassthru0 is connected
+2026-03-31 02:15:55,335 - myframework - INFO - [OK] NIC pciPassthru0 toggled successfully
+2026-03-31 02:15:55,335 - myframework - INFO - Waiting for NIC 'pciPassthru0' 802.1X authentication (max 90s)...
+2026-03-31 02:15:55,335 - myframework - INFO - Executing command on WindowsPassthrough: netsh lan show interfaces interface="pciPassthru0"
+2026-03-31 02:15:55,694 - myframework - INFO - [OK] NIC 'pciPassthru0' authentication status: '802.1X authentication not enabled'
+2026-03-31 02:15:55,694 - myframework - INFO - Waiting for NIC 'pciPassthru0' to get IP in range '10.16.148.128/26' (max 90s)...
+2026-03-31 02:15:55,694 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-31 02:16:02,038 - myframework - INFO - Executing command on WindowsPassthrough: $ProgressPreference = 'SilentlyContinue'; (Get-NetIPAddress -InterfaceAlias "pciPassthru0" -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress
+2026-03-31 02:16:03,569 - myframework - INFO - [OK] NIC 'pciPassthru0' got IP '10.16.148.129' which is in range '10.16.148.128/26'
+2026-03-31 02:16:04,114 - myframework - INFO - All dot1x properties for 98f2b301a055 (auth_time: Tue Mar 31 02:15:59 CDT 2026):
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_ntlmauth_status, Active Directory Accept, (dot1x@5290463614721804985 [dot1x]), 0, 1774941359
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_mar_last_activity_time, , (dot1x@5290463614721804985 [dot1x]), 0, 1774941339
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_schedule_mar_action_time_on, , (dot1x@5290463614721804985 [dot1x]), 0, 1774941339
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_auth_appliance, 10.16.177.66, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_action_targets, 5290463614721804985, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_NAS_addr, 10.16.128.21, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_auth_time, Tue Mar 31 02:15:59 CDT 2026, (dot1x@5290463614721804985 [dot1x]), 0, 1774941359
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_auth_appliance_id, 5290463614721804985, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941360,Tue Mar 31 02:16:00 CDT 2026, macs, 98f2b301a055, (dot1x@5290463614721804985 []), 0, 1774941325
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_host_in_mar, true, (dot1x@5290463614721804985 [dot1x]), 0, 1774941339
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941355,Tue Mar 31 02:15:55 CDT 2026, dot1x_radius_log, Tue Mar 31 02:15:27 2026: Tue Mar 31 02:15:27 2026 : Debug: (12) Received Access-Request Id 192 from 10.16.128.21:1645 to 10.16.177.66:1812 length 157
+2026-03-31 02:16:04,115 - myframework - INFO -   Tue Mar 31 02:15:27 2026: Tue Mar 31 02:15:27 2026 : Debug: (12)           if ("%{redis:hget %{User-Name} dot1x_target_access }" =~ /.+/) {
+2026-03-31 02:16:04,115 - myframework - INFO -   Tue Mar 31 02:15:27 2026: Tue Mar 31 02:15:27 2026 : Debug: rlm_redis (redis): executing the query: "hget 98f2b301a055 dot1x_target_access "
+2026-03-31 02:16:04,115 - myframework - INFO -   Tue Mar 31 02:15:27 2026: Tue Mar 31 02:15:27 2026 : Debug: (12)           EXPAND %{redis:hget %{User-Name} dot1x_target_access }
+2026-03-31 02:16:04,115 - myframework - INFO -   Tue Mar 31 02:15:27 2026: Tue Mar 31 02:15:27 2026 : Debug: (12)           if ("%{redis:hget %{User-Name} dot1x_target_access }" =~ /.+/)  -> FALSE
+2026-03-31 02:16:04,115 - myframework - INFO -   Tue Mar 31 02:15:27 2026: Tue Mar 31 02:15:27 2026 : Debug: (12)           elsif ("%{redis:hget 000000000000 dot1x_target_access }" == "accept_unknown_mab") {
+2026-03-31 02:16:04,115 - myframework - INFO -   Tue Mar 31 02:15:27 2026: Tue Mar 31 02:15:27 2026 : Debug: rlm_redis (redis): executing the query: "hget 000000000000 dot1x_target_access "
+2026-03-31 02:16:04,115 - myframework - INFO -   Tue Mar 31 02:15:27 2026: Tue Mar 31 02:15:27 2026 : Debug: (12)           EXPAND %{redis:hget 000000000000 dot1x_target_access }
+2026-03-31 02:16:04,115 - myframework - INFO -   Tue Mar 31 02:15:27 2026: Tue Mar 31 02:15:27 2026 : Debug: (12)           elsif ("%{redis:hget 000000000000 dot1x_target_access }" == "accept_unknown_mab")  -> FALSE
+2026-03-31 02:16:04,115 - myframework - INFO -   , (dot1x@5290463614721804985 [dot1x]), 0, 1774941355
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941360,Tue Mar 31 02:16:00 CDT 2026, mac, 98f2b301a055, (dot1x@5290463614721804985 []), 0, 1774941325
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_auth_state, Access-Accept, (dot1x@5290463614721804985 [dot1x]), 0, 1774941359
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_nasport_type, Ethernet, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_inactive_mar_action_time, , (dot1x@5290463614721804985 [dot1x]), 0, 1774941339
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941328,Tue Mar 31 02:15:28 CDT 2026, dot1x_failed_auth_time, Tue Mar 31 02:15:28 CDT 2026, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_mab_auth_status, Access-Accept, (dot1x@5290463614721804985 [dot1x]), 0, 1774941359
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_cisco_av_pair_audit_session_id, , (dot1x@5290463614721804985 [dot1x]), 0, 1774941359
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_NASPortIdStr, FastEthernet0/1, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_called_sid, 00-1E-79-A9-7F-03, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,115 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_calling_sid, 98-F2-B3-01-A0-55, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_success_auth_time, Tue Mar 31 02:15:59 CDT 2026, (dot1x@5290463614721804985 [dot1x]), 0, 1774941359
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_ass_restrictions, N\A, (dot1x@5290463614721804985 [dot1x]), 0, 1774941359
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_user, 98f2b301a055, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_mar_comment, , (dot1x@5290463614721804985 [dot1x]), 0, 1774941339
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_fr_eap_type, MAB, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941325,Tue Mar 31 02:15:25 CDT 2026, adm, new, (dot1x@5290463614721804985 []), 0, 1774941325
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_inactive_mar_action, , (dot1x@5290463614721804985 [dot1x]), 0, 1774941339
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941325,Tue Mar 31 02:15:25 CDT 2026, assigned_by, 98f2b301a055, (dot1x@5290463614721804985 []), 0, 1774941325
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_auth_source, Pre-Admission rule 1, (dot1x@5290463614721804985 [dot1x]), 0, 1774941359
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_target_access, vlan:	IsCOA:false, (dot1x@5290463614721804985 [dot1x]), 0, 1774941359
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_login_type, dot1x_mac_login, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_schedule_mar_action, , (dot1x@5290463614721804985 [dot1x]), 0, 1774941339
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, dot1x_NAS_port, 50001, (dot1x@5290463614721804985 [dot1x]), 0, 1774941328
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941360,Tue Mar 31 02:16:00 CDT 2026, dot1x_acct_sid, 00000D7E, (dot1x@5290463614721804985 [dot1x]), 0, 1774941360
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941325,Tue Mar 31 02:15:25 CDT 2026, assigned_by_type, mac, (dot1x@5290463614721804985 []), 0, 1774941325
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, online, true, (dot1x@5290463614721804985 []), 0, 1774941325
+2026-03-31 02:16:04,116 - myframework - INFO -   224.0.168.246, 1774941359,Tue Mar 31 02:15:59 CDT 2026, engine_seen_packet, true, (dot1x@5290463614721804985 []), 0, 1774941325
+2026-03-31 02:16:04,116 - myframework - INFO - Verifying pre-admission rule for host: 98f2b301a055
+2026-03-31 02:16:04,116 - myframework - INFO - Starting property checks for ID: 98f2b301a055
+2026-03-31 02:16:04,457 - myframework - INFO - Property dot1x_auth_state              : expected=Access-Accept       , actual=Access-Accept       , match=True
+2026-03-31 02:16:04,782 - myframework - INFO - Property dot1x_auth_source             : expected=Pre-Admission rule 1, actual=Pre-Admission rule 1, match=True
+2026-03-31 02:16:04,782 - myframework - INFO - All property checks passed
+2026-03-31 02:16:04,782 - myframework - INFO - Verifying MAB/MAR authentication for host: 98f2b301a055
+2026-03-31 02:16:04,782 - myframework - INFO - Starting property checks for ID: 98f2b301a055
+2026-03-31 02:16:05,119 - myframework - INFO - Property dot1x_auth_appliance          : expected=10.16.177.66        , actual=10.16.177.66        , match=True
+2026-03-31 02:16:05,449 - myframework - INFO - Property dot1x_NAS_addr                : expected=10.16.128.21        , actual=10.16.128.21        , match=True
+2026-03-31 02:16:05,731 - myframework - INFO - Property dot1x_NASPortIdStr            : expected=FastEthernet0/1     , actual=FastEthernet0/1     , match=True
+2026-03-31 02:16:06,038 - myframework - INFO - Property dot1x_mab_auth_status         : expected=Access-Accept       , actual=Access-Accept       , match=True
+2026-03-31 02:16:06,320 - myframework - INFO - Property dot1x_fr_eap_type             : expected=MAB                 , actual=MAB                 , match=True
+2026-03-31 02:16:06,592 - myframework - INFO - Property dot1x_login_type              : expected=dot1x_mac_login     , actual=dot1x_mac_login     , match=True
+2026-03-31 02:16:06,871 - myframework - INFO - Property dot1x_user                    : expected=98f2b301a055        , actual=98f2b301a055        , match=True
+2026-03-31 02:16:07,175 - myframework - INFO - Property dot1x_host_in_mar             : expected=true                , actual=true                , match=True
+2026-03-31 02:16:07,175 - myframework - INFO - All property checks passed
+2026-03-31 02:16:07,176 - myframework - INFO - MAB-specific authentication verification completed
+2026-03-31 02:16:07,459 - myframework - INFO - Verifying wired properties for host: 98f2b301a055
+2026-03-31 02:16:07,460 - myframework - INFO - Starting property checks for ID: 98f2b301a055
+2026-03-31 02:16:07,758 - myframework - INFO - Property dot1x_NASPortIdStr            : expected=FastEthernet0/1     , actual=FastEthernet0/1     , match=True
+2026-03-31 02:16:07,759 - myframework - INFO - All property checks passed
+2026-03-31 02:16:07,759 - myframework - INFO - [TC-9415] PASS - MAB with large MAR table test completed
+2026-03-31 02:16:08,382 - myframework - INFO - Running bulk MAR script /tmp/fs_mar_bulk_remove.pl (timeout=500s)
+2026-03-31 02:17:19,903 - myframework - INFO - Bulk MAR result: progress 200 (200 removed)
+progress 400 (400 removed)
+progress 600 (600 removed)
+progress 800 (800 removed)
+progress 1000 (1000 removed)
+progress 1200 (1200 removed)
+progress 1400 (1400 removed)
+progress 1600 (1600 removed)
+progress 1800 (1800 removed)
+progress 2000 (2000 removed)
+progress 2200 (2200 removed)
+progress 2400 (2400 removed)
+progress 2600 (2600 removed)
+progress 2800 (2800 removed)
+progress 3000 (3000 removed)
+progress 3200 (3200 removed)
+progress 3400 (3400 removed)
+progress 3600 (3600 removed)
+progress 3800 (3800 removed)
+progress 4000 (4000 removed)
+progress 4200 (4200 removed)
+progress 4400 (4400 removed)
+progress 4600 (4600 removed)
+progress 4800 (4800 removed)
+progress 5000 (5000 removed)
+progress 5200 (5200 removed)
+progress 5400 (5400 removed)
+progress 5600 (5600 removed)
+progress 5800 (5800 removed)
+progress 6000 (6000 removed)
+progress 6200 (6200 removed)
+progress 6400 (6400 removed)
+progress 6600 (6600 removed)
+progress 6800 (6800 removed)
+progress 7000 (7000 removed)
+progress 7200 (7200 removed)
+progress 7400 (7400 removed)
+progress 7600 (7600 removed)
+progress 7800 (7800 removed)
+progress 8000 (8000 removed)
+progress 8200 (8200 removed)
+progress 8400 (8400 removed)
+progress 8600 (8600 removed)
+progress 8800 (8800 removed)
+progress 9000 (9000 removed)
+progress 9200 (9200 removed)
+progress 9400 (9400 removed)
+progress 9600 (9600 removed)
+progress 9800 (9800 removed)
+progress 10000 (10000 removed)
+done removed=10000 total=10000
+2026-03-31 02:17:20,154 - myframework - INFO - Bulk MAR cleanup complete: 0 entries removed
+2026-03-31 02:17:20,155 - myframework - INFO - Deleted temp CSV: /tmp/mar_bulk_import_q1mk7317.csv
+2026-03-31 02:17:20,155 - myframework - INFO - 
+============================================================================Test passed: TC_9415_MABLargeMARTableTest Passed============================================================================
+
+2026-03-31 02:17:20,155 - myframework - INFO - === MAB Test Teardown ===
+2026-03-31 02:17:20,156 - myframework - INFO - Getting MAR entry for MAC '98-F2-B3-01-A0-55' via fstool devinfo dump
+2026-03-31 02:17:20,857 - myframework - INFO - Found MAR entry for '98-F2-B3-01-A0-55': {'dot1x_mac': '98f2b301a055', 'dot1x_target_access': 'vlan:\tIsCOA:false'}
+2026-03-31 02:17:20,857 - myframework - INFO - MAC '98-F2-B3-01-A0-55' exists in MAR: True
+2026-03-31 02:17:20,857 - myframework - INFO - Removing MAC '98-F2-B3-01-A0-55' from MAR via fstool devinfo on EM
+2026-03-31 02:17:21,607 - myframework - INFO - MAR devinfo remove result: Excuting command remove for mar : 98f2b301a055
+2026-03-31 02:17:21,607 - myframework - INFO - Cleanup: Removed MAC 98-F2-B3-01-A0-55 from MAR
+2026-03-31 02:17:21,607 - myframework - INFO - radius common teardown
+2026-03-31 02:17:21,608 - myframework - INFO - 
+=========================================================================================Running Suite Teardown=========================================================================================
+
+2026-03-31 02:17:21,608 - myframework - INFO - teardown radius suite
+2026-03-31 02:17:21,608 - myframework - INFO - Starting RADIUS teardown on port FastEthernet0/1 for Cisco ios switch 10.16.128.21
+2026-03-31 02:17:21,608 - myframework - INFO - Starting RADIUS teardown steps 1/5: dot1x on port FastEthernet0/1
+2026-03-31 02:17:21,609 - myframework - INFO - Executing command on CiscoIOS: ['interface FastEthernet0/1', 'dot1x pae authenticator', 'no mab', 'dot1x pae authenticator']
+2026-03-31 02:17:22,032 - myframework - INFO - Command output:
+2026-03-31 02:17:22,033 - myframework - INFO -   Cisco_3560_Automation#configure terminal
+2026-03-31 02:17:22,033 - myframework - INFO -   Enter configuration commands, one per line.  End with CNTL/Z.
+2026-03-31 02:17:22,033 - myframework - INFO -   Cisco_3560_Automatio(config)#interface FastEthernet0/1
+2026-03-31 02:17:22,033 - myframework - INFO -   Cisco_3560_Automatio(config-if)#dot1x pae authenticator
+2026-03-31 02:17:22,033 - myframework - INFO -   Cisco_3560_Automatio(config-if)#no mab
+2026-03-31 02:17:22,033 - myframework - INFO -   Cisco_3560_Automatio(config-if)#dot1x pae authenticator
+2026-03-31 02:17:22,033 - myframework - INFO -   Cisco_3560_Automatio(config-if)#end
+2026-03-31 02:17:22,033 - myframework - INFO -   Cisco_3560_Automation#
+2026-03-31 02:17:22,033 - myframework - INFO - Succeed to teardown port config on FastEthernet0/1 on Cisco switch 10.16.128.21
+2026-03-31 02:17:22,033 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa server radius dynamic-author
+2026-03-31 02:17:23,719 - myframework - INFO - Command output:
+2026-03-31 02:17:23,719 - myframework - INFO -   aaa server radius dynamic-author
+2026-03-31 02:17:23,719 - myframework - INFO -    client FD6F:9D5E:221E:1823::73 server-key aristo
+2026-03-31 02:17:23,719 - myframework - INFO -    client 10.100.49.69 server-key aristo
+2026-03-31 02:17:23,719 - myframework - INFO -    client 10.16.177.66 server-key aristo
+2026-03-31 02:17:23,719 - myframework - INFO - Preserving RADIUS dynamic-author client 10.16.177.66 as it existed before setup, skipping teardown
+2026-03-31 02:17:23,719 - myframework - INFO - Starting RADIUS teardown steps 3/5: AAA authentication
+2026-03-31 02:17:23,719 - myframework - INFO - Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-31 02:17:25,783 - myframework - INFO - Command output:
+2026-03-31 02:17:25,784 - myframework - INFO -   aaa authentication dot1x default group group-automation
+2026-03-31 02:17:25,784 - myframework - INFO -   aaa authorization network default group group-automation 
+2026-03-31 02:17:25,784 - myframework - INFO -   aaa accounting dot1x default start-stop group group-automation
+2026-03-31 02:17:25,785 - myframework - INFO - AAA was already configured with group group-automation before setup, skipping teardown
+2026-03-31 02:17:25,785 - myframework - INFO - Starting RADIUS teardown steps 4/5: RADIUS group
+2026-03-31 02:17:25,785 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-31 02:17:26,607 - myframework - INFO - Command output:
+2026-03-31 02:17:26,608 - myframework - INFO -   aaa group server radius group-automation
+2026-03-31 02:17:26,608 - myframework - INFO -    server name server-automation-ipv4-177-66
+2026-03-31 02:17:26,608 - myframework - INFO -    deadtime 3
+2026-03-31 02:17:26,608 - myframework - INFO - RADIUS group group-automation was configured on 10.16.128.21 before setup, skipping teardown
+2026-03-31 02:17:26,608 - myframework - INFO - Starting RADIUS teardown steps 5/5: RADIUS server
+2026-03-31 02:17:26,608 - myframework - INFO - Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-66
+2026-03-31 02:17:28,335 - myframework - INFO - Command output:
+2026-03-31 02:17:28,335 - myframework - INFO -   radius server server-automation-ipv4-177-66
+2026-03-31 02:17:28,336 - myframework - INFO -    address ipv4 10.16.177.66 auth-port 1812 acct-port 1813
+2026-03-31 02:17:28,336 - myframework - INFO -    key aristo
+2026-03-31 02:17:28,336 - myframework - INFO - RADIUS server server-automation-ipv4-177-66 was configured on 10.16.128.21 before setup, skipping teardown
+2026-03-31 02:17:28,336 - myframework - INFO - Successfully teardown all RADIUS configuration on Cisco switch 10.16.128.21
+2026-03-31 02:17:28,336 - myframework - INFO - Closing all connections
