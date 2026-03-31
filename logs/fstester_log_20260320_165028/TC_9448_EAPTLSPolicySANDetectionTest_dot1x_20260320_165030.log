@@ -1,0 +1,1857 @@
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043430.366270:Fri Mar 20 16:50:30 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xb5b88b8) timeout in 1774043429, Now=1774043430
+dot1x:15182:1774043430.366657:Fri Mar 20 16:50:30 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xb6de2d0): Reschedule gatekeeper
+dot1x:15182:1774043431.245019:Fri Mar 20 16:50:31 2026: [gatekeeper/Timers] Run linux command 'fstool fw status| grep -i 1812'. 
+Output: '  373  113K ACCEPT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:1812'(gatekeeper:2617)
+dot1x:15182:1774043431.245583:Fri Mar 20 16:50:31 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043432.837560:Fri Mar 20 16:50:32 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:31",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043432.838504:Fri Mar 20 16:50:32 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new sw devupdate: , , HASH(0xa50a218)
+dot1x:15182:1774043432.838743:Fri Mar 20 16:50:32 2026: main::disconnect_cb:5941:[other]::5: main::nas_update: Update 10.16.128.21
+dot1x:15182:1774043433.838866:Fri Mar 20 16:50:33 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043435.699093:Fri Mar 20 16:50:35 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:33",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043435.700305:Fri Mar 20 16:50:35 2026: record: send.p_resolve: {dot1x_radius_log=[[Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (515) Received Access-Request Id 170 from 10.16.128.18:58444 to 10.16.177.66:1812 length 320
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (515) eap_peap: crl last download time query return error. return length: 0
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (515) Sent Access-Challenge Id 170 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (516) Received Access-Request Id 171 from 10.16.128.18:58444 to 10.16.177.66:1812 length 485
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (516) Sent Access-Challenge Id 171 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1068
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (517) Received Access-Request Id 172 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (517) Sent Access-Challenge Id 172 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (518) Received Access-Request Id 173 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (518) Sent Access-Challenge Id 173 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (519) Received Access-Request Id 174 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (519) Sent Access-Challenge Id 174 from 10.16.177.66:1812 to 10.16.128.18:58444 length 885
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) Received Access-Request Id 175 from 10.16.128.18:58444 to 10.16.177.66:1812 length 330
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) eap_peap: TLS PEAP - recv TLS 1.2 Alert, fatal unknown_ca
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS PEAP - Alert read:fatal:unknown CA
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS PEAP - Server : Failed in error
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS Failed reading from OpenSSL
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS s3_pkt.c[1498]:error:14094418:SSL routines:ssl3_read_bytes:tlsv1 alert unknown ca
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS s3_pkt.c[1216]:error:140940E5:SSL routines:ssl3_read_bytes:ssl handshake failure
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS System call (I/O) error (-1)
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS EAP Receive handshake failed during operation
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: [eaptls process] = fail
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap: Failed continuing EAP PEAP (25) session.  EAP sub-module failed
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) eap: Sending EAP Failure (code 4) ID 6 length 4
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) eap: Failed in EAP select
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)     [eap] = invalid
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)   } # authenticate = invalid
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) Failed to authenticate the user
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: AuthStatus 'Access-Reject:'
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: literal --> AuthStatus 'Access-Reject:'
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)       EXPAND AuthStatus 'Access-Reject:'
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)          --> AuthStatus 'Access-Reject:'
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774043392  AuthStatus 'Access-Reject:'   with length: 66
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)          --> update 98-F2-B3-01-A0-55 1774043392  AuthStatus 'Access-Reject:'  
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)     modsingle[post-auth]: calling attr_filter.access_reject (rlm_attr_filter)
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: EXPAND %{User-Name}
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject:    --> host/AUTOBVT-GIG6GUR
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: Matched entry DEFAULT at line 11
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: EAP-Message = 0x04060004 allowed by EAP-Message =* 0x
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: Attribute "EAP-Message" allowed by 1 rules, disallowed by 0 rules
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: Message-Authenticator = 0x00000000000000000000000000000000 allowed by Message-Authenticator =* 0x
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: Attribute "Message-Authenticator" allowed by 1 rules, disallowed by 0 rules
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)     modsingle[post-auth]: returned from attr_filter.access_reject (rlm_attr_filter)
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)     [attr_filter.access_reject] = updated
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) eap: Reply already contained an EAP-Message, not inserting EAP-Failure
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) Sent Access-Reject Id 175 from 10.16.177.66:1812 to 10.16.128.18:58444 length 44
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (522) Received Access-Request Id 176 from 10.16.128.18:58444 to 10.16.177.66:1812 length 312
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (522) eap_peap: crl last download time query return error. return length: 0
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (522) Sent Access-Challenge Id 176 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (523) Received Access-Request Id 177 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (523) eap_tls: crl last download time query return error. return length: 0
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (523) Sent Access-Challenge Id 177 from 10.16.177.66:1812 to 10.16.128.18:58444 length 68
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (524) Received Access-Request Id 178 from 10.16.128.18:58444 to 10.16.177.66:1812 length 481
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (524) Sent Access-Challenge Id 178 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (525) Received Access-Request Id 179 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (525) Sent Access-Challenge Id 179 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (526) Received Access-Request Id 180 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (526) Sent Access-Challenge Id 180 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (527) Received Access-Request Id 181 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (527) Sent Access-Challenge Id 181 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (528) Received Access-Request Id 182 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (528) Sent Access-Challenge Id 182 from 10.16.177.66:1812 to 10.16.128.18:58444 length 88
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (529) Received Access-Request Id 183 from 10.16.128.18:58444 to 10.16.177.66:1812 length 1811
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (529) Sent Access-Challenge Id 183 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (530) Received Access-Request Id 184 from 10.16.128.18:58444 to 10.16.177.66:1812 length 1116
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (530) eap_tls: TLS error         : 0
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (530) eap_tls: TLS error         : 0
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (530) Sent Access-Challenge Id 184 from 10.16.177.66:1812 to 10.16.128.18:58444 length 119
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (531) Received Access-Request Id 185 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: fs_restirctions_rlm: invalid format skipping attribute vlan:.
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: fs_restirctions_rlm: invalid format skipping attribute IsCOA:false.
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: literal --> AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (531)       EXPAND AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (531)          --> AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774043418  AuthStatus 'Access-Accept:default rule_1'   with length: 80
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (531)          --> update 98-F2-B3-01-A0-55 1774043418  AuthStatus 'Access-Accept:default rule_1'  
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : WARNING: (531)       List "proxy-reply" is not available
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (531) Sent Access-Accept Id 185 from 10.16.177.66:1812 to 10.16.128.18:58444 length 166
+]],p_cert={cert=0,force=0},p_dont_ignore=,p_dont_update_activity_time=1,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+dot1x:15182:1774043435.700696:Fri Mar 20 16:50:35 2026: Sending message: type=p_resolve, content={dot1x_radius_log=[[Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (515) Received Access-Request Id 170 from 10.16.128.18:58444 to 10.16.177.66:1812 length 320
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (515) eap_peap: crl last download time query return error. return length: 0
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (515) Sent Access-Challenge Id 170 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (516) Received Access-Request Id 171 from 10.16.128.18:58444 to 10.16.177.66:1812 length 485
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (516) Sent Access-Challenge Id 171 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1068
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (517) Received Access-Request Id 172 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (517) Sent Access-Challenge Id 172 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (518) Received Access-Request Id 173 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (518) Sent Access-Challenge Id 173 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (519) Received Access-Request Id 174 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (519) Sent Access-Challenge Id 174 from 10.16.177.66:1812 to 10.16.128.18:58444 length 885
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) Received Access-Request Id 175 from 10.16.128.18:58444 to 10.16.177.66:1812 length 330
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) eap_peap: TLS PEAP - recv TLS 1.2 Alert, fatal unknown_ca
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS PEAP - Alert read:fatal:unknown CA
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS PEAP - Server : Failed in error
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS Failed reading from OpenSSL
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS s3_pkt.c[1498]:error:14094418:SSL routines:ssl3_read_bytes:tlsv1 alert unknown ca
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS s3_pkt.c[1216]:error:140940E5:SSL routines:ssl3_read_bytes:ssl handshake failure
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS System call (I/O) error (-1)
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: TLS EAP Receive handshake failed during operation
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap_peap: [eaptls process] = fail
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : ERROR: (520) eap: Failed continuing EAP PEAP (25) session.  EAP sub-module failed
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) eap: Sending EAP Failure (code 4) ID 6 length 4
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) eap: Failed in EAP select
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)     [eap] = invalid
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)   } # authenticate = invalid
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) Failed to authenticate the user
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: AuthStatus 'Access-Reject:'
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: literal --> AuthStatus 'Access-Reject:'
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)       EXPAND AuthStatus 'Access-Reject:'
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)          --> AuthStatus 'Access-Reject:'
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774043392  AuthStatus 'Access-Reject:'   with length: 66
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)          --> update 98-F2-B3-01-A0-55 1774043392  AuthStatus 'Access-Reject:'  
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)     modsingle[post-auth]: calling attr_filter.access_reject (rlm_attr_filter)
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: EXPAND %{User-Name}
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject:    --> host/AUTOBVT-GIG6GUR
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: Matched entry DEFAULT at line 11
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: EAP-Message = 0x04060004 allowed by EAP-Message =* 0x
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: Attribute "EAP-Message" allowed by 1 rules, disallowed by 0 rules
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: Message-Authenticator = 0x00000000000000000000000000000000 allowed by Message-Authenticator =* 0x
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) attr_filter.access_reject: Attribute "Message-Authenticator" allowed by 1 rules, disallowed by 0 rules
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)     modsingle[post-auth]: returned from attr_filter.access_reject (rlm_attr_filter)
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520)     [attr_filter.access_reject] = updated
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) eap: Reply already contained an EAP-Message, not inserting EAP-Failure
+Fri Mar 20 16:49:52 2026: Fri Mar 20 16:49:52 2026 : Debug: (520) Sent Access-Reject Id 175 from 10.16.177.66:1812 to 10.16.128.18:58444 length 44
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (522) Received Access-Request Id 176 from 10.16.128.18:58444 to 10.16.177.66:1812 length 312
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (522) eap_peap: crl last download time query return error. return length: 0
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (522) Sent Access-Challenge Id 176 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (523) Received Access-Request Id 177 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (523) eap_tls: crl last download time query return error. return length: 0
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (523) Sent Access-Challenge Id 177 from 10.16.177.66:1812 to 10.16.128.18:58444 length 68
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (524) Received Access-Request Id 178 from 10.16.128.18:58444 to 10.16.177.66:1812 length 481
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (524) Sent Access-Challenge Id 178 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (525) Received Access-Request Id 179 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (525) Sent Access-Challenge Id 179 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (526) Received Access-Request Id 180 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (526) Sent Access-Challenge Id 180 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (527) Received Access-Request Id 181 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (527) Sent Access-Challenge Id 181 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (528) Received Access-Request Id 182 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (528) Sent Access-Challenge Id 182 from 10.16.177.66:1812 to 10.16.128.18:58444 length 88
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (529) Received Access-Request Id 183 from 10.16.128.18:58444 to 10.16.177.66:1812 length 1811
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (529) Sent Access-Challenge Id 183 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (530) Received Access-Request Id 184 from 10.16.128.18:58444 to 10.16.177.66:1812 length 1116
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (530) eap_tls: TLS error         : 0
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (530) eap_tls: TLS error         : 0
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (530) Sent Access-Challenge Id 184 from 10.16.177.66:1812 to 10.16.128.18:58444 length 119
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (531) Received Access-Request Id 185 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: fs_restirctions_rlm: invalid format skipping attribute vlan:.
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: fs_restirctions_rlm: invalid format skipping attribute IsCOA:false.
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: literal --> AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (531)       EXPAND AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (531)          --> AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774043418  AuthStatus 'Access-Accept:default rule_1'   with length: 80
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (531)          --> update 98-F2-B3-01-A0-55 1774043418  AuthStatus 'Access-Accept:default rule_1'  
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : WARNING: (531)       List "proxy-reply" is not available
+Fri Mar 20 16:50:18 2026: Fri Mar 20 16:50:18 2026 : Debug: (531) Sent Access-Accept Id 185 from 10.16.177.66:1812 to 10.16.128.18:58444 length 166
+]],p_cert={cert=0,force=0},p_dont_ignore=,p_dont_update_activity_time=1,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+dot1x:15182:1774043436.701484:Fri Mar 20 16:50:36 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043438.246391:Fri Mar 20 16:50:38 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:36",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043439.248442:Fri Mar 20 16:50:39 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xb542e40) timeout in 1774043437, Now=1774043439
+dot1x:15182:1774043439.248761:Fri Mar 20 16:50:39 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xb6c4f70): Reschedule housekeep
+dot1x:15182:1774043439.249007:Fri Mar 20 16:50:39 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[1 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:15182:1774043439.249322:Fri Mar 20 16:50:39 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043440.840219:Fri Mar 20 16:50:40 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:39",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043440.842347:Fri Mar 20 16:50:40 2026: main::plugin_clear_cb:1563:[other]::5: called with: 
+{224.0.165.77={_timeinfo={dot1x_NAS_addr=1774043418,dot1x_acct_sid=1774043418,dot1x_ass_restrictions=1774043418,dot1x_auth_appliance=1774043418,dot1x_auth_appliance_id=1774043418,dot1x_auth_source=1774043418,dot1x_auth_state=1774043418,dot1x_auth_time=1774043418,dot1x_calling_sid=1774043418,dot1x_cisco_av_pair_audit_session_id=1774043418,dot1x_host=1774043418,dot1x_user=1774043418,mac=1774043435,primary_key=1774043439},active=1774043418,dot1x_NAS_addr=10.16.128.18,dot1x_acct_sid=000001fa,dot1x_action_targets=[5290463614721804985],dot1x_ass_restrictions=N\A,dot1x_auth_appliance=10.16.177.66,dot1x_auth_appliance_id=5290463614721804985,dot1x_auth_source=Pre-Admission rule 1,dot1x_auth_state=Access-Accept,dot1x_auth_time=1774043418,dot1x_calling_sid=98-F2-B3-01-A0-55,dot1x_cisco_av_pair_audit_session_id=service-type=Framed,dot1x_host=Dot1x-CLT-G,dot1x_user=host/Dot1x-CLT-G,ip=224.0.165.77,mac=98f2b301a055,primary_key=224.0.165.77}}
+dot1x:15182:1774043440.842738:Fri Mar 20 16:50:40 2026: main::cb_1x_clear:745:[Delete]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>Delete ip=224.0.165.77 mac=98f2b301a055 224.0.165.77={_timeinfo={dot1x_NAS_addr=1774043418,dot1x_acct_sid=1774043418,dot1x_ass_restrictions=1774043418,dot1x_auth_appliance=1774043418,dot1x_auth_appliance_id=1774043418,dot1x_auth_source=1774043418,dot1x_auth_state=1774043418,dot1x_auth_time=1774043418,dot1x_calling_sid=1774043418,dot1x_cisco_av_pair_audit_session_id=1774043418,dot1x_host=1774043418,dot1x_user=1774043418,mac=1774043435,primary_key=1774043439},active=1774043418,dot1x_NAS_addr=10.16.128.18,dot1x_acct_sid=000001fa,dot1x_action_targets=[5290463614721804985],dot1x_ass_restrictions=N\A,dot1x_auth_appliance=10.16.177.66,dot1x_auth_appliance_id=5290463614721804985,dot1x_auth_source=Pre-Admission rule 1,dot1x_auth_state=Access-Accept,dot1x_auth_time=1774043418,dot1x_calling_sid=98-F2-B3-01-A0-55,dot1x_cisco_av_pair_audit_session_id=service-type=Framed,dot1x_host=Dot1x-CLT-G,dot1x_user=host/Dot1x-CLT-G,ip=224.0.165.77,mac=98f2b301a055,primary_key=224.0.165.77}
+dot1x:15182:1774043440.843089:Fri Mar 20 16:50:40 2026: main::dot1x_dbDeleteHost:2955:[Delete]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>Deleted!
+================== MAC 98f2b301a055(debug=0)=====================
+>>Fields
+<<End of Fields
+>>Timers
+<<End of Timers
+============== End of MAC 98f2b301a055(debug=0)=====================
+dot1x:15182:1774043441.841984:Fri Mar 20 16:50:41 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xb6de2d0) timeout in 1774043440, Now=1774043441
+dot1x:15182:1774043441.842788:Fri Mar 20 16:50:41 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xb6e3c30): Reschedule gatekeeper
+dot1x:15182:1774043441.843293:Fri Mar 20 16:50:41 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043443.430784:Fri Mar 20 16:50:43 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:41",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043444.433639:Fri Mar 20 16:50:44 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043446.023006:Fri Mar 20 16:50:46 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:44",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043447.025928:Fri Mar 20 16:50:47 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043448.665675:Fri Mar 20 16:50:48 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:47",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043449.667923:Fri Mar 20 16:50:49 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xb6c4f70) timeout in 1774043449, Now=1774043449
+dot1x:15182:1774043449.671519:Fri Mar 20 16:50:49 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xb54bb78): Reschedule housekeep
+dot1x:15182:1774043449.672020:Fri Mar 20 16:50:49 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[2 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:15182:1774043449.672541:Fri Mar 20 16:50:49 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043451.204277:Fri Mar 20 16:50:51 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:49",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043452.208103:Fri Mar 20 16:50:52 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xb6e3c30) timeout in 1774043451, Now=1774043452
+dot1x:15182:1774043452.208600:Fri Mar 20 16:50:52 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xb5f63a8): Reschedule gatekeeper
+dot1x:15182:1774043452.209156:Fri Mar 20 16:50:52 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043453.738145:Fri Mar 20 16:50:53 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:52",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043454.740421:Fri Mar 20 16:50:54 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043456.373758:Fri Mar 20 16:50:56 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:54",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043457.376408:Fri Mar 20 16:50:57 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043459.145832:Fri Mar 20 16:50:59 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:50:57",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043460.147408:Fri Mar 20 16:51:00 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xb54bb78) timeout in 1774043459, Now=1774043460
+dot1x:15182:1774043460.147644:Fri Mar 20 16:51:00 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xb77a5a0): Reschedule housekeep
+dot1x:15182:1774043460.147827:Fri Mar 20 16:51:00 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[3 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:15182:1774043460.148058:Fri Mar 20 16:51:00 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043461.796910:Fri Mar 20 16:51:01 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:00",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043461.800557:Fri Mar 20 16:51:01 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new sw devupdate: , , HASH(0xa5098d8)
+dot1x:15182:1774043461.800818:Fri Mar 20 16:51:01 2026: main::disconnect_cb:5941:[other]::5: main::nas_update: Update 10.16.128.18
+dot1x:15182:1774043461.801020:Fri Mar 20 16:51:01 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new sw devupdate: , , HASH(0xa3ee620)
+dot1x:15182:1774043461.801217:Fri Mar 20 16:51:01 2026: main::disconnect_cb:5941:[other]::5: main::nas_update: Update 10.16.128.33
+dot1x:15182:1774043462.800652:Fri Mar 20 16:51:02 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xb5f63a8) timeout in 1774043462, Now=1774043462
+dot1x:15182:1774043462.800868:Fri Mar 20 16:51:02 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xb7be0b0): Reschedule gatekeeper
+dot1x:15182:1774043462.801037:Fri Mar 20 16:51:02 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043464.583821:Fri Mar 20 16:51:04 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:02",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043464.585003:Fri Mar 20 16:51:04 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043464
+NASPort '50101'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.18'
+CalledSid '00-6C-BC-CF-C0-81'
+UserName 'host/AUTOBVT-GIG6GUR'
+EapType 'PEAP'
+NASIdentifier 'Cisco_3850_B'
+NASPortIdStr 'GigabitEthernet1/0/1'
+dot1x:15182:1774043464.585339:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055>Got attribute-value pair: NASPort=50101 for host 98f2b301a055.
+dot1x:15182:1774043464.585524:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_NAS_port, val=50101 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.585661:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_NAS_port] val[50101] time[]
+dot1x:15182:1774043464.585851:Fri Mar 20 16:51:04 2026: main::dot1x_host_resolve_new:3134:[fr-update]::1: <98f2b301a055>mac[98f2b301a055] ip[] req: 
+dot1x:15182:1774043464.586009:Fri Mar 20 16:51:04 2026: main::dot1x_host_resolve_new:3138:[fr-update]::1: <98f2b301a055>Reporting by mac[98f2b301a055]
+dot1x:15182:1774043464.586326:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3209:[fr-update]::5: <98f2b301a055>created new message_so_far->{98f2b301a055}: HASH(0xb7628a8) {__put_calls=[{params=[mac,98f2b301a055,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043464.586498:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055>Got attribute-value pair: NASPortType=Ethernet for host 98f2b301a055.
+dot1x:15182:1774043464.586688:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_nasport_type, val=Ethernet skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.586788:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_nasport_type] val[Ethernet] time[]
+dot1x:15182:1774043464.586976:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055>Got attribute-value pair: NASIpAddress=10.16.128.18 for host 98f2b301a055.
+dot1x:15182:1774043464.587119:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_NAS_addr, val=10.16.128.18 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.587276:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_NAS_addr] val[10.16.128.18] time[]
+dot1x:15182:1774043464.587441:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055>Got attribute-value pair: CalledSid=00-6C-BC-CF-C0-81 for host 98f2b301a055.
+dot1x:15182:1774043464.587581:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_called_sid, val=00-6C-BC-CF-C0-81 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.587684:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_called_sid] val[00-6C-BC-CF-C0-81] time[]
+dot1x:15182:1774043464.587807:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3601:[fr-update]::5: <98f2b301a055>Got Called_Station_Id: 00-6C-BC-CF-C0-81
+dot1x:15182:1774043464.587961:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3605:[fr-update]::5: <98f2b301a055>CalledSid: parsed to ()
+dot1x:15182:1774043464.588068:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_called_sid, val=00-6C-BC-CF-C0-81 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.588169:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_called_sid] val[00-6C-BC-CF-C0-81] time[]
+dot1x:15182:1774043464.588714:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055>Got attribute-value pair: UserName=host/AUTOBVT-GIG6GUR for host 98f2b301a055.
+dot1x:15182:1774043464.588844:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_user, val=host/AUTOBVT-GIG6GUR skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.588965:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_user] val[host/AUTOBVT-GIG6GUR] time[]
+dot1x:15182:1774043464.589099:Fri Mar 20 16:51:04 2026: main::dot1x_update_user_props:3517:[fr-update]::1: <98f2b301a055>from fr: UserName (AUTOBVT-GIG6GUR, )
+dot1x:15182:1774043464.589201:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_login_type, val=dot1x_computer_login skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.589313:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_login_type] val[dot1x_computer_login] time[]
+dot1x:15182:1774043464.589467:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_host, val=AUTOBVT-GIG6GUR skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.589600:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_host] val[AUTOBVT-GIG6GUR] time[]
+dot1x:15182:1774043464.589754:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_default_domain, val= skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.589858:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_default_domain] val[] time[]
+dot1x:15182:1774043464.589996:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=nbtdomain, val= skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.590098:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[nbtdomain] val[] time[]
+dot1x:15182:1774043464.590216:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_domain, val= skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.590335:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_domain] val[] time[]
+dot1x:15182:1774043464.590478:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_rqeuested_domain, val=None given skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.590608:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_rqeuested_domain] val[None given] time[]
+dot1x:15182:1774043464.590766:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055>Got attribute-value pair: EapType=PEAP for host 98f2b301a055.
+dot1x:15182:1774043464.590913:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055>Got attribute-value pair: NASIdentifier=Cisco_3850_B for host 98f2b301a055.
+dot1x:15182:1774043464.591033:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_NAS_Identifier, val=Cisco_3850_B skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.591136:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_NAS_Identifier] val[Cisco_3850_B] time[]
+dot1x:15182:1774043464.591255:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3609:[fr-update]::5: <98f2b301a055>Got NAS_Identifier: Cisco_3850_B
+dot1x:15182:1774043464.591357:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_NAS_Identifier, val=Cisco_3850_B skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.591540:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_NAS_Identifier] val[Cisco_3850_B] time[]
+dot1x:15182:1774043464.591780:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055>Got attribute-value pair: NASPortIdStr=GigabitEthernet1/0/1 for host 98f2b301a055.
+dot1x:15182:1774043464.591949:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_NASPortIdStr, val=GigabitEthernet1/0/1 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.592094:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_NASPortIdStr] val[GigabitEthernet1/0/1] time[]
+dot1x:15182:1774043464.592228:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3624:[fr-update]::5: <98f2b301a055>Got NAS_Port_Id: GigabitEthernet1/0/1
+dot1x:15182:1774043464.592337:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_NASPortIdStr, val=GigabitEthernet1/0/1 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.592444:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_NASPortIdStr] val[GigabitEthernet1/0/1] time[]
+dot1x:15182:1774043464.592567:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_auth_time, val=1774043464 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.592685:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_auth_time] val[1774043464] time[]
+dot1x:15182:1774043464.592806:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055>(csid=98f2b301a055, fld=dot1x_calling_sid, val=98-F2-B3-01-A0-55 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.592921:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055>csid[98f2b301a055] field[dot1x_calling_sid] val[98-F2-B3-01-A0-55] time[]
+dot1x:15182:1774043464.593048:Fri Mar 20 16:51:04 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055>resolve for 98f2b301a055 is .
+dot1x:15182:1774043464.593339:Fri Mar 20 16:51:04 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043464
+AuthStatus 'Access-Reject:'
+dot1x:15182:1774043464.593559:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: AuthStatus=Access-Reject: for host 98f2b301a055.
+dot1x:15182:1774043464.593690:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3568:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>AuthStatus: parsed to (Access-Reject, )
+dot1x:15182:1774043464.593928:Fri Mar 20 16:51:04 2026: main::dot1x_update_authentication_props:3388:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Fetched user=AUTOBVT-GIG6GUR, auth entity=dot1x_computer_login.
+dot1x:15182:1774043464.594094:Fri Mar 20 16:51:04 2026: main::dot1x_stats_add:6938:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>dot1x_stats_add key = auth_rejects, label = number_of_rejected_authentications value = 14
+dot1x:15182:1774043464.594229:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_failed_auth_time, val=1774043464 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.594401:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_failed_auth_time] val[1774043464] time[]
+dot1x:15182:1774043464.594545:Fri Mar 20 16:51:04 2026: main::dot1x_update_authentication_props:3394:[fr-update]::0: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Logon Failure: Rejected user AUTOBVT-GIG6GUR: 
+dot1x:15182:1774043464.594701:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_auth_state, val=Access-Reject skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.594936:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_auth_state] val[Access-Reject] time[]
+dot1x:15182:1774043464.595102:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_host_auth_status, val=Access-Reject skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.595245:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_host_auth_status] val[Access-Reject] time[]
+dot1x:15182:1774043464.595853:Fri Mar 20 16:51:04 2026: main::dot1x_update_authorization_source:3467:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>from .
+dot1x:15182:1774043464.596012:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3578:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>AuthStatus marks the last fr update for the authentication
+dot1x:15182:1774043464.596130:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_auth_time, val=1774043464 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.596236:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_auth_time] val[1774043464] time[]
+dot1x:15182:1774043464.596367:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_calling_sid, val=98-F2-B3-01-A0-55 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.596523:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_calling_sid] val[98-F2-B3-01-A0-55] time[]
+dot1x:15182:1774043464.596709:Fri Mar 20 16:51:04 2026: main::dot1x_analyze_control_input:3296:[ntlmpl]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>""
+dot1x:15182:1774043464.596995:Fri Mar 20 16:51:04 2026: record: send.p_nplog: {ip=10.16.177.66,msg=98f2b301a055 Failed Auth}
+dot1x:15182:1774043464.597158:Fri Mar 20 16:51:04 2026: Sending message: type=p_nplog, content={ip=10.16.177.66,msg=98f2b301a055 Failed Auth}
+dot1x:15182:1774043464.597386:Fri Mar 20 16:51:04 2026: [98f2b301a055/ntlmpl/host/AUTOBVT-GIG6GUR] 98f2b301a055 Failed Auth(dot1x_host_log:385)
+dot1x:15182:1774043464.597512:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_ntlmauth_status, val=Reject skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.597669:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_ntlmauth_status] val[Reject] time[]
+dot1x:15182:1774043464.597822:Fri Mar 20 16:51:04 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>resolve for 98f2b301a055 is resolve auth.
+dot1x:15182:1774043464.598573:Fri Mar 20 16:51:04 2026: main::dot1x_get_host_property:3101:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>fetched dot1x_access_action_comment= from hostinfo
+dot1x:15182:1774043464.598810:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_action_targets, val=5290463614721804985 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.599129:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_action_targets] val[5290463614721804985] time[]
+dot1x:15182:1774043464.599383:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_auth_appliance_id, val=5290463614721804985 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.599570:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_auth_appliance_id] val[5290463614721804985] time[]
+dot1x:15182:1774043464.599766:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_auth_appliance, val=10.16.177.66 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.600087:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_auth_appliance] val[10.16.177.66] time[]
+dot1x:15182:1774043464.600326:Fri Mar 20 16:51:04 2026: main::dot1x_update_host_mar_properties:2239:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>mac[98f2b301a055] skip_add_to_resolve_msg[] do_parse_restriction[] mar: 
+dot1x:15182:1774043464.601083:Fri Mar 20 16:51:04 2026: [98f2b301a055/ntlmpl/host/AUTOBVT-GIG6GUR] fetched mar by key=98f2b301a055: item= data={mar=[]} header={context=request}(dot1x_fetchMar:2228)
+dot1x:15182:1774043464.601244:Fri Mar 20 16:51:04 2026: main::dot1x_fetchMar:2230:[ntlmpl]::0: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>no MAR entry for 98f2b301a055!
+dot1x:15182:1774043464.601507:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_host_in_mar, val=0 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.601707:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_host_in_mar] val[0] time[]
+1774043464 dot1x_resolve_host_now (scenario=New host authentication host=98f2b301a055 msfcsid='HASH(0xb7628a8)' ) { [98f2b301a055/ntlmpl/host/AUTOBVT-GIG6GUR] 
+dot1x:15182:1774043464.607324:Fri Mar 20 16:51:04 2026: main::dot1x_resolve_host_now:3079:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>message_so_far->{98f2b301a055}: HASH(0xb7628a8) {__put_calls=[{params=[mac,98f2b301a055,,],type=field},{params=[dot1x_NAS_port,50101,,],type=field},{params=[dot1x_nasport_type,Ethernet,,],type=field},{params=[dot1x_NAS_addr,10.16.128.18,,],type=field},{params=[dot1x_called_sid,00-6C-BC-CF-C0-81,,],type=field},{params=[dot1x_called_sid,00-6C-BC-CF-C0-81,,],type=field},{params=[dot1x_user,host/AUTOBVT-GIG6GUR,,],type=field},{params=[dot1x_login_type,dot1x_computer_login,,],type=field},{params=[dot1x_host,AUTOBVT-GIG6GUR,,],type=field},{params=[dot1x_default_domain,No value exists: Missing/Outdated authentication, or no Domain defined,],type=unknown},{params=[nbtdomain,,,],type=field},{params=[dot1x_domain,No value exists: Missing/Outdated authentication, or no Domain used,],type=unknown},{params=[dot1x_rqeuested_domain,None given,,],type=field},{params=[dot1x_NAS_Identifier,Cisco_3850_B,,],type=field},{params=[dot1x_NAS_Identifier,Cisco_3850_B,,],type=field},{params=[dot1x_NASPortIdStr,GigabitEthernet1/0/1,,],type=field},{params=[dot1x_NASPortIdStr,GigabitEthernet1/0/1,,],type=field},{params=[dot1x_auth_time,1774043464,,],type=field},{params=[dot1x_calling_sid,98-F2-B3-01-A0-55,,],type=field},{params=[dot1x_failed_auth_time,1774043464,,],type=field},{params=[dot1x_auth_state,Access-Reject,,],type=field},{params=[dot1x_host_auth_status,Access-Reject,,],type=field},{params=[dot1x_auth_time,1774043464,,],type=field},{params=[dot1x_calling_sid,98-F2-B3-01-A0-55,,],type=field},{params=[dot1x_ntlmauth_status,Reject,,],type=field},{params=[dot1x_action_targets,5290463614721804985,,],type=field},{params=[dot1x_auth_appliance_id,5290463614721804985,,],type=field},{params=[dot1x_auth_appliance,10.16.177.66,,],type=field},{params=[dot1x_host_in_mar,0,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043464.608159:Fri Mar 20 16:51:04 2026: record: send.p_resolve: {dot1x_NASPortIdStr=[[GigabitEthernet1/0/1]],dot1x_NAS_Identifier=[[Cisco_3850_B]],dot1x_NAS_addr=[[10.16.128.18]],dot1x_NAS_port=[[50101]],dot1x_action_targets=[[5290463614721804985]],dot1x_auth_appliance=[[10.16.177.66]],dot1x_auth_appliance_id=[[5290463614721804985]],dot1x_auth_state=[[Access-Reject]],dot1x_auth_time=[[1774043464]],dot1x_called_sid=[[00-6C-BC-CF-C0-81]],dot1x_calling_sid=[[98-F2-B3-01-A0-55]],dot1x_default_domain=[[ unknown-0fbc6f885ef5,,No value exists: Missing/Outdated authentication, or no Domain defined]],dot1x_domain=[[ unknown-0fbc6f885ef5,,No value exists: Missing/Outdated authentication, or no Domain used]],dot1x_failed_auth_time=[[1774043464]],dot1x_host=[[AUTOBVT-GIG6GUR]],dot1x_host_auth_status=[[Access-Reject]],dot1x_host_in_mar=[[0]],dot1x_login_type=[[dot1x_computer_login]],dot1x_nasport_type=[[Ethernet]],dot1x_ntlmauth_status=[[Reject]],dot1x_rqeuested_domain=[[None given]],dot1x_user=[[host/AUTOBVT-GIG6GUR]],nbtdomain=[[]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+dot1x:15182:1774043464.608873:Fri Mar 20 16:51:04 2026: Sending message: type=p_resolve, content={dot1x_NASPortIdStr=[[GigabitEthernet1/0/1]],dot1x_NAS_Identifier=[[Cisco_3850_B]],dot1x_NAS_addr=[[10.16.128.18]],dot1x_NAS_port=[[50101]],dot1x_action_targets=[[5290463614721804985]],dot1x_auth_appliance=[[10.16.177.66]],dot1x_auth_appliance_id=[[5290463614721804985]],dot1x_auth_state=[[Access-Reject]],dot1x_auth_time=[[1774043464]],dot1x_called_sid=[[00-6C-BC-CF-C0-81]],dot1x_calling_sid=[[98-F2-B3-01-A0-55]],dot1x_default_domain=[[ unknown-0fbc6f885ef5,,No value exists: Missing/Outdated authentication, or no Domain defined]],dot1x_domain=[[ unknown-0fbc6f885ef5,,No value exists: Missing/Outdated authentication, or no Domain used]],dot1x_failed_auth_time=[[1774043464]],dot1x_host=[[AUTOBVT-GIG6GUR]],dot1x_host_auth_status=[[Access-Reject]],dot1x_host_in_mar=[[0]],dot1x_login_type=[[dot1x_computer_login]],dot1x_nasport_type=[[Ethernet]],dot1x_ntlmauth_status=[[Reject]],dot1x_rqeuested_domain=[[None given]],dot1x_user=[[host/AUTOBVT-GIG6GUR]],nbtdomain=[[]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+1774043464} dot1x_resolve_host_now () [98f2b301a055/ntlmpl/host/AUTOBVT-GIG6GUR] 
+dot1x:15182:1774043464.610178:Fri Mar 20 16:51:04 2026: main::dot1x_resolve_auth_host:3061:[ntlmpl]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>going to remove authentication properties not found for host 98f2b301a055.
+dot1x:15182:1774043464.610381:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_NAS_addr6}
+dot1x:15182:1774043464.610618:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_NAS_addr6}
+dot1x:15182:1774043464.610887:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_FramedIpv6Address}
+dot1x:15182:1774043464.611048:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_FramedIpv6Address}
+dot1x:15182:1774043464.611203:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_issuer}
+dot1x:15182:1774043464.611309:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_issuer}
+dot1x:15182:1774043464.611554:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_fr_client_x509_cert_subj_alt_name}
+dot1x:15182:1774043464.611690:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_fr_client_x509_cert_subj_alt_name}
+dot1x:15182:1774043464.611824:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_FramedIpv6Prefix}
+dot1x:15182:1774043464.611991:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_FramedIpv6Prefix}
+dot1x:15182:1774043464.612227:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_expiration}
+dot1x:15182:1774043464.612382:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_expiration}
+dot1x:15182:1774043464.612514:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_subj}
+dot1x:15182:1774043464.612648:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_subj}
+dot1x:15182:1774043464.612878:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_FramedInterfaceId}
+dot1x:15182:1774043464.613041:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_FramedInterfaceId}
+dot1x:15182:1774043464.613227:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_radius_log}
+dot1x:15182:1774043464.613359:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_radius_log}
+dot1x:15182:1774043464.613499:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_fr_eap_type}
+dot1x:15182:1774043464.613595:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_fr_eap_type}
+dot1x:15182:1774043464.613720:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_cn}
+dot1x:15182:1774043464.613955:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_cn}
+dot1x:15182:1774043464.614198:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_acct_sid}
+dot1x:15182:1774043464.614311:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_acct_sid}
+dot1x:15182:1774043464.614481:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_alt_subj}
+dot1x:15182:1774043464.614635:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_alt_subj}
+dot1x:15182:1774043464.614839:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_FramedIpAddress}
+dot1x:15182:1774043464.614965:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_FramedIpAddress}
+dot1x:15182:1774043464.615179:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_ssid}
+dot1x:15182:1774043464.615345:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_ssid}
+dot1x:15182:1774043464.615590:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_auth_source}
+dot1x:15182:1774043464.615755:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_auth_source}
+dot1x:15182:1774043464.616001:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_serial}
+dot1x:15182:1774043464.616199:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_fr_client_cert_serial}
+dot1x:15182:1774043464.616502:Fri Mar 20 16:51:04 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_ass_restrictions}
+dot1x:15182:1774043464.616724:Fri Mar 20 16:51:04 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_ass_restrictions}
+dot1x:15182:1774043464.617356:Fri Mar 20 16:51:04 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043464
+AcctSid '000001fa'
+!
+dot1x:15182:1774043464.617768:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: AcctSid=000001fa for host 98f2b301a055.
+dot1x:15182:1774043464.618011:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_acct_sid, val=000001fa skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.618265:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_acct_sid] val[000001fa] time[]
+dot1x:15182:1774043464.618813:Fri Mar 20 16:51:04 2026: main::dot1x_host_resolve_new:3134:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>mac[98f2b301a055] ip[] req: 
+dot1x:15182:1774043464.619034:Fri Mar 20 16:51:04 2026: main::dot1x_host_resolve_new:3138:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Reporting by mac[98f2b301a055]
+dot1x:15182:1774043464.619253:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3209:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>created new message_so_far->{98f2b301a055}: HASH(0xb5433c0) {__put_calls=[{params=[mac,98f2b301a055,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043464.619459:Fri Mar 20 16:51:04 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>resolve for 98f2b301a055 is resolve now.
+1774043464 dot1x_resolve_host_now (scenario=resolve now host=98f2b301a055 msfcsid='HASH(0xb5433c0)' ) { [98f2b301a055/fr-update/host/AUTOBVT-GIG6GUR] 
+dot1x:15182:1774043464.619824:Fri Mar 20 16:51:04 2026: main::dot1x_resolve_host_now:3079:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>message_so_far->{98f2b301a055}: HASH(0xb5433c0) {__put_calls=[{params=[mac,98f2b301a055,,],type=field},{params=[dot1x_acct_sid,000001fa,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043464.620059:Fri Mar 20 16:51:04 2026: record: send.p_resolve: {dot1x_acct_sid=[[000001fa]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+dot1x:15182:1774043464.620250:Fri Mar 20 16:51:04 2026: Sending message: type=p_resolve, content={dot1x_acct_sid=[[000001fa]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+1774043464} dot1x_resolve_host_now () [98f2b301a055/fr-update/host/AUTOBVT-GIG6GUR] 
+dot1x:15182:1774043464.620791:Fri Mar 20 16:51:04 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043464
+AcctStatusType 'Stop'
+!
+dot1x:15182:1774043464.621063:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: AcctStatusType=Stop for host 98f2b301a055.
+dot1x:15182:1774043464.621261:Fri Mar 20 16:51:04 2026: main::dot1x_set_fr_property:3680:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Received AcctStatusType = Stop setting offline.
+dot1x:15182:1774043464.621385:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=online, val=0 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043464.621509:Fri Mar 20 16:51:04 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[online] val[0] time[]
+dot1x:15182:1774043464.621772:Fri Mar 20 16:51:04 2026: main::dot1x_host_resolve_new:3134:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>mac[98f2b301a055] ip[] req: 
+dot1x:15182:1774043464.621932:Fri Mar 20 16:51:04 2026: main::dot1x_host_resolve_new:3138:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Reporting by mac[98f2b301a055]
+dot1x:15182:1774043464.622148:Fri Mar 20 16:51:04 2026: main::dot1x_update_field:3209:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>created new message_so_far->{98f2b301a055}: HASH(0xb5cfff8) {__put_calls=[{params=[mac,98f2b301a055,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043464.622315:Fri Mar 20 16:51:04 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>resolve for 98f2b301a055 is resolve now.
+1774043464 dot1x_resolve_host_now (scenario=resolve now host=98f2b301a055 msfcsid='HASH(0xb5cfff8)' ) { [98f2b301a055/fr-update/host/AUTOBVT-GIG6GUR] 
+dot1x:15182:1774043464.622580:Fri Mar 20 16:51:04 2026: main::dot1x_resolve_host_now:3079:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>message_so_far->{98f2b301a055}: HASH(0xb5cfff8) {__put_calls=[{params=[mac,98f2b301a055,,],type=field},{params=[online,0,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043464.622776:Fri Mar 20 16:51:04 2026: record: send.p_resolve: {online=[[0]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+dot1x:15182:1774043464.623116:Fri Mar 20 16:51:04 2026: Sending message: type=p_resolve, content={online=[[0]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+1774043464} dot1x_resolve_host_now () [98f2b301a055/fr-update/host/AUTOBVT-GIG6GUR] 
+dot1x:15182:1774043465.585834:Fri Mar 20 16:51:05 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043467.322956:Fri Mar 20 16:51:07 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:05",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043467.323759:Fri Mar 20 16:51:07 2026: main::plugin_stats_cb:1592:[other]::5: called with: 
+dot1x:15182:1774043467.323941:Fri Mar 20 16:51:07 2026: main::dot1x_stats_add:6938:[other]::5: dot1x_stats_add key = running_time, label = running_ time_(minutes_since_start) value = 203
+dot1x:15182:1774043467.324257:Fri Mar 20 16:51:07 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 204{label=running_ time_(minutes_since_start),periods={},value=204}
+dot1x:15182:1774043467.324560:Fri Mar 20 16:51:07 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 204{label=number_of_accepted_authentications,periods={day={duration=1440,last_count=0},hour={avg_val=6,duration=60,last_count=18}},value=28}
+dot1x:15182:1774043467.324816:Fri Mar 20 16:51:07 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 204{count=43,label=average_duration_of_ntlm_auth,periods={},value=0}
+dot1x:15182:1774043467.325111:Fri Mar 20 16:51:07 2026: main::dot1x_stats_handle_periods:6983:[other]::5: value = 204{label=number_of_rejected_authentications,periods={day={duration=1440,last_count=0},hour={avg_val=2.33333333333333,duration=60,last_count=7}},value=15}
+dot1x:15182:1774043467.325430:Fri Mar 20 16:51:07 2026: Sent 26 stats
+dot1x:15182:1774043468.327278:Fri Mar 20 16:51:08 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <failcheck>Timer failcheck/failcheck=HASH(0xb806eb8) timeout in 1774043466, Now=1774043468
+dot1x:15182:1774043468.327779:Fri Mar 20 16:51:08 2026: main::dot1x_set_timer:2866:[Timers]::5: <failcheck>Set Timer failcheck/failcheck=HASH(0xb76ff68): Reschedule failcheck
+dot1x:15182:1774043468.328188:Fri Mar 20 16:51:08 2026: main::dot1x_handle_timer:2680:[Timers]::1: <failcheck>[2 / 3] remaining attempts to recheck AD sources failed.
+dot1x:15182:1774043468.328699:Fri Mar 20 16:51:08 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043469.894414:Fri Mar 20 16:51:09 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:08",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043470.895994:Fri Mar 20 16:51:10 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xb77a5a0) timeout in 1774043470, Now=1774043470
+dot1x:15182:1774043470.896261:Fri Mar 20 16:51:10 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xb6d3880): Reschedule housekeep
+dot1x:15182:1774043470.896383:Fri Mar 20 16:51:10 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[4 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:15182:1774043470.897421:Fri Mar 20 16:51:10 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043473.062632:Fri Mar 20 16:51:13 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:10",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043474.065671:Fri Mar 20 16:51:14 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xb7be0b0) timeout in 1774043472, Now=1774043474
+dot1x:15182:1774043474.066019:Fri Mar 20 16:51:14 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xb55bd30): Reschedule gatekeeper
+dot1x:15182:1774043474.066406:Fri Mar 20 16:51:14 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <initially_unavailable>Timer initially_unavailable/initially_unavailable=HASH(0xb5aadc0) timeout in 1774043471, Now=1774043474
+dot1x:15182:1774043474.066930:Fri Mar 20 16:51:14 2026: main::dot1x_set_timer:2866:[Timers]::5: <initially_unavailable>Set Timer initially_unavailable/initially_unavailable=HASH(0xb5941c0): Reschedule init unavailable check
+dot1x:15182:1774043474.067461:Fri Mar 20 16:51:14 2026: main::dot1x_handle_timer:2731:[Timers]::1: <initially_unavailable>[1 / 2] remaining attempts to recheck AD sources that failed init.
+dot1x:15182:1774043474.067785:Fri Mar 20 16:51:14 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043475.672865:Fri Mar 20 16:51:15 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:14",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043476.675108:Fri Mar 20 16:51:16 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043478.297742:Fri Mar 20 16:51:18 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:16",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043478.298812:Fri Mar 20 16:51:18 2026: main::plugin_private_message_cb:1588:[other]::5: called with: 
+{msg=[],name=dot1x_status,nodeid=5290463614721804985,plugin=gen}
+dot1x:15182:1774043478.299045:Fri Mar 20 16:51:18 2026: main::cb_1x_private_message:1503:[other]::5: Handling private message {msg=[],name=dot1x_status,nodeid=5290463614721804985,plugin=gen}
+dot1x:15182:1774043478.326150:Fri Mar 20 16:51:18 2026: main::handle_dot1x_status:2119:[other]::0: 
+ dot1x processes details: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 3493 Wed Mar 18 12:17:05 2026  2-04:34:12 00:00:00 sh -c /usr/bin/redis-server /etc/redis.conf --daemonize no </dev/null 2>&1 | fstool dot1x_logger redis-server
+ 3495 Wed Mar 18 12:17:05 2026  2-04:34:12 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl redis-server
+15219 Fri Mar 20 13:25:02 2026    03:26:15 00:00:00 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/mar.pl start
+15244 Fri Mar 20 13:25:03 2026    03:26:14 00:00:05 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/disconnect.pl start
+15371 Fri Mar 20 13:25:05 2026    03:26:12 00:02:10 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/1x_log_reader.pl daemon
+15805 Fri Mar 20 13:25:13 2026    03:26:04 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/usr/sbin/winbind/winbindd.txqalab -F -S -s /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba/smb.conf.txqalab </dev/null 2>&1 | fstool dot1x_logger wb.txqalab
+15807 Fri Mar 20 13:25:13 2026    03:26:04 00:00:01 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl wb.txqalab
+17620 Fri Mar 20 13:26:08 2026    03:25:09 00:00:00 sh -c /usr/local/forescout/plugin/dot1x/fs_radius/sbin/radiusd -xxx -l stdout -d /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb </dev/null 2>&1 | fstool dot1x_logger radiusd
+17622 Fri Mar 20 13:26:08 2026    03:25:09 00:00:04 /usr/bin/perl -X -I lib/perl/inc lib/fstool/commands/dot1x_logger.pl radiusd
+dot1x:15182:1774043478.326371:Fri Mar 20 16:51:18 2026: main::handle_dot1x_status:2120:[other]::0: 
+=-=-=-=-=-=-=-=-=-=-=-=-=-=
+dot1x:15182:1774043479.299517:Fri Mar 20 16:51:19 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043480.912638:Fri Mar 20 16:51:20 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:19",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043481.914611:Fri Mar 20 16:51:21 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xb6d3880) timeout in 1774043480, Now=1774043481
+dot1x:15182:1774043481.915123:Fri Mar 20 16:51:21 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xb7fd2c8): Reschedule housekeep
+dot1x:15182:1774043481.915384:Fri Mar 20 16:51:21 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[5 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:15182:1774043481.915678:Fri Mar 20 16:51:21 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043483.496243:Fri Mar 20 16:51:23 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:21",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043484.499075:Fri Mar 20 16:51:24 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xb55bd30) timeout in 1774043484, Now=1774043484
+dot1x:15182:1774043484.499864:Fri Mar 20 16:51:24 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xb72b048): Reschedule gatekeeper
+dot1x:15182:1774043484.500696:Fri Mar 20 16:51:24 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043486.183347:Fri Mar 20 16:51:26 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:24",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043487.185306:Fri Mar 20 16:51:27 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043488.840114:Fri Mar 20 16:51:28 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:27",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043489.844379:Fri Mar 20 16:51:29 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043491.497905:Fri Mar 20 16:51:31 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:29",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 16,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 16,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:50:27 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043491.498757:Fri Mar 20 16:51:31 2026: main::disconnect_cb:5941:[other]::5: main::nas_dev_cb: got new sw devupdate: , , HASH(0xa3f3448)
+dot1x:15182:1774043491.499072:Fri Mar 20 16:51:31 2026: main::disconnect_cb:5941:[other]::5: main::nas_update: Update 10.16.128.21
+dot1x:15182:1774043492.499860:Fri Mar 20 16:51:32 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <housekeep>Timer housekeep/housekeep=HASH(0xb7fd2c8) timeout in 1774043491, Now=1774043492
+dot1x:15182:1774043492.500332:Fri Mar 20 16:51:32 2026: main::dot1x_set_timer:2866:[Timers]::5: <housekeep>Set Timer housekeep/housekeep=HASH(0xb5b1520): Reschedule housekeep
+dot1x:15182:1774043492.500604:Fri Mar 20 16:51:32 2026: main::dot1x_handle_timer:2644:[Timers]::1: <housekeep>[6 / 6] remaining attempts to recheck AD sources believed OK.
+dot1x:15182:1774043492.503355:Fri Mar 20 16:51:32 2026: main::dot1x_ad_rpc_ping:7909:[Timers]::1: <housekeep>Checking RPC connectivity via netlogon ping to domain txqalab
+dot1x:15182:1774043492.521137:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command '/usr/local/forescout/plugin/dot1x/fs_radius/usr/bin/wbinfo -P'. Returned 0.(dot1x_ad_rpc_ping:7912)
+dot1x:15182:1774043492.521634:Fri Mar 20 16:51:32 2026: main::dot1x_housekeep_old_configs:7497:[Timers]::1: <housekeep>found that txqalab-dc1 believed working, keeping.
+dot1x:15182:1774043492.521829:Fri Mar 20 16:51:32 2026: main::dot1x_housekeep_old_configs:7503:[Timers]::1: <housekeep>task keeping .
+dot1x:15182:1774043492.528472:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'find /usr/local/forescout/plugin/dot1x/fs_radius/etc/samba -not -regex ".*\(txqalab\|working.any\).*" -name "smb.conf.*" -delete'. 
+Output: ''(dot1x_clean_old_smb_conf:363)
+dot1x:15182:1774043492.536274:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'find /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb -not -iregex ".*\(txqalab\).*" -name "ldap__*" -delete'. 
+Output: ''(dot1x_clean_old_fr_ldap_module:342)
+dot1x:15182:1774043492.543717:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'find /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb -not -iregex ".*\(txqalab\).*" -name "ldap_enc__*" -delete'. 
+Output: ''(dot1x_clean_old_fr_ldap_module:345)
+dot1x:15182:1774043492.549663:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'find /dev/shm/forescout -not -iregex ".*\(txqalab\).*" -name "ldap__*" -delete'. 
+Output: ''(dot1x_clean_old_fr_ldap_module:348)
+dot1x:15182:1774043492.555179:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'chmod -R a-w /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb'. Returned 0.(dot1x_configure_fr_directory_permissions:3878)
+dot1x:15182:1774043492.565712:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'chmod -R u+rw /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb'. Returned 0.(dot1x_configure_fr_directory_permissions:3880)
+dot1x:15182:1774043492.566615:Fri Mar 20 16:51:32 2026: main::dot1x_configure_edit_attr_filter:4026:[Timers]::0: <housekeep>Configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:15182:1774043492.575421:Fri Mar 20 16:51:32 2026: main::dot1x_configure_edit_attr_filter:4046:[Timers]::0: <housekeep>Done configuring /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/attr_filter
+dot1x:15182:1774043492.576241:Fri Mar 20 16:51:32 2026: main::dot1x_configure_upn2sam:4064:[Timers]::0: <housekeep>Writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:15182:1774043492.576589:Fri Mar 20 16:51:32 2026: main::dot1x_configure_upn2sam:4125:[Timers]::0: <housekeep>Done writing /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_upn2sam
+dot1x:15182:1774043492.581009:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/fs_default_accept /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_accept'. Returned 0.(dot1x_configure_fr_sites:4132)
+dot1x:15182:1774043492.584195:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/fs_default_authorize /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_authorize'. Returned 0.(dot1x_configure_fr_sites:4133)
+dot1x:15182:1774043492.587355:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/fs_default_reject /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_reject'. Returned 0.(dot1x_configure_fr_sites:4134)
+dot1x:15182:1774043492.590989:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/default_fs_template /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs'. Returned 0.(dot1x_configure_fr_site_default:4155)
+dot1x:15182:1774043492.592072:Fri Mar 20 16:51:32 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_site_default:4156)
+dot1x:15182:1774043492.604801:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs.tmp.15182.1774043492 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:15182:1774043492.608806:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/default_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/default'. Returned 0.(dot1x_configure_fr_site_default:4157)
+dot1x:15182:1774043492.613052:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/inner-tunnel_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs'. Returned 0.(dot1x_configure_fr_site_inner_tunnel:4288)
+dot1x:15182:1774043492.613716:Fri Mar 20 16:51:32 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_site_inner_tunnel:4289)
+dot1x:15182:1774043492.621976:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs.tmp.15182.1774043492 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:15182:1774043492.626120:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/inner-tunnel_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/inner-tunnel'. Returned 0.(dot1x_configure_fr_site_inner_tunnel:4290)
+dot1x:15182:1774043492.630613:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/sites/control-socket_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/control-socket_fs'. Returned 0.(dot1x_configure_fr_site_control_socket:4314)
+dot1x:15182:1774043492.634523:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/control-socket_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-enabled/control-socket'. Returned 0.(dot1x_configure_fr_site_control_socket:4315)
+dot1x:15182:1774043492.639581:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/radiusd.conf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/radiusd.conf'. Returned 0.(dot1x_configure_fr_radiusd:4011)
+dot1x:15182:1774043492.643395:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/clients.conf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/clients.conf'. Returned 0.(dot1x_configure_fr_clients:4015)
+dot1x:15182:1774043492.647013:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/proxy.conf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/proxy.conf'. Returned 0.(dot1x_configure_fr_proxy:4339)
+dot1x:15182:1774043492.679848:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'psql -c "select id from devinfo where category='ad' and (id='txqalab-dc1' or (field_name='ad_name' and field_value='txqalab-dc1'))" | grep "(0 rows)"'. Returned 256.(dot1x_ad_name_exists:321)
+dot1x:15182:1774043492.680416:Fri Mar 20 16:51:32 2026: [housekeep/Timers] No Ping servers found(dot1x_configure_fr_proxy:4503)
+cp: cannot remove ‘/usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/dictionary.airespace’: Permission denied
+dot1x:15182:1774043492.691425:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/dictionaries/* /usr/local/forescout/plugin/dot1x/fs_radius/share/freeradius/'. Returned 256.(dot1x_configure_fr_dictionaries:3870)
+dot1x:15182:1774043492.697632:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/detail_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/detail_fs'. Returned 0.(dot1x_configure_fr_module_detail:3884)
+dot1x:15182:1774043492.701276:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/detail_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/detail'. Returned 0.(dot1x_configure_fr_module_detail:3885)
+dot1x:15182:1774043492.730017:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/eap_fs_template /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/eap_enc'. Returned 0.(dot1x_configure_fr_module_eap:4840)
+dot1x:15182:1774043492.730919:Fri Mar 20 16:51:32 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_module_eap:4842)
+dot1x:15182:1774043492.738280:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/eap_enc.tmp.15182.1774043492 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/eap_enc'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:15182:1774043492.741775:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/fs_properties /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_properties'. Returned 0.(dot1x_configure_fr_module_fs_properties:3889)
+dot1x:15182:1774043492.744482:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_properties /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/fs_properties'. Returned 0.(dot1x_configure_fr_module_fs_properties:3890)
+dot1x:15182:1774043492.747639:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/fs_restrictions /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_restrictions'. Returned 0.(dot1x_configure_fr_module_fs_restrictions:3894)
+dot1x:15182:1774043492.750310:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/fs_restrictions /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/fs_restrictions'. Returned 0.(dot1x_configure_fr_module_fs_restrictions:3895)
+dot1x:15182:1774043492.753587:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/mschap_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/mschap_fs'. Returned 0.(dot1x_configure_fr_module_mschap:3901)
+dot1x:15182:1774043492.756155:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'chmod go-rw,u+rw /tmp/mschap.tmp'. Returned 0.(dot1x_edit_mschap_module:3914)
+dot1x:15182:1774043492.765271:Fri Mar 20 16:51:32 2026: main::dot1x_edit_mschap_module:3930:[Timers]::5: <housekeep>Domain Map = 
+dot1x:15182:1774043492.765464:Fri Mar 20 16:51:32 2026: main::dot1x_edit_mschap_module:3943:[Timers]::5: <housekeep>NTLM_AUTH LINE = 	 ntlm_auth = "/usr/bin/fstool ntlm_auth --mac=%{%{Calling-Station-Id}:-None} --username=%{%{reply:AD-Samaccountname}:-%{mschap:User-Name}} --full-username=%{%{User-Name}:-None} --realm=%{%{Realm}:-None} --challenge=%{%{mschap:Challenge}:-00} --hostdomain=%{%{redis:hget %{Calling-Station-Id} Domain}:-None} --nt-response=%{%{mschap:NT-Response}:-00}"
+dot1x:15182:1774043492.774514:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'mv /tmp/mschap.tmp /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/mschap_fs'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:15182:1774043492.777123:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/mschap_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/mschap'. Returned 0.(dot1x_configure_fr_module_mschap:3903)
+dot1x:15182:1774043492.780691:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/realm_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/realm_fs'. Returned 0.(dot1x_configure_fr_module_realm:3990)
+dot1x:15182:1774043492.783361:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/realm_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/realm'. Returned 0.(dot1x_configure_fr_module_realm:3991)
+dot1x:15182:1774043492.786480:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/redis_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/redis_fs'. Returned 0.(dot1x_configure_fr_module_redis:3995)
+dot1x:15182:1774043492.788919:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'ln -sf /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-available/redis_fs /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-enabled/redis'. Returned 0.(dot1x_configure_fr_module_redis:3996)
+dot1x:15182:1774043492.791962:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/policy.d/ntlm_auth /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/ntlm_auth'. Returned 0.(dot1x_configure_fr_module_ntlm_auth:4000)
+dot1x:15182:1774043492.795012:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/modules/attr_filter_post-proxy /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/mods-config/attr_filter/post-proxy'. Returned 0.(dot1x_configure_fr_module_attr_filter:4007)
+dot1x:15182:1774043492.798030:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'cp -f /usr/local/forescout/plugin/dot1x/fr_config/policy.d/fs_policy /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy'. Returned 0.(dot1x_configure_fr_fs_policy:3864)
+dot1x:15182:1774043492.798807:Fri Mar 20 16:51:32 2026: main::dot1x_get_default_policy_properties:7224:[Timers]::5: <housekeep>rule 1: {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XComboStringCriterion,field=EAP-Type,selected=TLS,value=TLS}],restrict=vlan:	IsCOA:false}
+dot1x:15182:1774043492.799189:Fri Mar 20 16:51:32 2026: main::dot1x_get_default_policy_properties:7224:[Timers]::5: <housekeep>rule 2: {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XStringCriterion,field=User-Name,filType=any,input=yalla,value=.*}],restrict=reject=dummy}
+dot1x:15182:1774043492.799667:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Updating policy file (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy) with default rules:
+ $VAR1 = {
+          'rule_2' => {
+                        'restrict' => 'reject=dummy',
+                        'criteria' => [
+                                        {
+                                          'filType' => 'any',
+                                          'input' => 'yalla',
+                                          'value' => '.*',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XStringCriterion',
+                                          'field' => 'User-Name'
+                                        }
+                                      ]
+                      },
+          'rule_1' => {
+                        'restrict' => 'vlan:	IsCOA:false',
+                        'criteria' => [
+                                        {
+                                          'value' => 'TLS',
+                                          'critClass' => 'forescout.plugin.dot1x.default_policy.D1XComboStringCriterion',
+                                          'selected' => 'TLS',
+                                          'field' => 'EAP-Type'
+                                        }
+                                      ]
+                      }
+        };
+(dot1x_configure_fr_create_default_policy:5389)
+dot1x:15182:1774043492.800137:Fri Mar 20 16:51:32 2026: [housekeep/Timers] processing lines and applying line_func(dot1x_configure_fr_create_default_policy:5391)
+dot1x:15182:1774043492.800794:Fri Mar 20 16:51:32 2026: main::line_policy_conf:5369:[Timers]::5: <housekeep>Writing unlang rule and setting auth in redis - {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XStringCriterion,field=User-Name,filType=any,input=yalla,value=.*}],restrict=reject=dummy}
+dot1x:15182:1774043492.801156:Fri Mar 20 16:51:32 2026: main::line_policy_conf:5369:[Timers]::5: <housekeep>Writing unlang rule and setting auth in redis - {criteria=[{critClass=forescout.plugin.dot1x.default_policy.D1XComboStringCriterion,field=EAP-Type,selected=TLS,value=TLS}],restrict=vlan:	IsCOA:false}
+dot1x:15182:1774043492.810236:Fri Mar 20 16:51:32 2026: [housekeep/Timers] Run linux command 'mv /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy.tmp.15182.1774043492 /usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/policy.d/fs_policy'. Returned 0.(dot1x_replace_file_if_changed:116)
+dot1x:15182:1774043492.815052:Fri Mar 20 16:51:32 2026: main::dot1x_configure_fr_create_default_policy:5406:[Timers]::5: <housekeep>Placing the default policy in default server (/usr/local/forescout/plugin/dot1x/fs_radius/etc/raddb/sites-available/fs_default_accept):	rule_1, rule_2
+dot1x:15182:1774043492.815927:Fri Mar 20 16:51:32 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043494.566968:Fri Mar 20 16:51:34 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:32",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 17,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 17,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:51:32 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043494.568234:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043493
+AssignedTo ''
+dot1x:15182:1774043494.568615:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: AssignedTo= for host 98f2b301a055.
+dot1x:15182:1774043494.568801:Fri Mar 20 16:51:34 2026: main::dot1x_parse_restriction:3426:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>result is N\A.
+dot1x:15182:1774043494.568987:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_ass_restrictions, val=N\A skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.569167:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_ass_restrictions] val[N\A] time[]
+dot1x:15182:1774043494.569369:Fri Mar 20 16:51:34 2026: main::dot1x_host_resolve_new:3134:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>mac[98f2b301a055] ip[] req: 
+dot1x:15182:1774043494.569524:Fri Mar 20 16:51:34 2026: main::dot1x_host_resolve_new:3138:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Reporting by mac[98f2b301a055]
+dot1x:15182:1774043494.569777:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3209:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>created new message_so_far->{98f2b301a055}: HASH(0xb752528) {__put_calls=[{params=[mac,98f2b301a055,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043494.569957:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_auth_time, val=1774043493 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.570121:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_auth_time] val[1774043493] time[]
+dot1x:15182:1774043494.570330:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_calling_sid, val=98-F2-B3-01-A0-55 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.570489:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_calling_sid] val[98-F2-B3-01-A0-55] time[]
+dot1x:15182:1774043494.570669:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>resolve for 98f2b301a055 is .
+dot1x:15182:1774043494.570948:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043493
+NASPort '50101'
+NASPortType 'Ethernet'
+NASIpAddress '10.16.128.18'
+CalledSid '00-6C-BC-CF-C0-81'
+UserName 'host/Dot1x-CLT-G'
+EapType 'TLS'
+1x_sr '4525faa35ab242a5'
+1x_ex '460102234000Z'
+1x_is '/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local'
+1x_su '/C=US/ST=Texas/L=Ranger/O=Forescout/OU=Lab/CN=Dot1x-CLT-G/emailAddress=clientg@internl.local'
+1x_cn 'Dot1x-CLT-G'
+NASIdentifier 'Cisco_3850_B'
+NASPortIdStr 'GigabitEthernet1/0/1'
+1x_san 'URI:E2EQADeviceId://qae2e-san-testid-12345'
+1x_eku '1.3.6.1.5.5.7.3.2'
+dot1x:15182:1774043494.571244:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: NASPort=50101 for host 98f2b301a055.
+dot1x:15182:1774043494.571402:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_NAS_port, val=50101 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.571534:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_NAS_port] val[50101] time[]
+dot1x:15182:1774043494.571794:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: NASPortType=Ethernet for host 98f2b301a055.
+dot1x:15182:1774043494.571951:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_nasport_type, val=Ethernet skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.572123:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_nasport_type] val[Ethernet] time[]
+dot1x:15182:1774043494.572353:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: NASIpAddress=10.16.128.18 for host 98f2b301a055.
+dot1x:15182:1774043494.572504:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_NAS_addr, val=10.16.128.18 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.572631:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_NAS_addr] val[10.16.128.18] time[]
+dot1x:15182:1774043494.572871:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: CalledSid=00-6C-BC-CF-C0-81 for host 98f2b301a055.
+dot1x:15182:1774043494.573055:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_called_sid, val=00-6C-BC-CF-C0-81 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.573213:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_called_sid] val[00-6C-BC-CF-C0-81] time[]
+dot1x:15182:1774043494.573427:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3601:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got Called_Station_Id: 00-6C-BC-CF-C0-81
+dot1x:15182:1774043494.573543:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3605:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>CalledSid: parsed to ()
+dot1x:15182:1774043494.573710:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_called_sid, val=00-6C-BC-CF-C0-81 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.573860:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_called_sid] val[00-6C-BC-CF-C0-81] time[]
+dot1x:15182:1774043494.574468:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: UserName=host/Dot1x-CLT-G for host 98f2b301a055.
+dot1x:15182:1774043494.574626:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_user, val=host/Dot1x-CLT-G skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.574778:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_user] val[host/Dot1x-CLT-G] time[]
+dot1x:15182:1774043494.575002:Fri Mar 20 16:51:34 2026: main::dot1x_update_user_props:3517:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>from fr: UserName (Dot1x-CLT-G, )
+dot1x:15182:1774043494.575134:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_login_type, val=dot1x_computer_login skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.575255:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_login_type] val[dot1x_computer_login] time[]
+dot1x:15182:1774043494.575470:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_host, val=Dot1x-CLT-G skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.575628:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_host] val[Dot1x-CLT-G] time[]
+dot1x:15182:1774043494.575823:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_default_domain, val= skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.575999:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_default_domain] val[] time[]
+dot1x:15182:1774043494.576184:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=nbtdomain, val= skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.576328:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[nbtdomain] val[] time[]
+dot1x:15182:1774043494.576473:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_domain, val= skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.576647:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_domain] val[] time[]
+dot1x:15182:1774043494.576844:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_rqeuested_domain, val=None given skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.577008:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_rqeuested_domain] val[None given] time[]
+dot1x:15182:1774043494.577226:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: EapType=TLS for host 98f2b301a055.
+dot1x:15182:1774043494.577394:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_fr_eap_type, val=EAP-TLS skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.577534:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_fr_eap_type] val[EAP-TLS] time[]
+dot1x:15182:1774043494.577772:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: 1x_sr=4525faa35ab242a5 for host 98f2b301a055.
+dot1x:15182:1774043494.577950:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_fr_client_cert_serial, val=4525faa35ab242a5 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.578143:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_fr_client_cert_serial] val[4525faa35ab242a5] time[]
+dot1x:15182:1774043494.578363:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: 1x_ex=460102234000Z for host 98f2b301a055.
+dot1x:15182:1774043494.578582:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_fr_client_cert_expiration, val=2398570800 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.578748:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_fr_client_cert_expiration] val[2398570800] time[]
+dot1x:15182:1774043494.578973:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: 1x_is=/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local for host 98f2b301a055.
+dot1x:15182:1774043494.579135:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_fr_client_cert_issuer, val=/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.579301:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_fr_client_cert_issuer] val[/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local] time[]
+dot1x:15182:1774043494.579525:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: 1x_su=/C=US/ST=Texas/L=Ranger/O=Forescout/OU=Lab/CN=Dot1x-CLT-G/emailAddress=clientg@internl.local for host 98f2b301a055.
+dot1x:15182:1774043494.579655:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_fr_client_cert_subj, val=/C=US/ST=Texas/L=Ranger/O=Forescout/OU=Lab/CN=Dot1x-CLT-G/emailAddress=clientg@internl.local skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.579867:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_fr_client_cert_subj] val[/C=US/ST=Texas/L=Ranger/O=Forescout/OU=Lab/CN=Dot1x-CLT-G/emailAddress=clientg@internl.local] time[]
+dot1x:15182:1774043494.580089:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: 1x_cn=Dot1x-CLT-G for host 98f2b301a055.
+dot1x:15182:1774043494.580242:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_fr_client_cert_cn, val=Dot1x-CLT-G skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.580362:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_fr_client_cert_cn] val[Dot1x-CLT-G] time[]
+dot1x:15182:1774043494.580600:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: NASIdentifier=Cisco_3850_B for host 98f2b301a055.
+dot1x:15182:1774043494.580726:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_NAS_Identifier, val=Cisco_3850_B skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.580881:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_NAS_Identifier] val[Cisco_3850_B] time[]
+dot1x:15182:1774043494.581072:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3609:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got NAS_Identifier: Cisco_3850_B
+dot1x:15182:1774043494.581195:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_NAS_Identifier, val=Cisco_3850_B skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.581360:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_NAS_Identifier] val[Cisco_3850_B] time[]
+dot1x:15182:1774043494.581561:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: NASPortIdStr=GigabitEthernet1/0/1 for host 98f2b301a055.
+dot1x:15182:1774043494.581730:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_NASPortIdStr, val=GigabitEthernet1/0/1 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.581860:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_NASPortIdStr] val[GigabitEthernet1/0/1] time[]
+dot1x:15182:1774043494.582064:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3624:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got NAS_Port_Id: GigabitEthernet1/0/1
+dot1x:15182:1774043494.582174:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_NASPortIdStr, val=GigabitEthernet1/0/1 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.582315:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_NASPortIdStr] val[GigabitEthernet1/0/1] time[]
+dot1x:15182:1774043494.582531:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: 1x_san=URI:E2EQADeviceId://qae2e-san-testid-12345 for host 98f2b301a055.
+dot1x:15182:1774043494.582642:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>(csid=98f2b301a055, fld=dot1x_fr_client_x509_cert_subj_alt_name, val=URI:E2EQADeviceId://qae2e-san-testid-12345 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.582837:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>csid[98f2b301a055] field[dot1x_fr_client_x509_cert_subj_alt_name] val[URI:E2EQADeviceId://qae2e-san-testid-12345] time[]
+dot1x:15182:1774043494.583081:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>Got attribute-value pair: 1x_eku=1.3.6.1.5.5.7.3.2 for host 98f2b301a055.
+dot1x:15182:1774043494.583323:Fri Mar 20 16:51:34 2026: record: send.p_nplog: {ip=10.16.177.66,msg=Bad FREERADIUS input '98f2b301a055 1x_eku 1.3.6.1.5.5.7.3.2'}
+dot1x:15182:1774043494.583488:Fri Mar 20 16:51:34 2026: Sending message: type=p_nplog, content={ip=10.16.177.66,msg=Bad FREERADIUS input '98f2b301a055 1x_eku 1.3.6.1.5.5.7.3.2'}
+dot1x:15182:1774043494.583703:Fri Mar 20 16:51:34 2026: Error: [98f2b301a055/fr-update/host/AUTOBVT-GIG6GUR] Bad FREERADIUS input '98f2b301a055 1x_eku 1.3.6.1.5.5.7.3.2'(dot1x_set_fr_property:3732)
+dot1x:15182:1774043494.583875:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055|usr=host/AUTOBVT-GIG6GUR>resolve for 98f2b301a055 is .
+dot1x:15182:1774043494.584111:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043493
+AuthStatus 'Access-Accept:default rule_1'
+dot1x:15182:1774043494.584399:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/Dot1x-CLT-G>Got attribute-value pair: AuthStatus=Access-Accept:default rule_1 for host 98f2b301a055.
+dot1x:15182:1774043494.584569:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3568:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>AuthStatus: parsed to (Access-Accept, default rule_1)
+dot1x:15182:1774043494.584739:Fri Mar 20 16:51:34 2026: main::dot1x_update_authentication_props:3388:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>Fetched user=Dot1x-CLT-G, auth entity=dot1x_computer_login.
+dot1x:15182:1774043494.584952:Fri Mar 20 16:51:34 2026: main::dot1x_stats_add:6938:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>dot1x_stats_add key = auth_accepts, label = number_of_accepted_authentications value = 28
+dot1x:15182:1774043494.585066:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_success_auth_time, val=1774043494 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.585276:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_success_auth_time] val[1774043494] time[]
+dot1x:15182:1774043494.585464:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_auth_state, val=Access-Accept skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.585608:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_auth_state] val[Access-Accept] time[]
+dot1x:15182:1774043494.585817:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_host_auth_status, val=Access-Accept skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.585982:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_host_auth_status] val[Access-Accept] time[]
+dot1x:15182:1774043494.586751:Fri Mar 20 16:51:34 2026: main::dot1x_update_authorization_source:3467:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>from default rule_1.
+dot1x:15182:1774043494.586886:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_auth_source, val=Pre-Admission rule 1 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.587057:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_auth_source] val[Pre-Admission rule 1] time[]
+dot1x:15182:1774043494.587252:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3578:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>AuthStatus marks the last fr update for the authentication
+dot1x:15182:1774043494.587413:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_auth_time, val=1774043493 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.587585:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_auth_time] val[1774043493] time[]
+dot1x:15182:1774043494.587768:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_calling_sid, val=98-F2-B3-01-A0-55 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.587915:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_calling_sid] val[98-F2-B3-01-A0-55] time[]
+dot1x:15182:1774043494.588154:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3296:[ntlmpl]::1: <98f2b301a055|usr=host/Dot1x-CLT-G>""
+dot1x:15182:1774043494.588313:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_ntlmauth_status, val=Active Directory Accept skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.588452:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_ntlmauth_status] val[Active Directory Accept] time[]
+dot1x:15182:1774043494.588669:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>resolve for 98f2b301a055 is resolve auth.
+dot1x:15182:1774043494.589403:Fri Mar 20 16:51:34 2026: main::dot1x_get_host_property:3101:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>fetched dot1x_access_action_comment= from hostinfo
+dot1x:15182:1774043494.589611:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_action_targets, val=5290463614721804985 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.589758:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_action_targets] val[5290463614721804985] time[]
+dot1x:15182:1774043494.589934:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_auth_appliance_id, val=5290463614721804985 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.590080:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_auth_appliance_id] val[5290463614721804985] time[]
+dot1x:15182:1774043494.590270:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_auth_appliance, val=10.16.177.66 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.590412:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_auth_appliance] val[10.16.177.66] time[]
+dot1x:15182:1774043494.590635:Fri Mar 20 16:51:34 2026: main::dot1x_update_host_mar_properties:2239:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>mac[98f2b301a055] skip_add_to_resolve_msg[] do_parse_restriction[] mar: 
+dot1x:15182:1774043494.591219:Fri Mar 20 16:51:34 2026: [98f2b301a055/ntlmpl/host/Dot1x-CLT-G] fetched mar by key=98f2b301a055: item= data={mar=[]} header={context=request}(dot1x_fetchMar:2228)
+dot1x:15182:1774043494.591382:Fri Mar 20 16:51:34 2026: main::dot1x_fetchMar:2230:[ntlmpl]::0: <98f2b301a055|usr=host/Dot1x-CLT-G>no MAR entry for 98f2b301a055!
+dot1x:15182:1774043494.591538:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_host_in_mar, val=0 skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.591679:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_host_in_mar] val[0] time[]
+1774043494 dot1x_resolve_host_now (scenario=New host authentication host=98f2b301a055 msfcsid='HASH(0xb752528)' ) { [98f2b301a055/ntlmpl/host/Dot1x-CLT-G] 
+dot1x:15182:1774043494.605623:Fri Mar 20 16:51:34 2026: main::dot1x_resolve_host_now:3079:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>message_so_far->{98f2b301a055}: HASH(0xb752528) {__put_calls=[{params=[mac,98f2b301a055,,],type=field},{params=[dot1x_ass_restrictions,N\A,,],type=field},{params=[dot1x_auth_time,1774043493,,],type=field},{params=[dot1x_calling_sid,98-F2-B3-01-A0-55,,],type=field},{params=[dot1x_NAS_port,50101,,],type=field},{params=[dot1x_nasport_type,Ethernet,,],type=field},{params=[dot1x_NAS_addr,10.16.128.18,,],type=field},{params=[dot1x_called_sid,00-6C-BC-CF-C0-81,,],type=field},{params=[dot1x_called_sid,00-6C-BC-CF-C0-81,,],type=field},{params=[dot1x_user,host/Dot1x-CLT-G,,],type=field},{params=[dot1x_login_type,dot1x_computer_login,,],type=field},{params=[dot1x_host,Dot1x-CLT-G,,],type=field},{params=[dot1x_default_domain,No value exists: Missing/Outdated authentication, or no Domain defined,],type=unknown},{params=[nbtdomain,,,],type=field},{params=[dot1x_domain,No value exists: Missing/Outdated authentication, or no Domain used,],type=unknown},{params=[dot1x_rqeuested_domain,None given,,],type=field},{params=[dot1x_fr_eap_type,EAP-TLS,,],type=field},{params=[dot1x_fr_client_cert_serial,4525faa35ab242a5,,],type=field},{params=[dot1x_fr_client_cert_expiration,2398570800,,],type=field},{params=[dot1x_fr_client_cert_issuer,/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local,,],type=field},{params=[dot1x_fr_client_cert_subj,/C=US/ST=Texas/L=Ranger/O=Forescout/OU=Lab/CN=Dot1x-CLT-G/emailAddress=clientg@internl.local,,],type=field},{params=[dot1x_fr_client_cert_cn,Dot1x-CLT-G,,],type=field},{params=[dot1x_NAS_Identifier,Cisco_3850_B,,],type=field},{params=[dot1x_NAS_Identifier,Cisco_3850_B,,],type=field},{params=[dot1x_NASPortIdStr,GigabitEthernet1/0/1,,],type=field},{params=[dot1x_NASPortIdStr,GigabitEthernet1/0/1,,],type=field},{params=[dot1x_fr_client_x509_cert_subj_alt_name,URI:E2EQADeviceId://qae2e-san-testid-12345,,],type=field},{params=[dot1x_success_auth_time,1774043494,,],type=field},{params=[dot1x_auth_state,Access-Accept,,],type=field},{params=[dot1x_host_auth_status,Access-Accept,,],type=field},{params=[dot1x_auth_source,Pre-Admission rule 1,,],type=field},{params=[dot1x_auth_time,1774043493,,],type=field},{params=[dot1x_calling_sid,98-F2-B3-01-A0-55,,],type=field},{params=[dot1x_ntlmauth_status,Active Directory Accept,,],type=field},{params=[dot1x_action_targets,5290463614721804985,,],type=field},{params=[dot1x_auth_appliance_id,5290463614721804985,,],type=field},{params=[dot1x_auth_appliance,10.16.177.66,,],type=field},{params=[dot1x_host_in_mar,0,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043494.606899:Fri Mar 20 16:51:34 2026: record: send.p_resolve: {dot1x_NASPortIdStr=[[GigabitEthernet1/0/1]],dot1x_NAS_Identifier=[[Cisco_3850_B]],dot1x_NAS_addr=[[10.16.128.18]],dot1x_NAS_port=[[50101]],dot1x_action_targets=[[5290463614721804985]],dot1x_ass_restrictions=[[N\A]],dot1x_auth_appliance=[[10.16.177.66]],dot1x_auth_appliance_id=[[5290463614721804985]],dot1x_auth_source=[[Pre-Admission rule 1]],dot1x_auth_state=[[Access-Accept]],dot1x_auth_time=[[1774043493]],dot1x_called_sid=[[00-6C-BC-CF-C0-81]],dot1x_calling_sid=[[98-F2-B3-01-A0-55]],dot1x_default_domain=[[ unknown-0fbc6f885ef5,,No value exists: Missing/Outdated authentication, or no Domain defined]],dot1x_domain=[[ unknown-0fbc6f885ef5,,No value exists: Missing/Outdated authentication, or no Domain used]],dot1x_fr_client_cert_cn=[[Dot1x-CLT-G]],dot1x_fr_client_cert_expiration=[[2398570800]],dot1x_fr_client_cert_issuer=[[/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local]],dot1x_fr_client_cert_serial=[[4525faa35ab242a5]],dot1x_fr_client_cert_subj=[[/C=US/ST=Texas/L=Ranger/O=Forescout/OU=Lab/CN=Dot1x-CLT-G/emailAddress=clientg@internl.local]],dot1x_fr_client_x509_cert_subj_alt_name=[[URI:E2EQADeviceId://qae2e-san-testid-12345]],dot1x_fr_eap_type=[[EAP-TLS]],dot1x_host=[[Dot1x-CLT-G]],dot1x_host_auth_status=[[Access-Accept]],dot1x_host_in_mar=[[0]],dot1x_login_type=[[dot1x_computer_login]],dot1x_nasport_type=[[Ethernet]],dot1x_ntlmauth_status=[[Active Directory Accept]],dot1x_rqeuested_domain=[[None given]],dot1x_success_auth_time=[[1774043494]],dot1x_user=[[host/Dot1x-CLT-G]],nbtdomain=[[]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+dot1x:15182:1774043494.607783:Fri Mar 20 16:51:34 2026: Sending message: type=p_resolve, content={dot1x_NASPortIdStr=[[GigabitEthernet1/0/1]],dot1x_NAS_Identifier=[[Cisco_3850_B]],dot1x_NAS_addr=[[10.16.128.18]],dot1x_NAS_port=[[50101]],dot1x_action_targets=[[5290463614721804985]],dot1x_ass_restrictions=[[N\A]],dot1x_auth_appliance=[[10.16.177.66]],dot1x_auth_appliance_id=[[5290463614721804985]],dot1x_auth_source=[[Pre-Admission rule 1]],dot1x_auth_state=[[Access-Accept]],dot1x_auth_time=[[1774043493]],dot1x_called_sid=[[00-6C-BC-CF-C0-81]],dot1x_calling_sid=[[98-F2-B3-01-A0-55]],dot1x_default_domain=[[ unknown-0fbc6f885ef5,,No value exists: Missing/Outdated authentication, or no Domain defined]],dot1x_domain=[[ unknown-0fbc6f885ef5,,No value exists: Missing/Outdated authentication, or no Domain used]],dot1x_fr_client_cert_cn=[[Dot1x-CLT-G]],dot1x_fr_client_cert_expiration=[[2398570800]],dot1x_fr_client_cert_issuer=[[/C=US/ST=Texas/L=Dallas/O=Forescout/OU=Lab/CN=Dot1x-CA/emailAddress=admin@internal.local]],dot1x_fr_client_cert_serial=[[4525faa35ab242a5]],dot1x_fr_client_cert_subj=[[/C=US/ST=Texas/L=Ranger/O=Forescout/OU=Lab/CN=Dot1x-CLT-G/emailAddress=clientg@internl.local]],dot1x_fr_client_x509_cert_subj_alt_name=[[URI:E2EQADeviceId://qae2e-san-testid-12345]],dot1x_fr_eap_type=[[EAP-TLS]],dot1x_host=[[Dot1x-CLT-G]],dot1x_host_auth_status=[[Access-Accept]],dot1x_host_in_mar=[[0]],dot1x_login_type=[[dot1x_computer_login]],dot1x_nasport_type=[[Ethernet]],dot1x_ntlmauth_status=[[Active Directory Accept]],dot1x_rqeuested_domain=[[None given]],dot1x_success_auth_time=[[1774043494]],dot1x_user=[[host/Dot1x-CLT-G]],nbtdomain=[[]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+1774043494} dot1x_resolve_host_now () [98f2b301a055/ntlmpl/host/Dot1x-CLT-G] 
+dot1x:15182:1774043494.609802:Fri Mar 20 16:51:34 2026: main::dot1x_resolve_auth_host:3061:[ntlmpl]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>going to remove authentication properties not found for host 98f2b301a055.
+dot1x:15182:1774043494.610173:Fri Mar 20 16:51:34 2026: record: send.p_clear_prop: {ip=[mac,98f2b301a055],name=dot1x_domain}
+dot1x:15182:1774043494.610368:Fri Mar 20 16:51:34 2026: Sending message: type=p_clear_prop, content={ip=[mac,98f2b301a055],name=dot1x_domain}
+dot1x:15182:1774043494.610799:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043493
+Cisco-AVPair 'service-type=Framed'
+!
+dot1x:15182:1774043494.611175:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/Dot1x-CLT-G>Got attribute-value pair: Cisco-AVPair=service-type=Framed for host 98f2b301a055.
+dot1x:15182:1774043494.611381:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_cisco_av_pair_audit_session_id, val=service-type=Framed skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.611600:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_cisco_av_pair_audit_session_id] val[service-type=Framed] time[]
+dot1x:15182:1774043494.611821:Fri Mar 20 16:51:34 2026: main::dot1x_host_resolve_new:3134:[fr-update]::1: <98f2b301a055|usr=host/Dot1x-CLT-G>mac[98f2b301a055] ip[] req: 
+dot1x:15182:1774043494.612112:Fri Mar 20 16:51:34 2026: main::dot1x_host_resolve_new:3138:[fr-update]::1: <98f2b301a055|usr=host/Dot1x-CLT-G>Reporting by mac[98f2b301a055]
+dot1x:15182:1774043494.612427:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3209:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>created new message_so_far->{98f2b301a055}: HASH(0xb7302c0) {__put_calls=[{params=[mac,98f2b301a055,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043494.612711:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>resolve for 98f2b301a055 is resolve now.
+1774043494 dot1x_resolve_host_now (scenario=resolve now host=98f2b301a055 msfcsid='HASH(0xb7302c0)' ) { [98f2b301a055/fr-update/host/Dot1x-CLT-G] 
+dot1x:15182:1774043494.612984:Fri Mar 20 16:51:34 2026: main::dot1x_resolve_host_now:3079:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>message_so_far->{98f2b301a055}: HASH(0xb7302c0) {__put_calls=[{params=[mac,98f2b301a055,,],type=field},{params=[dot1x_cisco_av_pair_audit_session_id,service-type=Framed,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043494.613202:Fri Mar 20 16:51:34 2026: record: send.p_resolve: {dot1x_cisco_av_pair_audit_session_id=[[service-type=Framed]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+dot1x:15182:1774043494.613368:Fri Mar 20 16:51:34 2026: Sending message: type=p_resolve, content={dot1x_cisco_av_pair_audit_session_id=[[service-type=Framed]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+1774043494} dot1x_resolve_host_now () [98f2b301a055/fr-update/host/Dot1x-CLT-G] 
+dot1x:15182:1774043494.619659:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043493
+Auth-Type 'EAP'
+!
+dot1x:15182:1774043494.619931:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/Dot1x-CLT-G>Got attribute-value pair: Auth-Type=EAP for host 98f2b301a055.
+dot1x:15182:1774043494.620068:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3559:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>Auth-Type: parsed to (EAP)
+dot1x:15182:1774043494.620264:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3563:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>Auth-Type marks the last fr update for the authentication
+dot1x:15182:1774043494.620416:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>resolve for 98f2b301a055 is resolve now.
+1774043494 dot1x_resolve_host_now (scenario=resolve now host=98f2b301a055 msfcsid='' ) { [98f2b301a055/fr-update/host/Dot1x-CLT-G] 
+1774043494} dot1x_resolve_host_now () [98f2b301a055/fr-update/host/Dot1x-CLT-G] 
+dot1x:15182:1774043494.620794:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043493
+AcctSid '000001fb'
+!
+dot1x:15182:1774043494.621093:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/Dot1x-CLT-G>Got attribute-value pair: AcctSid=000001fb for host 98f2b301a055.
+dot1x:15182:1774043494.621272:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3195:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>(csid=98f2b301a055, fld=dot1x_acct_sid, val=000001fb skip_add_to_resolve_msg= do_parse_restriction=)
+dot1x:15182:1774043494.621444:Fri Mar 20 16:51:34 2026: main::dot1x_dbSetField:2908:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>csid[98f2b301a055] field[dot1x_acct_sid] val[000001fb] time[]
+dot1x:15182:1774043494.621624:Fri Mar 20 16:51:34 2026: main::dot1x_host_resolve_new:3134:[fr-update]::1: <98f2b301a055|usr=host/Dot1x-CLT-G>mac[98f2b301a055] ip[] req: 
+dot1x:15182:1774043494.621789:Fri Mar 20 16:51:34 2026: main::dot1x_host_resolve_new:3138:[fr-update]::1: <98f2b301a055|usr=host/Dot1x-CLT-G>Reporting by mac[98f2b301a055]
+dot1x:15182:1774043494.622048:Fri Mar 20 16:51:34 2026: main::dot1x_update_field:3209:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>created new message_so_far->{98f2b301a055}: HASH(0xb5c1b08) {__put_calls=[{params=[mac,98f2b301a055,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043494.622272:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>resolve for 98f2b301a055 is resolve now.
+1774043494 dot1x_resolve_host_now (scenario=resolve now host=98f2b301a055 msfcsid='HASH(0xb5c1b08)' ) { [98f2b301a055/fr-update/host/Dot1x-CLT-G] 
+dot1x:15182:1774043494.622546:Fri Mar 20 16:51:34 2026: main::dot1x_resolve_host_now:3079:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>message_so_far->{98f2b301a055}: HASH(0xb5c1b08) {__put_calls=[{params=[mac,98f2b301a055,,],type=field},{params=[dot1x_acct_sid,000001fb,,],type=field}],p_id=0,req=}
+dot1x:15182:1774043494.622789:Fri Mar 20 16:51:34 2026: record: send.p_resolve: {dot1x_acct_sid=[[000001fb]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+dot1x:15182:1774043494.623029:Fri Mar 20 16:51:34 2026: Sending message: type=p_resolve, content={dot1x_acct_sid=[[000001fb]],p_cert={cert=0,force=0},p_dont_ignore=,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+1774043494} dot1x_resolve_host_now () [98f2b301a055/fr-update/host/Dot1x-CLT-G] 
+dot1x:15182:1774043494.623529:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3264:[listen]::0: 
+Got control input:
+update 98-F2-B3-01-A0-55 1774043493
+Framed-IP-Address ''
+dot1x:15182:1774043494.623803:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3556:[fr-update]::1: <98f2b301a055|usr=host/Dot1x-CLT-G>Got attribute-value pair: Framed-IP-Address= for host 98f2b301a055.
+dot1x:15182:1774043494.624002:Fri Mar 20 16:51:34 2026: main::dot1x_set_fr_property:3712:[fr-update]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>Received Framed-IP-Address = .
+dot1x:15182:1774043494.624153:Fri Mar 20 16:51:34 2026: main::dot1x_analyze_control_input:3300:[listen]::5: <98f2b301a055|usr=host/Dot1x-CLT-G>resolve for 98f2b301a055 is .
+dot1x:15182:1774043495.568527:Fri Mar 20 16:51:35 2026: main::dot1x_process_timeouts:2838:[Timers]::5: <gatekeeper>Timer gatekeeper/gatekeeper=HASH(0xb72b048) timeout in 1774043494, Now=1774043495
+dot1x:15182:1774043495.568856:Fri Mar 20 16:51:35 2026: main::dot1x_set_timer:2866:[Timers]::5: <gatekeeper>Set Timer gatekeeper/gatekeeper=HASH(0xb54ba98): Reschedule gatekeeper
+dot1x:15182:1774043496.417746:Fri Mar 20 16:51:36 2026: [gatekeeper/Timers] Run linux command 'fstool fw status| grep -i 1812'. 
+Output: '  373  113K ACCEPT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:1812'(gatekeeper:2617)
+dot1x:15182:1774043496.418322:Fri Mar 20 16:51:36 2026: main::dot1x_log_telemetry:1598: Entering dot1x_log_telemetry
+dot1x:15182:1774043498.066405:Fri Mar 20 16:51:38 2026: main::dot1x_log_telemetry:1726: TELEMETRY {
+   "dot1x_TM_TIME" : "2026-03-20 16:51:36",
+   "dot1x_UPTIME" : 0,
+   "dot1x_VERSION" : "4.8.6-48060050",
+   "eku_ALL_FAIL" : 0,
+   "eku_ALL_NOOP" : 17,
+   "eku_ALL_SUCCESS" : 0,
+   "eku_CUSTOM_FAIL" : 0,
+   "eku_CUSTOM_NOOP" : 0,
+   "eku_CUSTOM_SUCCESS" : 0,
+   "eku_PER_RULE_JSON" : {
+      "rule_1" : {
+         "fail" : 0,
+         "noop" : 17,
+         "success" : 0
+      },
+      "rule_2" : {
+         "fail" : 0,
+         "noop" : 0,
+         "success" : 0
+      }
+   },
+   "eku_POLICY_MTIME" : "Fri Mar 20 16:51:32 2026",
+   "eku_RULES_MAP_JSON" : {
+      "rule_1" : " [OTHER]",
+      "rule_2" : " [OTHER]"
+   },
+   "eku_WINDOW_MIN" : 60,
+   "rulechg_ADDED_JSON" : [],
+   "rulechg_BASE_TIME" : "",
+   "rulechg_DELETED_JSON" : [],
+   "rulechg_MOD_TIME" : "",
+   "rulechg_SUM_ADDED" : 0,
+   "rulechg_SUM_DELETED" : 0,
+   "rulechg_SUM_UPDATED" : 0,
+   "rulechg_UPDATES" : "",
+   "rulechg_WINDOW_MIN" : 60
+}
+dot1x:15182:1774043498.067580:Fri Mar 20 16:51:38 2026: record: send.p_resolve: {dot1x_radius_log=[[Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (533) Received Access-Request Id 186 from 10.16.128.18:58444 to 10.16.177.66:1812 length 320
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (533) eap_peap: crl last download time query return error. return length: 0
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (533) Sent Access-Challenge Id 186 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (534) Received Access-Request Id 187 from 10.16.128.18:58444 to 10.16.177.66:1812 length 485
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (534) Sent Access-Challenge Id 187 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1068
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (535) Received Access-Request Id 188 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (535) Sent Access-Challenge Id 188 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (536) Received Access-Request Id 189 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (536) Sent Access-Challenge Id 189 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (537) Received Access-Request Id 190 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (537) Sent Access-Challenge Id 190 from 10.16.177.66:1812 to 10.16.128.18:58444 length 885
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) Received Access-Request Id 191 from 10.16.128.18:58444 to 10.16.177.66:1812 length 330
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) eap_peap: TLS PEAP - recv TLS 1.2 Alert, fatal unknown_ca
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS PEAP - Alert read:fatal:unknown CA
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS PEAP - Server : Failed in error
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS Failed reading from OpenSSL
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS s3_pkt.c[1498]:error:14094418:SSL routines:ssl3_read_bytes:tlsv1 alert unknown ca
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS s3_pkt.c[1216]:error:140940E5:SSL routines:ssl3_read_bytes:ssl handshake failure
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS System call (I/O) error (-1)
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS EAP Receive handshake failed during operation
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: [eaptls process] = fail
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap: Failed continuing EAP PEAP (25) session.  EAP sub-module failed
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) eap: Sending EAP Failure (code 4) ID 6 length 4
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) eap: Failed in EAP select
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)     [eap] = invalid
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)   } # authenticate = invalid
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) Failed to authenticate the user
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: AuthStatus 'Access-Reject:'
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: literal --> AuthStatus 'Access-Reject:'
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)       EXPAND AuthStatus 'Access-Reject:'
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)          --> AuthStatus 'Access-Reject:'
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774043464  AuthStatus 'Access-Reject:'   with length: 66
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)          --> update 98-F2-B3-01-A0-55 1774043464  AuthStatus 'Access-Reject:'  
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)     modsingle[post-auth]: calling attr_filter.access_reject (rlm_attr_filter)
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: EXPAND %{User-Name}
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject:    --> host/AUTOBVT-GIG6GUR
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: Matched entry DEFAULT at line 11
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: EAP-Message = 0x04060004 allowed by EAP-Message =* 0x
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: Attribute "EAP-Message" allowed by 1 rules, disallowed by 0 rules
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: Message-Authenticator = 0x00000000000000000000000000000000 allowed by Message-Authenticator =* 0x
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: Attribute "Message-Authenticator" allowed by 1 rules, disallowed by 0 rules
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)     modsingle[post-auth]: returned from attr_filter.access_reject (rlm_attr_filter)
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)     [attr_filter.access_reject] = updated
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) eap: Reply already contained an EAP-Message, not inserting EAP-Failure
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) Sent Access-Reject Id 191 from 10.16.177.66:1812 to 10.16.128.18:58444 length 44
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (540) Received Access-Request Id 192 from 10.16.128.18:58444 to 10.16.177.66:1812 length 312
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (540) eap_peap: crl last download time query return error. return length: 0
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (540) Sent Access-Challenge Id 192 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (541) Received Access-Request Id 193 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (541) eap_tls: crl last download time query return error. return length: 0
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (541) Sent Access-Challenge Id 193 from 10.16.177.66:1812 to 10.16.128.18:58444 length 68
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (542) Received Access-Request Id 194 from 10.16.128.18:58444 to 10.16.177.66:1812 length 481
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (542) Sent Access-Challenge Id 194 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (543) Received Access-Request Id 195 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (543) Sent Access-Challenge Id 195 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (544) Received Access-Request Id 196 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (544) Sent Access-Challenge Id 196 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (545) Received Access-Request Id 197 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (545) Sent Access-Challenge Id 197 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (546) Received Access-Request Id 198 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (546) Sent Access-Challenge Id 198 from 10.16.177.66:1812 to 10.16.128.18:58444 length 88
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (547) Received Access-Request Id 199 from 10.16.128.18:58444 to 10.16.177.66:1812 length 1811
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (547) Sent Access-Challenge Id 199 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (548) Received Access-Request Id 200 from 10.16.128.18:58444 to 10.16.177.66:1812 length 1116
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (548) eap_tls: TLS error         : 0
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (548) eap_tls: TLS error         : 0
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (548) Sent Access-Challenge Id 200 from 10.16.177.66:1812 to 10.16.128.18:58444 length 119
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (549) Received Access-Request Id 201 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: fs_restirctions_rlm: invalid format skipping attribute vlan:.
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: fs_restirctions_rlm: invalid format skipping attribute IsCOA:false.
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: literal --> AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (549)       EXPAND AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (549)          --> AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774043493  AuthStatus 'Access-Accept:default rule_1'   with length: 80
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (549)          --> update 98-F2-B3-01-A0-55 1774043493  AuthStatus 'Access-Accept:default rule_1'  
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : WARNING: (549)       List "proxy-reply" is not available
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (549) Sent Access-Accept Id 201 from 10.16.177.66:1812 to 10.16.128.18:58444 length 166
+]],p_cert={cert=0,force=0},p_dont_ignore=,p_dont_update_activity_time=1,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}
+dot1x:15182:1774043498.067947:Fri Mar 20 16:51:38 2026: Sending message: type=p_resolve, content={dot1x_radius_log=[[Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (533) Received Access-Request Id 186 from 10.16.128.18:58444 to 10.16.177.66:1812 length 320
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (533) eap_peap: crl last download time query return error. return length: 0
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (533) Sent Access-Challenge Id 186 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (534) Received Access-Request Id 187 from 10.16.128.18:58444 to 10.16.177.66:1812 length 485
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (534) Sent Access-Challenge Id 187 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1068
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (535) Received Access-Request Id 188 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (535) Sent Access-Challenge Id 188 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (536) Received Access-Request Id 189 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (536) Sent Access-Challenge Id 189 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (537) Received Access-Request Id 190 from 10.16.128.18:58444 to 10.16.177.66:1812 length 319
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (537) Sent Access-Challenge Id 190 from 10.16.177.66:1812 to 10.16.128.18:58444 length 885
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) Received Access-Request Id 191 from 10.16.128.18:58444 to 10.16.177.66:1812 length 330
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) eap_peap: TLS PEAP - recv TLS 1.2 Alert, fatal unknown_ca
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS PEAP - Alert read:fatal:unknown CA
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS PEAP - Server : Failed in error
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS Failed reading from OpenSSL
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS s3_pkt.c[1498]:error:14094418:SSL routines:ssl3_read_bytes:tlsv1 alert unknown ca
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS s3_pkt.c[1216]:error:140940E5:SSL routines:ssl3_read_bytes:ssl handshake failure
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS System call (I/O) error (-1)
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: TLS EAP Receive handshake failed during operation
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap_peap: [eaptls process] = fail
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : ERROR: (538) eap: Failed continuing EAP PEAP (25) session.  EAP sub-module failed
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) eap: Sending EAP Failure (code 4) ID 6 length 4
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) eap: Failed in EAP select
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)     [eap] = invalid
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)   } # authenticate = invalid
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) Failed to authenticate the user
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: AuthStatus 'Access-Reject:'
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: literal --> AuthStatus 'Access-Reject:'
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)       EXPAND AuthStatus 'Access-Reject:'
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)          --> AuthStatus 'Access-Reject:'
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774043464  AuthStatus 'Access-Reject:'   with length: 66
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)          --> update 98-F2-B3-01-A0-55 1774043464  AuthStatus 'Access-Reject:'  
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)     modsingle[post-auth]: calling attr_filter.access_reject (rlm_attr_filter)
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: EXPAND %{User-Name}
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject:    --> host/AUTOBVT-GIG6GUR
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: Matched entry DEFAULT at line 11
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: EAP-Message = 0x04060004 allowed by EAP-Message =* 0x
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: Attribute "EAP-Message" allowed by 1 rules, disallowed by 0 rules
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: Message-Authenticator = 0x00000000000000000000000000000000 allowed by Message-Authenticator =* 0x
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) attr_filter.access_reject: Attribute "Message-Authenticator" allowed by 1 rules, disallowed by 0 rules
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)     modsingle[post-auth]: returned from attr_filter.access_reject (rlm_attr_filter)
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538)     [attr_filter.access_reject] = updated
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) eap: Reply already contained an EAP-Message, not inserting EAP-Failure
+Fri Mar 20 16:51:04 2026: Fri Mar 20 16:51:04 2026 : Debug: (538) Sent Access-Reject Id 191 from 10.16.177.66:1812 to 10.16.128.18:58444 length 44
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (540) Received Access-Request Id 192 from 10.16.128.18:58444 to 10.16.177.66:1812 length 312
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (540) eap_peap: crl last download time query return error. return length: 0
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (540) Sent Access-Challenge Id 192 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (541) Received Access-Request Id 193 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (541) eap_tls: crl last download time query return error. return length: 0
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (541) Sent Access-Challenge Id 193 from 10.16.177.66:1812 to 10.16.128.18:58444 length 68
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (542) Received Access-Request Id 194 from 10.16.128.18:58444 to 10.16.177.66:1812 length 481
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (542) Sent Access-Challenge Id 194 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (543) Received Access-Request Id 195 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (543) Sent Access-Challenge Id 195 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (544) Received Access-Request Id 196 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (544) Sent Access-Challenge Id 196 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (545) Received Access-Request Id 197 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (545) Sent Access-Challenge Id 197 from 10.16.177.66:1812 to 10.16.128.18:58444 length 1064
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (546) Received Access-Request Id 198 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:32 2026: Fri Mar 20 16:51:32 2026 : Debug: (546) Sent Access-Challenge Id 198 from 10.16.177.66:1812 to 10.16.128.18:58444 length 88
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (547) Received Access-Request Id 199 from 10.16.128.18:58444 to 10.16.177.66:1812 length 1811
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (547) Sent Access-Challenge Id 199 from 10.16.177.66:1812 to 10.16.128.18:58444 length 64
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (548) Received Access-Request Id 200 from 10.16.128.18:58444 to 10.16.177.66:1812 length 1116
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (548) eap_tls: TLS error         : 0
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (548) eap_tls: TLS error         : 0
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (548) Sent Access-Challenge Id 200 from 10.16.177.66:1812 to 10.16.128.18:58444 length 119
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (549) Received Access-Request Id 201 from 10.16.128.18:58444 to 10.16.177.66:1812 length 315
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: fs_restirctions_rlm: invalid format skipping attribute vlan:.
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: fs_restirctions_rlm: invalid format skipping attribute IsCOA:false.
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: literal --> AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (549)       EXPAND AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (549)          --> AuthStatus 'Access-Accept:default rule_1'
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: fs_properties_rlm: xlat message update 98-F2-B3-01-A0-55 1774043493  AuthStatus 'Access-Accept:default rule_1'   with length: 80
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (549)          --> update 98-F2-B3-01-A0-55 1774043493  AuthStatus 'Access-Accept:default rule_1'  
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : WARNING: (549)       List "proxy-reply" is not available
+Fri Mar 20 16:51:33 2026: Fri Mar 20 16:51:33 2026 : Debug: (549) Sent Access-Accept Id 201 from 10.16.177.66:1812 to 10.16.128.18:58444 length 166
+]],p_cert={cert=0,force=0},p_dont_ignore=,p_dont_update_activity_time=1,p_id=0,p_identry=[mac,98f2b301a055],p_ip=}

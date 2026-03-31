@@ -1,0 +1,94 @@
+2026-03-20 14:34:23,602 - myframework - INFO - 
+==========================================================================================Running Suite Setup===========================================================================================
+
+2026-03-20 14:34:23,602 - myframework - INFO - set up radius test suite
+2026-03-20 14:34:23,602 - myframework - INFO - === Starting EAP-TLS Test Setup ===
+2026-03-20 14:34:23,602 - myframework - INFO - Starting collecting logs from 10.16.177.66 for log file: /usr/local/forescout/log/plugin/dot1x/dot1x.log
+2026-03-20 14:34:23,602 - myframework - INFO - Starting collecting logs from 10.16.177.66 for log file: /usr/local/forescout/log/plugin/dot1x/radiusd.log
+2026-03-20 14:34:23,603 - myframework - INFO - Radius Common Setup
+2026-03-20 14:34:23,603 - myframework - INFO - Radius Server IP: 10.16.177.66
+2026-03-20 14:34:23,603 - myframework - INFO - Switch IP: 10.16.128.18
+2026-03-20 14:34:23,603 - myframework - INFO - Passthrough Management IP: 10.16.133.134
+2026-03-20 14:34:23,603 - myframework - INFO - Passthrough MAC: 98f2b301a055
+2026-03-20 14:34:23,603 - myframework - INFO - Test start time: 2026-03-20 14:34:23.603334
+2026-03-20 14:34:24,361 - myframework - INFO - Executing command on CounterAct: psql -t -A -F '|' -c "SELECT id, field_name, field_value FROM devinfo WHERE category='ad' AND field_name='ad_domain' AND field_value LIKE '%forescout.local%'"
+2026-03-20 14:34:24,539 - myframework - INFO - Command output:
+2026-03-20 14:34:24,539 - myframework - INFO -   txqalab2-dc1|ad_domain|txqalab2.txqalab.forescout.local
+2026-03-20 14:34:24,539 - myframework - INFO -   txqalab-dc1|ad_domain|txqalab.forescout.local
+2026-03-20 14:34:24,539 - myframework - INFO - AD domain and ad name mapping retrieved: {'txqalab2.txqalab.forescout.local': ['txqalab2-dc1'], 'txqalab.forescout.local': ['txqalab-dc1']}
+2026-03-20 14:34:24,539 - myframework - WARNING - No ad_name defined for ad_domain 'txqalab3.txqalab.forescout.local' in User Directory.
+2026-03-20 14:34:24,827 - myframework - INFO - CounterACT version on 10.16.177.66: 8.5.2
+2026-03-20 14:34:24,827 - myframework - INFO - CA version 8.5.2: using auth_value format 'txqalab-dc1:ad::testuser|administrator'
+2026-03-20 14:34:23,218 - myframework - INFO - Auth source 'txqalab-dc1' already configured in slot 1, skipping
+2026-03-20 14:34:23,218 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-20 14:34:23,218 - myframework - INFO - Checking RADIUS Authentication Source joined domain 'txqalab-dc1'
+2026-03-20 14:34:23,218 - myframework - INFO - Testing domain 'txqalab-dc1' joined status with testjoin command
+2026-03-20 14:34:23,218 - myframework - INFO - Executing command on CounterAct: fstool dot1x testjoin txqalab-dc1
+2026-03-20 14:34:26,902 - myframework - INFO - Test join command output: Join OK [txqalab-dc1]
+2026-03-20 14:34:26,902 - myframework - INFO - Domain 'txqalab-dc1' is already joined, skipping join operation
+2026-03-20 14:34:26,902 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-20 14:34:27,635 - myframework - INFO - Auth source null already set to 'txqalab-dc1', skipping
+2026-03-20 14:34:27,635 - myframework - INFO - Configuring RADIUS plugin settings on 10.16.177.66
+2026-03-20 14:34:28,328 - myframework - INFO - config.localradiusdebug.value already set to 'true', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - config.localradiusport.value already set to '1812', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - config.localacctport.value already set to '1813', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - config.ldap_ad_port.value already set to '636', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - config.min_tls_version.value already set to 'v1_2', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - config.fragment_size.value already set to '1024', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - config.enableradsec.value already set to 'false', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - config.onlyradsec.value already set to 'false', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - config.radsecport.value already set to '2083', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - config.ocsp.value already set to 'false', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - config.ocsp_shell.value already set to 'false', skipping
+2026-03-20 14:34:28,328 - myframework - INFO - Skipping empty value for: ocsp certificate name
+2026-03-20 14:34:28,328 - myframework - INFO - config.ocsp_override.value already set to 'false', skipping
+2026-03-20 14:34:28,329 - myframework - INFO - Skipping empty value for: ocsp responder url
+2026-03-20 14:34:28,329 - myframework - INFO - config.ocsp_nonce.value already set to 'true', skipping
+2026-03-20 14:34:28,329 - myframework - INFO - config.ocsp_soft.value already set to 'false', skipping
+2026-03-20 14:34:28,329 - myframework - INFO - config.crl.value already set to 'false', skipping
+2026-03-20 14:34:28,329 - myframework - INFO - Skipping empty value for: additional cdps (optional)
+2026-03-20 14:34:28,329 - myframework - INFO - config.crl_download_freq_number.value already set to '12', skipping
+2026-03-20 14:34:28,329 - myframework - INFO - config.cache.value already set to 'false', skipping
+2026-03-20 14:34:28,329 - myframework - INFO - config.enable_pap_authentication.value already set to 'false', skipping
+2026-03-20 14:34:28,329 - myframework - INFO - config.ldap_use_krb5.value already set to 'true', skipping
+2026-03-20 14:34:28,329 - myframework - INFO - config.ldap_use_machine_account.value already set to 'true', skipping
+2026-03-20 14:34:28,329 - myframework - INFO - config.ldap_sign_and_seal.value already set to 'false', skipping
+2026-03-20 14:34:28,329 - myframework - INFO - Dot1x has no changes, skipping restart
+2026-03-20 14:34:28,329 - myframework - INFO - Starting endpoint cleanup for MAC: 98f2b301a055
+2026-03-20 14:34:28,568 - myframework - INFO - Raw hostinfo output for MAC 98f2b301a055: 10.16.178.70, 1774035065,Fri Mar 20 14:31:05 CDT 2026, mac, 98f2b301a055, (sw@5290463614721804985 []), 0, 1774034803
+10.16.178.70, 1774034959,Fri Mar 20 14:29:19 CDT 2026, nc_ep_esg_by_mac, ???, (gen@5290463614721804985 []), no_plugin:ierr
+10.16.178.70, 1774034949,Fri Mar 20 14:29:09 CDT 2026, sw_duplicate_mac, ???, (sw@5290463614721804985 [sw]), sw_unknown_property_value:err
+2026-03-20 14:34:28,568 - myframework - INFO - Found 3 IP(s) for MAC 98f2b301a055: ['10.16.178.70', '10.16.178.70', '10.16.178.70']
+2026-03-20 14:34:28,568 - myframework - INFO - Found IP 10.16.178.70 for MAC 98f2b301a055 (preferred from 3 candidates)
+2026-03-20 14:34:28,568 - myframework - INFO - Endpoint IP: 10.16.178.70
+2026-03-20 14:34:29,077 - myframework - WARNING - CA SSH error on attempt 1 (connection may have dropped), reconnecting: RuntimeError("Command 'fstool hostinfo 10.16.178.70 | grep 'host_id'' failed with exit code 1: ")
+2026-03-20 14:34:29,077 - myframework - INFO - [POOL] Evicted connection for key: 10.16.177.65
+2026-03-20 14:34:29,564 - myframework - INFO - host_id not found, using IP 10.16.178.70 as identifier
+2026-03-20 14:34:29,564 - myframework - INFO - Deleting endpoint with ID: 10.16.178.70
+2026-03-20 14:34:32,391 - myframework - INFO - Endpoint 10.16.178.70 removed successfully
+2026-03-20 14:34:32,392 - myframework - INFO - Target IP range 10.16.178.64/26 derived from VLAN 1688
+2026-03-20 14:34:34,924 - myframework - INFO - Starting RADIUS configuration on port GigabitEthernet1/0/1 for Cisco ios switch 10.16.128.18
+2026-03-20 14:34:34,924 - myframework - INFO - Starting RADIUS Configuration steps 1/6: dot1x system-auth-control
+2026-03-20 14:34:37,747 - myframework - INFO - Executing command on CiscoIOS: show running-config | inc dot1x
+2026-03-20 14:34:40,347 - myframework - INFO - dot1x system-auth-control already enabled on Cisco switch 10.16.128.18
+2026-03-20 14:34:40,347 - myframework - INFO - Starting RADIUS Configuration steps 2/6: RADIUS server
+2026-03-20 14:34:40,349 - myframework - INFO - Executing command on CiscoIOS: show running-config | section radius server server-automation-ipv4-177-66
+2026-03-20 14:34:42,951 - myframework - INFO - Command output:
+2026-03-20 14:34:42,951 - myframework - INFO -   radius server server-automation-ipv4-177-66
+2026-03-20 14:34:42,951 - myframework - INFO -    address ipv4 10.16.177.66 auth-port 1812 acct-port 1813
+2026-03-20 14:34:42,951 - myframework - INFO -    key aristo
+2026-03-20 14:34:42,952 - myframework - INFO - Executing command on CiscoIOS: show running-config | section ^radius server
+2026-03-20 14:34:45,379 - myframework - INFO - RADIUS server server-automation-ipv4-177-66 already exists on 10.16.128.18
+2026-03-20 14:34:45,379 - myframework - INFO - Starting RADIUS Configuration steps 3/6: RADIUS group
+2026-03-20 14:34:45,380 - myframework - INFO - Executing command on CiscoIOS: show running-config | section aaa group server radius group-automation
+2026-03-20 14:34:48,183 - myframework - INFO - Command output:
+2026-03-20 14:34:48,184 - myframework - INFO -   aaa group server radius group-automation
+2026-03-20 14:34:48,184 - myframework - INFO -    server name server-automation-ipv4-177-66
+2026-03-20 14:34:48,184 - myframework - INFO -    deadtime 3
+2026-03-20 14:34:48,184 - myframework - INFO - RADIUS group group-automation already exists on 10.16.128.18
+2026-03-20 14:34:48,184 - myframework - INFO - Starting RADIUS Configuration steps 4/6: AAA authentication
+2026-03-20 14:34:48,184 - myframework - INFO - Executing command on CiscoIOS: show running-config | include ^aaa (authentication|authorization|accounting)
+2026-03-20 14:34:48,921 - myframework - INFO - === EAP-TLS Test Teardown ===
+2026-03-20 14:34:48,922 - myframework - INFO - Removing certificates...
+2026-03-20 14:34:48,922 - myframework - INFO - Certificates removed
+2026-03-20 14:34:48,922 - myframework - INFO - radius common teardown
