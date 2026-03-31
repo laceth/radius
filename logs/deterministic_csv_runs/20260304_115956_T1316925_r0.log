@@ -1,0 +1,65 @@
+====================================================================
+TESTCASEID: T1316925
+TESTSPEC:   tests/radius/functional/radius_functional_eap_tls.py::TC_9448_EAPTLSPolicySANDetectionTest
+Mode: REQUIRE_PASSES=1 (MAX_ATTEMPTS=1)
+Retry-on-fail: 0, Timeout: 0
+====================================================================
+----
+TESTCASEID: T1316925
+TESTSPEC:   tests/radius/functional/radius_functional_eap_tls.py::TC_9448_EAPTLSPolicySANDetectionTest
+ATTEMPT:    1
+CMD:        python fstester.py -t tests/radius/functional/radius_functional_eap_tls.py::TC_9448_EAPTLSPolicySANDetectionTest -config test_config/radius/tarik_radius.yml
+LOG:        logs/2026-03-04_115956/T1316925__tests_radius_functional_radius_functional_eap_tls_py__TC_9448_EAPTLSPolicySANDetectionTest/attempt_1.log
+[INFO] 
+Running class: TC_9448_EAPTLSPolicySANDetectionTest
+[INFO] === Starting EAP-TLS Test Setup ===
+[INFO] Radius Common Setup
+[INFO] Radius Server IP: 10.100.49.78
+[INFO] Switch IP: 10.16.128.15
+[INFO] Passthrough Management IP: 10.16.133.143
+[INFO] Passthrough MAC: 288023b82d59
+[INFO] Test start time: 2026-03-04 11:59:58.627701
+Exception (client): Error reading SSH protocol banner[Errno 104] Connection reset by peer
+Traceback (most recent call last):
+  File "/home/triley/fstester001/.public/lib/python3.12/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/triley/fstester001/.public/lib/python3.12/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/triley/fstester001/.public/lib/python3.12/site-packages/paramiko/packet.py", line 663, in _read_timeout
+    x = self.__socket.recv(128)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/triley/fstester001/.public/lib/python3.12/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/home/triley/fstester001/.public/lib/python3.12/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner[Errno 104] Connection reset by peer
+
+[ERROR] 
+========================================================================Test Failed: TC_9448_EAPTLSPolicySANDetectionTest Failed========================================================================
+
+[ERROR] Error: Failed to connect to root: Error reading SSH protocol banner[Errno 104] Connection reset by peer
+[INFO] === EAP-TLS Test Teardown ===
+[INFO] Removing certificates...
+[INFO] Certificates removed
+[INFO] radius common teardown
+[INFO] Closing all connections
+HTML report generated: radius_report.html
+DURATION: 2s
+RESULT: FAIL (exit=0)
+Hit max attempts: 1/1 (passes=0)
+
+==================== SUMMARY ====================
+TESTCASEID     TESTSPEC                                                                                     ATTEMPTS     PASSES      FAILS      PASS_RATE   TOTAL_SECS
+T1316925       tests/radius/functional/radius_functional_eap_tls.py::TC_9448_EAPTLSPolicySANDetectionTest          1          0          1         0.0000            2
+
+Logs:      logs/2026-03-04_115956
+Summary:   logs/2026-03-04_115956/summary.csv
+Failures:  logs/2026-03-04_115956/failed_tests.txt
+===============================================
